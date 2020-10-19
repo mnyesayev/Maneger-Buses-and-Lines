@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_00_3729_1237
 {  
-    partial class program
+    partial class Program
     {
 
         static partial void Welcome1237()
