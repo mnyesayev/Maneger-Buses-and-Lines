@@ -13,7 +13,7 @@ namespace dotNet5781_00_3729_1237
         {
             Welcome3729();
             Welcome1237();
-            //Console.ReadKey();
+            Console.ReadKey();
         }
         static partial void Welcome1237();
         private static void Welcome3729()
