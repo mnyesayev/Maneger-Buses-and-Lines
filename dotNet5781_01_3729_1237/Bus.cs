@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_01_3729_1237
 {
-    class Bus
+    public class Bus
     {
-        private
-        uint id;
+        private uint id;
+        public uint Id { get => id;private set => id = value; }
 
     }
 }
