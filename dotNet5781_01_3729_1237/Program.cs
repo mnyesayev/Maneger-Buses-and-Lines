@@ -11,7 +11,11 @@ namespace dotNet5781_01_3729_1237
         static void Main(string[] args)
         {
 
-            Bus b = new Bus();
+            manageBuses buses=new manageBuses();
+            buses.AddBus(new DateTime(2018, 8, 3), 12368896);
+            buses.AddBus(new DateTime(2018, 8, 3), 12345678);
+
+            Console.ReadKey(); 
         }
     }
 }
