@@ -9,6 +9,7 @@ namespace dotNet5781_01_3729_1237
 {
     class manageBuses
     {
+
         private List<Bus> buses;
 
         public List<Bus> Buses { get => buses; set => buses = value; }
@@ -20,25 +21,26 @@ namespace dotNet5781_01_3729_1237
 
         public void AddBus(DateTime dateRoadAscent, uint id)
         {
-            if (Buses.Count()==0)
+            if (Buses.Count() == 0)
                 Buses.Add(new Bus(dateRoadAscent, id));
             else
             {
                 Bus bus = this.SearchBus(id);
-                if(bus==null)
+                if (bus == null)
                     Buses.Add(new Bus(dateRoadAscent, id));
             }
         }
-        public Bus SearchBus(uint id)
+        public  Bus SearchBus(uint id)
         {
+            
             foreach (var bus in Buses)
             {
                 if (bus.Id != id)
                     continue;
                 else
-                    return bus;
+                    return  bus;
             }
-            return null;
+            return  null;
         }
         public void ChooseBus(uint id)
         {
@@ -56,9 +58,9 @@ namespace dotNet5781_01_3729_1237
             }
 
         }
-        public void DriverService(uint id,char choice)
+        public void DriverService(uint id, char choice)
         {
-            Bus bus = this.SearchBus(id);
+             Bus bus = this.SearchBus(id);
             if (bus == null)
             {
                 Console.WriteLine("This bus not exsits");
@@ -69,7 +71,7 @@ namespace dotNet5781_01_3729_1237
             if (choice == 'C' || choice == 'c')
                 bus.Care();
             return;
-           
+
 
 
 

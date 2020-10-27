@@ -50,7 +50,7 @@ namespace dotNet5781_01_3729_1237
             Id = id;
             Mileage = mileage;
             Fuel = fuel;
-            LastCare = new DateTime(2019, 8, 2);
+            LastCare = default;
             LastCareMileage = mileage;
         }
         public void Care()
