@@ -71,12 +71,14 @@ namespace dotNet5781_01_3729_1237
             if (choice == 'C' || choice == 'c')
                 bus.Care();
             return;
+        }
 
-
-
-
-
-
+        // returns how meny mileage the bus was driving -
+        // - from the last care
+        public uint LastCare(uint id)
+        {
+            Bus bus = this.SearchBus(id);
+            return (bus.Mileage - bus.LastCareMileage);
         }
     }
 }
