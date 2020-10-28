@@ -13,7 +13,7 @@ namespace dotNet5781_01_3729_1237
         static void Main(string[] args)
         {
 
-            manageBuses Buses = new manageBuses();
+            ManageBuses Buses = new ManageBuses();
             string[] options = new string[5]
             {
                 "Exit the program",
@@ -23,7 +23,6 @@ namespace dotNet5781_01_3729_1237
                 "Get information on the last care mileage of the all buses",
             };
 
-
             Choises userChoise;
             do
             {
@@ -31,7 +30,7 @@ namespace dotNet5781_01_3729_1237
                 {
                     Console.WriteLine("Press {0} to " + options[i], i);
                 }
-
+                
                 // get the number
 
                 int temp;
@@ -40,33 +39,23 @@ namespace dotNet5781_01_3729_1237
                 userChoise = (Choises)temp;
 
                 uint id;
-
+                DateTime time;
                 switch (userChoise)
                 {
                     case Choises.addbus:
-
-
-                        int[] date = new int[3];
-
                         Console.WriteLine("Please enter the date of road ascent");
-                        Console.WriteLine("enter -- year space month space day");
+                        while (!DateTime.TryParse(Console.ReadLine(), out time))
+                            Console.WriteLine("Wrong input! Try Again.");
 
-                        for (int i = 0; i < 3; i++)
-                        {
-                            while (!int.TryParse(Console.ReadLine(), out date[i]))
-                                Console.WriteLine("Wrong input! Try Again.");
-                        }
-
-                        Console.WriteLine("pleace enter id for the bus");
+                        Console.WriteLine("Pleace enter id for the bus");
                         while (!uint.TryParse(Console.ReadLine(), out id))
                             Console.WriteLine("Wrong input! Try Again.");
 
-                        Buses.AddBus(new DateTime(date[0], date[1], date[2]), id);
-                       
+                        Buses.AddBus(time, id);
                         break;
                     case Choises.chooseBus:
 
-                        Console.WriteLine("pleace enter id for the bus");
+                        Console.WriteLine("Pleace enter id for the bus");
                         while (!uint.TryParse(Console.ReadLine(), out id))
                             Console.WriteLine("Wrong input! Try Again.");
 
@@ -74,33 +63,27 @@ namespace dotNet5781_01_3729_1237
 
                         break;
                     case Choises.driverService:
-                       
-                        Console.WriteLine("pleace enter id for the bus");
+
+                        Console.WriteLine("Pleace enter id for the bus");
                         while (!uint.TryParse(Console.ReadLine(), out id))
                             Console.WriteLine("Wrong input! Try Again.");
-                        
+
                         Console.WriteLine("Pleace enter 'f' for refuling or 'c' for care");
                         char serviceOptions;
                         char.TryParse(Console.ReadLine(), out serviceOptions);
-
                         Buses.DriverService(id, serviceOptions);
                         break;
-                   
                     case Choises.lastcare:
                         Buses.LastCareAllBuses();
-
                         break;
                     case Choises.exit:
-                        Console.WriteLine("goodBye");
+                        Console.WriteLine("GoodBye");
                         break;
                     default:
                         Console.WriteLine("Your input {0}, please enter number between 0 - 4", userChoise);
                         break;
                 }
-
-
             } while (userChoise != Choises.exit);
-
             Console.ReadKey();
         }
     }
