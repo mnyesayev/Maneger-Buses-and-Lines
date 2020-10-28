@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,12 +22,20 @@ namespace dotNet5781_01_3729_1237
             get => id;
             set
             {
-                if (DateRoadAscent.Year < 2018 && value <= 9999999)
-                    id = value;
-                else if (DateRoadAscent.Year >= 2018 && (value <= 99999999 && value > 9999999))
-                    id = value;
-                else
-                    Console.WriteLine("This id not valid!");
+                bool temp = false;
+                do
+                {
+                    if (DateRoadAscent.Year < 2018 && value <= 9999999 && value >= 1000000)
+                        id = value;
+                    else if (DateRoadAscent.Year >= 2018 && (value <= 99999999 && value >= 10000000))
+                        id = value;
+                    else
+                    {
+                        temp = true;
+                        Console.WriteLine("Wrong input! Try Again.");
+                        uint.TryParse(Console.ReadLine(), out value);
+                    }
+                } while (temp);
             }
         }
         public DateTime DateRoadAscent
@@ -81,6 +90,12 @@ namespace dotNet5781_01_3729_1237
             Mileage += addMileage;
             Fuel -= addMileage;
         }
-       
+      
+        // returns how meny mileage the bus was driving -
+        // - from the last care
+        public uint ReturnLastCare()
+        {
+            return (Mileage - LastCareMileage);
+        }
     }
 }

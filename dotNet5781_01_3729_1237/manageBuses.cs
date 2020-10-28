@@ -73,12 +73,14 @@ namespace dotNet5781_01_3729_1237
             return;
         }
 
-        // returns how meny mileage the bus was driving -
-        // - from the last care
-        public uint LastCare(uint id)
+        public void LastCareAllBuses()
         {
-            Bus bus = this.SearchBus(id);
-            return (bus.Mileage - bus.LastCareMileage);
+            foreach (var Bus in Buses)
+	        {
+                Console.WriteLine(Bus.ReturnLastCare() /**/ );
+	        }
         }
+
+
     }
 }
