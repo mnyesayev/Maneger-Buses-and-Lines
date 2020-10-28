@@ -21,9 +21,9 @@ namespace dotNet5781_01_3729_1237
             get => id;
             set
             {
-                if (DateRoadAscent.Year < 2018 && value <= 9999999)
+                if (DateRoadAscent.Year < 2018 && (value <= 9999999 && value > 1000000))
                     id = value;
-                else if (DateRoadAscent.Year >= 2018 && (value <= 99999999 && value > 9999999))
+                else if (DateRoadAscent.Year >= 2018 && (value <= 99999999 && value > 10000000))
                     id = value;
                 else
                     Console.WriteLine("This id not valid!");
@@ -81,6 +81,6 @@ namespace dotNet5781_01_3729_1237
             Mileage += addMileage;
             Fuel -= addMileage;
         }
-       
+
     }
 }
