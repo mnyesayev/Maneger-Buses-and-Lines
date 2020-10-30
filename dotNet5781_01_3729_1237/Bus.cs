@@ -25,28 +25,8 @@ namespace dotNet5781_01_3729_1237
         /// Represents the bus license number
         ///  by years as provided by law
         /// </summary>
-        public uint Id
-        {
-            get => id;
-            private set
-            {
-                bool temp = false;
-                do
-                {
-                    temp = false;
-                    if (DateRoadAscent.Year < 2018 && value <= 9999999 && value >= 1000000)
-                        id = value;
-                    else if (DateRoadAscent.Year >= 2018 && (value <= 99999999 && value >= 10000000))
-                        id = value;
-                    else
-                    {
-                        temp = true;
-                        Console.WriteLine("Wrong input! Try Again.");
-                        uint.TryParse(Console.ReadLine(), out value);
-                    }
-                } while (temp);
-            }
-        }
+        public uint Id { get => id; private set => id = value; }
+
         /// <summary>
         /// Displays the date of ascent to the road.
         /// </summary>

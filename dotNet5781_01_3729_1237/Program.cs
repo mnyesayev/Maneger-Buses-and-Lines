@@ -50,7 +50,7 @@ namespace dotNet5781_01_3729_1237
                         Console.WriteLine("Pleace enter id for the bus");
                         while (!uint.TryParse(Console.ReadLine(), out id))
                             Console.WriteLine("Wrong input! Try Again.");
-
+                       
                         Buses.AddBus(time, id);
                         break;
                     case Choises.chooseBus:

@@ -30,17 +30,42 @@ namespace dotNet5781_01_3729_1237
         /// </summary>
         /// <param name="dateRoadAscent"></param>
         /// <param name="id"></param>
-        public void AddBus(DateTime dateRoadAscent, uint id)
+        public void AddBus(DateTime dateRoadAscent, uint temp)
         {
-            if (Buses.Count() == 0)
-                Buses.Add(new Bus(dateRoadAscent, id));
-            else
-            {
-                Bus bus = this.SearchBus(id);
-                if (bus == null)
-                    Buses.Add(new Bus(dateRoadAscent, id));
-            }
+            uint id=this.CheckId(dateRoadAscent, temp);
+            Buses.Add(new Bus(dateRoadAscent, id));
         }
+        /// <summary>
+        /// Checks the correctness of the license number in the system
+        /// and handles irregular cases
+        /// </summary>
+        /// <param name="dateRoadAscent"></param>
+        /// <param name="id"></param>
+        /// <returns>Proper id</returns>
+        public uint CheckId(DateTime dateRoadAscent, uint id)
+        {
+            bool temp = false;
+            do
+            {
+                temp = false;
+                Bus bus = this.SearchBus(id);
+                if (dateRoadAscent.Year < 2018 && (id <= 9999999 && id >= 1000000) && bus == null)
+                    return id;
+                else if (dateRoadAscent.Year >= 2018 && (id <= 99999999 && id >= 10000000) && bus == null)
+                    return id;
+                else
+                {
+                    temp = true;
+                    if (bus != null)
+                        Console.WriteLine("This id already exists! Try again");
+                    else
+                        Console.WriteLine("Wrong input! Try Again.");
+                    uint.TryParse(Console.ReadLine(), out id);
+                }
+            } while (temp);
+            return 1;//If an unexpected fault has occurred
+        }
+
         /// <summary>
         /// Looking for a bus according to his id
         /// </summary>
@@ -109,4 +134,7 @@ namespace dotNet5781_01_3729_1237
             }
         }
     }
+
 }
+
+
