@@ -16,7 +16,7 @@ namespace dotNet5781_01_3729_1237
     {
         uint id;
         uint mileage;
-        uint fuel;
+        int fuel;
         uint lastCareMileage;
         DateTime dateRoadAscent;
         DateTime lastCare;
@@ -48,7 +48,7 @@ namespace dotNet5781_01_3729_1237
         /// <summary>
         /// Shows how many miles the bus can travel further
         /// </summary>
-        public uint Fuel { get => fuel; set => fuel = value; }
+        public int Fuel { get => fuel; set => fuel = value; }
         /// <summary>
         /// Displays the date of the last treatment in the garage
         /// </summary>
@@ -64,7 +64,7 @@ namespace dotNet5781_01_3729_1237
         /// <param name="id"></param>
         /// <param name="mileage"></param>
         /// <param name="fuel"></param>
-        public Bus(DateTime dateRoadAscent = default, uint id = 0, uint mileage = 0, uint fuel = 1200)
+        public Bus(DateTime dateRoadAscent = default, uint id = 0, uint mileage = 0, int fuel = 1200)
         {
             DateRoadAscent = dateRoadAscent;
             Id = id;
@@ -123,7 +123,7 @@ namespace dotNet5781_01_3729_1237
         public void StartDrive(uint addMileage)
         {
             Mileage += addMileage;
-            Fuel -= addMileage;
+            Fuel -= (int)addMileage;
         }
 
         /// <summary>
