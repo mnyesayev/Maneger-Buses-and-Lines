@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_3729_1237
 {
-    class BusLineStation : BusStation
+    public class BusLineStation : BusStation
     {
         private double distancePrevStation;
         private int minutesTimePrevStation;

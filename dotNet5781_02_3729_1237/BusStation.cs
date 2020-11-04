@@ -15,7 +15,7 @@ namespace dotNet5781_02_3729_1237
         /// <summary>
         /// Represents / updates the station number.
         /// </summary>
-        protected int BusStationKey
+        public int BusStationKey
         {
             get => busStationKey;
             set
@@ -91,7 +91,7 @@ namespace dotNet5781_02_3729_1237
         }
         public override string ToString()
         {
-            return $"Bus Station Code: {busStationKey} {Latitude}°N {Longitude}°E";
+            return $"Bus Station Code: {busStationKey} {Latitude}°N {Longitude}°E\n";
         }
     }
 }

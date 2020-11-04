@@ -10,8 +10,21 @@ namespace dotNet5781_02_3729_1237
     {
         static void Main(string[] args)
         {
-            BusStation st = new BusStation();
-            Console.WriteLine(st.ToString());
+            BusLineStation[] stations = new BusLineStation[5];
+            Random r = new Random(DateTime.Now.Millisecond);
+            for (int i = 0; i < 5; i++)
+            {
+                stations[i] = new BusLineStation(r.Next(9999));
+            }
+            Line st = new Line();
+            int j;
+            for (int i = 0; i < 5; i++)
+            {
+                j=int.Parse(Console.ReadLine());
+                st.addStation(stations[i], j);
+            }
+
+                Console.WriteLine(st.ToString());
             Console.ReadKey();
         }
     }
