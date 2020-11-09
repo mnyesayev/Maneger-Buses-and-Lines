@@ -46,6 +46,7 @@
     <Compile Include="BusLineStation.cs" />
     <Compile Include="BusStation.cs" />
     <Compile Include="Line.cs" />
+    <Compile Include="Lines.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
