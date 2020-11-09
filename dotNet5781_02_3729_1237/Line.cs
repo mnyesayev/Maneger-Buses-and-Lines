@@ -7,44 +7,46 @@ using System.Threading.Tasks;
 namespace dotNet5781_02_3729_1237
 {
 
-    public class Line:IComparable
+    public class Line : IComparable
     {
         public enum Areas
         {
             General, North, South, Center, Jerusalem, Lowland, JudeaAndSamaria
         }
         private List<BusLineStation> stations;
-        private int busLine;
+        private int numLine;
         private BusLineStation firstStation;
         private BusLineStation lastStation;
         private Areas area;
+
+
 
         internal List<BusLineStation> Stations { get => stations; set => stations = value; }
         internal BusLineStation FirstStation { get => firstStation; set => firstStation = value; }
         internal BusLineStation LastStation { get => lastStation; set => lastStation = value; }
         private Areas Area { get => area; set => area = value; }
-        public int BusLine { get => busLine; set => busLine = value; }
+        public int NumLine { get => numLine; set => numLine = value; }
 
         public Line(int busLine = 0, Areas area = Areas.General)
         {
             Stations = new List<BusLineStation>();
-            BusLine = busLine;
+            NumLine = busLine;
             Area = area;
         }
         public string StringStations()
         {
-            string temp=null;
+            string temp = null;
             foreach (var state in Stations)
             {
 
-                temp+=state.ToString();
+                temp += state.ToString();
             }
             return temp;
         }
 
         public override string ToString()
         {
-            return $"Bus line: {BusLine} \nArea: {Area} \nStations:\n{StringStations()}";
+            return $"Bus line: {NumLine} \nArea: {Area} \nStations:\n{StringStations()}";
         }
         public bool addStation(BusLineStation station, int index)
         {
@@ -118,7 +120,7 @@ namespace dotNet5781_02_3729_1237
             int index1 = getIndex(station1);
             int index2 = getIndex(station2);
             if (index1 == -1 || index2 == -1)
-            { }//throw
+                throw new KeyNotFoundException("One or more stations do not exist on this line!");
             if (index1 < index2)
             {
                 double distance = 0;
@@ -129,17 +131,23 @@ namespace dotNet5781_02_3729_1237
                 return distance;
             }
             else
-            { return -1; }//throw
+            {
+                throw new ArgumentException("You cannot measure distance between stations " +
+                    "\nthat are not in chronological order of the line in that direction");
+            }
+
         }
-        public int GetMinutesTime(BusLineStation station1, BusLineStation station2)
+        public TimeSpan GetMinutesTime(BusLineStation station1, BusLineStation station2)
         {
             int index1 = getIndex(station1);
             int index2 = getIndex(station2);
             if (index1 == -1 || index2 == -1)
-            { }//throw
+            {
+                throw new KeyNotFoundException("One or more stations do not exist on this line!");
+            }
             if (index1 < index2)
             {
-                int minutesTime = 0;
+                TimeSpan minutesTime = TimeSpan.Zero;//is now 00:00:00
                 for (int i = index1; i < index2; i++)
                 {
                     minutesTime += Stations[i + 1].MinutesTimePrevStation;
@@ -147,34 +155,42 @@ namespace dotNet5781_02_3729_1237
                 return minutesTime;
             }
             else
-            { return -1; }//throw
+            {
+                throw new ArgumentException("You cannot measure time between stations " +
+                    "\nthat are not in chronological order of the line in that direction");
+            }
         }
         public Line SubLine(BusLineStation station1, BusLineStation station2)
         {
             int index1 = getIndex(station1);
             int index2 = getIndex(station2);
             if (index1 == -1 || index2 == -1)
-            { }//throw
+            {
+                throw new KeyNotFoundException("One or more stations do not exist on this line!");
+            }
             if (index1 < index2)
             {
                 Line temp = new Line();
                 for (int i = index1; i < index2; i++)
                 {
-                    temp.Stations.Insert(i,stations[i]);
+                    temp.Stations.Insert(i, stations[i]);
                 }
                 temp.FirstStation = station1;
                 temp.LastStation = station2;
                 return temp;
             }
             else
-            { return null; }//throw
+            {
+                throw new ArgumentException("You can not find a subway between stations " +
+                    "\nthat are not in chronological order of the line in that direction");
+            }
         }
 
         int IComparable.CompareTo(object obj)
         {
             Line line = (Line)obj;
-            int time1 = this.GetMinutesTime(FirstStation, LastStation);
-            int time2 = line.GetMinutesTime(FirstStation, LastStation);
+            TimeSpan time1 = this.GetMinutesTime(FirstStation, LastStation);
+            TimeSpan time2 = line.GetMinutesTime(FirstStation, LastStation);
             if (time1 > time2)
                 return 1;
             if (time1 == time2)

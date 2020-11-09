@@ -10,15 +10,15 @@ namespace dotNet5781_02_3729_1237
     public class BusLineStation : BusStation
     {
         private double distancePrevStation;
-        private int minutesTimePrevStation;
+        private TimeSpan minutesTimePrevStation;
         public double DistancePrevStation { get => distancePrevStation; set => distancePrevStation = value; }
-        public int MinutesTimePrevStation { get => minutesTimePrevStation; set => minutesTimePrevStation = value; }
+        public TimeSpan MinutesTimePrevStation { get => minutesTimePrevStation; set => minutesTimePrevStation = value; }
         public BusLineStation(int busStationKey = 0, double longitude = 180,
-            double latitude = 90, string address = null, double distance = 0, int minutsTime = 0)
+            double latitude = 90, string address = null, double distance = 0, double minutsTime = 0)
             : base(busStationKey, longitude, latitude, address)
         {
             DistancePrevStation = distance;
-            MinutesTimePrevStation = minutsTime;
+            MinutesTimePrevStation = TimeSpan.FromMinutes(minutsTime);
         }
     }
 }

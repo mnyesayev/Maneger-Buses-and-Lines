@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_3729_1237
 {
-    class Lines : IEnumerable
+    class Lines:IEnumerable 
     {
         private List<Line> allLines;
 
@@ -22,36 +22,37 @@ namespace dotNet5781_02_3729_1237
         {
             try
             {
-                // the bus not exsist
-                allLines[line.BusLine];
-                return true;
-            
-            }
-            catch // the bus alrady exsist
-            {
-
-                return false;
-            }   
-           
-            
-
-        }
-
-        public bool DelLine(Line line)
-        {
-            if (!ChackLine(line.BusLine)) // the bus not exsist
-                return false;
-            else // the bus exsist
-            {
-                foreach (var item in )
+                // we check if the line exsist
+                Lines tmp = this[line.NumLine];
+                if (tmp.allLines.Count() == 1 && line.FirstStation == tmp.allLines[0].LastStation && line.LastStation == tmp.allLines[0].FirstStation)
                 {
-
+                    allLines.Add(line);//we add a line in the opposite direction
+                    return true;
                 }
+                return false;//There is already such a line with in two directions
+            }
+            catch (KeyNotFoundException) // the line not exsist
+            {
+                allLines.Add(line);
+                return true;
+            }   
+        }
+
+        public bool DelLine(int numLine)
+        {
+            try
+            {
+                Lines temp = this[numLine];
+
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
 
-        public bool ChackLine(int busLine)
+       /* public bool ChackLine(int busLine)
         {
             try
             {
@@ -59,22 +60,24 @@ namespace dotNet5781_02_3729_1237
             }
             catch
             { }
-        }
+        }*/
 
-        public List<Line> this[int busLine]
+        public Lines this[int numLine]
         {
             get
             {
-                List<Line> temp = new List<Line>();
-                for (int i = 0; i < allLines.Count(); i++)
+                Lines temp = new Lines();
+                int i = 0;
+                foreach (Line item in this)//we use myEnumerator
                 {
-                    if (allLines[i].BusLine == busLine)
-                        temp.Add(allLines[i]);
-
-                    if (temp.Count == 2) return temp;
+                    if (item.NumLine == numLine)
+                        temp.allLines.Add(item);
+                    if (temp.allLines.Count() == 2)
+                        return temp;
+                    ++i;
                 }
-                if (temp.Count == 0)
-                    throw new IndexOutOfRangeException("the line not exsist");
+                if (temp.allLines.Count == 0)
+                    throw new KeyNotFoundException("the line not exsist");
                 return temp;
             }
         }
@@ -89,19 +92,18 @@ namespace dotNet5781_02_3729_1237
 
         }
 
-        public MyEnmrtr GetEnumerator()
+        public IEnumerator GetEnumerator()
         {
-            return new MyEnmrtr(this);
+            return new MyEnumerator(this);
         }
 
-        public class MyEnmrtr : IEnumerator
+        public class MyEnumerator : IEnumerator
         {
             Lines cool;
             int cntr = -1; //  before the first element!!!
-            internal MyEnmrtr(Lines coll) { this.cool = coll; }
+            internal MyEnumerator(Lines coll) { this.cool = coll; }
 
-            public void Reset() { } // deprecated can be empty
-
+            public void Reset() { cntr = -1; } 
             public object Current { get { return cool.allLines[cntr]; } }
             public bool MoveNext()
             {

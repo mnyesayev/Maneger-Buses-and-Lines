@@ -43,13 +43,13 @@ namespace dotNet5781_02_3729_1237
             {
                 for (int i = 0; i < options.Length; i++)
                     Console.WriteLine("Press {0} to " + options[i], i);
-                
+
                 // get the number
                 int temp;
                 while (!int.TryParse(Console.ReadLine(), out temp))
                     Console.WriteLine("Wrong input! Try Again.");
                 userChoise = (Choises)temp;
-                
+
                 switch (userChoise)
                 {
                     case Choises.exit:
