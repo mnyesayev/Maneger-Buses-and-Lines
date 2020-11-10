@@ -24,7 +24,7 @@ namespace dotNet5781_02_3729_1237
             {
                 // we check if the line exsist
                 Lines tmp = this[line.NumLine];
-                if (tmp.allLines.Count() == 1 && line.FirstStation == tmp.allLines[0].LastStation && line.LastStation == tmp.allLines[0].FirstStation)
+                if (tmp.allLines.Count == 1 && line.FirstStation == tmp.allLines[0].LastStation && line.LastStation == tmp.allLines[0].FirstStation)
                 {
                     allLines.Add(line);//we add a line in the opposite direction
                     return true;
@@ -72,7 +72,7 @@ namespace dotNet5781_02_3729_1237
                 {
                     if (item.NumLine == numLine)
                         temp.allLines.Add(item);
-                    if (temp.allLines.Count() == 2)
+                    if (temp.allLines.Count == 2)
                         return temp;
                     ++i;
                 }
@@ -107,7 +107,7 @@ namespace dotNet5781_02_3729_1237
             public object Current { get { return cool.allLines[cntr]; } }
             public bool MoveNext()
             {
-                return ++cntr < cool.allLines.Count();
+                return ++cntr < cool.allLines.Count;
             }
         }
     }

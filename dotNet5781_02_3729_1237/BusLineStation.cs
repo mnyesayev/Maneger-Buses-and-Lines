@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_3729_1237
 {
-    public class BusLineStation : BusStation
+    public class BusLineStation 
     {
         private double distancePrevStation;
         private TimeSpan minutesTimePrevStation;
+        BusStation busStation;
         public double DistancePrevStation { get => distancePrevStation; set => distancePrevStation = value; }
         public TimeSpan MinutesTimePrevStation { get => minutesTimePrevStation; set => minutesTimePrevStation = value; }
-        public BusLineStation(int busStationKey = 0, double longitude = 180,
-            double latitude = 90, string address = null, double distance = 0, double minutsTime = 0)
-            : base(busStationKey, longitude, latitude, address)
+        public BusStation BusStation { get => busStation; set => busStation = value; }
+
+        public BusLineStation(BusStation busStation, double distance = 0, double minutsTime = 0)
         {
+            BusStation = busStation;
             DistancePrevStation = distance;
             MinutesTimePrevStation = TimeSpan.FromMinutes(minutsTime);
         }

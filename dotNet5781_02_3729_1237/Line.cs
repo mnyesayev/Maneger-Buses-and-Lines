@@ -50,7 +50,7 @@ namespace dotNet5781_02_3729_1237
         }
         public bool addStation(BusLineStation station, int index)
         {
-            if (checkStation(station.BusStationKey) || index > Stations.Count() || index < 0)
+            if (checkStation(station.BusStation.BusStationKey) || index > Stations.Count || index < 0)
                 return false;
             if (index == 0)
             {
@@ -74,7 +74,7 @@ namespace dotNet5781_02_3729_1237
             int i = 0;
             foreach (var station in Stations)
             {
-                if (station.BusStationKey == stationKey)
+                if (station.BusStation.BusStationKey == stationKey)
                 {
 
                     if (FirstStation == station && stations.Count() > 1)
@@ -99,7 +99,7 @@ namespace dotNet5781_02_3729_1237
         {
             foreach (var station in Stations)
             {
-                if (station.BusStationKey == stationKey)
+                if (station.BusStation.BusStationKey == stationKey)
                     return true;
             }
             return false;
@@ -109,7 +109,7 @@ namespace dotNet5781_02_3729_1237
             int i = 0;
             foreach (var element in Stations)
             {
-                if (element.BusStationKey == station.BusStationKey)
+                if (element.BusStation.BusStationKey == station.BusStation.BusStationKey)
                     return i;
                 ++i;
             }

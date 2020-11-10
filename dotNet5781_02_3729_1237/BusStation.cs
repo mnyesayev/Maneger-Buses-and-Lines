@@ -29,7 +29,7 @@ namespace dotNet5781_02_3729_1237
         /// <summary>
         /// Displays / updates a global longitude
         /// </summary>
-        protected double Longitude
+        public double Longitude
         {
             get => longitude;
             set
@@ -43,7 +43,7 @@ namespace dotNet5781_02_3729_1237
         /// <summary>
         /// Displays / updates a global latitude
         /// </summary>
-        protected double Latitude
+        public double Latitude
         {
             get => latitude;
             set
@@ -84,7 +84,7 @@ namespace dotNet5781_02_3729_1237
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns>Returns a double random number within the range of the State of Israel</returns>
-        protected double israelRandom(double min, double max)
+        private double israelRandom(double min, double max)
         {
             Random r = new Random(DateTime.Now.Millisecond);
             return r.NextDouble() * (max - min) + min;
