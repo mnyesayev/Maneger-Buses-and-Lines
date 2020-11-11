@@ -23,22 +23,7 @@ namespace dotNet5781_02_3729_1237
                 "Print all the lines in the system",
                 "Print all the stations in the system and the lines that pass through them"
             };
-            Choises userChoise;
-
-            BusLineStation[] stations = new BusLineStation[5];
-            Random r = new Random(DateTime.Now.Millisecond);
-            for (int i = 0; i < 5; i++)
-            {
-                stations[i] = new BusLineStation(r.Next(9999));
-            }
-            Line st = new Line();
-            int j;
-            for (int i = 0; i < 5; i++)
-            {
-                j = int.Parse(Console.ReadLine());
-                st.addStation(stations[i], j);
-            }
-            Console.WriteLine(st.ToString());
+            Choises userChoise;           
             do
             {
                 for (int i = 0; i < options.Length; i++)
