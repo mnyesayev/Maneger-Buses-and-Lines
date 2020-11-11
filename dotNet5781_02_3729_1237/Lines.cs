@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_3729_1237
 {
-    class Lines:IEnumerable 
+    class Lines : IEnumerable
     {
         private List<Line> allLines;
 
@@ -24,7 +24,8 @@ namespace dotNet5781_02_3729_1237
             {
                 // we check if the line exsist
                 Lines tmp = this[line.NumLine];
-                if (tmp.allLines.Count == 1 && line.FirstStation == tmp.allLines[0].LastStation && line.LastStation == tmp.allLines[0].FirstStation)
+                if (tmp.allLines.Count == 1 && line.FirstStation == tmp.allLines[0].LastStation
+                    && line.LastStation == tmp.allLines[0].FirstStation)
                 {
                     allLines.Add(line);//we add a line in the opposite direction
                     return true;
@@ -35,7 +36,7 @@ namespace dotNet5781_02_3729_1237
             {
                 allLines.Add(line);
                 return true;
-            }   
+            }
         }
 
         public bool DelLine(int numLine)
@@ -43,7 +44,15 @@ namespace dotNet5781_02_3729_1237
             try
             {
                 Lines temp = this[numLine];
+                if (temp.allLines.Count == 1)
+                    allLines.Remove(temp.allLines[0]);
+                if (temp.allLines.Count == 2)
+                {
+                    allLines.Remove(temp.allLines[0]);
+                    allLines.Remove(temp.allLines[1]);
+                }
 
+                return true;
             }
             catch (KeyNotFoundException ex)
             {
@@ -52,29 +61,17 @@ namespace dotNet5781_02_3729_1237
             }
         }
 
-       /* public bool ChackLine(int busLine)
-        {
-            try
-            {
-                Line temp = allLines[busLine];
-            }
-            catch
-            { }
-        }*/
-
         public Lines this[int numLine]
         {
             get
             {
                 Lines temp = new Lines();
-                int i = 0;
                 foreach (Line item in this)//we use myEnumerator
                 {
                     if (item.NumLine == numLine)
                         temp.allLines.Add(item);
                     if (temp.allLines.Count == 2)
                         return temp;
-                    ++i;
                 }
                 if (temp.allLines.Count == 0)
                     throw new KeyNotFoundException("the line not exsist");
@@ -84,12 +81,25 @@ namespace dotNet5781_02_3729_1237
 
         public List<Line> GetLinesPerStation(int station)
         {
-
+            List<Line> temp = new List<Line>();
+            foreach (Line line in this)
+            {
+                foreach (var item2 in line.Stations)
+                {
+                    if (item2.BusStationKey == station)
+                        temp.Add(line);
+                }
+            }
+            if (temp == null)
+                throw new KeyNotFoundException("there is no line in the station");
+            else return temp;
         }
 
         public List<Line> LowToHigh()
         {
-
+            var temp = this.allLines;
+            temp.Sort();
+            return temp;
         }
 
         public IEnumerator GetEnumerator()
@@ -103,7 +113,7 @@ namespace dotNet5781_02_3729_1237
             int cntr = -1; //  before the first element!!!
             internal MyEnumerator(Lines coll) { this.cool = coll; }
 
-            public void Reset() { cntr = -1; } 
+            public void Reset() { cntr = -1; }
             public object Current { get { return cool.allLines[cntr]; } }
             public bool MoveNext()
             {
