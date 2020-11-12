@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,12 @@ namespace dotNet5781_02_3729_1237
             get => busStationKey;
             set
             {
-                if (value <= 999999)
+                if (value <= 999999 && value > 0)
                     busStationKey = value;
                 else
-                { }//throw
+                {
+                    throw new NotSupportedException("Our system not support to set this value at this range.");
+                }
             }
         }
         /// <summary>
@@ -36,8 +39,6 @@ namespace dotNet5781_02_3729_1237
             {
                 if (value <= 180 || value >= -180)
                     longitude = value;
-                else
-                { }//throw
             }
         }
         /// <summary>
@@ -50,8 +51,6 @@ namespace dotNet5781_02_3729_1237
             {
                 if (value <= 90 || value >= -90)
                     latitude = value;
-                else
-                { }//throw
             }
         }
         /// <summary>
@@ -67,27 +66,16 @@ namespace dotNet5781_02_3729_1237
         /// <param name="address"></param>
         public BusStation(int busStationKey = 0, double longitude = 180, double latitude = 90, string address = null)
         {
-            BusStationKey = busStationKey;
+            this.busStationKey = busStationKey;
             if (longitude <= 35.5 && longitude >= 34.3)
                 Longitude = longitude;
             else
-                Longitude = israelRandom(34.3, 35.5);
+                Longitude = MyRandom.GetDoubleRandom(34.3, 35.5);
             if (latitude <= 33.3 && latitude >= 31)
                 Latitude = latitude;
             else
-                Latitude = israelRandom(31, 33.3);
+                Latitude = MyRandom.GetDoubleRandom(31, 33.3);
             Address = address;
-        }
-        /// <summary>
-        /// Gets two parameters that represent the range of the number lottery
-        /// </summary>
-        /// <param name="min"></param>
-        /// <param name="max"></param>
-        /// <returns>Returns a double random number within the range of the State of Israel</returns>
-        private double israelRandom(double min, double max)
-        {
-            Random r = new Random(DateTime.Now.Millisecond);
-            return r.NextDouble() * (max - min) + min;
         }
         public override string ToString()
         {

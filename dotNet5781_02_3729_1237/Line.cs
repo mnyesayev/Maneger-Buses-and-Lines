@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,10 +28,23 @@ namespace dotNet5781_02_3729_1237
         private Areas Area { get => area; set => area = value; }
         public int NumLine { get => numLine; set => numLine = value; }
 
-        public Line(int busLine = 0, Areas area = Areas.General)
+        private Line(int numLine = 0, Areas area = Areas.General)
         {
             Stations = new List<BusLineStation>();
-            NumLine = busLine;
+            NumLine = numLine;
+            Area = area;
+        }
+
+        public Line(BusStation station1, BusStation station2, int numLine, Areas area = Areas.General)
+        {
+            Stations = new List<BusLineStation>();
+            var lStation1 = new BusLineStation(busStation:station1,first:true);
+            var lStation2 = new BusLineStation(station2 );
+            Stations.Add(lStation1);
+            Stations.Add( lStation2);
+            FirstStation = stations[0];
+            LastStation = stations[1];
+            NumLine = numLine;
             Area = area;
         }
         public string StringStations()
@@ -48,25 +62,33 @@ namespace dotNet5781_02_3729_1237
         {
             return $"Bus line: {NumLine} \nArea: {Area} \nStations:\n{StringStations()}";
         }
-        public bool addStation(BusLineStation station, int index)
+        private void setFirst(BusLineStation lineStation)
         {
-            if (checkStation(station.BusStationKey) || index > Stations.Count || index < 0)
+            lineStation.DistancePrevStation = 0;
+            lineStation.MinutesTimePrevStation = TimeSpan.Zero;
+            FirstStation = lineStation;
+        }
+        public bool AddStation(BusStation station, int index)
+        {
+            if (CheckStation(station.BusStationKey) || index > Stations.Count || index < 0)
                 return false;
             if (index == 0)
             {
-                Stations.Insert(index, station);
-                FirstStation = station;
-                if (Stations.Count() == 1)
-                    LastStation = station;
+                var newfirst = new BusLineStation(station, first: true);
+                Stations[0].DistancePrevStation = MyRandom.GetDoubleRandom(0.5, 10);
+                Stations[0].MinutesTimePrevStation = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(1, 10));
+                Stations.Insert(index, newfirst);
+                FirstStation = newfirst;
                 return true;
             }
+            var newStop = new BusLineStation(station);
             if (index == Stations.Count())
             {
-                Stations.Add(station);
-                LastStation = station;
+                Stations.Add(newStop);
+                LastStation = newStop;
                 return true;
             }
-            Stations.Insert(index, station);
+            Stations.Insert(index, newStop);
             return true;
         }
         public bool DelStation(int stationKey)
@@ -76,10 +98,9 @@ namespace dotNet5781_02_3729_1237
             {
                 if (station.BusStationKey == stationKey)
                 {
-
-                    if (FirstStation == station && stations.Count() > 1)
-                        FirstStation = stations[i + 1];
-                    if (LastStation == station && stations.Count() > 1)
+                    if (FirstStation.BusStationKey == station.BusStationKey && stations.Count() > 1)
+                        setFirst(Stations[i + 1]);
+                    if (LastStation.BusStationKey == station.BusStationKey && stations.Count() > 1)
                         LastStation = stations[i - 1];
                     if (stations.Count() == 1)
                         FirstStation = LastStation = null;
@@ -95,7 +116,7 @@ namespace dotNet5781_02_3729_1237
         /// </summary>
         /// <param name="stationKey"></param>
         /// <returns>if station exist return true else false</returns>
-        public bool checkStation(int stationKey)
+        public bool CheckStation(int stationKey)
         {
             foreach (var station in Stations)
             {
@@ -104,23 +125,23 @@ namespace dotNet5781_02_3729_1237
             }
             return false;
         }
-        private int getIndex(BusLineStation station)
+        private int getIndex(int stationKey)
         {
             int i = 0;
             foreach (var element in Stations)
             {
-                if (element.BusStationKey == station.BusStationKey)
+                if (element.BusStationKey == stationKey)
                     return i;
                 ++i;
             }
             return -1;
         }
-        public double GetDistance(BusLineStation station1, BusLineStation station2)
+        public double GetDistance(BusStation station1, BusStation station2)
         {
-            int index1 = getIndex(station1);
-            int index2 = getIndex(station2);
+            int index1 = getIndex(station1.BusStationKey);
+            int index2 = getIndex(station2.BusStationKey);
             if (index1 == -1 || index2 == -1)
-                throw new KeyNotFoundException("One or more stations do not exist on this line!");
+                throw new KeyNotFoundException($"One or more of the stations does not exist in this direction of the line {this.NumLine}");
             if (index1 < index2)
             {
                 double distance = 0;
@@ -137,13 +158,13 @@ namespace dotNet5781_02_3729_1237
             }
 
         }
-        public TimeSpan GetMinutesTime(BusLineStation station1, BusLineStation station2)
+        public TimeSpan GetMinutesTime(BusStation station1, BusStation station2)
         {
-            int index1 = getIndex(station1);
-            int index2 = getIndex(station2);
+            int index1 = getIndex(station1.BusStationKey);
+            int index2 = getIndex(station2.BusStationKey);
             if (index1 == -1 || index2 == -1)
             {
-                throw new KeyNotFoundException("One or more stations do not exist on this line!");
+                throw new KeyNotFoundException($"One or more of the stations does not exist in this direction of the line {this.NumLine}");
             }
             if (index1 < index2)
             {
@@ -160,13 +181,13 @@ namespace dotNet5781_02_3729_1237
                     "\nthat are not in chronological order of the line in that direction");
             }
         }
-        public Line SubLine(BusLineStation station1, BusLineStation station2)
+        public Line SubLine(BusStation station1, BusStation station2)
         {
-            int index1 = getIndex(station1);
-            int index2 = getIndex(station2);
+            int index1 = getIndex(station1.BusStationKey);
+            int index2 = getIndex(station2.BusStationKey);
             if (index1 == -1 || index2 == -1)
             {
-                throw new KeyNotFoundException("One or more stations do not exist on this line!");
+                throw new KeyNotFoundException($"One or more of the stations does not exist in this direction of the line {this.NumLine}");
             }
             if (index1 < index2)
             {
@@ -175,8 +196,8 @@ namespace dotNet5781_02_3729_1237
                 {
                     temp.Stations.Insert(i, stations[i]);
                 }
-                temp.FirstStation = station1;
-                temp.LastStation = station2;
+                temp.FirstStation = stations[index1];
+                temp.LastStation = stations[index2];
                 return temp;
             }
             else
@@ -190,7 +211,7 @@ namespace dotNet5781_02_3729_1237
         {
             Line line = (Line)obj;
             TimeSpan time1 = this.GetMinutesTime(FirstStation, LastStation);
-            TimeSpan time2 = line.GetMinutesTime(FirstStation, LastStation);
+            TimeSpan time2 = line.GetMinutesTime(line.FirstStation, line.LastStation);
             if (time1 > time2)
                 return 1;
             if (time1 == time2)

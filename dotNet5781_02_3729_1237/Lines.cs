@@ -13,9 +13,11 @@ namespace dotNet5781_02_3729_1237
     {
         private List<Line> allLines;
 
+        public List<Line> AllLines { get => allLines; set => allLines = value; }
+
         public Lines()
         {
-            allLines = new List<Line>();
+            AllLines = new List<Line>();
         }
 
         public bool AddLine(Line line)
@@ -24,32 +26,47 @@ namespace dotNet5781_02_3729_1237
             {
                 // we check if the line exsist
                 Lines tmp = this[line.NumLine];
-                if (tmp.allLines.Count == 1 && line.FirstStation == tmp.allLines[0].LastStation
-                    && line.LastStation == tmp.allLines[0].FirstStation)
+                if (tmp.AllLines.Count == 1 && line.FirstStation == tmp.AllLines[0].LastStation
+                    && line.LastStation == tmp.AllLines[0].FirstStation)
                 {
-                    allLines.Add(line);//we add a line in the opposite direction
+                    AllLines.Add(line);//we add a line in the opposite direction
                     return true;
                 }
                 return false;//There is already such a line with in two directions
             }
             catch (KeyNotFoundException) // the line not exsist
             {
-                allLines.Add(line);
+                AllLines.Add(line);
                 return true;
             }
         }
-
+        public bool AddStaion(BusStation busStation, int index, int direction)
+        {
+            if (direction == 1)
+            {
+                if (!this.AllLines[direction - 1].AddStation(busStation, index))
+                    return false;
+                return true;
+            }
+            if (direction == 2)
+            {
+                if (!this.AllLines[direction].AddStation(busStation, index))
+                    return false;
+                return true;
+            }
+            return false;
+        }
         public bool DelLine(int numLine)
         {
             try
             {
                 Lines temp = this[numLine];
-                if (temp.allLines.Count == 1)
-                    allLines.Remove(temp.allLines[0]);
-                if (temp.allLines.Count == 2)
+                if (temp.AllLines.Count == 1)
+                    AllLines.Remove(temp.AllLines[0]);
+                if (temp.AllLines.Count == 2)
                 {
-                    allLines.Remove(temp.allLines[0]);
-                    allLines.Remove(temp.allLines[1]);
+                    AllLines.Remove(temp.AllLines[0]);
+                    AllLines.Remove(temp.AllLines[1]);
                 }
 
                 return true;
@@ -60,7 +77,12 @@ namespace dotNet5781_02_3729_1237
                 return false;
             }
         }
-
+        /// <summary>
+        /// indexr only get. 
+        /// Exeception: if number line not found throw "KeyNotFoundException"
+        /// </summary>
+        /// <param name="numLine"></param>
+        /// <returns>lines with this number line</returns>
         public Lines this[int numLine]
         {
             get
@@ -69,16 +91,21 @@ namespace dotNet5781_02_3729_1237
                 foreach (Line item in this)//we use myEnumerator
                 {
                     if (item.NumLine == numLine)
-                        temp.allLines.Add(item);
-                    if (temp.allLines.Count == 2)
+                        temp.AllLines.Add(item);
+                    if (temp.AllLines.Count == 2)
                         return temp;
                 }
-                if (temp.allLines.Count == 0)
+                if (temp.AllLines.Count == 0)
                     throw new KeyNotFoundException("the line not exsist");
                 return temp;
             }
         }
-
+        /// <summary>
+        /// Gets a station number and finds the lines that pass through it
+        ///If no line is found an exception of "KeyNotFoundException"
+        /// </summary>
+        /// <param name="station"></param>
+        /// <returns>List of lines passing through this station</returns>
         public List<Line> GetLinesPerStation(int station)
         {
             List<Line> temp = new List<Line>();
@@ -90,14 +117,14 @@ namespace dotNet5781_02_3729_1237
                         temp.Add(line);
                 }
             }
-            if (temp == null)
+            if (temp.Count == 0)
                 throw new KeyNotFoundException("there is no line in the station");
             else return temp;
         }
 
         public List<Line> LowToHigh()
         {
-            var temp = this.allLines;
+            var temp = this.AllLines;
             temp.Sort();
             return temp;
         }
@@ -114,10 +141,10 @@ namespace dotNet5781_02_3729_1237
             internal MyEnumerator(Lines coll) { this.cool = coll; }
 
             public void Reset() { cntr = -1; }
-            public object Current { get { return cool.allLines[cntr]; } }
+            public object Current { get { return cool.AllLines[cntr]; } }
             public bool MoveNext()
             {
-                return ++cntr < cool.allLines.Count;
+                return ++cntr < cool.AllLines.Count;
             }
         }
     }
