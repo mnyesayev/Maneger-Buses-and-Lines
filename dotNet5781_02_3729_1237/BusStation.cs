@@ -15,13 +15,14 @@ namespace dotNet5781_02_3729_1237
         private string address;
         /// <summary>
         /// Represents / updates the station number.
+        /// Exception: "NotSupportedException" when thh value in set not in the supported range
         /// </summary>
         public int BusStationKey
         {
             get => busStationKey;
             set
             {
-                if (value <= 999999 && value > 0)
+                if (value <= 999999 && value >= 0)
                     busStationKey = value;
                 else
                 {
@@ -61,12 +62,29 @@ namespace dotNet5781_02_3729_1237
         /// Builder with / without parameters who builds a bus station.
         /// </summary>
         /// <param name="busStationKey"></param>
-        /// <param name="longitude"></param>
-        /// <param name="latitude"></param>
-        /// <param name="address"></param>
+        /// <param name="longitude">
+        /// If the parameter in the range of Israel is drawn a random number</param>
+        /// <param name="latitude">
+        /// If the parameter in the range of Israel is drawn a random number</param>
+        /// <param name="address">City, street and number</param>
         public BusStation(int busStationKey = 0, double longitude = 180, double latitude = 90, string address = null)
         {
-            this.busStationKey = busStationKey;
+            try
+            {
+                BusStationKey = busStationKey;
+            }
+            catch (NotSupportedException ex)
+            {
+                BusStationKey = 0;
+                Console.WriteLine(ex.Message+ "\nwarning! The station ID is 0, so we recommend that you change it " +
+                    "\nto change press 1");
+                In.Cin(out int ch);
+                if(ch==1)
+                {
+                    In.Cin(out busStationKey);
+                    this.busStationKey = busStationKey;
+                }    
+            }
             if (longitude <= 35.5 && longitude >= 34.3)
                 Longitude = longitude;
             else
@@ -77,6 +95,7 @@ namespace dotNet5781_02_3729_1237
                 Latitude = MyRandom.GetDoubleRandom(31, 33.3);
             Address = address;
         }
+        
         public override string ToString()
         {
             return $"Bus Station Code: {busStationKey} {Latitude}°N {Longitude}°E\n";

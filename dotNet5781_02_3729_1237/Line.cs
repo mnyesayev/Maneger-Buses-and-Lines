@@ -192,9 +192,13 @@ namespace dotNet5781_02_3729_1237
             if (index1 < index2)
             {
                 Line temp = new Line();
-                for (int i = index1; i < index2; i++)
+                temp.area = this.area;
+                temp.numLine = this.numLine;
+                int j = 0;
+                for (int i = index1; i <= index2; i++)
                 {
-                    temp.Stations.Insert(i, stations[i]);
+                    temp.Stations.Insert(j, stations[i]);
+                    ++j;
                 }
                 temp.FirstStation = stations[index1];
                 temp.LastStation = stations[index2];

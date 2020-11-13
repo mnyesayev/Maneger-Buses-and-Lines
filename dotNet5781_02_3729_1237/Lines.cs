@@ -26,8 +26,7 @@ namespace dotNet5781_02_3729_1237
             {
                 // we check if the line exsist
                 Lines tmp = this[line.NumLine];
-                if (tmp.AllLines.Count == 1 && line.FirstStation == tmp.AllLines[0].LastStation
-                    && line.LastStation == tmp.AllLines[0].FirstStation)
+                if (tmp.AllLines.Count == 1 ) 
                 {
                     AllLines.Add(line);//we add a line in the opposite direction
                     return true;
@@ -56,19 +55,17 @@ namespace dotNet5781_02_3729_1237
             }
             return false;
         }
-        public bool DelLine(int numLine)
+        public bool DelLine(int numLine,int dirction=0)
         {
             try
             {
                 Lines temp = this[numLine];
                 if (temp.AllLines.Count == 1)
                     AllLines.Remove(temp.AllLines[0]);
-                if (temp.AllLines.Count == 2)
+                if (temp.AllLines.Count >= 2)
                 {
-                    AllLines.Remove(temp.AllLines[0]);
-                    AllLines.Remove(temp.AllLines[1]);
+                    AllLines.Remove(temp.AllLines[dirction-1]);
                 }
-
                 return true;
             }
             catch (KeyNotFoundException ex)
@@ -76,6 +73,22 @@ namespace dotNet5781_02_3729_1237
                 Console.WriteLine(ex.Message);
                 return false;
             }
+        }
+        public bool DelStaion(int stationKey,int direction)
+        {
+            if (direction == 1)
+            {
+                if (!this.AllLines[direction - 1].DelStation(stationKey))
+                    return false;
+                return true;
+            }
+            if (direction == 2)
+            {
+                if (!this.AllLines[direction].DelStation(stationKey))
+                    return false;
+                return true;
+            }
+            return false;
         }
         /// <summary>
         /// indexr only get. 
