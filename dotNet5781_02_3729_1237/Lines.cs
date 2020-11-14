@@ -9,29 +9,41 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_3729_1237
 {
+    /// <summary>
+    /// A class representing a collection of lines where each line
+    /// can contain a list of lines of the line (currently up to two lines per line) 
+    /// includes an implementation for the iterator, its own index
+    /// </summary>
     class Lines : IEnumerable
     {
         private List<Line> allLines;
 
         public List<Line> AllLines { get => allLines; set => allLines = value; }
-
+        /// <summary>
+        /// defaul Ctor.
+        /// </summary>
         public Lines()
         {
             AllLines = new List<Line>();
         }
-
+        /// <summary>
+        /// Gets a line and tries to add it to the collection provided there are no longer two tracks
+        /// for the same line
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns>a bool var.</returns>
         public bool AddLine(Line line)
         {
             try
             {
                 // we check if the line exsist
                 Lines tmp = this[line.NumLine];
-                if (tmp.AllLines.Count == 1 ) 
+                if (tmp.AllLines.Count == 1 && tmp.AllLines[0].Area == line.Area)
                 {
                     AllLines.Add(line);//we add a line in the opposite direction
                     return true;
                 }
-                return false;//There is already such a line with in two directions
+                return false;//There is already such a line with in two directions 
             }
             catch (KeyNotFoundException) // the line not exsist
             {
@@ -39,23 +51,27 @@ namespace dotNet5781_02_3729_1237
                 return true;
             }
         }
+        /// <summary>
+        /// Adds a stop to a particular route on the line
+        /// </summary>
+        /// <param name="busStation"></param>
+        /// <param name="index"></param>
+        /// <param name="direction"></param>
+        /// <returns>a bool var.</returns>
         public bool AddStaion(BusStation busStation, int index, int direction)
         {
-            if (direction == 1)
-            {
-                if (!this.AllLines[direction - 1].AddStation(busStation, index))
-                    return false;
+            if (this.AllLines[direction - 1].AddStation(busStation, index))
                 return true;
-            }
-            if (direction == 2)
-            {
-                if (!this.AllLines[direction].AddStation(busStation, index))
-                    return false;
-                return true;
-            }
             return false;
         }
-        public bool DelLine(int numLine,int dirction=0)
+        /// <summary>
+        /// Deletes a line / track from a line from the collection.
+        /// Exception:"KeyNotFoundException"
+        /// </summary>
+        /// <param name="numLine"></param>
+        /// <param name="dirction"></param>
+        /// <returns>a bool var.</returns>
+        public bool DelLine(int numLine, int dirction = 0)
         {
             try
             {
@@ -64,7 +80,7 @@ namespace dotNet5781_02_3729_1237
                     AllLines.Remove(temp.AllLines[0]);
                 if (temp.AllLines.Count >= 2)
                 {
-                    AllLines.Remove(temp.AllLines[dirction-1]);
+                    AllLines.Remove(temp.AllLines[dirction - 1]);
                 }
                 return true;
             }
@@ -74,20 +90,16 @@ namespace dotNet5781_02_3729_1237
                 return false;
             }
         }
-        public bool DelStaion(int stationKey,int direction)
+        /// <summary>
+        /// Delets a stop from a particular route on the line
+        /// </summary>
+        /// <param name="stationKey"></param>
+        /// <param name="direction"></param>
+        /// <returns>a bool var.</returns>
+        public bool DelStation(int stationKey, int direction)
         {
-            if (direction == 1)
-            {
-                if (!this.AllLines[direction - 1].DelStation(stationKey))
-                    return false;
+            if (this.AllLines[direction - 1].DelStation(stationKey))
                 return true;
-            }
-            if (direction == 2)
-            {
-                if (!this.AllLines[direction].DelStation(stationKey))
-                    return false;
-                return true;
-            }
             return false;
         }
         /// <summary>
@@ -134,7 +146,10 @@ namespace dotNet5781_02_3729_1237
                 throw new KeyNotFoundException("there is no line in the station");
             else return temp;
         }
-
+        /// <summary>
+        /// Returns a list of lines sorted by fastest arrival time
+        /// </summary>
+        /// <returns></returns>
         public List<Line> LowToHigh()
         {
             var temp = this.AllLines;
@@ -146,14 +161,16 @@ namespace dotNet5781_02_3729_1237
         {
             return new MyEnumerator(this);
         }
-
+        /// <summary>
+        /// Self-implemetation of an IEnumerator interface
+        /// </summary>
         public class MyEnumerator : IEnumerator
         {
             Lines cool;
             int cntr = -1; //  before the first element!!!
             internal MyEnumerator(Lines coll) { this.cool = coll; }
 
-            public void Reset() { cntr = -1; }
+            public void Reset() { }
             public object Current { get { return cool.AllLines[cntr]; } }
             public bool MoveNext()
             {

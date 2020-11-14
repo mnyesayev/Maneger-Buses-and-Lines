@@ -7,16 +7,32 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_3729_1237
 {
+    /// <summary>
+    /// Static class for generating random numbers
+    /// </summary>
     static class MyRandom
     {
         public static Random r = new Random(DateTime.Now.Millisecond);
+        /// <summary>
+        /// Returns an real random number between two ranges(min,max)
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns>an real random number between two ranges(min,max)</returns>
         public static double GetDoubleRandom(double min, double max)
         {
             return (r.NextDouble() * (max - min)) + min;
         }
     }
+    /// <summary>
+    /// Static class for Receiving Numbers from Console
+    /// </summary>
     static class In
     {
+        /// <summary>
+        /// A function for read an integer number, including checking the format on the spot
+        /// </summary>
+        /// <param name="t"></param>
         public static void Cin(out int t)
         {
             while (!int.TryParse(Console.ReadLine(), out t))
@@ -34,13 +50,13 @@ namespace dotNet5781_02_3729_1237
             List<BusStation> listStations = new List<BusStation>();
             void init(int beg, int size, int indexLine)
             {
-                if (indexLine == allTheLines.AllLines.Count)
+                if (indexLine == allTheLines.AllLines.Count)//stop condition
                     return;
                 for (int i = beg; i < size; i++)
                 {
                     allTheLines.AllLines[indexLine].AddStation(listStations[i], allTheLines.AllLines[indexLine].Stations.Count - 1);
                 }
-                init(beg, --size, ++indexLine);
+                init(beg, --size, ++indexLine);//call recursive
             }
 
             // create rendom busStation
@@ -50,9 +66,6 @@ namespace dotNet5781_02_3729_1237
             for (int i = 52, x = 0, y = 10; i < 62; ++i, ++x, ++y)
                 allTheLines.AddLine(new Line(listStations[x], listStations[y], i));
             init(20, 40, 0);
-
-
-
             string[] options = new string[]
             {
                 "Exit the program",
@@ -68,6 +81,7 @@ namespace dotNet5781_02_3729_1237
             Choises userChoise;
             do
             {
+
                 for (int i = 0; i < options.Length; i++)
                     Console.WriteLine("Press {0} to " + options[i], i);
 
@@ -86,10 +100,25 @@ namespace dotNet5781_02_3729_1237
                     case Choises.addLine:
                         Console.WriteLine("Plese enter the number of line:");
                         In.Cin(out temp);
+                        while (temp <= 0)
+                        {
+                            Console.WriteLine("Invalid nember Line,Try again!");
+                            In.Cin(out temp);
+                        }
                         Console.WriteLine("Enter a departure station number");
                         In.Cin(out stationKey);
+                        while (stationKey <= 0 || stationKey > 999999)
+                        {
+                            Console.WriteLine("Invalid station key,Try again!");
+                            In.Cin(out stationKey);
+                        }
                         Console.WriteLine("Enter a destination station number");
                         In.Cin(out stationKey2);
+                        while (stationKey2 <= 0 || stationKey2 > 999999)
+                        {
+                            Console.WriteLine("Invalid station key,Try again!");
+                            In.Cin(out stationKey2);
+                        }
                         busStation1 = listStations.Find(delegate (BusStation station)
                         { return station.BusStationKey == stationKey; });
                         busStation2 = listStations.Find(delegate (BusStation station)
@@ -134,14 +163,24 @@ namespace dotNet5781_02_3729_1237
                     case Choises.addStation:
                         Console.WriteLine("Plese enter the number of line:");
                         In.Cin(out temp);
+                        while (temp <= 0)
+                        {
+                            Console.WriteLine("Invalid nember Line,Try again!");
+                            In.Cin(out temp);
+                        }
                         try
                         {
                             Lines line = allTheLines[temp];
                             Console.WriteLine("please enter the key of stop:");
                             In.Cin(out stationKey);
+                            while (stationKey <= 0 || stationKey > 999999)
+                            {
+                                Console.WriteLine("Invalid station key,Try again!");
+                                In.Cin(out stationKey);
+                            }
                             BusStation busStation = listStations.Find(delegate (BusStation station)
                             { return station.BusStationKey == stationKey; });
-                            Console.WriteLine("Please enter a station index that will be in the new route");
+                            Console.WriteLine("Please enter a station index(1 to n) that will be in the new route");
                             In.Cin(out index);
                             if (line.AllLines.Count == 2)
                             {
@@ -160,13 +199,13 @@ namespace dotNet5781_02_3729_1237
                                 if (busStation == null)
                                 {
                                     listStations.Add(new BusStation(stationKey));
-                                    if (line.AddStaion(listStations[listStations.Count - 1], index, temp))
+                                    if (line.AddStaion(listStations[listStations.Count - 1], index - 1, temp))
                                     {
                                         Console.WriteLine("success");
                                         continue;
                                     }
                                 }
-                                else if (line.AddStaion(busStation, index, temp))
+                                else if (line.AddStaion(busStation, index - 1, temp))
                                 {
                                     Console.WriteLine("success");
                                     continue;
@@ -174,7 +213,7 @@ namespace dotNet5781_02_3729_1237
                             }
                             else if (line.AllLines.Count == 1)//If the line has meanwhile only one direction
                             {
-                                if (busStation != null && line.AllLines[0].AddStation(busStation, index))
+                                if (busStation != null && line.AllLines[0].AddStation(busStation, index - 1))
                                 {
                                     Console.WriteLine("success");
                                     continue;
@@ -182,7 +221,7 @@ namespace dotNet5781_02_3729_1237
                                 else
                                 {
                                     listStations.Add(new BusStation(stationKey));
-                                    if (line.AllLines[0].AddStation(listStations[listStations.Count - 1], index))
+                                    if (line.AllLines[0].AddStation(listStations[listStations.Count - 1], index - 1))
                                     {
                                         Console.WriteLine("success");
                                         continue;
@@ -199,62 +238,114 @@ namespace dotNet5781_02_3729_1237
                     case Choises.delLine:
                         Console.WriteLine("Plese enter the number of line:");
                         In.Cin(out temp);
-                        Lines line1 = allTheLines[temp];
-                        if (line1.AllLines.Count > 1)
+                        while (temp <= 0)
                         {
-                            Console.WriteLine("Which route of line do you want to delete?");
-                            int i = 1;
-                            foreach (Lines item in line1)
-                            {
-                                Console.WriteLine("Press {0} to ", i);
-                                Console.WriteLine("first stop: " + item.AllLines[i - 1].FirstStation.ToString());
-                                Console.WriteLine("last stop: " + item.AllLines[i - 1].LastStation.ToString());
-                                ++i;
-                            }
-                            In.Cin(out index);
-                            if (line1.DelLine(temp, index))
-                            {
-                                Console.WriteLine("success");
-                                continue;
-                            }
+                            Console.WriteLine("Invalid nember Line,Try again!");
+                            In.Cin(out temp);
                         }
-                        if (line1.AllLines.Count == 1)
-                            if (allTheLines.DelLine(temp))
+                        try
+                        {
+                            Lines line1 = allTheLines[temp];
+                            if (line1.AllLines.Count > 1)
                             {
-                                Console.WriteLine("success");
-                                continue;
+                                Console.WriteLine("Which route of line do you want to delete?");
+                                int i = 1;
+                                foreach (Line item in line1)
+                                {
+                                    Console.WriteLine("Press {0} to ", i);
+                                    Console.WriteLine("first stop: " + item.FirstStation.ToString());
+                                    Console.WriteLine("last stop: " + item.LastStation.ToString());
+                                    ++i;
+                                }
+                                In.Cin(out index);
+                                if (index != 1 && index != 2)
+                                {
+                                    Console.WriteLine("Wrong input!");
+                                    continue;
+                                }
+                                if (allTheLines.DelLine(temp, index))
+                                {
+                                    Console.WriteLine("success");
+                                    continue;
+                                }
                             }
+                            if (line1.AllLines.Count == 1)
+                                if (allTheLines.DelLine(temp))
+                                {
+                                    Console.WriteLine("success");
+                                    continue;
+                                }
+                        }
+                        catch (Exception)
+                        {
+
+                            throw;
+                        }
+
                         Console.WriteLine("not success");
                         break;
                     case Choises.delStation:
                         Console.WriteLine("Plese enter the number of line:");
                         In.Cin(out temp);
+                        while (temp <= 0)
+                        {
+                            Console.WriteLine("Invalid nember Line,Try again!");
+                            In.Cin(out temp);
+                        }
                         try
                         {
                             Lines line = allTheLines[temp];
                             Console.WriteLine("please enter the key of stop:");
                             In.Cin(out stationKey);
-                            if(line.AllLines.Count==1&&line.AllLines[0].DelStation(stationKey))
+                            while (stationKey <= 0 || stationKey > 999999)
                             {
-                                Console.WriteLine("success");
-                                continue;
+                                Console.WriteLine("Invalid station key,Try again!");
+                                In.Cin(out stationKey);
                             }
-                            if(line.AllLines.Count>1)
+                            if (line.AllLines.Count == 1)
+                            {
+                                try
+                                {
+                                    if (line.AllLines[0].DelStation(stationKey))
+                                    {
+                                        Console.WriteLine("success");
+                                        continue;
+                                    }
+                                }
+                                catch (NotSupportedException ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+
+                            }
+                            if (line.AllLines.Count > 1)
                             {
                                 Console.WriteLine("Which route of line do you want to delete?");
                                 int i = 1;
-                                foreach (Lines item in line)
+                                foreach (Line item in line)
                                 {
                                     Console.WriteLine("Press {0} to ", i);
-                                    Console.WriteLine("first stop: " + item.AllLines[i - 1].FirstStation.ToString());
-                                    Console.WriteLine("last stop: " + item.AllLines[i - 1].LastStation.ToString());
+                                    Console.WriteLine("first stop: " + item.FirstStation.ToString());
+                                    Console.WriteLine("last stop: " + item.LastStation.ToString());
                                     ++i;
                                 }
                                 In.Cin(out index);
-                                if (line.DelStation(stationKey, index))
+                                if (index != 1 && index != 2)
                                 {
-                                    Console.WriteLine("success");
+                                    Console.WriteLine("Wrong input!");
                                     continue;
+                                }
+                                try
+                                {
+                                    if (line.DelStation(stationKey, index))
+                                    {
+                                        Console.WriteLine("success");
+                                        continue;
+                                    }
+                                }
+                                catch (NotSupportedException ex)
+                                {
+                                    Console.WriteLine(ex.Message);
                                 }
                             }
                             Console.WriteLine("not success");
@@ -263,10 +354,15 @@ namespace dotNet5781_02_3729_1237
                         {
                             Console.WriteLine(ex.Message);
                         }
-                            break;
+                        break;
                     case Choises.search:
                         Console.WriteLine("Please enter the station key:");
                         In.Cin(out stationKey);
+                        while (stationKey <= 0 || stationKey > 999999)
+                        {
+                            Console.WriteLine("Invalid station key,Try again!");
+                            In.Cin(out stationKey);
+                        }
                         try
                         {
                             var tmp = allTheLines.GetLinesPerStation(stationKey);
@@ -285,13 +381,28 @@ namespace dotNet5781_02_3729_1237
                     case Choises.noReplacements:
                         Console.WriteLine("Enter a departure station number");
                         In.Cin(out stationKey);
+                        while (stationKey <= 0 || stationKey > 999999)
+                        {
+                            Console.WriteLine("Invalid station key,Try again!");
+                            In.Cin(out stationKey);
+                        }
                         Console.WriteLine("Enter a destination station number");
                         In.Cin(out stationKey2);
+                        while (stationKey2 <= 0 || stationKey2 > 999999)
+                        {
+                            Console.WriteLine("Invalid station key,Try again!");
+                            In.Cin(out stationKey2);
+                        }
                         var t = new Lines();
                         busStation1 = listStations.Find(delegate (BusStation station)
                        { return station.BusStationKey == stationKey; });
                         busStation2 = listStations.Find(delegate (BusStation station)
                        { return station.BusStationKey == stationKey2; });
+                        if (busStation1 == null || busStation2 == null)
+                        {
+                            Console.WriteLine("One or more stations do not exist in the system!");
+                            continue;
+                        }
                         foreach (Line item in allTheLines)
                         {
                             try
@@ -345,6 +456,8 @@ namespace dotNet5781_02_3729_1237
 
                         break;
                     default:
+                        Console.WriteLine("what do you not understand?");
+                        Console.WriteLine("ENTER NUMBER BETWEEN 0-8!!");
                         break;
                 }
             } while (userChoise != Choises.exit);
