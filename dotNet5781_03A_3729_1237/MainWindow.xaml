@@ -28,17 +28,17 @@
 
             <Label Content="Bus line number:" Grid.Column="0"
                    VerticalAlignment="Center"
-                   FontFamily="ariel" FontSize="24"
+                   FontFamily="Arial " FontSize="24"
                    HorizontalAlignment="Right"/>
             <ComboBox Name="cbBusLines" Grid.Column="1"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Center"
                         Background="#FFB9D9F3"
-            FontFamily="ariel" FontSize="24" SelectionChanged="cbBusLine_SelectionChanged"/>
+            FontFamily="ariel" FontSize="24" SelectionChanged="cbBusLine_SelectionChanged" Margin="0,16.511,0,16.51" Width="71"/>
             <Label Content="Area:" Grid.Column="2" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
-                   FontFamily="ariel" FontSize="24"/>
+                   FontFamily="ariel" FontSize="24" RenderTransformOrigin="1.403,0.595" Margin="104.106,18.511,30.506,10.51"/>
             <TextBox Name="tbArea" Grid.Column="3"
                      HorizontalAlignment="Center"
                      TextWrapping="Wrap" 
