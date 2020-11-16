@@ -23,6 +23,8 @@ namespace dotNet5781_03A_3729_1237
         public MainWindow()
         {
             InitializeComponent();
+            
         }
+        
     }
 }
