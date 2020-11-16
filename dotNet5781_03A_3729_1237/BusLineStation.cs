@@ -50,5 +50,9 @@ namespace dotNet5781_03A_3729_1237
                 MinutesTimePrevStation = TimeSpan.FromMinutes(minutsTime);
             }
         }
+        public override string ToString()
+        {
+            return base.ToString()+"  "+this.MinutesTimePrevStation.ToString(@"hh\:mm\:ss");
+        }
     }
 }
