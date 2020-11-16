@@ -34,7 +34,7 @@
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
                         Background="#FFB9D9F3"
-                    FontFamily="ariel" FontSize="24" SelectionChanged="cbBusLine_SelectionChanged"/>
+            FontFamily="ariel" FontSize="24" SelectionChanged="cbBusLine_SelectionChanged"/>
             <Label Content="Area:" Grid.Column="2" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"

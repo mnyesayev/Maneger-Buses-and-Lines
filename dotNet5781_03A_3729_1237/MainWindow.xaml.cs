@@ -34,7 +34,7 @@ namespace dotNet5781_03A_3729_1237
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Lines currentDisplayBusLine;
+        private Line currentDisplayBusLine;
         Lines busLines = new Lines();
         List<BusStation> listStations = new List<BusStation>();
         public MainWindow()
@@ -45,20 +45,18 @@ namespace dotNet5781_03A_3729_1237
                 listStations.Add(new BusStation(i));
             // create 10 lines
             for (int x = 0, y = 10; x < 10; ++x, ++y)
-                busLines.AddLine(new Line(listStations[x], listStations[y], MyRandom.r.Next(1, 999)));
+                busLines.AddLine(new Line(listStations[x], listStations[y], MyRandom.r.Next(1, 100)));
             cbBusLines.ItemsSource = busLines;
-            cbBusLines.DisplayMemberPath = " BusLineNum ";
+            cbBusLines.DisplayMemberPath = "NumLine";//name of my property in ex 2
             cbBusLines.SelectedIndex = 0;
             ShowBusLine(busLines.AllLines[cbBusLines.SelectedIndex].NumLine);
-
-
         }
         private void ShowBusLine(int index)
         {
-
-            currentDisplayBusLine = busLines[index];
+            var tmp = busLines[index];//for easy syntax
+            currentDisplayBusLine =tmp.AllLines[0];
             UpGrid.DataContext = currentDisplayBusLine;
-            lbBusLineStations.DataContext = currentDisplayBusLine.AllLines[0];
+            lbBusLineStations.DataContext = currentDisplayBusLine.Stations;
         }
         private void cbBusLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
