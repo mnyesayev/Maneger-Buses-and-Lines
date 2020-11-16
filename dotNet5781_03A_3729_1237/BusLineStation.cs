@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotNet5781_02_3729_1237
+namespace dotNet5781_03A_3729_1237
 {
     /// <summary>
     /// This class represents a logical bus line station 

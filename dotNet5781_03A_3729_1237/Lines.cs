@@ -7,7 +7,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotNet5781_02_3729_1237
+namespace dotNet5781_03A_3729_1237
 {
     /// <summary>
     /// A class representing a collection of lines where each line

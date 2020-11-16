@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotNet5781_02_3729_1237
+namespace dotNet5781_03A_3729_1237
 {
     /// <summary>
     /// This class represents a physical bus station with latitude, longitude, station key 

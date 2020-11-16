@@ -30,10 +30,10 @@
                    VerticalAlignment="Center"
                    FontFamily="ariel" FontSize="24"
                    HorizontalAlignment="Center"/>
-            <ComboBox Name="cbBusLine" Grid.Column="1"
+            <ComboBox Name="cbBusLines" Grid.Column="1"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
-                      FontFamily="ariel" FontSize="24"/>
+                      FontFamily="ariel" FontSize="24" SelectionChanged="cbBusLine_SelectionChanged"/>
             <Label Content="Area:" Grid.Column="2" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -46,7 +46,7 @@
                      VerticalAlignment="Stretch"/>
 
         </Grid>
-        <ListBox Name="IbBusLineStations"
+        <ListBox Name="lbBusLineStations"
                  ItemsSource="{Binding}"
             HorizontalAlignment="Stretch"
                  Height="286" Margin="10,10,0,0" 
