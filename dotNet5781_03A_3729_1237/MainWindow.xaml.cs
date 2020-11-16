@@ -58,7 +58,7 @@ namespace dotNet5781_03A_3729_1237
 
             currentDisplayBusLine = busLines[index];
             UpGrid.DataContext = currentDisplayBusLine;
-            lbBusLineStations.DataContext = currentDisplayBusLine.AllLines[0];
+            lbBusLineStations.DataContext = currentDisplayBusLine.AllLines[cbBusLines.SelectedIndex];
         }
         private void cbBusLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

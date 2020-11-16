@@ -33,17 +33,19 @@
             <ComboBox Name="cbBusLines" Grid.Column="1"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
+                      Background="DarkBlue"
                       FontFamily="ariel" FontSize="24" SelectionChanged="cbBusLine_SelectionChanged"/>
             <Label Content="Area:" Grid.Column="2" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
                    FontFamily="ariel" FontSize="24"/>
             <TextBox Name="tbArea" Grid.Column="3"
-                     HorizontalAlignment="Stretch"
+                     HorizontalAlignment="Center"
                      TextWrapping="Wrap" 
                      Text="{Binding Path=Area}"
                      FontFamily="ariel" FontSize="24"
-                     VerticalAlignment="Stretch"/>
+                     VerticalAlignment="Center"
+                     Background="#FFB9D9F3"/>
 
         </Grid>
         <ListBox Name="lbBusLineStations"
@@ -52,6 +54,7 @@
                  Height="286" Margin="10,10,0,0" 
                  Grid.Row="1" 
                  VerticalAlignment="Top" 
+         
                  Width="673"/>
 
 
