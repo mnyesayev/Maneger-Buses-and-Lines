@@ -29,10 +29,10 @@
             <Label Content="Bus line number:" Grid.Column="0"
                    VerticalAlignment="Center"
                    FontFamily="ariel" FontSize="24"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Right"/>
             <ComboBox Name="cbBusLines" Grid.Column="1"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center"
                         Background="#FFB9D9F3"
             FontFamily="ariel" FontSize="24" SelectionChanged="cbBusLine_SelectionChanged"/>
             <Label Content="Area:" Grid.Column="2" 
