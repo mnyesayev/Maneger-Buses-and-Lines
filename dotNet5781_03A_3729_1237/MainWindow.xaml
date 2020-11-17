@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:dotNet5781_03A_3729_1237"
         mc:Ignorable="d"
         Title="Bus program" Height="640" Width="800"
-        Icon="C:\VS2019 - github\dotNet5781_3729_1237\dotNet5781_03A_3729_1237\imege\bus.jpg"
+        Icon="imege\bus.jpg"
         Background="#FFB9D9F3">
     <Grid x:Name="MainGrid">
 
@@ -58,9 +58,9 @@
                  VerticalAlignment="Top" 
          Background="#FFB8E2F0"
                  FontSize="20"
-                 Width="673"/>
+                 Width="673" RenderTransformOrigin="0.5,0.5"/>
 
-  
+
         <TextBlock Text="© כל הזכויות שמורות" 
                    Foreground="DarkBlue" 
                    Grid.Row="1" HorizontalAlignment="Center"
