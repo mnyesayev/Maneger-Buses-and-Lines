@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Bus program" Height="640" Width="800"
         Icon="bus.jpg"
-        Background="#FFB9D9F3">
+        Background="#BBD8FF">
     <Grid x:Name="MainGrid">
 
         <Grid.RowDefinitions>
@@ -47,25 +47,34 @@
                      Text="{Binding Path=Area}"
                      FontFamily="ariel" FontSize="24"
                      VerticalAlignment="Center"
-                     Background="#FFB9D9F3"/>
+                     Background="#BBD8FF"
+                     />
 
         </Grid>
-        <ListBox Name="lbBusLineStations"
-                 ItemsSource="{Binding}"
-            HorizontalAlignment="Stretch"
-                 Height="286" Margin="10,10,0,0" 
-                 Grid.Row="1" 
-                 VerticalAlignment="Top" 
-         Background="#FFB8E2F0"
-                 FontSize="20"
-                 Width="673" RenderTransformOrigin="0.5,0.5"/>
-
-
+        <Border    HorizontalAlignment="Stretch"
+                   Height="286" Margin="10,10,0,0" 
+                   Grid.Row="1" 
+                   VerticalAlignment="Top" 
+                   Width="674" RenderTransformOrigin="0.5,0.5"
+                   Background="#D4E7FF"
+                   BorderBrush="#82B3F4"
+                   BorderThickness="2"
+                   CornerRadius="5">
+            <ListBox   Name="lbBusLineStations"
+                   ItemsSource="{Binding}"         
+                   FontSize="18"
+                   HorizontalAlignment="Center"
+                   Height="286"  
+                   Width="673" 
+                   Grid.Row="1" 
+                   VerticalAlignment="Top"
+                   Background="#D4E7FF"                       
+                   />
+        </Border>
+        
         <TextBlock Text="© כל הזכויות שמורות" 
                    Foreground="DarkBlue" 
                    Grid.Row="1" HorizontalAlignment="Center"
                    VerticalAlignment="Bottom" />
-
-       
     </Grid>
 </Window>

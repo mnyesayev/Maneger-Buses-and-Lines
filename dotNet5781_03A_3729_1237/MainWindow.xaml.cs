@@ -37,15 +37,27 @@ namespace dotNet5781_03A_3729_1237
         private Line currentDisplayBusLine;
         Lines busLines = new Lines();
         List<BusStation> listStations = new List<BusStation>();
+        void init(int beg, int size, int indexLine)
+        {
+            if (indexLine == busLines.AllLines.Count)//stop condition
+                return;
+            for (int i = beg; i < size; i++)
+            {
+                busLines.AllLines[indexLine].AddStation(listStations[i], busLines.AllLines[indexLine].Stations.Count - 1);
+            }
+            init(beg, --size, ++indexLine);//call recursive
+        }
         public MainWindow()
         {
+
             InitializeComponent();
             // create rendom busStation
             for (int i = 1; i < 41; i++)
-                listStations.Add(new BusStation(i));
+                listStations.Add(new BusStation(MyRandom.r.Next(1, 999999)));
             // create 10 lines
             for (int x = 0, y = 10; x < 10; ++x, ++y)
-                busLines.AddLine(new Line(listStations[x], listStations[y], MyRandom.r.Next(1, 100)));
+                busLines.AddLine(new Line(listStations[x], listStations[y], MyRandom.r.Next(1, 999)));
+            init(20, 40, 0);
             cbBusLines.ItemsSource = busLines;
             cbBusLines.DisplayMemberPath = "NumLine";//name of my property in ex 2
             cbBusLines.SelectedIndex = 0;
@@ -54,7 +66,7 @@ namespace dotNet5781_03A_3729_1237
         private void ShowBusLine(int index)
         {
             var tmp = busLines[index];//for easy syntax
-            currentDisplayBusLine =tmp.AllLines[0];
+            currentDisplayBusLine = tmp.AllLines[0];
             UpGrid.DataContext = currentDisplayBusLine;
             lbBusLineStations.DataContext = currentDisplayBusLine.Stations;
         }
