@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_03B_3729_1237
 {
+    enum States
+    {
+        ready,drive, refueling,care
+    }
     /// <summary>
     /// The class represents a single bus
     /// with functionality to monitor its integrity and suitability for travel
@@ -20,7 +24,7 @@ namespace dotNet5781_03B_3729_1237
         uint lastCareMileage;
         DateTime dateRoadAscent;
         DateTime lastCare;
-
+        States state;
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law
@@ -78,6 +82,9 @@ namespace dotNet5781_03B_3729_1237
                     lastCareMileage = value;
             }
         }
+
+        internal States State { get => state; set => state = value; }
+
         /// <summary>
         /// A Ctor who creates a bus and also serves as a default Ctor
         /// </summary>
@@ -178,7 +185,7 @@ namespace dotNet5781_03B_3729_1237
         }
         public override string ToString()
         {
-            return $"{PrintId()}     {DateRoadAscent.ToString(@"dd/MM/yyyy")}     {Mileage}";
+            return $"{PrintId()}        {DateRoadAscent.ToString(@"dd/MM/yyyy")}                    {Mileage}";
         }
     }
 }

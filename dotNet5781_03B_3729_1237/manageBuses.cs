@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,16 @@ namespace dotNet5781_03B_3729_1237
     /// </summary>
     public class ManageBuses
     {
-        private List<Bus> buses;
+        private ObservableCollection<Bus> buses;
 
-        public List<Bus> Buses { get => buses; set => buses = value; }
+        public ObservableCollection<Bus> Buses { get => buses; set => buses = value; }
 
         /// <summary>
         /// A default Ctor that creates an empty bus list
         /// </summary>
         public ManageBuses()
         {
-            Buses = new List<Bus>();
+            Buses = new ObservableCollection<Bus>();
         }
         /// <summary>
         /// The function adds a new bus and receives the date of its ascent 

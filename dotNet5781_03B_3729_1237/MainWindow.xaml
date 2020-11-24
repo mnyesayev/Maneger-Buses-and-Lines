@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_3729_1237"
         mc:Ignorable="d"
-        Title="Manager buses" Icon="bus.ico"  Height="450" Width="800">
-    <Grid>
+        Title="Manager buses" Icon="bus.ico"  Height="auto" Width="auto">
 
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="128"/>
+            <ColumnDefinition Width="256"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
@@ -19,18 +19,24 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-
-        <ListBox
-            ItemsSource="{Binding}"
-            BorderBrush="Aqua" 
-            x:Name="lbBuses" Grid.Row="2" Grid.RowSpan="2"
+        <TextBlock x:Name="tb0" Grid.Row="2" Grid.Column="1" Text="Bus ID"
+                   FontWeight="Bold" FontSize="24" FontStyle="Italic"/>
+        <TextBlock x:Name="tb1" Grid.Row="2" Grid.Column="2" Text="Date Road Accent" 
+                   FontWeight="Bold" FontSize="22"  FontStyle="Italic"/>
+        <TextBlock x:Name="tb2" Grid.Row="2" Grid.Column="3" Text="Milleage" 
+                   FontWeight="Bold" FontSize="22"  FontStyle="Italic"/>
+        <ListBox 
+            ItemsSource="{Binding }"
+            BorderBrush="Aqua" BorderThickness="3"    
+            x:Name="lbBuses" Grid.Row="3" Grid.RowSpan="2"
             Grid.Column="1" Grid.ColumnSpan="4" 
-        >
+            FontFamily="Arial" FontSize="22" >
         </ListBox>
     </Grid>
 </Window>
