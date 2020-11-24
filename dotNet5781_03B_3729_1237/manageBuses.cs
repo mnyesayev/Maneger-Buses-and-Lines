@@ -30,9 +30,9 @@ namespace dotNet5781_03B_3729_1237
         /// </summary>
         /// <param name="dateRoadAscent"></param>
         /// <param name="id"></param>
-        public void AddBus(DateTime dateRoadAscent, uint idBus)
+        public void AddBus(DateTime dateRoadAscent, int idBus)
         {
-            uint id=this.CheckId(dateRoadAscent, idBus);
+            uint id=this.CheckId(dateRoadAscent, (uint)idBus);
             Buses.Add(new Bus(dateRoadAscent, id));
         }
         /// <summary>

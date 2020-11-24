@@ -34,7 +34,7 @@
             <ComboBox Name="cbBusLines" Grid.Column="1"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Center"
-                        Background="#FFB9D9F3"
+                      Background="#FFB9D9F3"
                       
             FontFamily="ariel" FontSize="20" SelectionChanged="cbBusLine_SelectionChanged"/>
             <Label Content="Area:" Grid.Column="2" 

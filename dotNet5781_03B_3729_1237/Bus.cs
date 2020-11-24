@@ -52,11 +52,32 @@ namespace dotNet5781_03B_3729_1237
         /// <summary>
         /// Displays the date of the last treatment in the garage
         /// </summary>
-        public DateTime LastCare { get => lastCare; set => lastCare = value; }
+        public DateTime LastCare
+        {
+            get => lastCare;
+            set
+            {
+                if (value == default || value < DateRoadAscent)
+                    lastCare = DateRoadAscent;
+                else
+                    lastCare = value;
+            }
+        }
+
         /// <summary>
         /// Displays the amount of bus mileage in the last care
         /// </summary>
-        public uint LastCareMileage { get => lastCareMileage; set => lastCareMileage = value; }
+        public uint LastCareMileage
+        {
+            get => lastCareMileage;
+            set
+            {
+                if (value == 0 || value < Mileage)
+                    lastCareMileage = Mileage;
+                else
+                    lastCareMileage = value;
+            }
+        }
         /// <summary>
         /// A Ctor who creates a bus and also serves as a default Ctor
         /// </summary>
@@ -71,16 +92,8 @@ namespace dotNet5781_03B_3729_1237
             Id = id;
             Mileage = mileage;
             Fuel = fuel;
-            
-            if (LastCare == default || LastCare < dateRoadAscent)
-                LastCare = DateRoadAscent;
-            else
-                LastCare = lastCare;
-            
-            if (LastCareMileage == 0)
-                LastCareMileage = mileage;
-            else
-                LastCareMileage = lastCareMileage;
+            LastCare = lastCare;
+            LastCareMileage = lastCareMileage;
         }
         /// <summary>
         /// The function updates the last treatment date and saves its mileage
@@ -159,8 +172,13 @@ namespace dotNet5781_03B_3729_1237
             {
                 temp = temp.Insert(2, "-");
                 temp = temp.Insert(6, "-");
+                temp = temp.Insert(9, "  ");
             }
             return temp;
+        }
+        public override string ToString()
+        {
+            return $"{PrintId()}     {DateRoadAscent.ToString(@"dd/MM/yyyy")}     {Mileage}";
         }
     }
 }
