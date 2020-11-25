@@ -24,6 +24,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
@@ -38,7 +39,7 @@
                 CornerRadius="6" BorderThickness="3"
                 BorderBrush="Aqua">
         </Border>
-            
+
         <TextBlock x:Name="tb0" Grid.Row="3" Grid.Column="1" Text="Bus ID"
                    FontWeight="Bold" FontSize="22" Margin="8,0,0,0"/>
         <TextBlock x:Name="tb1" Grid.Row="3" Grid.Column="2" Text="Date Road Accent" 
@@ -53,6 +54,8 @@
             FontFamily="Arial" FontSize="22" 
             Margin="3">
         </ListBox>
+        <Button x:Name="bAddBus" Grid.Row="6" Grid.Column="1"
+                Margin="3,10,0,0.2" Content="Add Bus" FontSize="20" FontWeight="Bold" Click="bAddBus_Click"/>
     </Grid>
-   
+
 </Window>

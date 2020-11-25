@@ -1,0 +1,53 @@
+﻿<Window x:Class="dotNet5781_03B_3729_1237.wAddBus"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotNet5781_03B_3729_1237"
+        mc:Ignorable="d"
+        Title="Add new bus" Icon="bus.ico" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="tbDRA" Grid.Row="2" Grid.Column="1" 
+                   Text="Date road ascent:" />
+        <TextBlock x:Name="tbIdBus" Grid.Row="3" Grid.Column="1" 
+                   Text="Id bus:" />
+        <TextBlock x:Name="tbMileage" Grid.Row="4" Grid.Column="1" 
+                   Text="Total mileage:" />
+        <TextBlock x:Name="tbDateLastCare" Grid.Row="5" Grid.Column="1" 
+                   Text="Date last care:" />
+        <TextBlock x:Name="tbMileageLastCare" Grid.Row="6" Grid.Column="1" 
+                   Text="Mileage in last care:" />
+
+        <DatePicker x:Name="dPDRA" Grid.Row="2" Grid.Column="2" CalendarClosed="dPDRA_calendrer_closed" 
+                    />
+        <TextBox x:Name="tBIdBus" Grid.Row="3" Grid.Column="2" IsEnabled="False" 
+                    />
+        <TextBox x:Name="tBMileage" Grid.Row="4" Grid.Column="2" IsEnabled="False" 
+                    />
+        <DatePicker x:Name="dPDateLastCare" Grid.Row="5" Grid.Column="2" IsEnabled="False" 
+                    />
+        <TextBox x:Name="tBMileageLastCare" Grid.Row="6" Grid.Column="2" IsEnabled="False" 
+                    />
+        <Button x:Name="bDoneAddBus" Grid.Row="7" Grid.Column="4"
+                Content="Save" Click="bDoneAddBus_Click"/>
+    </Grid>
+</Window>

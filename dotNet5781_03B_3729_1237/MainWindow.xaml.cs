@@ -37,8 +37,8 @@ namespace dotNet5781_03B_3729_1237
     {
         // amount of buses
         const int NumBuses = 15;
+        private ManageBuses buses = new ManageBuses();
         // create list of buses
-        ManageBuses buses = new ManageBuses();
         public MainWindow()
         {
             InitializeComponent();
@@ -91,6 +91,14 @@ namespace dotNet5781_03B_3729_1237
                 }
 
             }
+        }
+
+        private void bAddBus_Click(object sender, RoutedEventArgs e)
+        {
+            wAddBus wAdd = new wAddBus();
+            wAdd.ShowDialog();
+            buses.Buses.Add(wAdd.NewBus);
+            
         }
     }
 }
