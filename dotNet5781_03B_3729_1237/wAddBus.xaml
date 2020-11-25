@@ -47,14 +47,41 @@
 
         <DatePicker x:Name="dPDRA" Grid.Row="2" Grid.Column="2" CalendarClosed="dPDRA_calendrer_closed" 
                    Margin="0,0,0,5" />
+        <Image x:Name="ImDRA" Source="ok.png" 
+               Grid.Column="3" Grid.Row="2" 
+               Visibility="Hidden"/>
         <TextBox x:Name="tBIdBus" Grid.Row="3" Grid.Column="2" IsEnabled="False" 
-                    Margin="0,0,0,5" TextChanged="afterEnterId"     />
+                    Margin="0,0,0,5" TextChanged="tBidBus_TextChanged"     />
+        <Image x:Name="ImIdBusOk" Source="ok.png" 
+               Grid.Column="3" Grid.Row="3" 
+               Visibility="Hidden"/>
+        <Image x:Name="ImIdBusError" Source="error.png" 
+               Grid.Column="3" Grid.Row="3" 
+               Visibility="Hidden"/>
         <TextBox x:Name="tBMileage" Grid.Row="4" Grid.Column="2" IsEnabled="False" 
-                   Margin="0,0,0,5" />
+                   Margin="0,0,0,5" TextChanged="tBMileage_TextChanged" />
+        <Image x:Name="ImMileageOk" Source="ok.png" 
+               Grid.Column="3" Grid.Row="4" 
+               Visibility="Hidden"/>
+        <Image x:Name="ImMileageError" Source="error.png" 
+               Grid.Column="3" Grid.Row="4" 
+               Visibility="Hidden"/>
         <DatePicker x:Name="dPDateLastCare" Grid.Row="5" Grid.Column="2" IsEnabled="False" 
-                    Margin="0,0,0,5"/>
+                    Margin="0,0,0,5" CalendarClosed="dPDateLastCare_CalendarClosed"/>
+        <Image x:Name="ImDateLastCareOk" Source="ok.png" 
+               Grid.Column="3" Grid.Row="5" 
+               Visibility="Hidden"/>
+        <Image x:Name="ImDateLastCareError" Source="error.png" 
+               Grid.Column="3" Grid.Row="5" 
+               Visibility="Hidden"/>
         <TextBox x:Name="tBMileageLastCare" Grid.Row="6" Grid.Column="2" IsEnabled="False" 
-                   Margin="0,0,0,0" />
+                   Margin="0,0,0,0" TextChanged="tBMileageLastCare_TextChanged" />
+        <Image x:Name="ImMileageLastCareOk" Source="ok.png" 
+               Grid.Column="3" Grid.Row="6" 
+               Visibility="Hidden"/>
+        <Image x:Name="ImMileageLastCareError" Source="error.png" 
+               Grid.Column="3" Grid.Row="6" 
+               Visibility="Hidden"/>
         <Button x:Name="bDoneAddBus" Grid.Row="7" Grid.Column="4"
                 Grid.ColumnSpan="2"
                 Content="Save" Click="bDoneAddBus_Click"/>

@@ -19,7 +19,7 @@ namespace dotNet5781_03B_3729_1237
     /// </summary>
     public partial class wAddBus : Window
     {
-       // DateTime tmpDra;
+        // DateTime tmpDra;
         uint id;
         DateTime Dra;//date road ascent
         uint mileage;
@@ -30,58 +30,120 @@ namespace dotNet5781_03B_3729_1237
             InitializeComponent();
         }
         private Bus newBus = null;
-        public Bus NewBus { get => newBus; private set=>newBus= value; }
-        
+        public Bus NewBus { get => newBus; private set => newBus = value; }
+
         private void bDoneAddBus_Click(object sender, RoutedEventArgs e)
         {
-            //uint id;
-            //DateTime Dra;//date road ascent
-            //uint mileage;
-            //uint mileageLastCare;
-            //DateTime dateLastCare;
-            //if(!DateTime.TryParse(dPDRA.Text,out Dra))
-            //{
-            //    MessageBox.Show("Enter positive number!");
-            //}
-            //if (!uint.TryParse(tBIdBus.Text,out id))
-            //{
-            //   MessageBox.Show("Enter positive Id bus!"); 
-            //}
-            //if (!uint.TryParse(tBMileage.Text, out mileage))
-            //{
-            //    MessageBox.Show("Enter positive Total Mileage !");
-            //}
-            //if (!uint.TryParse(tBIdBus.Text, out mileageLastCare))
-            //{
-            //    MessageBox.Show("Enter positive Mileage Last Care!");
-            //}
-            //if (!DateTime.TryParse(dPDateLastCare.Text, out dateLastCare))
-            //{
-            //    MessageBox.Show("Enter positive number!");
-            //}
-            newBus = new Bus(Dra,id);
-            newBus.Mileage = mileage;
-            newBus.LastCareMileage = mileageLastCare;
-            newBus.LastCare = dateLastCare;
-            this.Close();
+            if (ImDRA.Visibility != Visibility.Visible
+                || ImIdBusOk.Visibility != Visibility.Visible
+                || ImMileageOk.Visibility != Visibility.Visible
+                || ImDateLastCareOk.Visibility != Visibility.Visible
+                || ImMileageLastCareOk.Visibility != Visibility.Visible)
+            {
+                MessageBox.Show("Fill in all the fields", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else 
+            {
+                newBus = new Bus(Dra, id);
+                newBus.Mileage = mileage;
+                newBus.LastCareMileage = mileageLastCare;
+                newBus.LastCare = dateLastCare;
+                this.Close();
+            }
         }
 
-        private void dPDRA_calendrer_closed (object sender, RoutedEventArgs e)
+        private void dPDRA_calendrer_closed(object sender, RoutedEventArgs e)
         {
             Dra = DateTime.Parse(dPDRA.Text);
-            if(Dra > DateTime.Now)
+            if (Dra > DateTime.Now)
             {
-                MessageBox.Show("you can not enter futher date!","ERROR DATE",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show("you can not enter futher date!", "ERROR DATE", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
                 tBIdBus.IsEnabled = true;
+                ImDRA.Visibility = Visibility.Visible;
+                //dPDRA.IsEnabled = false;
+                tBidBus_TextChanged(sender, e);
+                dPDateLastCare_CalendarClosed(sender, e);
+                tBMileage_TextChanged(sender, e);
+                tBMileageLastCare_TextChanged(sender, e);
             }
         }
 
-        private void afterEnterId(object sender, TextChangedEventArgs e)
+
+        private void tBidBus_TextChanged(object sender, RoutedEventArgs e)
         {
-            //tBMileage.IsEnabled = true;
+            if (Dra.Year >= 2018 && tBIdBus.Text.Length == 8 && uint.TryParse(tBIdBus.Text, out id) 
+                && id > 10000000 && id < 99999999)
+            {
+                ImIdBusError.Visibility = Visibility.Hidden;
+                ImIdBusOk.Visibility = Visibility.Visible;
+                tBMileage.IsEnabled = true;
+            }
+            else if (Dra.Year < 2018 && tBIdBus.Text.Length == 7 && uint.TryParse(tBIdBus.Text, out id)
+                && id > 1000000 && id < 9999999)
+            {
+                ImIdBusError.Visibility = Visibility.Hidden;
+                ImIdBusOk.Visibility = Visibility.Visible;
+                tBMileage.IsEnabled = true;
+            }
+            else
+            {
+                ImIdBusError.Visibility = Visibility.Visible;
+                tBMileage.IsEnabled = false;
+                //MessageBox.Show("Enter ligal format of bus id", "ERROR ID", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+        }
+
+        private void tBMileage_TextChanged(object sender, RoutedEventArgs e)
+        {
+            if(uint.TryParse(tBMileage.Text, out mileage))
+            {
+                ImMileageError.Visibility = Visibility.Hidden;
+                ImMileageOk.Visibility = Visibility.Visible;
+                dPDateLastCare.IsEnabled = true;
+                tBMileageLastCare_TextChanged(sender, e);
+            }
+            else
+            {
+                ImMileageOk.Visibility = Visibility.Hidden;
+                ImMileageError.Visibility = Visibility.Visible;
+                dPDateLastCare.IsEnabled = false;
+            }
+        }
+
+        private void dPDateLastCare_CalendarClosed(object sender, RoutedEventArgs e)
+        {
+            if(dPDateLastCare.SelectedDate > dPDRA.SelectedDate)
+            {
+                ImDateLastCareError.Visibility = Visibility.Hidden;
+                ImDateLastCareOk.Visibility = Visibility.Visible;
+                tBMileageLastCare.IsEnabled = true;
+                dateLastCare = DateTime.Parse(dPDateLastCare.Text);
+            }
+            else
+            {
+                ImDateLastCareError.Visibility = Visibility.Visible;
+                ImDateLastCareOk.Visibility = Visibility.Hidden;
+                tBMileageLastCare.IsEnabled = false;
+            }
+        }
+
+        private void tBMileageLastCare_TextChanged(object sender, EventArgs e)
+        {
+            if (uint.TryParse(tBMileageLastCare.Text, out mileageLastCare) && mileage >= mileageLastCare)
+            {
+                ImMileageLastCareError.Visibility = Visibility.Hidden;
+                ImMileageLastCareOk.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ImMileageLastCareError.Visibility = Visibility.Visible;
+                ImMileageLastCareOk.Visibility = Visibility.Hidden;
+            }
+            
         }
     }
 }

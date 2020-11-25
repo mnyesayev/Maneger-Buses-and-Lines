@@ -109,5 +109,11 @@
   <ItemGroup>
     <Resource Include="plus.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ok.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
