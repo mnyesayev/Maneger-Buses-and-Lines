@@ -19,7 +19,12 @@ namespace dotNet5781_03B_3729_1237
     /// </summary>
     public partial class wAddBus : Window
     {
-        DateTime tmpDra;
+       // DateTime tmpDra;
+        uint id;
+        DateTime Dra;//date road ascent
+        uint mileage;
+        uint mileageLastCare;
+        DateTime dateLastCare;
         public wAddBus()
         {
             InitializeComponent();
@@ -29,32 +34,32 @@ namespace dotNet5781_03B_3729_1237
         
         private void bDoneAddBus_Click(object sender, RoutedEventArgs e)
         {
-            uint id;
-            DateTime Dra;//date road ascent
-            uint mileage;
-            uint mileageLastCare;
-            DateTime dateLastCare;
-            if(!DateTime.TryParse(dPDRA.Text,out Dra))
-            {
-                MessageBox.Show("Enter positive number!");
-            }
-            if (!uint.TryParse(tBIdBus.Text,out id))
-            {
-               MessageBox.Show("Enter positive Id bus!"); 
-            }
-            if (!uint.TryParse(tBMileage.Text, out mileage))
-            {
-                MessageBox.Show("Enter positive Total Mileage !");
-            }
-            if (!uint.TryParse(tBIdBus.Text, out mileageLastCare))
-            {
-                MessageBox.Show("Enter positive Mileage Last Care!");
-            }
-            if (!DateTime.TryParse(dPDateLastCare.Text, out dateLastCare))
-            {
-                MessageBox.Show("Enter positive number!");
-            }
-            //newBus = new Bus(Dra,id;
+            //uint id;
+            //DateTime Dra;//date road ascent
+            //uint mileage;
+            //uint mileageLastCare;
+            //DateTime dateLastCare;
+            //if(!DateTime.TryParse(dPDRA.Text,out Dra))
+            //{
+            //    MessageBox.Show("Enter positive number!");
+            //}
+            //if (!uint.TryParse(tBIdBus.Text,out id))
+            //{
+            //   MessageBox.Show("Enter positive Id bus!"); 
+            //}
+            //if (!uint.TryParse(tBMileage.Text, out mileage))
+            //{
+            //    MessageBox.Show("Enter positive Total Mileage !");
+            //}
+            //if (!uint.TryParse(tBIdBus.Text, out mileageLastCare))
+            //{
+            //    MessageBox.Show("Enter positive Mileage Last Care!");
+            //}
+            //if (!DateTime.TryParse(dPDateLastCare.Text, out dateLastCare))
+            //{
+            //    MessageBox.Show("Enter positive number!");
+            //}
+            newBus = new Bus(Dra,id);
             newBus.Mileage = mileage;
             newBus.LastCareMileage = mileageLastCare;
             newBus.LastCare = dateLastCare;
@@ -63,15 +68,20 @@ namespace dotNet5781_03B_3729_1237
 
         private void dPDRA_calendrer_closed (object sender, RoutedEventArgs e)
         {
-             tmpDra = DateTime.Parse(dPDRA.Text);
-            if(tmpDra > DateTime.Now)
+            Dra = DateTime.Parse(dPDRA.Text);
+            if(Dra > DateTime.Now)
             {
-                MessageBox.Show("you can not enter futher date!");
+                MessageBox.Show("you can not enter futher date!","ERROR DATE",MessageBoxButton.OK,MessageBoxImage.Error);
             }
             else
             {
                 tBIdBus.IsEnabled = true;
             }
+        }
+
+        private void afterEnterId(object sender, TextChangedEventArgs e)
+        {
+            //tBMileage.IsEnabled = true;
         }
     }
 }

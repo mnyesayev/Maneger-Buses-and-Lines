@@ -5,11 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_3729_1237"
         mc:Ignorable="d"
-        Title="Add new bus" Icon="bus.ico" Height="450" Width="800">
+        Title="Add new bus" Icon="plus.png" 
+        Height="350" Width="500" Background="AliceBlue"
+        FontSize="16">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="140"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -26,6 +29,11 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="1"
+                   Grid.ColumnSpan="3" Margin="0,0,0,10"
+                   Text="Enter all the data in order"
+                   FontWeight="Bold"/>
         <TextBlock x:Name="tbDRA" Grid.Row="2" Grid.Column="1" 
                    Text="Date road ascent:" />
         <TextBlock x:Name="tbIdBus" Grid.Row="3" Grid.Column="1" 
@@ -38,16 +46,17 @@
                    Text="Mileage in last care:" />
 
         <DatePicker x:Name="dPDRA" Grid.Row="2" Grid.Column="2" CalendarClosed="dPDRA_calendrer_closed" 
-                    />
+                   Margin="0,0,0,5" />
         <TextBox x:Name="tBIdBus" Grid.Row="3" Grid.Column="2" IsEnabled="False" 
-                    />
+                    Margin="0,0,0,5" TextChanged="afterEnterId"     />
         <TextBox x:Name="tBMileage" Grid.Row="4" Grid.Column="2" IsEnabled="False" 
-                    />
+                   Margin="0,0,0,5" />
         <DatePicker x:Name="dPDateLastCare" Grid.Row="5" Grid.Column="2" IsEnabled="False" 
-                    />
+                    Margin="0,0,0,5"/>
         <TextBox x:Name="tBMileageLastCare" Grid.Row="6" Grid.Column="2" IsEnabled="False" 
-                    />
+                   Margin="0,0,0,0" />
         <Button x:Name="bDoneAddBus" Grid.Row="7" Grid.Column="4"
+                Grid.ColumnSpan="2"
                 Content="Save" Click="bDoneAddBus_Click"/>
     </Grid>
 </Window>
