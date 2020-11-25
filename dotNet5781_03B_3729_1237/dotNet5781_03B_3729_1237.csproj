@@ -104,16 +104,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="bus.ico" />
+    <Resource Include="imegs\bus.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="plus.png" />
+    <Resource Include="imegs\plus.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="error.png" />
+    <Resource Include="imegs\error.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ok.png" />
+    <Resource Include="imegs\ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imegs\bus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
