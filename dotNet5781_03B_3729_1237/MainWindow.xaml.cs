@@ -100,7 +100,7 @@ namespace dotNet5781_03B_3729_1237
 
             if (wAdd.NewBus != null && buses.SearchBus(wAdd.NewBus.Id) != null)
                 MessageBox.Show("This bus alrsdy exsist!!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-            else
+            else if (wAdd.NewBus != null)
                 buses.Buses.Add(wAdd.NewBus);
 
         }

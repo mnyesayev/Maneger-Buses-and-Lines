@@ -96,6 +96,7 @@ namespace dotNet5781_03B_3729_1237
             else
             {
                 ImIdBusError.Visibility = Visibility.Visible;
+                ImIdBusOk.Visibility = Visibility.Hidden;
                 tBMileage.IsEnabled = false;
                 //MessageBox.Show("Enter ligal format of bus id", "ERROR ID", MessageBoxButton.OK, MessageBoxImage.Error);
 
