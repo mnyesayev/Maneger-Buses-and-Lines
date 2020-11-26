@@ -7,12 +7,40 @@
         mc:Ignorable="d"
         Title=" Manager buses" Icon="imegs\bus.png" 
         Height="auto" Width="auto" Background="Azure">
+    
+    <!--template for list box-->
+    <Window.Resources>
+        <DataTemplate x:Key="BusTemplate" >
+
+            <StackPanel Orientation="Horizontal" >
+
+                <TextBlock Text="{Binding Path= bus}" Width="550" />
+
+                <Button x:Name="startDrive" 
+                        Content="Start drive"
+                        Margin="30,0,0,0" 
+                        Width="150"
+                        Click="startDrive_Click"/>
+
+                <Button x:Name="reful"
+                    Content="Reful"
+                         Width="100"
+                        Margin="30,0,0,0" />
+
+                <TextBlock Text="{Binding Path= State}" Width="150" 
+                           Margin="100,0,0,0"/>
+
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="128"/>
-            <ColumnDefinition Width="256"/>
+            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
@@ -34,7 +62,7 @@
                    Grid.Row="1" FontSize="22" FontWeight="Bold"
                    />
 
-        <Border Grid.Column="1" Grid.ColumnSpan="4"
+        <Border Grid.Column="1" Grid.ColumnSpan="6"
                 Grid.Row="3" Grid.RowSpan="3"
                 CornerRadius="6" BorderThickness="3"
                 BorderBrush="Aqua">
@@ -46,11 +74,18 @@
                    FontWeight="Bold" FontSize="22" Margin="8,0,0,0"/>
         <TextBlock x:Name="tb2" Grid.Row="3" Grid.Column="3" Text="Milleage" 
                    FontWeight="Bold" FontSize="22" Margin="8,0,0,0"/>
+        <TextBlock x:Name="tb3" Grid.Row="3" Grid.Column="5" Text="Options"
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold" FontSize="22" Margin="10,0,0,0" />
+        <TextBlock x:Name="tb4" Grid.Row="3" Grid.Column="6" Text="Status" 
+                   FontWeight="Bold" FontSize="22" Margin="8,0,0,0" 
+                   HorizontalAlignment="Center"/>
         <ListBox 
             ItemsSource="{Binding }"
                 BorderThickness="0"
+            ItemTemplate="{StaticResource BusTemplate}"
             x:Name="lbBuses" Grid.Row="4" Grid.RowSpan="2"
-            Grid.Column="1" Grid.ColumnSpan="4" 
+            Grid.Column="1" Grid.ColumnSpan="6" 
             FontFamily="Arial" FontSize="22" 
             Margin="3">
         </ListBox>

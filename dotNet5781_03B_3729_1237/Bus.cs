@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_03B_3729_1237
 {
-    enum States
+    public enum States
     {
         ready,drive, refueling,care
     }
@@ -25,6 +25,12 @@ namespace dotNet5781_03B_3729_1237
         DateTime dateRoadAscent;
         DateTime lastCare;
         States state;
+
+
+        // get the ToString of the Bus class
+        public string bus { get => ToString(); }
+        
+        
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law
@@ -101,6 +107,7 @@ namespace dotNet5781_03B_3729_1237
             Fuel = fuel;
             LastCare = lastCare;
             LastCareMileage = lastCareMileage;
+            State = States.ready;
         }
         /// <summary>
         /// The function updates the last treatment date and saves its mileage
