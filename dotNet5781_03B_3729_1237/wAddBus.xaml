@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Add new bus" Icon="imegs\plus.png" 
         Height="350" Width="500" Background="AliceBlue"
-        FontSize="16">
+        FontSize="16" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -46,7 +46,7 @@
                    Text="Mileage in last care:" />
 
         <DatePicker x:Name="dPDRA" Grid.Row="2" Grid.Column="2" CalendarClosed="dPDRA_calendrer_closed" 
-                   Margin="0,0,0,5" />
+                   Margin="0,0,0,5"  FirstDayOfWeek="Sunday"   />
         <Image x:Name="ImDRA" Source="imegs\ok.png" 
                Grid.Column="3" Grid.Row="2" 
                Visibility="Hidden"/>
@@ -67,7 +67,8 @@
                Grid.Column="3" Grid.Row="4" 
                Visibility="Hidden"/>
         <DatePicker x:Name="dPDateLastCare" Grid.Row="5" Grid.Column="2" IsEnabled="False" 
-                    Margin="0,0,0,5" CalendarClosed="dPDateLastCare_CalendarClosed"/>
+                    Margin="0,0,0,5" CalendarClosed="dPDateLastCare_CalendarClosed"
+                    FirstDayOfWeek="Sunday"/>
         <Image x:Name="ImDateLastCareOk" Source="imegs\ok.png" 
                Grid.Column="3" Grid.Row="5" 
                Visibility="Hidden"/>
