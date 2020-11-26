@@ -118,5 +118,11 @@
   <ItemGroup>
     <Resource Include="imegs\bus.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imegs\blue.png" />
+    <Resource Include="imegs\green.png" />
+    <Resource Include="imegs\red.png" />
+    <Resource Include="imegs\yellow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
