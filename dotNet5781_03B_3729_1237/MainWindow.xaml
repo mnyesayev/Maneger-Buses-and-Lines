@@ -26,7 +26,7 @@
                         Background="#FF64CCF1" Foreground="White"/>
 
                 <Button x:Name="reful"
-                    Content="Reful"
+                    Content="Refuel"
                          Width="100"
                         Margin="30,0,0,0" 
                         Style="{DynamicResource style10}"
