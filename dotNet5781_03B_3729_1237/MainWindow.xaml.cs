@@ -116,7 +116,10 @@ namespace dotNet5781_03B_3729_1237
 
         }
 
-
+        private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+           
+        }
     }
 }
 

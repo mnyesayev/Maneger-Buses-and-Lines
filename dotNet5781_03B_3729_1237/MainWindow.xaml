@@ -36,6 +36,10 @@
                 <TextBlock Text="{Binding Path= State}" 
                            Margin="50,0,0,0"/>
 
+                
+
+
+
             </StackPanel>
         </DataTemplate>
         <Style x:Key="FocusVisual">
@@ -148,7 +152,9 @@
             x:Name="lbBuses" Grid.Row="4" Grid.RowSpan="2"
             Grid.Column="1" Grid.ColumnSpan="6" 
             FontFamily="Arial" FontSize="22" 
-            Margin="3" Background="Azure">
+            Margin="3" Background="Azure" 
+            MouseDoubleClick="lbBuses_MouseDoubleClick"
+            >
         </ListBox>
         <Button x:Name="bAddBus" Grid.Row="6" Grid.Column="1"
                 Margin="3,10,0,0.2" Content="Add Bus" FontSize="20"
