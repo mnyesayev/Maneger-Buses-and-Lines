@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:dotNet5781_03B_3729_1237"
         mc:Ignorable="d"
         Title=" Manager buses" Icon="imegs\bus.png" 
-        Height="auto" Width="auto" Background="Azure">
-    
+        Height="auto" Width="auto" Background="Azure"
+        FontFamily="ariel">
+
     <!--template for list box-->
     <Window.Resources>
         <DataTemplate x:Key="BusTemplate" >
@@ -20,18 +21,78 @@
                         Content="Start drive"
                         Margin="30,0,0,0" 
                         Width="150"
-                        Click="startDrive_Click"/>
+                        Click="startDrive_Click"
+                        Style="{DynamicResource style10}"
+                        Background="#FF64CCF1" Foreground="White"/>
 
                 <Button x:Name="reful"
                     Content="Reful"
                          Width="100"
-                        Margin="30,0,0,0" />
+                        Margin="30,0,0,0" 
+                        Style="{DynamicResource style10}"
+                        Background="#FF64CCF1" Foreground="White"
+                        Click="reful_Click"/>
 
-                <TextBlock Text="{Binding Path= State}" Width="150" 
-                           Margin="100,0,0,0"/>
+                <TextBlock Text="{Binding Path= State}" 
+                           Margin="50,0,0,0"/>
 
             </StackPanel>
         </DataTemplate>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="style10" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="20" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#EAB01E"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#EAB01E"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#F1CA68"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#F1CA68"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -52,8 +113,8 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
@@ -64,21 +125,21 @@
 
         <Border Grid.Column="1" Grid.ColumnSpan="6"
                 Grid.Row="3" Grid.RowSpan="3"
-                CornerRadius="6" BorderThickness="3"
-                BorderBrush="Aqua">
+                CornerRadius="6" BorderThickness="0"
+                BorderBrush="#FF64CCF1">
         </Border>
 
         <TextBlock x:Name="tb0" Grid.Row="3" Grid.Column="1" Text="Bus ID"
-                   FontWeight="Bold" FontSize="22" Margin="8,0,0,0"/>
-        <TextBlock x:Name="tb1" Grid.Row="3" Grid.Column="2" Text="Date Road Accent" 
-                   FontWeight="Bold" FontSize="22" Margin="8,0,0,0"/>
-        <TextBlock x:Name="tb2" Grid.Row="3" Grid.Column="3" Text="Milleage" 
-                   FontWeight="Bold" FontSize="22" Margin="8,0,0,0"/>
+                   FontWeight="Light" FontSize="22" Margin="8,0,0,0"/>
+        <TextBlock x:Name="tb1" Grid.Row="3" Grid.Column="2" Text="  | Date Road Accent" 
+                   FontWeight="Light" FontSize="22" Margin="8,0,0,0"/>
+        <TextBlock x:Name="tb2" Grid.Row="3" Grid.Column="3" Text=" | Milleage" 
+                   FontWeight="Light" FontSize="22" Margin="8,0,0,0"/>
         <TextBlock x:Name="tb3" Grid.Row="3" Grid.Column="5" Text="Options"
                    HorizontalAlignment="Left"
-                   FontWeight="Bold" FontSize="22" Margin="10,0,0,0" />
+                   FontWeight="Light" FontSize="22" Margin="10,0,0,0" />
         <TextBlock x:Name="tb4" Grid.Row="3" Grid.Column="6" Text="Status" 
-                   FontWeight="Bold" FontSize="22" Margin="8,0,0,0" 
+                   FontWeight="Light" FontSize="22" Margin="8,0,0,0" 
                    HorizontalAlignment="Center"/>
         <ListBox 
             ItemsSource="{Binding }"
@@ -87,10 +148,12 @@
             x:Name="lbBuses" Grid.Row="4" Grid.RowSpan="2"
             Grid.Column="1" Grid.ColumnSpan="6" 
             FontFamily="Arial" FontSize="22" 
-            Margin="3">
+            Margin="3" Background="Azure">
         </ListBox>
         <Button x:Name="bAddBus" Grid.Row="6" Grid.Column="1"
-                Margin="3,10,0,0.2" Content="Add Bus" FontSize="20" FontWeight="Bold" Click="bAddBus_Click"/>
+                Margin="3,10,0,0.2" Content="Add Bus" FontSize="20"
+                FontWeight="Bold" Click="bAddBus_Click" Style="{DynamicResource style10}"
+                Background="#FF64CCF1" Foreground="White" />
     </Grid>
 
 </Window>

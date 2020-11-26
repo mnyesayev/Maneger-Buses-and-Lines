@@ -85,6 +85,7 @@
                Visibility="Hidden"/>
         <Button x:Name="bDoneAddBus" Grid.Row="7" Grid.Column="4"
                 Grid.ColumnSpan="2"
-                Content="Save" Click="bDoneAddBus_Click"/>
+                Content="Save" Click="bDoneAddBus_Click"
+                />
     </Grid>
 </Window>
