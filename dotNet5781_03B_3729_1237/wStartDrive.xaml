@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_3729_1237"
         mc:Ignorable="d"
-        Title="wStartDrive" Height="180" Width="400" FontSize="22" FontWeight="Bold" FontFamily="Arial">
+        Title="Start Drive" 
+        Height="180" Width="400" FontSize="22" 
+        FontWeight="Bold" FontFamily="Arial"
+        Icon="imegs\busdrive.png">
     <Grid>
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="20"/>
