@@ -36,7 +36,7 @@
                    Grid.Column="2" Grid.Row="2"  />
         <TextBlock x:Name="tb1DRA" Text="Date of road ascent:"
                    Grid.Column="1" Grid.Row="3"/>
-        <TextBlock x:Name="tb2DRA" Text="{Binding Path=DateRoadAscent}"
+        <TextBlock x:Name="tb2DRA" Text="{Binding Path=GetDateRoadAscent}"
                    Grid.Column="2" Grid.Row="3"/>
         <TextBlock x:Name="tb1Mileage" Text="Total Mileage:"
                    Grid.Column="1" Grid.Row="4"/>
@@ -44,7 +44,7 @@
                    Grid.Column="2" Grid.Row="4"/>
         <TextBlock x:Name="tb1DateLastCare" Text="The last care was at:"
                    Grid.Column="1" Grid.Row="5"/>
-        <TextBlock x:Name="tb2DateLastCare" Text="{Binding Path=LastCare}"
+        <TextBlock x:Name="tb2DateLastCare" Text="{Binding Path=GetDateLastCare}"
                    Grid.Column="2" Grid.Row="5"/>
         <TextBlock x:Name="tb1MileageLastCare" Text="Mileage in last care:"
                    Grid.Column="1" Grid.Row="6"/>

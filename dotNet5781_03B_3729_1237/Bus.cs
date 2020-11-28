@@ -10,7 +10,7 @@ namespace dotNet5781_03B_3729_1237
 {
     public enum States
     {
-        ready,drive, refueling,care
+        ready, drive, refueling, care
     }
     /// <summary>
     /// The class represents a single bus
@@ -29,8 +29,8 @@ namespace dotNet5781_03B_3729_1237
 
         // get the ToString of the Bus class
         public string bus { get => ToString(); }
-        
-        
+
+
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law
@@ -88,9 +88,16 @@ namespace dotNet5781_03B_3729_1237
                     lastCareMileage = value;
             }
         }
+        public States State { get => state; set => state = value; }
 
-        internal States State { get => state; set => state = value; }
-
+        public string GetDateRoadAscent
+        {
+            get { return DateRoadAscent.ToString(@"dd/MM/yyyy"); }
+        }        
+        public string GetDateLastCare
+        {
+            get { return LastCare.ToString(@"dd/MM/yyyy"); }
+        }
         /// <summary>
         /// A Ctor who creates a bus and also serves as a default Ctor
         /// </summary>
@@ -176,7 +183,8 @@ namespace dotNet5781_03B_3729_1237
         /// <returns>string at format 12-345-67(Until 2017 inclusive),123-45-678(2018 onwards)</returns>
         public string PrintId
         {
-            get {
+            get
+            {
                 string temp = this.Id.ToString();
                 if (this.DateRoadAscent.Year > 2017)
                 {
@@ -194,7 +202,7 @@ namespace dotNet5781_03B_3729_1237
         }
         public override string ToString()
         {
-            return $"{PrintId}        {DateRoadAscent.ToString(@"dd/MM/yyyy")}                    {Mileage}";
+            return $"{PrintId}        {GetDateRoadAscent}                    {Mileage}";
         }
     }
 }
