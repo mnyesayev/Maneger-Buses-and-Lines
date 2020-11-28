@@ -108,17 +108,30 @@ namespace dotNet5781_03B_3729_1237
 
         private void startDrive_Click(object sender, RoutedEventArgs e)
         {
-
+            wStartDrive drive = new wStartDrive();
+            Button button = (Button)sender;
+            if (button.DataContext is Bus)
+            {
+                drive.DataContext = button.DataContext;
+                drive.ShowDialog();
+            }
         }
-
         private void reful_Click(object sender, RoutedEventArgs e)
         {
-
+            Button button = (Button)sender;
+            if(button.DataContext is Bus)
+            {
+                Bus tmp = (Bus)button.DataContext;
+                var st= tmp.Refueling();
+                MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-           
+            wBusInfo busInfo = new wBusInfo();
+            busInfo.DataContext = lbBuses.SelectedItem;
+            busInfo.ShowDialog();
         }
     }
 }

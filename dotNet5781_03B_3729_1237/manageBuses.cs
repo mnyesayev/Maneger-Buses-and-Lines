@@ -131,7 +131,7 @@ namespace dotNet5781_03B_3729_1237
         {
             foreach (var Bus in Buses)
             {
-                Console.WriteLine(Bus.PrintId() + " ------ " + Bus.ReturnLastCare());
+                Console.WriteLine(Bus.PrintId + " ------ " + Bus.ReturnLastCare());
             }
         }
     }

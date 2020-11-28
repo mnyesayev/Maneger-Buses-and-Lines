@@ -1,0 +1,30 @@
+﻿<Window x:Class="dotNet5781_03B_3729_1237.wStartDrive"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotNet5781_03B_3729_1237"
+        mc:Ignorable="d"
+        Title="wStartDrive" Height="180" Width="400" FontSize="22" FontWeight="Bold" FontFamily="Arial">
+    <Grid>
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="tbField" Text="Please enter mileage of the road:"
+                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" />
+        <TextBox x:Name="tbMileage" 
+                 Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" PreviewKeyDown="tbMileage_PreviewKeyDown"/>
+    </Grid>
+</Window>

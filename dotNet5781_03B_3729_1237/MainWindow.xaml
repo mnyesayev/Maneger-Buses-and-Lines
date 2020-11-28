@@ -11,8 +11,8 @@
 
     <!--template for list box-->
     <Window.Resources>
-        <DataTemplate x:Key="BusTemplate" >
-
+        <DataTemplate x:Key="BusTemplate" DataType="local:Bus" >
+        
             <StackPanel Orientation="Horizontal" >
 
                 <TextBlock Text="{Binding Path= bus}" Width="550" />
@@ -33,20 +33,17 @@
                         Background="#FF64CCF1" Foreground="White"
                         Click="reful_Click"/>
 
-                <TextBlock Text="{Binding Path= State}" 
+                <TextBlock Text="{Binding Path=State}" 
                            Margin="50,0,0,0"/>
-
-                
-
-
-
             </StackPanel>
         </DataTemplate>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" 
+                                   Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" 
+                                   StrokeThickness="1" StrokeDashArray="1 2"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -147,7 +144,7 @@
                    HorizontalAlignment="Center"/>
         <ListBox 
             ItemsSource="{Binding }"
-                BorderThickness="0"
+            BorderThickness="0"
             ItemTemplate="{StaticResource BusTemplate}"
             x:Name="lbBuses" Grid.Row="4" Grid.RowSpan="2"
             Grid.Column="1" Grid.ColumnSpan="6" 

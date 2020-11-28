@@ -132,7 +132,7 @@ namespace dotNet5781_03B_3729_1237
         /// or 20 thousand kilometers
         /// </summary>
         ///<param name="addMileage"></param>
-        /// <returns>If the bus need a care</returns>
+        /// <returns>false if the bus need a care</returns>
         public bool CheckCare(uint addMileage)
         {
             if (Mileage + addMileage - LastCareMileage >= 20000)
@@ -145,7 +145,7 @@ namespace dotNet5781_03B_3729_1237
         /// Shows whether a bus can travel with the fuel it has
         /// </summary>
         /// <param name="subFuel"></param>
-        /// <returns>True or false accordingly</returns>
+        /// <returns>False if fuel not enough</returns>
         public bool CheckFuel(uint subFuel)
         {
             if (Fuel - subFuel > 0)
@@ -174,25 +174,27 @@ namespace dotNet5781_03B_3729_1237
         ///A function converts the vehicle license to a string
         /// </summary>
         /// <returns>string at format 12-345-67(Until 2017 inclusive),123-45-678(2018 onwards)</returns>
-        public string PrintId()
+        public string PrintId
         {
-            string temp = this.Id.ToString();
-            if (this.DateRoadAscent.Year > 2017)
-            {
-                temp = temp.Insert(3, "-");
-                temp = temp.Insert(6, "-");
+            get {
+                string temp = this.Id.ToString();
+                if (this.DateRoadAscent.Year > 2017)
+                {
+                    temp = temp.Insert(3, "-");
+                    temp = temp.Insert(6, "-");
+                }
+                if (this.DateRoadAscent.Year < 2018)
+                {
+                    temp = temp.Insert(2, "-");
+                    temp = temp.Insert(6, "-");
+                    temp = temp.Insert(9, "  ");
+                }
+                return temp;
             }
-            if (this.DateRoadAscent.Year < 2018)
-            {
-                temp = temp.Insert(2, "-");
-                temp = temp.Insert(6, "-");
-                temp = temp.Insert(9, "  ");
-            }
-            return temp;
         }
         public override string ToString()
         {
-            return $"{PrintId()}        {DateRoadAscent.ToString(@"dd/MM/yyyy")}                    {Mileage}";
+            return $"{PrintId}        {DateRoadAscent.ToString(@"dd/MM/yyyy")}                    {Mileage}";
         }
     }
 }
