@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:dotNet5781_03B_3729_1237" 
         mc:Ignorable="d"
         Title="Bus Info" Height="450" Width="800"
-        Icon="imegs\info.png">
+        Icon="imegs\info.png" FontSize="17" Background="Azure">
     
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -30,24 +30,43 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="Tilte" Text="Bus Information" 
-                   Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"/>
+                   Grid.Column="1" Grid.Row="1" 
+                   Grid.ColumnSpan="5" FontSize="22"
+                   HorizontalAlignment="Center" FontWeight="Bold"/>
         <TextBlock x:Name="tb1busId" Text="bus ID:" 
                    Grid.Column="1" Grid.Row="2"/>
         <TextBlock x:Name="tb2busId"   Text="{Binding Path=PrintId}"
-                   Grid.Column="2" Grid.Row="2"  />
+                   Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1DRA" Text="Date of road ascent:"
                    Grid.Column="1" Grid.Row="3"/>
         <TextBlock x:Name="tb2DRA" Text="{Binding Path=GetDateRoadAscent}"
-                   Grid.Column="2" Grid.Row="3"/>
+                   Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1Mileage" Text="Total Mileage:"
                    Grid.Column="1" Grid.Row="4"/>
         <TextBlock x:Name="tb2Mileage" Text="{Binding Path=Mileage}"
-                   Grid.Column="2" Grid.Row="4"/>
+                   Grid.Column="2" Grid.Row="4" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1DateLastCare" Text="The last care was at:"
                    Grid.Column="1" Grid.Row="5"/>
         <TextBlock x:Name="tb2DateLastCare" Text="{Binding Path=GetDateLastCare}"
-                   Grid.Column="2" Grid.Row="5"/>
+                   Grid.Column="2" Grid.Row="5" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1MileageLastCare" Text="Mileage in last care:"
                    Grid.Column="1" Grid.Row="6"/>
+        <TextBlock x:Name="tb2MileageLastCare" Text="{Binding Path = LastCareMileage}"
+                   Grid.Column="2" Grid.Row="6" HorizontalAlignment="Right"/>
+        <TextBlock x:Name="tb1fuel" Text="Have fuel for:"
+                   Grid.Column="4" Grid.Row="2"/>
+        <TextBlock x:Name="tb2fuel" Text="{Binding Path=Fuel}"
+                   Grid.Column="5" Grid.Row="2" HorizontalAlignment="Right"/>
+        <TextBlock x:Name="tb1status" Text="Bus status:"
+                   Grid.Column="4" Grid.Row="3"/>
+        <TextBlock x:Name="tb2status" Text="{Binding Path=State}"
+                   Grid.Column="5" Grid.Row="3" HorizontalAlignment="Right"/>
+        <Button x:Name="bRefuel" Content="Refuel"
+                Grid.Column="1" Grid.ColumnSpan="2"
+                Grid.Row="7" Click="bReful_Click"/>
+        <Button x:Name="bCare" Content="Care" 
+                Grid.Column="4" Grid.ColumnSpan="2"
+                Grid.Row="7" Click="bCare_Click"/>
     </Grid>
+    
 </Window>

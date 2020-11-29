@@ -25,5 +25,21 @@ namespace dotNet5781_03B_3729_1237
             InitializeComponent();
             
         }
+
+        private void bReful_Click(object sender, RoutedEventArgs e)
+        {
+            Bus tmp = (Bus)this.DataContext;
+            var st = tmp.Refueling();
+            MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+            // need to refrash the window
+        }
+
+        private void bCare_Click(object sender, RoutedEventArgs e)
+        {
+            Bus tmp = (Bus)this.DataContext;
+            var st = tmp.Care();
+            MessageBox.Show(st, "Care", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        }
     }
 }
