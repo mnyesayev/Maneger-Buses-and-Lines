@@ -42,13 +42,18 @@ namespace dotNet5781_03B_3729_1237
                         MessageBox.Show("you can't to start drive \ntake the bus to care immediately!"
                             , "Care ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         this.Close();
+                        return;
                     }
                     else if (!bus.CheckFuel(tmp))
                     {
                         MessageBox.Show("you can't to start drive because \nthere is not enough fuel for this trip!"
                                , "Fuel ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         this.Close();
+                        return;
                     }
+                    this.Close();
+                    
+                    bus.StartDrive(uint.Parse(text.Text));
                     return;
                 }
             }

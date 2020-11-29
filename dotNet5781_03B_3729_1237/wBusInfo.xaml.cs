@@ -31,7 +31,9 @@ namespace dotNet5781_03B_3729_1237
             Bus tmp = (Bus)this.DataContext;
             var st = tmp.Refueling();
             MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
-            // need to refrash the window
+            // refrash the fuel
+            tb2fuel.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
+
         }
 
         private void bCare_Click(object sender, RoutedEventArgs e)
@@ -39,7 +41,9 @@ namespace dotNet5781_03B_3729_1237
             Bus tmp = (Bus)this.DataContext;
             var st = tmp.Care();
             MessageBox.Show(st, "Care", MessageBoxButton.OK, MessageBoxImage.Information);
-
+            // refrash the date
+            tb2DateLastCare.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
+            tb2MileageLastCare.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
         }
     }
 }

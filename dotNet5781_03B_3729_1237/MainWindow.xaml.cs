@@ -115,6 +115,7 @@ namespace dotNet5781_03B_3729_1237
                 drive.DataContext = button.DataContext;
                 drive.ShowDialog();
             }
+            lbBuses.Items.Refresh();
         }
         private void reful_Click(object sender, RoutedEventArgs e)
         {
@@ -125,6 +126,7 @@ namespace dotNet5781_03B_3729_1237
                 var st= tmp.Refueling();
                 MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            lbBuses.Items.Refresh();
         }
 
         private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -132,6 +134,7 @@ namespace dotNet5781_03B_3729_1237
             wBusInfo busInfo = new wBusInfo();
             busInfo.DataContext = lbBuses.SelectedItem;
             busInfo.ShowDialog();
+            lbBuses.Items.Refresh();
         }
     }
 }

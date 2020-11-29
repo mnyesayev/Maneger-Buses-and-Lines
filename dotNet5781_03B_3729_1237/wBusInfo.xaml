@@ -47,7 +47,7 @@
                    Grid.Column="2" Grid.Row="4" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1DateLastCare" Text="The last care was at:"
                    Grid.Column="1" Grid.Row="5"/>
-        <TextBlock x:Name="tb2DateLastCare" Text="{Binding Path=GetDateLastCare}"
+        <TextBlock x:Name="tb2DateLastCare" Text="{Binding Path=GetDateLastCare, UpdateSourceTrigger=Default}"
                    Grid.Column="2" Grid.Row="5" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1MileageLastCare" Text="Mileage in last care:"
                    Grid.Column="1" Grid.Row="6"/>
@@ -55,7 +55,7 @@
                    Grid.Column="2" Grid.Row="6" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1fuel" Text="Have fuel for:"
                    Grid.Column="4" Grid.Row="2"/>
-        <TextBlock x:Name="tb2fuel" Text="{Binding Path=Fuel}"
+        <TextBlock x:Name="tb2fuel" Text="{Binding Path=Fuel, UpdateSourceTrigger=Default}"
                    Grid.Column="5" Grid.Row="2" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1status" Text="Bus status:"
                    Grid.Column="4" Grid.Row="3"/>
