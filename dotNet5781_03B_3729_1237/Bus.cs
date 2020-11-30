@@ -4,13 +4,14 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace dotNet5781_03B_3729_1237
 {
     public enum States
     {
-        ready, drive, refueling, care
+        ready, drive, refueling, care, mustCare
     }
     /// <summary>
     /// The class represents a single bus
@@ -26,7 +27,15 @@ namespace dotNet5781_03B_3729_1237
         DateTime lastCare;
         States state;
 
-
+        public event EventHandler<BusEventArgs> StateChanged;
+        void StateChangedHandler(States state)
+        {
+            if (StateChanged != null)
+            {
+                new Thread((obj) => StateChanged(this, (BusEventArgs)obj)
+                          ).Start(new BusEventArgs(state));
+            }
+        }
         // get the ToString of the Bus class
         public string bus { get => ToString(); }
 
@@ -90,14 +99,6 @@ namespace dotNet5781_03B_3729_1237
         }
         public States State { get => state; set => state = value; }
 
-        public string GetDateRoadAscent
-        {
-            get { return DateRoadAscent.ToString(@"dd/MM/yyyy"); }
-        }        
-        public string GetDateLastCare
-        {
-            get { return LastCare.ToString(@"dd/MM/yyyy"); }
-        }
         /// <summary>
         /// A Ctor who creates a bus and also serves as a default Ctor
         /// </summary>
@@ -114,7 +115,11 @@ namespace dotNet5781_03B_3729_1237
             Fuel = fuel;
             LastCare = lastCare;
             LastCareMileage = lastCareMileage;
-            State = States.ready;
+            if (CheckCare())
+                State = States.mustCare;
+            else
+                State = States.ready;
+
         }
         /// <summary>
         /// The function updates the last treatment date and saves its mileage
@@ -123,6 +128,7 @@ namespace dotNet5781_03B_3729_1237
         {
             LastCare = DateTime.Now;
             LastCareMileage = mileage;
+            this.Refueling();
             return ("You can drive now another 20,000 miles safely :)");
 
         }
@@ -140,10 +146,9 @@ namespace dotNet5781_03B_3729_1237
         /// <returns>false if the bus not need a care</returns>
         public bool CheckCare()
         {
-            if (DateTime.Compare(DateTime.Now, lastCare.AddYears(1)) >= 0)
+            if (DateTime.Compare(lastCare,DateTime.Now.AddYears(-1)) <= 0)
                 return true;
-            return
-                false;
+            return false;  
         }
         /// <summary>
         /// The func. checks if the bus has passed a 20 thousand kilometers 
@@ -211,7 +216,17 @@ namespace dotNet5781_03B_3729_1237
         }
         public override string ToString()
         {
-            return $"{PrintId}        {GetDateRoadAscent}                    {Mileage}";
+            return $"{PrintId}       {DateRoadAscent.ToString(@"dd/MM/yyyy")}    {Mileage}";
+        }
+    }
+
+    public class BusEventArgs : EventArgs
+    {
+        private States state;
+        public States State { get { return state; } private set { state = value; } }
+        public BusEventArgs(States state)
+        {
+            State=state;
         }
     }
 }

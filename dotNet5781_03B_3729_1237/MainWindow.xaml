@@ -11,11 +11,9 @@
 
     <!--template for list box-->
     <Window.Resources>
-        <DataTemplate x:Key="BusTemplate" DataType="local:Bus" >
-        
-            <StackPanel Orientation="Horizontal" >
+        <DataTemplate x:Key="Buttons" DataType="local:Bus" >
 
-                <TextBlock Text="{Binding Path= bus}" Width="550" />
+            <StackPanel Orientation="Horizontal" >
 
                 <Button x:Name="startDrive" 
                         Content="Start drive"
@@ -24,7 +22,6 @@
                         Click="startDrive_Click"
                         Style="{DynamicResource style10}"
                         Background="#FF64CCF1" Foreground="White"/>
-
                 <Button x:Name="reful"
                     Content="Refuel"
                          Width="100"
@@ -33,10 +30,7 @@
                         Background="#FF64CCF1" Foreground="White"
                         Click="reful_Click"/>
 
-                <TextBlock Text="{Binding Path=State}" 
-                           Margin="50,0,0,0"/>
-
-                <Image Source = "{Binding}" Width="15"
+                <Image Source = "imegs\red.png" Width="15"
                        Height="15" Margin="20,0,0,0"/>
             </StackPanel>
         </DataTemplate>
@@ -133,29 +127,31 @@
                 BorderBrush="#FF64CCF1">
         </Border>
 
-        <TextBlock x:Name="tb0" Grid.Row="3" Grid.Column="1" Text="Bus ID"
-                   FontWeight="Light" FontSize="22" Margin="8,0,0,0"/>
-        <TextBlock x:Name="tb1" Grid.Row="3" Grid.Column="2" Text="  | Date Road Accent" 
-                   FontWeight="Light" FontSize="22" Margin="8,0,0,0"/>
-        <TextBlock x:Name="tb2" Grid.Row="3" Grid.Column="3" Text=" | Milleage" 
-                   FontWeight="Light" FontSize="22" Margin="8,0,0,0"/>
-        <TextBlock x:Name="tb3" Grid.Row="3" Grid.Column="5" Text="Options"
-                   HorizontalAlignment="Left"
-                   FontWeight="Light" FontSize="22" Margin="10,0,0,0" />
-        <TextBlock x:Name="tb4" Grid.Row="3" Grid.Column="6" Text="Status" 
-                   FontWeight="Light" FontSize="22" Margin="8,0,0,0" 
-                   HorizontalAlignment="Center"/>
-        <ListBox 
-            ItemsSource="{Binding }"
+        <ListView 
+            ItemsSource="{Binding}"
             BorderThickness="0"
-            ItemTemplate="{StaticResource BusTemplate}"
-            x:Name="lbBuses" Grid.Row="4" Grid.RowSpan="2"
+            x:Name="lvBuses" Grid.Row="4" Grid.RowSpan="2"
             Grid.Column="1" Grid.ColumnSpan="6" 
             FontFamily="Arial" FontSize="22" 
-            Margin="3" Background="Azure" 
+            Margin="3" Background="Azure"
+            GridViewColumnHeader.Click="GridViewColumnHeader_ClickedHandler"
             MouseDoubleClick="lbBuses_MouseDoubleClick"
             >
-        </ListBox>
+            <ListView.View >
+                <GridView>
+                    <GridViewColumn x:Name="gvcBusId" Header="Bus ID" Width="140"  
+                                    DisplayMemberBinding="{Binding Path=PrintId}" FrameworkElement.FlowDirection="RightToLeft"/>
+                    <GridViewColumn x:Name="gvcDra" Header="Date Road Ascent" Width="240"
+                                    DisplayMemberBinding="{Binding Path=DateRoadAscent, StringFormat=dd/MM/yyyy}"/>
+                    <GridViewColumn x:Name="gvcMileage" Header="Mileage" Width="150"
+                                    DisplayMemberBinding="{Binding Path=Mileage}"/>
+                    <GridViewColumn x:Name="gvcButtons" Header="Options" Width="auto"
+                                     CellTemplate="{StaticResource Buttons}"/>
+                    <GridViewColumn x:Name="gvcState" Header="Status" Width="150" 
+                                    DisplayMemberBinding="{Binding Path=State ,UpdateSourceTrigger=PropertyChanged}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Button x:Name="bAddBus" Grid.Row="6" Grid.Column="1"
                 Margin="3,10,0,0.2" Content="Add Bus" FontSize="20"
                 FontWeight="Bold" Click="bAddBus_Click" Style="{DynamicResource style10}"

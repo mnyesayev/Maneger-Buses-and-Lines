@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,7 +49,7 @@ namespace dotNet5781_03B_3729_1237
             uint id;
             for (int i = 0; i < NumBuses; i++)
             {
-                var DRA = new DateTime(MyRandom.r.Next(2015, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
+                var DRA = new DateTime(MyRandom.r.Next(2016, 2020), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
                 if (DRA.Year < 2018)
                     id = (uint)MyRandom.r.Next(1000000, 9999999);
                 else
@@ -57,7 +59,8 @@ namespace dotNet5781_03B_3729_1237
             }
             // the function do mass in evrey bus. (mileage, last care, etc..)
             massBuses(buses);
-            lbBuses.DataContext = buses.Buses;
+            lvBuses.DataContext = buses.Buses;
+            
         }
 
         // the function do mass in evrey bus. (mileage, last care, etc..)
@@ -93,6 +96,20 @@ namespace dotNet5781_03B_3729_1237
             }
         }
 
+        GridViewColumnHeader lastHeaderClicked = null;
+        ListSortDirection lastDirection = ListSortDirection.Ascending;
+
+        private void GridViewColumnHeader_ClickedHandler(object sender, RoutedEventArgs e)
+        {
+            if (!(e.OriginalSource is GridViewColumnHeader ch))
+                return;
+            var dir = ListSortDirection.Ascending;
+            if (ch == lastHeaderClicked && lastDirection == ListSortDirection.Ascending)
+                dir = ListSortDirection.Descending;
+            sort(ch, dir);
+            lastHeaderClicked = ch;
+            lastDirection = dir;
+        }
         private void bAddBus_Click(object sender, RoutedEventArgs e)
         {
             wAddBus wAdd = new wAddBus();
@@ -115,27 +132,63 @@ namespace dotNet5781_03B_3729_1237
                 drive.DataContext = button.DataContext;
                 drive.ShowDialog();
             }
-            lbBuses.Items.Refresh();
+            lvBuses.Items.Refresh();
         }
+       /* private void windowBusObserver(object sender, BusEventArgs args)
+        {
+            stateChanged(args.State);
+        }
+        void stateChanged(States state)
+        {
+
+        }*/
         private void reful_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            if(button.DataContext is Bus)
+            if (button.DataContext is Bus)
             {
                 Bus tmp = (Bus)button.DataContext;
-                var st= tmp.Refueling();
-                MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+                new Thread(() =>
+                {
+                    tmp.State = States.refueling;
+                    Thread.Sleep(12000);
+                    var st = tmp.Refueling();
+                    MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (tmp.CheckCare())
+                        tmp.State = States.mustCare;
+                    else
+                        tmp.State = States.ready;
+                }).Start();
             }
-            lbBuses.Items.Refresh();
+            lvBuses.Items.Refresh();
         }
 
         private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             wBusInfo busInfo = new wBusInfo();
-            busInfo.DataContext = lbBuses.SelectedItem;
+            busInfo.DataContext = lvBuses.SelectedItem;
             busInfo.ShowDialog();
-            lbBuses.Items.Refresh();
+            new Thread(() => 
+            {
+                this.Dispatcher.Invoke(()=> 
+                {  
+                     
+                });
+            });
+            lvBuses.Items.Refresh();
+        }
+
+        private void sort(GridViewColumnHeader ch, ListSortDirection dir)
+        {
+            var bn = (ch.Column.DisplayMemberBinding as Binding)?.Path.Path;
+            bn = bn ?? ch.Column.Header as string;
+            var dv = CollectionViewSource.GetDefaultView(lvBuses.ItemsSource);
+            dv.SortDescriptions.Clear();
+            var sd = new SortDescription(bn, dir);
+            dv.SortDescriptions.Add(sd);
+            dv.Refresh();
         }
     }
 }
+
 

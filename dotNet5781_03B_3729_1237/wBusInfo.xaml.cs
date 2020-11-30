@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,8 +30,17 @@ namespace dotNet5781_03B_3729_1237
         private void bReful_Click(object sender, RoutedEventArgs e)
         {
             Bus tmp = (Bus)this.DataContext;
-            var st = tmp.Refueling();
-            MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+            new Thread(() =>
+            {
+                tmp.State = States.refueling;
+                Thread.Sleep(12000);
+                var st = tmp.Refueling();
+                MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (tmp.CheckCare())
+                    tmp.State = States.mustCare;
+                else
+                    tmp.State = States.ready;
+            }).Start();
             // refrash the fuel
             tb2fuel.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
 
@@ -39,11 +49,22 @@ namespace dotNet5781_03B_3729_1237
         private void bCare_Click(object sender, RoutedEventArgs e)
         {
             Bus tmp = (Bus)this.DataContext;
-            var st = tmp.Care();
-            MessageBox.Show(st, "Care", MessageBoxButton.OK, MessageBoxImage.Information);
-            // refrash the date
-            tb2DateLastCare.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
-            tb2MileageLastCare.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
+            new Thread(() =>
+            {
+
+                tmp.State = States.care;
+                this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
+                Thread.Sleep(12000);
+                var str = tmp.Care();
+                this.Dispatcher.Invoke(() => 
+                { tb2DateLastCare.Text = tmp.LastCare.ToString(@"dd/MM/yyyy");
+                  tb2MileageLastCare.Text=tmp.LastCareMileage.ToString();
+                  tmp.State = States.ready;
+                  tb2status.Text = tmp.State.ToString();
+                });
+                
+                MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);   
+            }).Start();
         }
     }
 }

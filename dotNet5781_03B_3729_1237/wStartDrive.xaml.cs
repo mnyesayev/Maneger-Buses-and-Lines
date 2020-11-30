@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,13 +54,19 @@ namespace dotNet5781_03B_3729_1237
                     }
                     if (bus.CheckFuel(tmp))
                     {
-                        MessageBox.Show("you can't to start drive because \nthere is not enough fuel for this trip!"
+                        MessageBox.Show("You can't to start drive because \nthere is not enough fuel for this trip!"
                                , "Fuel ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         this.Close();
                         return;
                     }
                     this.Close();
-                    bus.StartDrive(tmp);
+                    new Thread(() =>
+                    {
+                        bus.State = States.drive;
+                        Thread.Sleep((int)(tmp/MyRandom.r.Next(20,50))*6000);
+                        bus.StartDrive(tmp);
+                        bus.State = States.ready;
+                    }).Start();
                     return;
                 }
             }
