@@ -135,29 +135,38 @@ namespace dotNet5781_03B_3729_1237
             return ("You have now full tank :)");
         }
         /// <summary>
-        /// The func. checks if the bus has passed a year since the last care 
-        /// or 20 thousand kilometers
+        /// The func. checks if the bus has passed a year since the last care
+        /// </summary>
+        /// <returns>false if the bus not need a care</returns>
+        public bool CheckCare()
+        {
+            if (DateTime.Compare(DateTime.Now, lastCare.AddYears(1)) >= 0)
+                return true;
+            return
+                false;
+        }
+        /// <summary>
+        /// The func. checks if the bus has passed a 20 thousand kilometers 
+        /// by "addMileage"
         /// </summary>
         ///<param name="addMileage"></param>
-        /// <returns>false if the bus need a care</returns>
+        /// <returns>false if the bus not need a care</returns>
         public bool CheckCare(uint addMileage)
         {
             if (Mileage + addMileage - LastCareMileage >= 20000)
-                return false;
-            else if (DateTime.Compare(DateTime.Now, lastCare.AddYears(1)) >= 0)
-                return false;
-            return true;
+                return true;
+            return false;
         }
         /// <summary>
         /// Shows whether a bus can travel with the fuel it has
         /// </summary>
         /// <param name="subFuel"></param>
-        /// <returns>False if fuel not enough</returns>
+        /// <returns>false if fuel enough to current drive</returns>
         public bool CheckFuel(uint subFuel)
         {
             if (Fuel - subFuel > 0)
-                return true;
-            return false;
+                return false;
+            return true;
         }
         /// <summary>
         /// Adds the "addmileage" in the "mileage" and reduces the fuel accordingly

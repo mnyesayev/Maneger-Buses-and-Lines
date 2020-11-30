@@ -37,14 +37,21 @@ namespace dotNet5781_03B_3729_1237
                     var tmp = uint.Parse(text.Text);
                     e.Handled = true;
                     Bus bus = (Bus)this.DataContext;
-                    if (!bus.CheckCare(tmp))
+                    if(bus.CheckCare())
                     {
-                        MessageBox.Show("you can't to start drive \ntake the bus to care immediately!"
+                        MessageBox.Show("You can't to start drive \ntake the bus to care immediately!"
+                           , "Care ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        this.Close();
+                        return;
+                    }
+                    if (bus.CheckCare(tmp))
+                    {
+                        MessageBox.Show($"You can't to start drive of {tmp}km, \nconsider taking the bus for care"
                             , "Care ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         this.Close();
                         return;
                     }
-                    else if (!bus.CheckFuel(tmp))
+                    if (bus.CheckFuel(tmp))
                     {
                         MessageBox.Show("you can't to start drive because \nthere is not enough fuel for this trip!"
                                , "Fuel ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -52,8 +59,7 @@ namespace dotNet5781_03B_3729_1237
                         return;
                     }
                     this.Close();
-                    
-                    bus.StartDrive(uint.Parse(text.Text));
+                    bus.StartDrive(tmp);
                     return;
                 }
             }
