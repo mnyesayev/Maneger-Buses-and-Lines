@@ -20,11 +20,11 @@ namespace dotNet5781_03B_3729_1237
     /// </summary>
     public partial class wBusInfo : Window
     {
-     
+
         public wBusInfo()
         {
             InitializeComponent();
-            
+
         }
 
         private void bReful_Click(object sender, RoutedEventArgs e)
@@ -33,6 +33,7 @@ namespace dotNet5781_03B_3729_1237
             new Thread(() =>
             {
                 tmp.State = States.refueling;
+                this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
                 Thread.Sleep(12000);
                 var st = tmp.Refueling();
                 MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -40,9 +41,16 @@ namespace dotNet5781_03B_3729_1237
                     tmp.State = States.mustCare;
                 else
                     tmp.State = States.ready;
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    tb2status.Text = tmp.State.ToString();
+                    tb2fuel.Text = tmp.Fuel.ToString();
+                });
+
             }).Start();
             // refrash the fuel
-            tb2fuel.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
+   
 
         }
 
@@ -56,15 +64,21 @@ namespace dotNet5781_03B_3729_1237
                 this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
                 Thread.Sleep(12000);
                 var str = tmp.Care();
-                this.Dispatcher.Invoke(() => 
-                { tb2DateLastCare.Text = tmp.LastCare.ToString(@"dd/MM/yyyy");
-                  tb2MileageLastCare.Text=tmp.LastCareMileage.ToString();
-                  tmp.State = States.ready;
-                  tb2status.Text = tmp.State.ToString();
-                });
                 
-                MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);   
+                // refresh the data
+                this.Dispatcher.Invoke(() =>
+                {
+                    tb2DateLastCare.Text = tmp.LastCare.ToString(@"dd/MM/yyyy");
+                    tb2MileageLastCare.Text = tmp.LastCareMileage.ToString();
+                    tb2fuel.Text = tmp.Fuel.ToString();
+                    tmp.State = States.ready;
+                    tb2status.Text = tmp.State.ToString();
+                });
+
+                MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);
             }).Start();
         }
+
+        
     }
 }

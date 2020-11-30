@@ -60,7 +60,8 @@ namespace dotNet5781_03B_3729_1237
             // the function do mass in evrey bus. (mileage, last care, etc..)
             massBuses(buses);
             lvBuses.DataContext = buses.Buses;
-            
+
+                   
         }
 
         // the function do mass in evrey bus. (mileage, last care, etc..)
@@ -168,15 +169,17 @@ namespace dotNet5781_03B_3729_1237
             wBusInfo busInfo = new wBusInfo();
             busInfo.DataContext = lvBuses.SelectedItem;
             busInfo.ShowDialog();
-            new Thread(() => 
-            {
-                this.Dispatcher.Invoke(()=> 
-                {  
+            //new Thread(() => 
+            //{
+            //    this.Dispatcher.Invoke(()=> 
+            //    {  
                      
-                });
-            });
+            //    });
+            //});
             lvBuses.Items.Refresh();
         }
+
+
 
         private void sort(GridViewColumnHeader ch, ListSortDirection dir)
         {
@@ -188,6 +191,13 @@ namespace dotNet5781_03B_3729_1237
             dv.SortDescriptions.Add(sd);
             dv.Refresh();
         }
+
+        private void lvBuses_TargetUpdated(object sender, DataTransferEventArgs e)
+        {
+            lvBuses.Items.Refresh();
+        }
+
+       
     }
 }
 
