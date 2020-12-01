@@ -30,7 +30,7 @@
                         Background="#FF64CCF1" Foreground="White"
                         Click="reful_Click"/>
 
-                <Image Source = "imegs\red.png" Width="15"
+                <Image x:Name="ImVisual" Source = "imegs\yellow.png" Width="15"
                        Height="15" Margin="20,0,0,0"/>
             </StackPanel>
         </DataTemplate>
@@ -135,7 +135,7 @@
             FontFamily="Arial" FontSize="22" 
             Margin="3" Background="Azure"
             GridViewColumnHeader.Click="GridViewColumnHeader_ClickedHandler"
-            MouseDoubleClick="lbBuses_MouseDoubleClick"
+            MouseDoubleClick="lbBuses_MouseDoubleClick" TargetUpdated="lvBuses_TargetUpdated"  
             >
             <ListView.View >
                 <GridView>
