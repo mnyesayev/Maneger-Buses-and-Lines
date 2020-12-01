@@ -24,7 +24,8 @@ namespace dotNet5781_03B_3729_1237
         {
             InitializeComponent();
         }
-
+        Thread thStartDrive;
+        public  Thread ThStartDrive { get => thStartDrive; set => thStartDrive = value; }
         private void tbMileage_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
@@ -59,14 +60,18 @@ namespace dotNet5781_03B_3729_1237
                         this.Close();
                         return;
                     }
-                    this.Close();
-                    new Thread(() =>
+                    ThStartDrive= new Thread(() =>
                     {
                         bus.State = States.drive;
-                        Thread.Sleep((int)(tmp/MyRandom.r.Next(20,50))*6000);
+                        var s = MyRandom.r.Next(20, 50);
+                        var t = ((double)tmp / s)*6;
+                        var ts = TimeSpan.FromSeconds(t);
+                        Thread.Sleep(ts);
                         bus.StartDrive(tmp);
                         bus.State = States.ready;
-                    }).Start();
+                    });
+                    ThStartDrive.Start();
+                    this.Close();
                     return;
                 }
             }

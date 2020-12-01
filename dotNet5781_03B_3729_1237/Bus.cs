@@ -80,6 +80,10 @@ namespace dotNet5781_03B_3729_1237
                     lastCare = DateRoadAscent;
                 else
                     lastCare = value;
+                if (CheckCare())
+                    State = States.mustCare;
+                else
+                    state = States.ready;
             }
         }
 
@@ -92,7 +96,9 @@ namespace dotNet5781_03B_3729_1237
             set
             {
                 if (value == 0 || value < Mileage)
-                    lastCareMileage = Mileage;
+                {
+                    lastCareMileage = Mileage;                    
+                }
                 else
                     lastCareMileage = value;
             }

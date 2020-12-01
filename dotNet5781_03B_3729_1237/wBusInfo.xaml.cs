@@ -33,24 +33,24 @@ namespace dotNet5781_03B_3729_1237
         private void bReful_Click(object sender, RoutedEventArgs e)
         {
             Bus tmp = (Bus)this.DataContext;
-            ThFuel= new Thread(() =>
-            {
-                tmp.State = States.refueling;
-                this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
-                Thread.Sleep(6000);
-                var st = tmp.Refueling();
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (tmp.CheckCare())
-                        tmp.State = States.mustCare;
-                    else
-                        tmp.State = States.ready;
-                    tb2status.Text = tmp.State.ToString(); 
-                });
-                MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
-            });
+            ThFuel = new Thread(() =>
+             {
+                 tmp.State = States.refueling;
+                 this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
+                 Thread.Sleep(new TimeSpan(0, 0, 12));
+                 var st = tmp.Refueling();
+                 this.Dispatcher.Invoke(() =>
+                 {
+                     tb2fuel.Text = tmp.Fuel.ToString();
+                     if (tmp.CheckCare())
+                         tmp.State = States.mustCare;
+                     else
+                         tmp.State = States.ready;
+                     tb2status.Text = tmp.State.ToString();
+                 });
+                 MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+             });
             ThFuel.Start();
-
         }
 
         private void bCare_Click(object sender, RoutedEventArgs e)
@@ -61,19 +61,19 @@ namespace dotNet5781_03B_3729_1237
             {
                 tmp.State = States.care;
                 this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
-                Thread.Sleep(12000);
+                Thread.Sleep(new TimeSpan(0, 0, 144));
                 var str = tmp.Care();
-                this.Dispatcher.Invoke(() => 
-                { tb2DateLastCare.Text = tmp.LastCare.ToString(@"dd/MM/yyyy");
-                  tb2MileageLastCare.Text=tmp.LastCareMileage.ToString();
-                  tmp.State = States.ready;
-                  tb2status.Text = tmp.State.ToString();
-                });                
-                MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);   
+                this.Dispatcher.Invoke(() =>
+                {
+                    tb2DateLastCare.Text = tmp.LastCare.ToString(@"dd/MM/yyyy");
+                    tb2MileageLastCare.Text = tmp.LastCareMileage.ToString();
+                    tb2fuel.Text = tmp.Fuel.ToString();
+                    tmp.State = States.ready;
+                    tb2status.Text = tmp.State.ToString();
+                });
+                MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);
             });
             ThCare.Start();
         }
-
-        
     }
 }

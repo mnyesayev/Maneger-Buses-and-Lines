@@ -61,7 +61,7 @@ namespace dotNet5781_03B_3729_1237
             massBuses(buses);
             lvBuses.DataContext = buses.Buses;
 
-                   
+
         }
 
         // the function do mass in evrey bus. (mileage, last care, etc..)
@@ -132,33 +132,52 @@ namespace dotNet5781_03B_3729_1237
             {
                 drive.DataContext = button.DataContext;
                 drive.ShowDialog();
+                new Thread(() =>
+                {
+                    while (drive.ThStartDrive != null && drive.ThStartDrive.IsAlive)
+                        continue;
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        lvBuses.Items.Refresh();
+                    });
+                }).Start();
             }
             lvBuses.Items.Refresh();
         }
-       /* private void windowBusObserver(object sender, BusEventArgs args)
-        {
-            stateChanged(args.State);
-        }
-        void stateChanged(States state)
-        {
+        /* private void windowBusObserver(object sender, BusEventArgs args)
+         {
+             stateChanged(args.State);
+         }
+         void stateChanged(States state)
+         {
 
-        }*/
+         }*/
         private void reful_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             if (button.DataContext is Bus)
             {
                 Bus tmp = (Bus)button.DataContext;
+                Thread thMainFuel = new Thread(() =>
+                 {
+                     tmp.State = States.refueling;
+                     Thread.Sleep(new TimeSpan(0, 0, 12));
+                     var st = tmp.Refueling();
+                     MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+                     if (tmp.CheckCare())
+                         tmp.State = States.mustCare;
+                     else
+                         tmp.State = States.ready;
+                 });
+                thMainFuel.Start();
                 new Thread(() =>
                 {
-                    tmp.State = States.refueling;
-                    Thread.Sleep(12000);
-                    var st = tmp.Refueling();
-                    MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
-                    if (tmp.CheckCare())
-                        tmp.State = States.mustCare;
-                    else
-                        tmp.State = States.ready;
+                    while (thMainFuel.IsAlive)
+                        continue;
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        lvBuses.Items.Refresh();
+                    });
                 }).Start();
             }
             lvBuses.Items.Refresh();
@@ -169,9 +188,9 @@ namespace dotNet5781_03B_3729_1237
             wBusInfo busInfo = new wBusInfo();
             busInfo.DataContext = lvBuses.SelectedItem;
             busInfo.ShowDialog();
-            new Thread(() => 
+            new Thread(() =>
             {
-                while (busInfo.ThCare!=null&&busInfo.ThCare.IsAlive)
+                while (busInfo.ThCare != null && busInfo.ThCare.IsAlive)
                 {
                     continue;
                 }
@@ -179,8 +198,8 @@ namespace dotNet5781_03B_3729_1237
                 {
                     continue;
                 }
-                this.Dispatcher.Invoke(()=> 
-                {  
+                this.Dispatcher.Invoke(() =>
+                {
                     lvBuses.Items.Refresh();
                 });
             }).Start();
@@ -205,7 +224,7 @@ namespace dotNet5781_03B_3729_1237
             lvBuses.Items.Refresh();
         }
 
-       
+
     }
 }
 
