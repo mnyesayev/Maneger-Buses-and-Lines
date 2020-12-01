@@ -170,11 +170,19 @@ namespace dotNet5781_03B_3729_1237
             busInfo.ShowDialog();
             new Thread(() => 
             {
+                while (busInfo.ThCare!=null&&busInfo.ThCare.IsAlive)
+                {
+                    continue;
+                }
+                while (busInfo.ThFuel != null && busInfo.ThFuel.IsAlive)
+                {
+                    continue;
+                }
                 this.Dispatcher.Invoke(()=> 
                 {  
-                     
+                    lvBuses.Items.Refresh();
                 });
-            });
+            }).Start();
             lvBuses.Items.Refresh();
         }
 

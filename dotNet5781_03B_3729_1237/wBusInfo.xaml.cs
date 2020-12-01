@@ -26,32 +26,39 @@ namespace dotNet5781_03B_3729_1237
             InitializeComponent();
             
         }
-
+        Thread thCare;
+        Thread thFuel;
+        public Thread ThCare { get => thCare; private set => thCare = value; }
+        public Thread ThFuel { get => thFuel; private set => thFuel = value; }
         private void bReful_Click(object sender, RoutedEventArgs e)
         {
             Bus tmp = (Bus)this.DataContext;
-            new Thread(() =>
+            ThFuel= new Thread(() =>
             {
                 tmp.State = States.refueling;
-                Thread.Sleep(12000);
+                this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
+                Thread.Sleep(6000);
                 var st = tmp.Refueling();
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (tmp.CheckCare())
+                        tmp.State = States.mustCare;
+                    else
+                        tmp.State = States.ready;
+                    tb2status.Text = tmp.State.ToString(); 
+                });
                 MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
-                if (tmp.CheckCare())
-                    tmp.State = States.mustCare;
-                else
-                    tmp.State = States.ready;
-            }).Start();
-            // refrash the fuel
-            tb2fuel.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
+            });
+            ThFuel.Start();
 
         }
 
         private void bCare_Click(object sender, RoutedEventArgs e)
         {
             Bus tmp = (Bus)this.DataContext;
-            new Thread(() =>
+            ThCare = new Thread(
+            () =>
             {
-
                 tmp.State = States.care;
                 this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
                 Thread.Sleep(12000);
@@ -61,10 +68,10 @@ namespace dotNet5781_03B_3729_1237
                   tb2MileageLastCare.Text=tmp.LastCareMileage.ToString();
                   tmp.State = States.ready;
                   tb2status.Text = tmp.State.ToString();
-                });
-                
+                });                
                 MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);   
-            }).Start();
+            });
+            ThCare.Start();
         }
     }
 }
