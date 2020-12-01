@@ -62,7 +62,7 @@
         
         <TextBlock x:Name="tb2status" Text="{Binding Path=State}"
                    Grid.Column="5" Grid.Row="3" HorizontalAlignment="Right"/>
-        <Image x:Name="Im2Status" Source="{Binding Path= image}" 
+        <Image x:Name="Im2Status" Source="{Binding Path= Image}" 
                HorizontalAlignment="Left" Grid.Column="5" Grid.Row="3"
                Width="15" Height="15"/>
         <Button x:Name="bRefuel" Content="Refuel"
