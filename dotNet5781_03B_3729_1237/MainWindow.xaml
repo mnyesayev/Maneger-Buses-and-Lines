@@ -136,6 +136,12 @@
             >
             <ListView.View >
                 <GridView>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="Background" Value="Azure"></Setter>
+                            <Setter Property="BorderThickness" Value="0"></Setter>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
                     <GridViewColumn x:Name="gvcBusId" Header="Bus ID" Width="140"  
                                     DisplayMemberBinding="{Binding Path=PrintId}" FrameworkElement.FlowDirection="RightToLeft"/>
                     <GridViewColumn x:Name="gvcDra" Header="Date Road Ascent" Width="240"

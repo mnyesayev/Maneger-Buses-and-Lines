@@ -80,9 +80,15 @@ namespace dotNet5781_03B_3729_1237
                 else
                     lastCare = value;
                 if (CheckCare())
+                {
                     State = States.mustCare;
+                    Image = "images/red.png";
+                }
                 else
+                {
                     state = States.ready;
+                    Image = "images/green.png";
+                }
             }
         }
 
