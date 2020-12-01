@@ -93,9 +93,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="140"/>
-            <ColumnDefinition Width="240"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -168,6 +168,18 @@
                 Margin="3,10,0,0.2" Content="Add Bus" FontSize="20"
                 FontWeight="Bold" Click="bAddBus_Click" Style="{DynamicResource style10}"
                 Background="#FF64CCF1" Foreground="White" />
+
+        <Button x:Name="bDelBUs" Grid.Row="6" Grid.Column="2"
+                Margin="3,10,0,0.2" Content="Delete Bus" FontSize="20"
+                FontWeight="Bold"  Style="{DynamicResource style10}"
+                Background="#FF64CCF1" Foreground="White" Click="Click_bDelBus" />
+
+        
+
+        
+
+        
+        
     </Grid>
 
 </Window>

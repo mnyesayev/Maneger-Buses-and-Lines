@@ -36,6 +36,7 @@ namespace dotNet5781_03B_3729_1237
             ThFuel = new Thread(() =>
              {
                  tmp.State = States.refueling;
+                 tmp.Image = "images\\yellow.png";
                  this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
                  Thread.Sleep(new TimeSpan(0, 0, 12));
                  var st = tmp.Refueling();
@@ -43,9 +44,16 @@ namespace dotNet5781_03B_3729_1237
                  {
                      tb2fuel.Text = tmp.Fuel.ToString();
                      if (tmp.CheckCare())
+                     {
                          tmp.State = States.mustCare;
+                         tmp.Image = "images\\red.png";
+                     }
                      else
+                     {
                          tmp.State = States.ready;
+                         tmp.Image = "images\\green.png";
+
+                     }
                      tb2status.Text = tmp.State.ToString();
                  });
                  MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -60,6 +68,7 @@ namespace dotNet5781_03B_3729_1237
             () =>
             {
                 tmp.State = States.care;
+                tmp.Image = "images\\yellow.png";
                 this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
                 Thread.Sleep(new TimeSpan(0, 0, 144));
                 var str = tmp.Care();
