@@ -9,7 +9,7 @@
         Height="auto" Width="auto" Background="Azure"
         FontFamily="ariel">
 
-    <!--template for list box-->
+    <!--template for list view-->
     <Window.Resources>
         <DataTemplate x:Key="Buttons" DataType="local:Bus" >
 

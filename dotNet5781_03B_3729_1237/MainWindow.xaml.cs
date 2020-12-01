@@ -87,11 +87,11 @@ namespace dotNet5781_03B_3729_1237
                 }
                 else if (i == 2)
                 {
-                    buses.Buses[7].Fuel = MyRandom.r.Next(10, 100);
-                    buses.Buses[8].Fuel = MyRandom.r.Next(10, 100);
-                    buses.Buses[9].Fuel = MyRandom.r.Next(10, 100);
                     buses.Buses[10].Fuel = MyRandom.r.Next(10, 100);
                     buses.Buses[11].Fuel = MyRandom.r.Next(10, 100);
+                    buses.Buses[12].Fuel = MyRandom.r.Next(10, 100);
+                    buses.Buses[13].Fuel = MyRandom.r.Next(10, 100);
+                    buses.Buses[14].Fuel = MyRandom.r.Next(10, 100);
                 }
 
             }
@@ -211,7 +211,10 @@ namespace dotNet5781_03B_3729_1237
         private void sort(GridViewColumnHeader ch, ListSortDirection dir)
         {
             var bn = (ch.Column.DisplayMemberBinding as Binding)?.Path.Path;
-            bn = bn ?? ch.Column.Header as string;
+            if (bn == "PrintId")//sort header of PrintId according to Id
+                bn = "Id" ?? ch.Column.Header as string;//sort header of PrintId according to Id
+            else
+                bn = bn ?? ch.Column.Header as string;
             var dv = CollectionViewSource.GetDefaultView(lvBuses.ItemsSource);
             dv.SortDescriptions.Clear();
             var sd = new SortDescription(bn, dir);
