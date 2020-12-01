@@ -59,6 +59,7 @@ namespace dotNet5781_03B_3729_1237
             }
             // the function do mass in evrey bus. (mileage, last care, etc..)
             massBuses(buses);
+            updateImage();
             lvBuses.DataContext = buses.Buses;
 
 
@@ -162,15 +163,25 @@ namespace dotNet5781_03B_3729_1237
                  {
 
                      tmp.State = States.refueling;
+                     tmp.Image = "images\\yellow.png";
                      Thread.Sleep(new TimeSpan(0, 0, 12));
                      var st = tmp.Refueling();
                      MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
                      if (tmp.CheckCare())
+                     {
                          tmp.State = States.mustCare;
+                         tmp.Image = "images\\red.png";
+
+                     }
                      else
+                     {
                          tmp.State = States.ready;
+                         tmp.Image = "images\\green.png";
+
+                     }
                  });
                 thMainFuel.Start();
+                
                 new Thread(() =>
                 {
                     while (thMainFuel.IsAlive)
@@ -228,7 +239,27 @@ namespace dotNet5781_03B_3729_1237
             lvBuses.Items.Refresh();
         }
 
+        private void Click_bDelBus(object sender, RoutedEventArgs e)
+        {
+            
+        }
 
+        private void updateImage()
+        {
+            foreach (var item in buses.Buses)
+            {
+                if (item.State == States.ready)
+                    item.Image = "images\\green.png";
+                else if (item.State == States.drive)
+                    item.Image = "images\\blue.png";
+                else if (item.State == States.care)
+                    item.Image = "images\\yellow.png";
+                else if (item.State == States.refueling)
+                    item.Image = "images\\yellow.png";
+                else if (item.State == States.mustCare)
+                    item.Image = "images\\red.png";
+            }
+        }
     }
 }
 

@@ -63,12 +63,14 @@ namespace dotNet5781_03B_3729_1237
                     ThStartDrive= new Thread(() =>
                     {
                         bus.State = States.drive;
+                        bus.Image = "images\\blue.png";
                         var s = MyRandom.r.Next(20, 50);
                         var t = ((double)tmp / s)*6;
                         var ts = TimeSpan.FromSeconds(t);
                         Thread.Sleep(ts);
                         bus.StartDrive(tmp);
                         bus.State = States.ready;
+                        bus.Image = "images\\green.png";
                     });
                     ThStartDrive.Start();
                     this.Close();
