@@ -8,7 +8,7 @@
         Title="Start Drive" 
         Height="180" Width="400" FontSize="22" 
         FontWeight="Bold" FontFamily="Arial"
-        Icon="imegs\busdrive.png">
+        Icon="images\busdrive.png">
     <Grid>
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="20"/>

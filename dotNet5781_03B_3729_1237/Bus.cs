@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace dotNet5781_03B_3729_1237
 {
@@ -26,8 +28,8 @@ namespace dotNet5781_03B_3729_1237
         DateTime dateRoadAscent;
         DateTime lastCare;
         States state;
-
-        public event EventHandler<BusEventArgs> StateChanged;
+        string image;
+        /*public event EventHandler<BusEventArgs> StateChanged;
         void StateChangedHandler(States state)
         {
             if (StateChanged != null)
@@ -35,10 +37,7 @@ namespace dotNet5781_03B_3729_1237
                 new Thread((obj) => StateChanged(this, (BusEventArgs)obj)
                           ).Start(new BusEventArgs(state));
             }
-        }
-        // get the ToString of the Bus class
-        public string bus { get => ToString(); }
-
+        }*/
 
         /// <summary>
         /// Represents the bus license number
@@ -97,13 +96,15 @@ namespace dotNet5781_03B_3729_1237
             {
                 if (value == 0 || value < Mileage)
                 {
-                    lastCareMileage = Mileage;                    
+                    lastCareMileage = Mileage;
                 }
                 else
                     lastCareMileage = value;
             }
         }
         public States State { get => state; set => state = value; }
+
+        public string Image { get => image; set => image = value; }
 
         /// <summary>
         /// A Ctor who creates a bus and also serves as a default Ctor
@@ -122,10 +123,15 @@ namespace dotNet5781_03B_3729_1237
             LastCare = lastCare;
             LastCareMileage = lastCareMileage;
             if (CheckCare())
+            {
                 State = States.mustCare;
+                Image = "images/red.png";
+            }
             else
+            {
                 State = States.ready;
-
+                Image = "images/green.png";
+            }
         }
         /// <summary>
         /// The function updates the last treatment date and saves its mileage
@@ -152,9 +158,9 @@ namespace dotNet5781_03B_3729_1237
         /// <returns>false if the bus not need a care</returns>
         public bool CheckCare()
         {
-            if (DateTime.Compare(lastCare,DateTime.Now.AddYears(-1)) <= 0)
+            if (DateTime.Compare(lastCare, DateTime.Now.AddYears(-1)) <= 0)
                 return true;
-            return false;  
+            return false;
         }
         /// <summary>
         /// The func. checks if the bus has passed a 20 thousand kilometers 
@@ -220,21 +226,18 @@ namespace dotNet5781_03B_3729_1237
                 return temp;
             }
         }
+
         public override string ToString()
         {
             return $"{PrintId}       {DateRoadAscent.ToString(@"dd/MM/yyyy")}    {Mileage}";
         }
     }
 
-    public class BusEventArgs : EventArgs
+    /*public class BusIcons
     {
-        private States state;
-        public States State { get { return state; } private set { state = value; } }
-        public BusEventArgs(States state)
-        {
-            State=state;
-        }
-    }
+        States status;
+        States
+    }*/
 
-    
+
 }

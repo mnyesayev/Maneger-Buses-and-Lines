@@ -63,7 +63,7 @@ namespace dotNet5781_03B_3729_1237
 
 
         }
-
+        
         // the function do mass in evrey bus. (mileage, last care, etc..)
         public void massBuses(ManageBuses buses)
         {
@@ -99,7 +99,7 @@ namespace dotNet5781_03B_3729_1237
 
         GridViewColumnHeader lastHeaderClicked = null;
         ListSortDirection lastDirection = ListSortDirection.Ascending;
-
+        
         private void GridViewColumnHeader_ClickedHandler(object sender, RoutedEventArgs e)
         {
             if (!(e.OriginalSource is GridViewColumnHeader ch))
@@ -160,6 +160,7 @@ namespace dotNet5781_03B_3729_1237
                 Bus tmp = (Bus)button.DataContext;
                 Thread thMainFuel = new Thread(() =>
                  {
+
                      tmp.State = States.refueling;
                      Thread.Sleep(new TimeSpan(0, 0, 12));
                      var st = tmp.Refueling();

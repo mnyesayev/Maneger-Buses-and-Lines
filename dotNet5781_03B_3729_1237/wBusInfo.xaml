@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:dotNet5781_03B_3729_1237" 
         mc:Ignorable="d"
         Title="Bus Info" Height="450" Width="800"
-        Icon="imegs\info.png" FontSize="17" Background="Azure">
+        Icon="images\info.png" FontSize="17" Background="Azure">
     
     <Grid>
         <Grid.ColumnDefinitions>
