@@ -285,7 +285,11 @@ namespace dotNet5781_03B_3729_1237
 
         private void Click_bDelBus(object sender, RoutedEventArgs e)
         {
-
+            Button button = (Button)sender;
+            var bus = (Bus)button.DataContext;
+            wDelbus delbus = new wDelbus();
+            delbus.DataContext = button.DataContext;
+            delbus.ShowDialog();
         }
 
     }
