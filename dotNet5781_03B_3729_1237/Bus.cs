@@ -29,7 +29,7 @@ namespace dotNet5781_03B_3729_1237
         DateTime lastCare;
         States state;
         string image;
-        
+        int time;
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law
@@ -102,7 +102,7 @@ namespace dotNet5781_03B_3729_1237
         public States State { get => state; set => state = value; }
 
         public string Image { get => image; set => image = value; }
-
+        public int Time { get => time; set => time = value; }
         /// <summary>
         /// A Ctor who creates a bus and also serves as a default Ctor
         /// </summary>

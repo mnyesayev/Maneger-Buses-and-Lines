@@ -37,6 +37,7 @@ namespace dotNet5781_03B_3729_1237
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         // amount of buses
         const int NumBuses = 15;
         private ManageBuses buses = new ManageBuses();
@@ -95,8 +96,10 @@ namespace dotNet5781_03B_3729_1237
             }
         }
 
+
         GridViewColumnHeader lastHeaderClicked = null;
         ListSortDirection lastDirection = ListSortDirection.Ascending;
+
 
         private void GridViewColumnHeader_ClickedHandler(object sender, RoutedEventArgs e)
         {
@@ -156,7 +159,7 @@ namespace dotNet5781_03B_3729_1237
                 if (tmp.State == States.refueling || tmp.State == States.drive || tmp.State == States.care)
                     return;
                 Thread thMainFuel = new Thread(() =>
-                 {
+                {
                      tmp.State = States.refueling;
                      tmp.Image = "images\\yellow.png";
                      Thread.Sleep(new TimeSpan(0, 0, 12));
@@ -174,7 +177,14 @@ namespace dotNet5781_03B_3729_1237
                      }
                  });
                 thMainFuel.Start();
-
+                new Thread(() =>//for change time to ready
+                {
+                    for (tmp.Time = 12; tmp.Time > 0; --tmp.Time)
+                    {
+                       
+                        Thread.Sleep(new TimeSpan(0, 0, 1));
+                    }
+                }).Start();
                 new Thread(() =>
                 {
                     while (thMainFuel.IsAlive)
@@ -193,12 +203,43 @@ namespace dotNet5781_03B_3729_1237
             wBusInfo busInfo = new wBusInfo();
             if (lvBuses.SelectedItem is Bus)
             {
+                Bus bus = (Bus)lvBuses.SelectedItem;
                 busInfo.DataContext = lvBuses.SelectedItem;
-                if (busInfo.ThStatusBarCare != null)
-                    
-
+                if (bus.Fuel < 1200)
+                    busInfo.bRefuel.IsEnabled = true;
+                if(bus.Time!=0)
+                {
+                    busInfo.tb1StatusBar.Visibility = Visibility.Visible;
+                    busInfo.tb2StatusBar.Visibility = Visibility.Visible;
+                    new Thread(() => 
+                    {
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            if (bus.State == States.refueling)
+                                busInfo.bRefuel.IsEnabled = false;
+                        });
+                        while (bus.Time!=0)
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                busInfo.tb2StatusBar.Text =bus.Time.ToString();
+                            });
+                            Thread.Sleep(new TimeSpan(0, 0, 1));
+                        }
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            busInfo.tb2fuel.Text = bus.Fuel.ToString();
+                            busInfo.tb2MileageLastCare.Text = bus.LastCareMileage.ToString();
+                            busInfo.tb2DateLastCare.Text = bus.LastCare.ToString(@"dd/MM/yyyy");
+                            busInfo.tb2Mileage.Text = bus.Mileage.ToString();
+                            busInfo.tb2status.Text = bus.State.ToString();
+                            busInfo.Im2Status.Source = new BitmapImage(new Uri(bus.Image, UriKind.Relative));
+                            busInfo.tb1StatusBar.Visibility = Visibility.Hidden;
+                            busInfo.tb2StatusBar.Visibility = Visibility.Hidden;
+                        });                       
+                    }).Start();
+                }
                 busInfo.ShowDialog();
-               
                 new Thread(() =>
                 {
                     while (busInfo.ThCare != null && busInfo.ThCare.IsAlive)
@@ -219,8 +260,6 @@ namespace dotNet5781_03B_3729_1237
                 lvBuses.Items.Refresh();
             }
         }
-
-
 
         private void sort(GridViewColumnHeader ch, ListSortDirection dir)
         {

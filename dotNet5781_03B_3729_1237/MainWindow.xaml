@@ -145,7 +145,7 @@
                                     DisplayMemberBinding="{Binding Path=PrintId}" FrameworkElement.FlowDirection="RightToLeft"/>
                     <GridViewColumn x:Name="gvcDra" Header="Date Road Ascent" Width="240"
                                     DisplayMemberBinding="{Binding Path=DateRoadAscent, StringFormat=dd/MM/yyyy}"/>
-                    <GridViewColumn x:Name="gvcMileage" Header="Mileage" Width="150"
+                    <GridViewColumn x:Name="gvcMileage" Header="Mileage" Width="120"
                                     DisplayMemberBinding="{Binding Path=Mileage}"/>
                     <GridViewColumn x:Name="gvcButtons" Header="Options" Width="auto"
                                      CellTemplate="{StaticResource Buttons}"/>
@@ -160,8 +160,16 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                   
-                                    
+                    <GridViewColumn x:Name="gvcBar"  Header="ready in"  Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate x:Name="time" >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Time}" Visibility="Hidden" Margin="20,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                 </GridView>
             </ListView.View>
         </ListView>
