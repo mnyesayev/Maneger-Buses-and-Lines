@@ -66,7 +66,6 @@ namespace dotNet5781_03B_3729_1237
             {
                 tBIdBus.IsEnabled = true;
                 ImDRA.Visibility = Visibility.Visible;
-                //dPDRA.IsEnabled = false;
                 tBidBus_TextChanged(sender, e);
                 dPDateLastCare_CalendarClosed(sender, e);
                 tBMileage_TextChanged(sender, e);
@@ -77,6 +76,7 @@ namespace dotNet5781_03B_3729_1237
 
         private void tBidBus_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (tBIdBus.Text.Length == 0 || tBIdBus.IsEnabled == false) return;
             if (sender == null) return;
             if (e == null) return;
             if (Dra.Year >= 2018 && tBIdBus.Text.Length == 8 && uint.TryParse(tBIdBus.Text, out id)
@@ -98,13 +98,12 @@ namespace dotNet5781_03B_3729_1237
                 ImIdBusError.Visibility = Visibility.Visible;
                 ImIdBusOk.Visibility = Visibility.Hidden;
                 tBMileage.IsEnabled = false;
-                //MessageBox.Show("Enter ligal format of bus id", "ERROR ID", MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
         }
 
         private void tBMileage_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (tBMileage.Text.Length == 0 || tBMileage.IsEnabled == false) return;
             if (sender == null) return;
             if (e == null) return;
             if (uint.TryParse(tBMileage.Text, out mileage))
@@ -124,6 +123,7 @@ namespace dotNet5781_03B_3729_1237
 
         private void dPDateLastCare_CalendarClosed(object sender, RoutedEventArgs e)
         {
+            if (dPDateLastCare.SelectedDate == null || dPDateLastCare.IsEnabled == false) return;
             if (sender == null) return;
             if (e == null) return;
             if (dPDateLastCare.SelectedDate >= dPDRA.SelectedDate && dPDateLastCare.SelectedDate <= DateTime.Now)
@@ -143,6 +143,7 @@ namespace dotNet5781_03B_3729_1237
 
         private void tBMileageLastCare_TextChanged(object sender, EventArgs e)
         {
+            if (tbMileage.Text.Length == 0 || tBMileageLastCare.IsEnabled == false) return;
             if (sender == null) return;
             if (e == null) return;
             if (uint.TryParse(tBMileageLastCare.Text, out mileageLastCare) && mileage >= mileageLastCare)

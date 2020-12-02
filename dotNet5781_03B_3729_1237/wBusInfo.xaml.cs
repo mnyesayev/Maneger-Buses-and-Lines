@@ -28,8 +28,13 @@ namespace dotNet5781_03B_3729_1237
         }
         Thread thCare;
         Thread thFuel;
+        Thread thStatusBarCare;
+        Thread thStatusBarRefuel;
         public Thread ThCare { get => thCare; private set => thCare = value; }
         public Thread ThFuel { get => thFuel; private set => thFuel = value; }
+        public Thread ThStatusBarCare { get => thStatusBarCare; private set => thStatusBarCare = value; }
+        public Thread ThStatusBarRefuel { get => thStatusBarRefuel; private set => thStatusBarRefuel = value; }
+
         private void bReful_Click(object sender, RoutedEventArgs e)
         {
             Bus tmp = (Bus)this.DataContext;
@@ -37,10 +42,12 @@ namespace dotNet5781_03B_3729_1237
              {
                  tmp.State = States.refueling;
                  tmp.Image = "images\\yellow.png";
-                 this.Dispatcher.Invoke(() => 
+                 this.Dispatcher.Invoke(() =>
                  {
                      tb2status.Text = tmp.State.ToString();
                      Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
+                     tb1StatusBar.Visibility = Visibility.Visible;
+                     tb2StatusBar.Visibility = Visibility.Visible;
                  });
                  Thread.Sleep(new TimeSpan(0, 0, 12));
                  var st = tmp.Refueling();
@@ -66,6 +73,23 @@ namespace dotNet5781_03B_3729_1237
                  MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
              });
             ThFuel.Start();
+            thStatusBarRefuel = new Thread(() =>
+             {
+                 for (int i = 12; i > 0; --i)
+                 {
+                     this.Dispatcher.Invoke(() =>
+                     {
+                         tb2StatusBar.Text = i.ToString();
+                     });
+                     Thread.Sleep(new TimeSpan(0, 0, 1));
+                 }
+                 this.Dispatcher.Invoke(() =>
+                 {
+                     tb1StatusBar.Visibility = Visibility.Hidden;
+                     tb2StatusBar.Visibility = Visibility.Hidden;
+                 });
+             });
+            thStatusBarRefuel.Start();
         }
 
         private void bCare_Click(object sender, RoutedEventArgs e)
@@ -75,12 +99,13 @@ namespace dotNet5781_03B_3729_1237
             () =>
             {
                 tmp.State = States.care;
-                tmp.Image = "images\\yellow.png";
-                this.Dispatcher.Invoke(() => 
+                tmp.Image = "images\\orange.png";
+                this.Dispatcher.Invoke(() =>
                 {
                     tb2status.Text = tmp.State.ToString();
                     Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
-
+                    tb1StatusBar.Visibility = Visibility.Visible;
+                    tb2StatusBar.Visibility = Visibility.Visible;
                 });
                 Thread.Sleep(new TimeSpan(0, 0, 144));
                 var str = tmp.Care();
@@ -96,6 +121,23 @@ namespace dotNet5781_03B_3729_1237
                 MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);
             });
             ThCare.Start();
+            ThStatusBarCare = new Thread(() =>
+             {
+                 for (int i = 144; i > 0; --i)
+                 {
+                     this.Dispatcher.Invoke(() =>
+                     {
+                         tb2StatusBar.Text = i.ToString();
+                     });
+                     Thread.Sleep(new TimeSpan(0, 0, 1));
+                 }
+                 this.Dispatcher.Invoke(() =>
+                 {
+                     tb1StatusBar.Visibility = Visibility.Hidden;
+                     tb2StatusBar.Visibility = Visibility.Hidden;
+                 });
+             });
+            thStatusBarCare.Start();
         }
     }
 }

@@ -11,7 +11,7 @@
 
     <!--template for list view-->
     <Window.Resources>
-        <DataTemplate x:Key="Buttons" DataType="local:Bus" >
+        <DataTemplate x:Key="Buttons" >
 
             <StackPanel Orientation="Horizontal" >
 
@@ -132,8 +132,7 @@
             FontFamily="Arial" FontSize="22" 
             Margin="3" Background="Azure"
             GridViewColumnHeader.Click="GridViewColumnHeader_ClickedHandler"
-            MouseDoubleClick="lbBuses_MouseDoubleClick" TargetUpdated="lvBuses_TargetUpdated"  
-            >
+            MouseDoubleClick="lbBuses_MouseDoubleClick" >
             <ListView.View >
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>
@@ -161,6 +160,8 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                   
+                                    
                 </GridView>
             </ListView.View>
         </ListView>

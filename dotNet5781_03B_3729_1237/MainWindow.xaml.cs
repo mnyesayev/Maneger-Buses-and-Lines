@@ -59,12 +59,9 @@ namespace dotNet5781_03B_3729_1237
             }
             // the function do mass in evrey bus. (mileage, last care, etc..)
             massBuses(buses);
-            updateImage();
             lvBuses.DataContext = buses.Buses;
-
-
         }
-        
+
         // the function do mass in evrey bus. (mileage, last care, etc..)
         public void massBuses(ManageBuses buses)
         {
@@ -72,19 +69,19 @@ namespace dotNet5781_03B_3729_1237
             {
                 if (i == 0) // Creates a need to do care
                 {
+                    buses.Buses[0].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
                     buses.Buses[1].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
                     buses.Buses[2].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
                     buses.Buses[3].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
                     buses.Buses[4].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
-                    buses.Buses[5].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
                 }
                 else if (i == 1)//Raises the mileage so that care will be needed soon
                 {
+                    buses.Buses[5].Mileage += (uint)MyRandom.r.Next(18500, 19995);
                     buses.Buses[6].Mileage += (uint)MyRandom.r.Next(18500, 19995);
                     buses.Buses[7].Mileage += (uint)MyRandom.r.Next(18500, 19995);
                     buses.Buses[8].Mileage += (uint)MyRandom.r.Next(18500, 19995);
                     buses.Buses[9].Mileage += (uint)MyRandom.r.Next(18500, 19995);
-                    buses.Buses[10].Mileage += (uint)MyRandom.r.Next(18500, 19995);
                 }
                 else if (i == 2)
                 {
@@ -100,7 +97,7 @@ namespace dotNet5781_03B_3729_1237
 
         GridViewColumnHeader lastHeaderClicked = null;
         ListSortDirection lastDirection = ListSortDirection.Ascending;
-        
+
         private void GridViewColumnHeader_ClickedHandler(object sender, RoutedEventArgs e)
         {
             if (!(e.OriginalSource is GridViewColumnHeader ch))
@@ -127,41 +124,39 @@ namespace dotNet5781_03B_3729_1237
 
         private void startDrive_Click(object sender, RoutedEventArgs e)
         {
-            wStartDrive drive = new wStartDrive();
             Button button = (Button)sender;
-            if (button.DataContext is Bus)
+            var bus = (Bus)button.DataContext;
+            if (bus.State == States.care || bus.State == States.drive || bus.State == States.refueling)
+                return;
+            wStartDrive drive = new wStartDrive();
+            drive.DataContext = button.DataContext;
+            drive.ShowDialog();
+            new Thread(() =>
             {
-                drive.DataContext = button.DataContext;
-                drive.ShowDialog();
-                new Thread(() =>
+                while (drive.ThStartDrive != null && drive.ThStartDrive.IsAlive)
                 {
-                    while (drive.ThStartDrive != null && drive.ThStartDrive.IsAlive)
-                        continue;
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        lvBuses.Items.Refresh();
-                    });
-                }).Start();
-            }
+                    Thread.Sleep(TimeSpan.FromSeconds(0.5));
+                    continue;
+                }
+                this.Dispatcher.Invoke(() =>
+                {
+                    lvBuses.Items.Refresh();
+                });
+            }).Start();
             lvBuses.Items.Refresh();
         }
-        /* private void windowBusObserver(object sender, BusEventArgs args)
-         {
-             stateChanged(args.State);
-         }
-         void stateChanged(States state)
-         {
 
-         }*/
         private void reful_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
+
             if (button.DataContext is Bus)
             {
                 Bus tmp = (Bus)button.DataContext;
+                if (tmp.State == States.refueling || tmp.State == States.drive || tmp.State == States.care)
+                    return;
                 Thread thMainFuel = new Thread(() =>
                  {
-
                      tmp.State = States.refueling;
                      tmp.Image = "images\\yellow.png";
                      Thread.Sleep(new TimeSpan(0, 0, 12));
@@ -171,17 +166,15 @@ namespace dotNet5781_03B_3729_1237
                      {
                          tmp.State = States.mustCare;
                          tmp.Image = "images\\red.png";
-
                      }
                      else
                      {
                          tmp.State = States.ready;
                          tmp.Image = "images\\green.png";
-
                      }
                  });
                 thMainFuel.Start();
-                
+
                 new Thread(() =>
                 {
                     while (thMainFuel.IsAlive)
@@ -198,24 +191,33 @@ namespace dotNet5781_03B_3729_1237
         private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             wBusInfo busInfo = new wBusInfo();
-            busInfo.DataContext = lvBuses.SelectedItem;
-            busInfo.ShowDialog();
-            new Thread(() =>
+            if (lvBuses.SelectedItem is Bus)
             {
-                while (busInfo.ThCare != null && busInfo.ThCare.IsAlive)
+                busInfo.DataContext = lvBuses.SelectedItem;
+                if (busInfo.ThStatusBarCare != null)
+                    
+
+                busInfo.ShowDialog();
+               
+                new Thread(() =>
                 {
-                    continue;
-                }
-                while (busInfo.ThFuel != null && busInfo.ThFuel.IsAlive)
-                {
-                    continue;
-                }
-                this.Dispatcher.Invoke(() =>
-                {
-                    lvBuses.Items.Refresh();
-                });
-            }).Start();
-            lvBuses.Items.Refresh();
+                    while (busInfo.ThCare != null && busInfo.ThCare.IsAlive)
+                    {
+                        Thread.Sleep(TimeSpan.FromSeconds(0.5));
+                        continue;
+                    }
+                    while (busInfo.ThFuel != null && busInfo.ThFuel.IsAlive)
+                    {
+                        Thread.Sleep(TimeSpan.FromSeconds(0.5));
+                        continue;
+                    }
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        lvBuses.Items.Refresh();
+                    });
+                }).Start();
+                lvBuses.Items.Refresh();
+            }
         }
 
 
@@ -223,10 +225,16 @@ namespace dotNet5781_03B_3729_1237
         private void sort(GridViewColumnHeader ch, ListSortDirection dir)
         {
             var bn = (ch.Column.DisplayMemberBinding as Binding)?.Path.Path;
-            if (bn == "PrintId")//sort header of PrintId according to Id
+            if (bn == "PrintId")
                 bn = "Id" ?? ch.Column.Header as string;//sort header of PrintId according to Id
             else
+            {
                 bn = bn ?? ch.Column.Header as string;
+                if (bn == "Options")
+                    return;//not should sorted. 
+                if (bn == "Status")
+                    bn = "State";//sort header of Status according to State
+            }
             var dv = CollectionViewSource.GetDefaultView(lvBuses.ItemsSource);
             dv.SortDescriptions.Clear();
             var sd = new SortDescription(bn, dir);
@@ -234,32 +242,13 @@ namespace dotNet5781_03B_3729_1237
             dv.Refresh();
         }
 
-        private void lvBuses_TargetUpdated(object sender, DataTransferEventArgs e)
-        {
-            lvBuses.Items.Refresh();
-        }
+
 
         private void Click_bDelBus(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
-        private void updateImage()
-        {
-            foreach (var item in buses.Buses)
-            {
-                if (item.State == States.ready)
-                    item.Image = "images\\green.png";
-                else if (item.State == States.drive)
-                    item.Image = "images\\blue.png";
-                else if (item.State == States.care)
-                    item.Image = "images\\yellow.png";
-                else if (item.State == States.refueling)
-                    item.Image = "images\\yellow.png";
-                else if (item.State == States.mustCare)
-                    item.Image = "images\\red.png";
-            }
-        }
     }
 }
 

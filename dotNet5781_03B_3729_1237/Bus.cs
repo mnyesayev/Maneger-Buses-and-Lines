@@ -29,16 +29,7 @@ namespace dotNet5781_03B_3729_1237
         DateTime lastCare;
         States state;
         string image;
-        /*public event EventHandler<BusEventArgs> StateChanged;
-        void StateChangedHandler(States state)
-        {
-            if (StateChanged != null)
-            {
-                new Thread((obj) => StateChanged(this, (BusEventArgs)obj)
-                          ).Start(new BusEventArgs(state));
-            }
-        }*/
-
+        
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law
@@ -82,12 +73,12 @@ namespace dotNet5781_03B_3729_1237
                 if (CheckCare())
                 {
                     State = States.mustCare;
-                    Image = "images/red.png";
+                    Image = "images\\red.png";
                 }
                 else
                 {
                     state = States.ready;
-                    Image = "images/green.png";
+                    Image = "images\\green.png";
                 }
             }
         }
@@ -131,12 +122,12 @@ namespace dotNet5781_03B_3729_1237
             if (CheckCare())
             {
                 State = States.mustCare;
-                Image = "images/red.png";
+                Image = "images\\red.png";
             }
             else
             {
                 State = States.ready;
-                Image = "images/green.png";
+                Image = "images\\green.png";
             }
         }
         /// <summary>
@@ -160,11 +151,14 @@ namespace dotNet5781_03B_3729_1237
         }
         /// <summary>
         /// The func. checks if the bus has passed a year since the last care
+        /// or drive another 20000 mileage 
         /// </summary>
         /// <returns>false if the bus not need a care</returns>
         public bool CheckCare()
         {
             if (DateTime.Compare(lastCare, DateTime.Now.AddYears(-1)) <= 0)
+                return true;
+            if (Mileage - LastCareMileage >= 20000)
                 return true;
             return false;
         }
@@ -238,12 +232,5 @@ namespace dotNet5781_03B_3729_1237
             return $"{PrintId}       {DateRoadAscent.ToString(@"dd/MM/yyyy")}    {Mileage}";
         }
     }
-
-    /*public class BusIcons
-    {
-        States status;
-        States
-    }*/
-
 
 }
