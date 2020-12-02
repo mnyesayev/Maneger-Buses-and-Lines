@@ -37,12 +37,17 @@ namespace dotNet5781_03B_3729_1237
              {
                  tmp.State = States.refueling;
                  tmp.Image = "images\\yellow.png";
-                 this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
+                 this.Dispatcher.Invoke(() => 
+                 {
+                     tb2status.Text = tmp.State.ToString();
+                     Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
+                 });
                  Thread.Sleep(new TimeSpan(0, 0, 12));
                  var st = tmp.Refueling();
                  this.Dispatcher.Invoke(() =>
                  {
                      tb2fuel.Text = tmp.Fuel.ToString();
+
                      if (tmp.CheckCare())
                      {
                          tmp.State = States.mustCare;
@@ -55,6 +60,8 @@ namespace dotNet5781_03B_3729_1237
 
                      }
                      tb2status.Text = tmp.State.ToString();
+                     Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
+
                  });
                  MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
              });
@@ -69,7 +76,12 @@ namespace dotNet5781_03B_3729_1237
             {
                 tmp.State = States.care;
                 tmp.Image = "images\\yellow.png";
-                this.Dispatcher.Invoke(() => { tb2status.Text = tmp.State.ToString(); });
+                this.Dispatcher.Invoke(() => 
+                {
+                    tb2status.Text = tmp.State.ToString();
+                    Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
+
+                });
                 Thread.Sleep(new TimeSpan(0, 0, 144));
                 var str = tmp.Care();
                 this.Dispatcher.Invoke(() =>
@@ -79,6 +91,7 @@ namespace dotNet5781_03B_3729_1237
                     tb2fuel.Text = tmp.Fuel.ToString();
                     tmp.State = States.ready;
                     tb2status.Text = tmp.State.ToString();
+                    Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
                 });
                 MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);
             });
