@@ -41,9 +41,8 @@ namespace dotNet5781_03B_3729_1237
                 tmp.Image = "images\\yellow.png";
                 this.Dispatcher.Invoke(() =>
                 {
+                    bCare.IsEnabled = false;
                     bRefuel.IsEnabled = false;
-                    tb2status.Text = tmp.State.ToString();
-                    Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
                     tb1StatusBar.Visibility = Visibility.Visible;
                     tb2StatusBar.Visibility = Visibility.Visible;
                 });
@@ -51,20 +50,17 @@ namespace dotNet5781_03B_3729_1237
                 var st = tmp.Refueling();
                 this.Dispatcher.Invoke(() =>
                 {
-                     tb2fuel.Text = tmp.Fuel.ToString();
-                     if (tmp.CheckCare())
-                     {
-                         tmp.State = States.mustCare;
-                         tmp.Image = "images\\red.png";
-                     }
-                     else
-                     {
-                         tmp.State = States.ready;
-                         tmp.Image = "images\\green.png";
-                     }
-                     tb2status.Text = tmp.State.ToString();
-                     Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
-                     bRefuel.IsEnabled = true;
+                    if (tmp.CheckCare())
+                    {
+                        tmp.State = States.mustCare;
+                        tmp.Image = "images\\red.png";
+                    }
+                    else
+                    {
+                        tmp.State = States.ready;
+                        tmp.Image = "images\\green.png";
+                    }
+                    bCare.IsEnabled = true;
                 });
                 MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
             });
@@ -75,17 +71,16 @@ namespace dotNet5781_03B_3729_1237
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                    tb2StatusBar.Text = tmp.Time.ToString();
+                        tb2StatusBar.Text = tmp.Time.ToString();
                     });
                     Thread.Sleep(new TimeSpan(0, 0, 1));
                 }
                 this.Dispatcher.Invoke(() =>
                 {
-                tb1StatusBar.Visibility = Visibility.Hidden;
-                tb2StatusBar.Visibility = Visibility.Hidden;
+                    tb1StatusBar.Visibility = Visibility.Hidden;
+                    tb2StatusBar.Visibility = Visibility.Hidden;
                 });
             }).Start();
-
         }
         private void bCare_Click(object sender, RoutedEventArgs e)
         {
@@ -99,21 +94,15 @@ namespace dotNet5781_03B_3729_1237
                 this.Dispatcher.Invoke(() =>
                 {
                     bCare.IsEnabled = false;
-                    tb2status.Text = tmp.State.ToString();
-                    Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
+                    bRefuel.IsEnabled = false;                   
                     tb1StatusBar.Visibility = Visibility.Visible;
                     tb2StatusBar.Visibility = Visibility.Visible;
                 });
                 Thread.Sleep(new TimeSpan(0, 0, 144));
                 var str = tmp.Care();
                 this.Dispatcher.Invoke(() =>
-                {
-                    tb2DateLastCare.Text = tmp.LastCare.ToString(@"dd/MM/yyyy");
-                    tb2MileageLastCare.Text = tmp.LastCareMileage.ToString();
-                    tb2fuel.Text = tmp.Fuel.ToString();
+                {                    
                     tmp.State = States.ready;
-                    tb2status.Text = tmp.State.ToString();
-                    Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
                     bCare.IsEnabled = true;
                 });
                 MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);

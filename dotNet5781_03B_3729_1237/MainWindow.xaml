@@ -142,20 +142,20 @@
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
                     <GridViewColumn x:Name="gvcBusId" Header="Bus ID" Width="140"  
-                                    DisplayMemberBinding="{Binding Path=PrintId}" FrameworkElement.FlowDirection="RightToLeft"/>
+                                    DisplayMemberBinding="{Binding Path=PrintId,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                     <GridViewColumn x:Name="gvcDra" Header="Date Road Ascent" Width="240"
-                                    DisplayMemberBinding="{Binding Path=DateRoadAscent, StringFormat=dd/MM/yyyy}"/>
+                                    DisplayMemberBinding="{Binding Path=DateRoadAscent, StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                     <GridViewColumn x:Name="gvcMileage" Header="Mileage" Width="120"
-                                    DisplayMemberBinding="{Binding Path=Mileage}"/>
+                                    DisplayMemberBinding="{Binding Path=Mileage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                     <GridViewColumn x:Name="gvcButtons" Header="Options" Width="auto"
                                      CellTemplate="{StaticResource Buttons}"/>
                     <GridViewColumn x:Name="gvcState" Header="Status" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate x:Name="icons" >
                                 <StackPanel Orientation="Horizontal">
-                                    <Image x:Name="ImVisual" Source = "{Binding Image}" Width="15"
+                                    <Image x:Name="ImVisual" Source = "{Binding Image,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Width="15"
                                             Height="15" Margin="20,0,0,0"/>
-                                    <TextBlock Text="{Binding State}" Margin="20,0,0,0"/>
+                                    <TextBlock Text="{Binding State,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -163,9 +163,7 @@
                     <GridViewColumn x:Name="gvcBar"  Header="ready in"  Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate x:Name="time" >
-                                <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Time}" Visibility="Hidden" Margin="20,0,0,0"/>
-                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -182,13 +180,6 @@
                 Margin="3,10,0,0.2" Content="Delete Bus" FontSize="20"
                 FontWeight="Bold"  Style="{DynamicResource style10}"
                 Background="#FF64CCF1" Foreground="White" Click="Click_bDelBus" />
-
-        
-
-        
-
-        
-        
     </Grid>
 
 </Window>

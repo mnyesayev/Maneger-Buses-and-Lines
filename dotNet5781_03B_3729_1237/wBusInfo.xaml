@@ -43,31 +43,31 @@
                    Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1Mileage" Text="Total Mileage:"
                    Grid.Column="1" Grid.Row="4"/>
-        <TextBlock x:Name="tb2Mileage" Text="{Binding Path=Mileage}"
+        <TextBlock x:Name="tb2Mileage" Text="{Binding Path=Mileage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                    Grid.Column="2" Grid.Row="4" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1DateLastCare" Text="The last care was at:"
                    Grid.Column="1" Grid.Row="5"/>
-        <TextBlock x:Name="tb2DateLastCare" Text="{Binding Path=LastCare,StringFormat=dd/MM/yyyy, UpdateSourceTrigger=Default}"
+        <TextBlock x:Name="tb2DateLastCare" Text="{Binding Path=LastCare,StringFormat=dd/MM/yyyy, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                    Grid.Column="2" Grid.Row="5" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1MileageLastCare" Text="Mileage in last care:"
                    Grid.Column="1" Grid.Row="6"/>
-        <TextBlock x:Name="tb2MileageLastCare" Text="{Binding Path = LastCareMileage}"
+        <TextBlock x:Name="tb2MileageLastCare" Text="{Binding Path = LastCareMileage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                    Grid.Column="2" Grid.Row="6" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1fuel" Text="Have fuel for:"
                    Grid.Column="4" Grid.Row="2"/>
-        <TextBlock x:Name="tb2fuel" Text="{Binding Path=Fuel, UpdateSourceTrigger=Default}"
+        <TextBlock x:Name="tb2fuel" Text="{Binding Path=Fuel, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                    Grid.Column="5" Grid.Row="2" HorizontalAlignment="Right"/>
         <TextBlock x:Name="tb1status" Text="Bus status:"
                    Grid.Column="4" Grid.Row="3"/>
-        
-        <TextBlock x:Name="tb2status" Text="{Binding Path=State}"
+
+        <TextBlock x:Name="tb2status" Text="{Binding Path=State,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                    Grid.Column="5" Grid.Row="3" HorizontalAlignment="Right"/>
-        <Image x:Name="Im2Status" Source="{Binding Path= Image}" 
+        <Image x:Name="Im2Status" Source="{Binding Path= Image,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" 
                HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="5" Grid.Row="3"
                Width="30" Height="30"/>
         <TextBlock x:Name="tb1StatusBar" Text="Will be ready in:" 
                    Grid.Column="4" Grid.Row="4" Visibility="Hidden"/>
-        <TextBlock x:Name="tb2StatusBar" Text="{Binding}" 
+        <TextBlock x:Name="tb2StatusBar" Text="{Binding }" 
                    Grid.Column="5" Grid.Row="4" Visibility="Hidden"/>
         <Button x:Name="bRefuel" Content="Refuel" 
                 Grid.Column="1" Grid.ColumnSpan="2" IsEnabled="False"

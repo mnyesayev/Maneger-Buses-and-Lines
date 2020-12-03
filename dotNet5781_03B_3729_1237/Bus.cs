@@ -2,7 +2,9 @@
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +21,7 @@ namespace dotNet5781_03B_3729_1237
     /// The class represents a single bus
     /// with functionality to monitor its integrity and suitability for travel
     /// </summary>
-    public class Bus
+    public class Bus : INotifyPropertyChanged
     {
         uint id;
         uint mileage;
@@ -30,6 +32,13 @@ namespace dotNet5781_03B_3729_1237
         States state;
         string image;
         int time;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law
@@ -51,7 +60,10 @@ namespace dotNet5781_03B_3729_1237
             set
             {
                 if (!(mileage >= value))
+                {
                     mileage = value;
+                    OnPropertyChanged();
+                }
             }
         }
         /// <summary>
@@ -68,6 +80,7 @@ namespace dotNet5781_03B_3729_1237
                     State = States.mustRefuel;
                     Image = "images\\red.png";
                 }
+                OnPropertyChanged();
             }
         }
         /// <summary>
@@ -92,6 +105,7 @@ namespace dotNet5781_03B_3729_1237
                     state = States.ready;
                     Image = "images\\green.png";
                 }
+                OnPropertyChanged();
             }
         }
 
@@ -109,12 +123,31 @@ namespace dotNet5781_03B_3729_1237
                 }
                 else
                     lastCareMileage = value;
+                OnPropertyChanged();
             }
         }
-        public States State { get => state; set => state = value; }
+        public States State
+        {
+            get => state; set
+            {
+                state = value; OnPropertyChanged();
+            }
+        }
 
-        public string Image { get => image; set => image = value; }
-        public int Time { get => time; set => time = value; }
+        public string Image
+        {
+            get => image; set
+            {
+                image = value; OnPropertyChanged();
+            }
+        }
+        public int Time
+        {
+            get => time; set
+            {
+                time = value; OnPropertyChanged();
+            }
+        }
         /// <summary>
         /// A Ctor who creates a bus and also serves as a default Ctor
         /// </summary>
