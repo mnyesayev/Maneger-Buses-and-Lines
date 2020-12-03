@@ -70,8 +70,21 @@ namespace dotNet5781_03B_3729_1237
                         var ts = TimeSpan.FromSeconds(t);
                         Thread.Sleep(ts);
                         bus.StartDrive(tmp);
-                        bus.State = States.ready;
-                        bus.Image = "images\\green.png";
+                        if (bus.CheckCare())
+                        {
+                            bus.State = States.mustCare;
+                            bus.Image = "images\\red.png";
+                        }
+                        else if (bus.CheckFuel(0))
+                        {
+                            bus.State = States.mustRefuel;
+                            bus.Image = "images\\red.png";
+                        }
+                        else
+                        {
+                            bus.State = States.ready;
+                            bus.Image = "images\\green.png";
+                        }
                     });
                     ThStartDrive.Start();
                     new Thread(() =>//for change time to ready

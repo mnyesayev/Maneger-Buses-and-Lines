@@ -161,10 +161,9 @@ namespace dotNet5781_03B_3729_1237
                 Thread thMainFuel = new Thread(() =>
                 {
                      tmp.State = States.refueling;
-                     tmp.Image = "images\\yellow.png";
-                     Thread.Sleep(new TimeSpan(0, 0, 12));
+                     tmp.Image = "images\\yellow.png"; 
+                    Thread.Sleep(new TimeSpan(0, 0, 12));
                      var st = tmp.Refueling();
-                     MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
                      if (tmp.CheckCare())
                      {
                          tmp.State = States.mustCare;
@@ -175,7 +174,8 @@ namespace dotNet5781_03B_3729_1237
                          tmp.State = States.ready;
                          tmp.Image = "images\\green.png";
                      }
-                 });
+                    MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+                });
                 thMainFuel.Start();
                 new Thread(() =>//for change time to ready
                 {
@@ -214,7 +214,7 @@ namespace dotNet5781_03B_3729_1237
                     {
                         this.Dispatcher.Invoke(() =>
                         {
-                            if (bus.State != States.ready && bus.State != States.mustCare)
+                            if (bus.State != States.ready && bus.State != States.mustCare&&bus.State!=States.mustRefuel)
                             {
                                 busInfo.bRefuel.IsEnabled = false;
                                 busInfo.bCare.IsEnabled = false;

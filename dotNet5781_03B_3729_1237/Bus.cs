@@ -13,7 +13,7 @@ namespace dotNet5781_03B_3729_1237
 {
     public enum States
     {
-        ready, drive, refueling, care, mustCare
+        ready, drive, refueling, care, mustCare, mustRefuel
     }
     /// <summary>
     /// The class represents a single bus
@@ -57,7 +57,19 @@ namespace dotNet5781_03B_3729_1237
         /// <summary>
         /// Shows how many miles the bus can travel further
         /// </summary>
-        public int Fuel { get => fuel; set => fuel = value; }
+        public int Fuel
+        {
+            get => fuel;
+            set
+            {
+                fuel = value;
+                if (CheckFuel(0))
+                {
+                    State = States.mustRefuel;
+                    Image = "images\\red.png";
+                }
+            }
+        }
         /// <summary>
         /// Displays the date of the last treatment in the garage
         /// </summary>
