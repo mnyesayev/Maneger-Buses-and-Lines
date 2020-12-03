@@ -285,11 +285,19 @@ namespace dotNet5781_03B_3729_1237
 
         private void Click_bDelBus(object sender, RoutedEventArgs e)
         {
-            Button button = (Button)sender;
-            var bus = (Bus)button.DataContext;
             wDelbus delbus = new wDelbus();
-            delbus.DataContext = button.DataContext;
+            
             delbus.ShowDialog();
+            Bus busToDel = buses.SearchBus(delbus.IdDelbus);
+            if (busToDel != null)
+            {
+                if (MessageBox.Show("are you sure ?", "delete Bus", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    buses.Buses.Remove(busToDel);
+                else return;
+            }
+            else MessageBox.Show("The bus not exsist ", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+
+           
         }
 
     }

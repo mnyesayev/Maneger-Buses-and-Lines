@@ -28,6 +28,6 @@
         <TextBlock x:Name="tbTitle" Text="Enter id of the bus you wont to delete:" 
                    Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" FontWeight="Bold"/>
         <TextBox x:Name="TbBusId" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" 
-                 FontWeight="Bold" VerticalAlignment="Stretch"/>
+                 FontWeight="Bold" VerticalAlignment="Stretch" PreviewKeyDown="tbBusId_PreviewKeyDown"/>
     </Grid>
 </Window>
