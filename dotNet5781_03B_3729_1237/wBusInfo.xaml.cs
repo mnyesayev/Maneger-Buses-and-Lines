@@ -64,10 +64,7 @@ namespace dotNet5781_03B_3729_1237
                      }
                      tb2status.Text = tmp.State.ToString();
                      Im2Status.Source = new BitmapImage(new Uri(tmp.Image, UriKind.Relative));
-                    bRefuel.IsEnabled = true;
-
-
-
+                     bRefuel.IsEnabled = true;
                 });
                 MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
             });

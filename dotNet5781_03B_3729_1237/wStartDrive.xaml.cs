@@ -34,6 +34,7 @@ namespace dotNet5781_03B_3729_1237
 
             if (e.Key == Key.Enter || e.Key == Key.Return)
             {
+                double t=0;
                 if (text.Text.Length > 0)
                 {
                     var tmp = uint.Parse(text.Text);
@@ -65,7 +66,7 @@ namespace dotNet5781_03B_3729_1237
                         bus.State = States.drive;
                         bus.Image = "images\\blue.png";
                         var s = MyRandom.r.Next(20, 50);
-                        var t = ((double)tmp / s)*6;
+                        t =Math.Ceiling( ((double)tmp / s)*6);
                         var ts = TimeSpan.FromSeconds(t);
                         Thread.Sleep(ts);
                         bus.StartDrive(tmp);
@@ -73,6 +74,13 @@ namespace dotNet5781_03B_3729_1237
                         bus.Image = "images\\green.png";
                     });
                     ThStartDrive.Start();
+                    new Thread(() =>//for change time to ready
+                    {
+                        for (bus.Time = (int)t; bus.Time > 0; --bus.Time)
+                        {
+                            Thread.Sleep(new TimeSpan(0, 0, 1));
+                        }
+                    }).Start();
                     this.Close();
                     return;
                 }

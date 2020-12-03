@@ -181,7 +181,6 @@ namespace dotNet5781_03B_3729_1237
                 {
                     for (tmp.Time = 12; tmp.Time > 0; --tmp.Time)
                     {
-                       
                         Thread.Sleep(new TimeSpan(0, 0, 1));
                     }
                 }).Start();
@@ -215,8 +214,11 @@ namespace dotNet5781_03B_3729_1237
                     {
                         this.Dispatcher.Invoke(() =>
                         {
-                            if (bus.State == States.refueling)
+                            if (bus.State != States.ready && bus.State != States.mustCare)
+                            {
                                 busInfo.bRefuel.IsEnabled = false;
+                                busInfo.bCare.IsEnabled = false;
+                            }
                         });
                         while (bus.Time!=0)
                         {
@@ -236,6 +238,10 @@ namespace dotNet5781_03B_3729_1237
                             busInfo.Im2Status.Source = new BitmapImage(new Uri(bus.Image, UriKind.Relative));
                             busInfo.tb1StatusBar.Visibility = Visibility.Hidden;
                             busInfo.tb2StatusBar.Visibility = Visibility.Hidden;
+                            if (bus.Fuel < 1200)
+                                busInfo.bRefuel.IsEnabled = true;
+                            if (bus.State == States.ready || bus.State == States.mustCare)
+                                busInfo.bCare.IsEnabled = true;
                         });                       
                     }).Start();
                 }

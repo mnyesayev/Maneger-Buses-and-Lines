@@ -70,7 +70,7 @@
         <TextBlock x:Name="tb2StatusBar" Text="{Binding}" 
                    Grid.Column="5" Grid.Row="4" Visibility="Hidden"/>
         <Button x:Name="bRefuel" Content="Refuel" 
-                Grid.Column="1" Grid.ColumnSpan="2"
+                Grid.Column="1" Grid.ColumnSpan="2" IsEnabled="False"
                 Grid.Row="7" Click="bReful_Click"/>
         <Button x:Name="bCare" Content="Care" 
                 Grid.Column="4" Grid.ColumnSpan="2"
