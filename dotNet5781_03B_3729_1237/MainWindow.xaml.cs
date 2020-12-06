@@ -273,7 +273,7 @@ namespace dotNet5781_03B_3729_1237
                     buses.Buses.Remove(busToDel);
                 else return;
             }
-            else 
+            else if(delbus.TbBusId.Text.Length!=0&&busToDel==null)
                 MessageBox.Show("The bus not exsist ", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
