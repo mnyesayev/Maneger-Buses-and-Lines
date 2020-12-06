@@ -158,5 +158,8 @@
   <ItemGroup>
     <Resource Include="images\ok.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\trash.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
