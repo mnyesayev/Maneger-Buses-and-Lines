@@ -137,45 +137,44 @@ namespace dotNet5781_03B_3729_1237
             drive.ShowDialog();
         }
 
-        private void reful_Click(object sender, RoutedEventArgs e)
+        private void refuel_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
 
             if (button.DataContext is Bus)
             {
                 Bus tmp = (Bus)button.DataContext;
+                if (tmp.Fuel == 1200)
+                {
+                    MessageBox.Show("This bus with full thank!", "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
                 if (tmp.State == States.refueling || tmp.State == States.drive || tmp.State == States.care)
                     return;
-               /* ListViewItem lvi=(ListViewItem)(lvBuses.ItemContainerGenerator.ContainerFromItem(lvBuses.Items.CurrentItem));
-                ContentPresenter myCP = FindVisualChild<ContentPresenter>(lvi);
-                DataTemplate myDT = myCP.ContentTemplate;
-                TextBlock myTB = (TextBlock)myDT.FindName("tbTime", myCP);*/
+             
                 Thread thMainFuel = new Thread(() =>
+            {
+                tmp.State = States.refueling;
+                tmp.Image = "images\\yellow.png";
+                tmp.Time = 12;
+                for (; tmp.Time > 0; --tmp.Time)
                 {
-                    tmp.State = States.refueling;
-                    tmp.Image = "images\\yellow.png";
-                    Thread.Sleep(new TimeSpan(0, 0, 12));
-                    var st = tmp.Refueling();
-                    if (tmp.CheckCare())
-                    {
-                        tmp.State = States.mustCare;
-                        tmp.Image = "images\\red.png";
-                    }
-                    else
-                    {
-                        tmp.State = States.ready;
-                        tmp.Image = "images\\green.png";
-                    }
-                    MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
-                });
+                    Thread.Sleep(new TimeSpan(0, 0, 1));
+                }
+                var st = tmp.Refueling();
+                if (tmp.CheckCare())
+                {
+                    tmp.State = States.mustCare;
+                    tmp.Image = "images\\red.png";
+                }
+                else
+                {
+                    tmp.State = States.ready;
+                    tmp.Image = "images\\green.png";
+                }
+                MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
+            });
                 thMainFuel.Start();
-                new Thread(() =>//for change time to ready
-                {
-                    for (tmp.Time = 12; tmp.Time > 0; --tmp.Time)
-                    {
-                        Thread.Sleep(new TimeSpan(0, 0, 1));
-                    }
-                }).Start();
             }
         }
 
@@ -191,7 +190,6 @@ namespace dotNet5781_03B_3729_1237
                 if (bus.Time != 0)
                 {
                     busInfo.tb1StatusBar.Visibility = Visibility.Visible;
-                    busInfo.tb2StatusBar.Visibility = Visibility.Visible;
                     new Thread(() =>
                     {
                         this.Dispatcher.Invoke(() =>
@@ -204,16 +202,11 @@ namespace dotNet5781_03B_3729_1237
                         });
                         while (bus.Time != 0)
                         {
-                            this.Dispatcher.Invoke(() =>
-                            {
-                                busInfo.tb2StatusBar.Text = bus.Time.ToString();
-                            });
                             Thread.Sleep(new TimeSpan(0, 0, 1));
                         }
                         this.Dispatcher.Invoke(() =>
-                        {                           
+                        {
                             busInfo.tb1StatusBar.Visibility = Visibility.Hidden;
-                            busInfo.tb2StatusBar.Visibility = Visibility.Hidden;
                             if (bus.Fuel < 1200)
                                 busInfo.bRefuel.IsEnabled = true;
                             if (bus.State == States.ready || bus.State == States.mustCare)
@@ -233,7 +226,7 @@ namespace dotNet5781_03B_3729_1237
             else
             {
                 bn = bn ?? ch.Column.Header as string;
-                if (bn == "Options")
+                if (bn == "Options"||bn=="Ready in")
                     return;//not should sorted. 
                 if (bn == "Status")
                     bn = "State";//sort header of Status according to State
@@ -245,25 +238,27 @@ namespace dotNet5781_03B_3729_1237
             dv.Refresh();
         }
 
-        /*private childItem FindVisualChild<childItem>(DependencyObject obj)
+        private DependencyObject FindVisualChild<childItem>(DependencyObject obj)
             where childItem : DependencyObject
         {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); ++i)
             {
+                if (VisualTreeHelper.GetChildrenCount(obj) == 6)
+                    return obj;
                 DependencyObject child = VisualTreeHelper.GetChild(obj, i);
                 if (child != null && child is childItem)
                 {
-                    return (childItem)child;
+                    return child;
                 }
                 else
                 {
-                    childItem childOfChild = FindVisualChild<childItem>(child);
+                    DependencyObject childOfChild = FindVisualChild<childItem>(child);
                     if (childOfChild != null)
                         return childOfChild;
                 }
             }
             return null;
-        }*/
+        }
 
 
         private void Click_bDelBus(object sender, RoutedEventArgs e)

@@ -31,7 +31,7 @@ namespace dotNet5781_03B_3729_1237
         public Thread ThCare { get => thCare; private set => thCare = value; }
         public Thread ThFuel { get => thFuel; private set => thFuel = value; }
 
-        private void bReful_Click(object sender, RoutedEventArgs e)
+        private void bRefuel_Click(object sender, RoutedEventArgs e)
         {
             Bus tmp = (Bus)this.DataContext;
             if (tmp.State == States.refueling) return;//Protection test
@@ -44,9 +44,12 @@ namespace dotNet5781_03B_3729_1237
                     bCare.IsEnabled = false;
                     bRefuel.IsEnabled = false;
                     tb1StatusBar.Visibility = Visibility.Visible;
-                    tb2StatusBar.Visibility = Visibility.Visible;
                 });
-                Thread.Sleep(new TimeSpan(0, 0, 12));
+                tmp.Time = 12;
+                for (; tmp.Time > 0; --tmp.Time)
+                {
+                    Thread.Sleep(new TimeSpan(0, 0, 1));
+                }
                 var st = tmp.Refueling();
                 this.Dispatcher.Invoke(() =>
                 {
@@ -61,26 +64,11 @@ namespace dotNet5781_03B_3729_1237
                         tmp.Image = "images\\green.png";
                     }
                     bCare.IsEnabled = true;
+                    tb1StatusBar.Visibility = Visibility.Hidden;
                 });
                 MessageBox.Show(st, "Refuel", MessageBoxButton.OK, MessageBoxImage.Information);
             });
             ThFuel.Start();
-            new Thread(() =>
-            {
-                for (tmp.Time = 12; tmp.Time > 0; --tmp.Time)
-                {
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        tb2StatusBar.Text = tmp.Time.ToString();
-                    });
-                    Thread.Sleep(new TimeSpan(0, 0, 1));
-                }
-                this.Dispatcher.Invoke(() =>
-                {
-                    tb1StatusBar.Visibility = Visibility.Hidden;
-                    tb2StatusBar.Visibility = Visibility.Hidden;
-                });
-            }).Start();
         }
         private void bCare_Click(object sender, RoutedEventArgs e)
         {
@@ -96,34 +84,22 @@ namespace dotNet5781_03B_3729_1237
                     bCare.IsEnabled = false;
                     bRefuel.IsEnabled = false;                   
                     tb1StatusBar.Visibility = Visibility.Visible;
-                    tb2StatusBar.Visibility = Visibility.Visible;
                 });
-                Thread.Sleep(new TimeSpan(0, 0, 144));
+                tmp.Time = 144;
+                for (; tmp.Time > 0; --tmp.Time)
+                {
+                    Thread.Sleep(new TimeSpan(0, 0, 1));
+                }
                 var str = tmp.Care();
                 this.Dispatcher.Invoke(() =>
-                {                    
+                {
+                    tb1StatusBar.Visibility = Visibility.Hidden;
                     tmp.State = States.ready;
                     bCare.IsEnabled = true;
                 });
                 MessageBox.Show(str, "Care", MessageBoxButton.OK, MessageBoxImage.Information);
             });
             ThCare.Start();
-            new Thread(() =>//for change time to ready
-            {
-                for (tmp.Time = 144; tmp.Time > 0; --tmp.Time)
-                {
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        tb2StatusBar.Text = tmp.Time.ToString();
-                    });
-                    Thread.Sleep(new TimeSpan(0, 0, 1));
-                }
-                this.Dispatcher.Invoke(() =>
-                {
-                    tb1StatusBar.Visibility = Visibility.Hidden;
-                    tb2StatusBar.Visibility = Visibility.Hidden;
-                });
-            }).Start();
         }
     }
 }

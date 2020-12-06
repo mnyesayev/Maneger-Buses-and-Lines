@@ -145,7 +145,8 @@ namespace dotNet5781_03B_3729_1237
         {
             get => time; set
             {
-                time = value; OnPropertyChanged();
+                time = value;
+                OnPropertyChanged();
             }
         }
         /// <summary>
@@ -183,7 +184,7 @@ namespace dotNet5781_03B_3729_1237
             LastCare = DateTime.Now;
             LastCareMileage = mileage;
             this.Refueling();
-            return ("You can drive now another 20,000 miles safely :)");
+            return string.Format("Bus {0} can drive now another 20,000 miles safely :)",PrintId);
 
         }
         /// <summary>
@@ -192,7 +193,7 @@ namespace dotNet5781_03B_3729_1237
         public string Refueling()
         {
             Fuel = 1200;
-            return ("You have now full tank :)");
+            return string.Format("To Bus: {0} have now full tank :)",PrintId);
         }
         /// <summary>
         /// The func. checks if the bus has passed a year since the last care

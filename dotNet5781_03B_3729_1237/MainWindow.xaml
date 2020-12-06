@@ -28,7 +28,7 @@
                         Margin="30,0,0,0" 
                         Style="{DynamicResource style10}"
                         Background="#FF64CCF1" Foreground="White"
-                        Click="reful_Click"/>
+                        Click="refuel_Click"/>
             </StackPanel>
         </DataTemplate>
         <Style x:Key="FocusVisual">
@@ -162,8 +162,10 @@
                     </GridViewColumn>
                     <GridViewColumn x:Name="gvcBar"  Header="ready in"  Width="auto">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate x:Name="time" >
-                                    <TextBlock Text="{Binding Time}" Visibility="Hidden" Margin="20,0,0,0"/>
+                            <DataTemplate>
+                                <StackPanel Margin="20,0,0,0">
+                                    <TextBlock Text="{Binding Path=Time,StringFormat=#;;;,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Visibility="Visible"/>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
