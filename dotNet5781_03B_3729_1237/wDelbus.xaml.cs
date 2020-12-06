@@ -23,10 +23,10 @@ namespace dotNet5781_03B_3729_1237
         public wDelbus()
         {
             InitializeComponent();
-           
+
         }
 
-        public uint IdDelbus { get => idDelbus;  private set => idDelbus = value; }
+        public uint IdDelbus { get => idDelbus; private set => idDelbus = value; }
 
         private void tbBusId_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -42,7 +42,7 @@ namespace dotNet5781_03B_3729_1237
                     e.Handled = true;
                     this.Close();
                 }
-                
+
             }
             if (e.Key == Key.NumPad0 || e.Key == Key.NumPad1 || e.Key == Key.NumPad2 ||
                     e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || e.Key == Key.NumPad5 || e.Key == Key.NumPad6 ||

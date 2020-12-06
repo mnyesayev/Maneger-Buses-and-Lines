@@ -25,7 +25,7 @@ namespace dotNet5781_03B_3729_1237
             InitializeComponent();
         }
         Thread thStartDrive;
-        public  Thread ThStartDrive { get => thStartDrive; set => thStartDrive = value; }
+        public Thread ThStartDrive { get => thStartDrive; set => thStartDrive = value; }
         private void tbMileage_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
@@ -34,13 +34,13 @@ namespace dotNet5781_03B_3729_1237
 
             if (e.Key == Key.Enter || e.Key == Key.Return)
             {
-                double t=0;
+                double t = 0;
                 if (text.Text.Length > 0)
                 {
                     var tmp = uint.Parse(text.Text);
                     e.Handled = true;
                     Bus bus = (Bus)this.DataContext;
-                    if(bus.CheckCare())
+                    if (bus.CheckCare())
                     {
                         MessageBox.Show("You can't to start drive \ntake the bus to care immediately!"
                            , "Care ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -61,33 +61,33 @@ namespace dotNet5781_03B_3729_1237
                         this.Close();
                         return;
                     }
-                    ThStartDrive= new Thread(() =>
-                    {
-                        bus.State = States.drive;
-                        bus.Image = "images\\blue.png";
-                        var s = MyRandom.r.Next(20, 50);
-                        t =Math.Ceiling( ((double)tmp / s)*6);
-                        for (bus.Time = (int)t; bus.Time > 0; --bus.Time)
-                        {
-                            Thread.Sleep(new TimeSpan(0, 0, 1));
-                        }
-                        bus.StartDrive(tmp);
-                        if (bus.CheckCare())
-                        {
-                            bus.State = States.mustCare;
-                            bus.Image = "images\\red.png";
-                        }
-                        else if (bus.CheckFuel(0))
-                        {
-                            bus.State = States.mustRefuel;
-                            bus.Image = "images\\red.png";
-                        }
-                        else
-                        {
-                            bus.State = States.ready;
-                            bus.Image = "images\\green.png";
-                        }
-                    });
+                    ThStartDrive = new Thread(() =>
+                     {
+                         bus.State = States.drive;
+                         bus.Image = "images\\blue.png";
+                         var s = MyRandom.r.Next(20, 50);
+                         t = Math.Ceiling(((double)tmp / s) * 6);
+                         for (bus.Time = (int)t; bus.Time > 0; --bus.Time)
+                         {
+                             Thread.Sleep(new TimeSpan(0, 0, 1));
+                         }
+                         bus.StartDrive(tmp);
+                         if (bus.CheckCare())
+                         {
+                             bus.State = States.mustCare;
+                             bus.Image = "images\\red.png";
+                         }
+                         else if (bus.CheckFuel(0))
+                         {
+                             bus.State = States.mustRefuel;
+                             bus.Image = "images\\red.png";
+                         }
+                         else
+                         {
+                             bus.State = States.ready;
+                             bus.Image = "images\\green.png";
+                         }
+                     });
                     ThStartDrive.Start();
                     this.Close();
                     return;

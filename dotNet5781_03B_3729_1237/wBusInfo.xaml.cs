@@ -82,7 +82,7 @@ namespace dotNet5781_03B_3729_1237
                 this.Dispatcher.Invoke(() =>
                 {
                     bCare.IsEnabled = false;
-                    bRefuel.IsEnabled = false;                   
+                    bRefuel.IsEnabled = false;
                     tb1StatusBar.Visibility = Visibility.Visible;
                 });
                 tmp.Time = 144;

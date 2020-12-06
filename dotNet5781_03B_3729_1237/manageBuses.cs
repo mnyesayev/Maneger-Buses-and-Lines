@@ -31,40 +31,9 @@ namespace dotNet5781_03B_3729_1237
         /// </summary>
         /// <param name="dateRoadAscent"></param>
         /// <param name="id"></param>
-        public void AddBus(DateTime dateRoadAscent, int idBus)
+        public void AddBus(DateTime dateRoadAscent, uint idBus)
         {
-            uint id=this.CheckId(dateRoadAscent, (uint)idBus);
-            Buses.Add(new Bus(dateRoadAscent, id));
-        }
-        /// <summary>
-        /// Checks the correctness of the license number in the system
-        /// and handles irregular cases
-        /// </summary>
-        /// <param name="dateRoadAscent"></param>
-        /// <param name="id"></param>
-        /// <returns>Proper id</returns>
-        public uint CheckId(DateTime dateRoadAscent, uint id)
-        {
-            bool temp = false;
-            do
-            {
-                temp = false;
-                Bus bus = this.SearchBus(id);
-                if (dateRoadAscent.Year < 2018 && (id <= 9999999 && id >= 1000000) && bus == null)
-                    return id;
-                else if (dateRoadAscent.Year >= 2018 && (id <= 99999999 && id >= 10000000) && bus == null)
-                    return id;
-                else
-                {
-                    temp = true;
-                    if (bus != null)
-                        Console.WriteLine("This id already exists! Try again");
-                    else
-                        Console.WriteLine("Wrong input! Try Again.");
-                    uint.TryParse(Console.ReadLine(), out id);
-                }
-            } while (temp);
-            return 1;//If an unexpected fault has occurred
+            Buses.Add(new Bus(dateRoadAscent, idBus));
         }
 
         /// <summary>
@@ -83,45 +52,6 @@ namespace dotNet5781_03B_3729_1237
                     return bus;
             }
             return null;
-        }
-        /// <summary>
-        /// A function selects a bus according to its id and checks if it can 
-        /// make the trip otherwise it prints a message accordingly
-        /// </summary>
-        /// <param name="id"></param>
-        public void ChooseBus(uint id)
-        {
-            Bus bus = this.SearchBus(id);
-            if (bus == null)
-            {
-                Console.WriteLine("This bus not exsits");
-                return;
-            }
-            Random r = new Random(DateTime.Now.Millisecond);
-            uint lengthRoute = (uint)r.Next(1200);
-            if (bus.CheckCare(lengthRoute) && bus.CheckFuel(lengthRoute))
-                bus.StartDrive(lengthRoute);
-            else
-                Console.WriteLine("The bus cannot make the trip");
-        }
-        /// <summary>
-        /// The function offers service to the driver according to his request.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="choice"></param>
-        public void DriverService(uint id, char choice)
-        {
-            Bus bus = this.SearchBus(id);
-            if (bus == null)
-            {
-                Console.WriteLine("This bus not exsits");
-                return;
-            }
-            if (choice == 'f' || choice == 'F')
-                bus.Refueling();
-            if (choice == 'C' || choice == 'c')
-                bus.Care();
-            return;
         }
         /// <summary>
         /// The function prints the bus license how many miles each bus has performed 

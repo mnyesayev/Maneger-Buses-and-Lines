@@ -151,7 +151,7 @@ namespace dotNet5781_03B_3729_1237
                 }
                 if (tmp.State == States.refueling || tmp.State == States.drive || tmp.State == States.care)
                     return;
-             
+
                 Thread thMainFuel = new Thread(() =>
             {
                 tmp.State = States.refueling;
@@ -226,7 +226,7 @@ namespace dotNet5781_03B_3729_1237
             else
             {
                 bn = bn ?? ch.Column.Header as string;
-                if (bn == "Options"||bn=="Ready in")
+                if (bn == "Options" || bn == "Ready in")
                     return;//not should sorted. 
                 if (bn == "Status")
                     bn = "State";//sort header of Status according to State
