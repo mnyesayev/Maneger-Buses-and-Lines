@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:dotNet5781_03B_3729_1237"
         mc:Ignorable="d"
         Title="Delete Bus" Height="180" Width="450" FontSize="22"
-                FontWeight="Bold" FontFamily="Arial" Icon="images\trash.png"
->
+        FontWeight="Bold" FontFamily="Arial" Icon="images\trash.png"
+        WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>

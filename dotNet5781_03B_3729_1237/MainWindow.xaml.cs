@@ -277,6 +277,10 @@ namespace dotNet5781_03B_3729_1237
                 MessageBox.Show("The bus not exsist ", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            Environment.Exit(Environment.ExitCode);
+        }
     }
 }
 

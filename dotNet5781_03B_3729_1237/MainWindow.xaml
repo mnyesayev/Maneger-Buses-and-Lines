@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title=" Manager buses" Icon="images\bus.png" 
         Height="auto" Width="auto" Background="Azure"
-        FontFamily="ariel">
+        FontFamily="ariel" Closing="MainWindow_Closing">
 
     <!--template for list view-->
     <Window.Resources>
@@ -122,16 +122,10 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="titlebus" Text="Hello everyone"
+        <TextBlock x:Name="titlebus" Text="Hello to manege bus fleet "
                    Grid.Column="1" Grid.ColumnSpan="2"
                    Grid.Row="1" FontSize="22" FontWeight="Bold"
                    />
-
-        <Border Grid.Column="1" Grid.ColumnSpan="6"
-                Grid.Row="3" Grid.RowSpan="3"
-                CornerRadius="6" BorderThickness="0"
-                BorderBrush="#FF64CCF1">
-        </Border>
 
         <ListView 
             ItemsSource="{Binding}"

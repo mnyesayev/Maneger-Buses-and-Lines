@@ -31,6 +31,10 @@ namespace dotNet5781_03B_3729_1237
         public Thread ThCare { get => thCare; private set => thCare = value; }
         public Thread ThFuel { get => thFuel; private set => thFuel = value; }
 
+
+        /// <summary>
+        /// start Thread for refuel the bus
+        /// </summary>
         private void bRefuel_Click(object sender, RoutedEventArgs e)
         {
             Bus tmp = (Bus)this.DataContext;
@@ -39,6 +43,7 @@ namespace dotNet5781_03B_3729_1237
             {
                 tmp.State = States.refueling;
                 tmp.Image = "images\\yellow.png";
+                // update GUI
                 this.Dispatcher.Invoke(() =>
                 {
                     bCare.IsEnabled = false;
@@ -51,6 +56,7 @@ namespace dotNet5781_03B_3729_1237
                     Thread.Sleep(new TimeSpan(0, 0, 1));
                 }
                 var st = tmp.Refueling();
+               // update GUI
                 this.Dispatcher.Invoke(() =>
                 {
                     if (tmp.CheckCare())
@@ -70,6 +76,10 @@ namespace dotNet5781_03B_3729_1237
             });
             ThFuel.Start();
         }
+
+        /// <summary>
+        /// start Thread for start care the bus
+        /// </summary>
         private void bCare_Click(object sender, RoutedEventArgs e)
         {
             Bus tmp = (Bus)this.DataContext;
@@ -79,6 +89,7 @@ namespace dotNet5781_03B_3729_1237
             {
                 tmp.State = States.care;
                 tmp.Image = "images\\orange.png";
+                // update GUI
                 this.Dispatcher.Invoke(() =>
                 {
                     bCare.IsEnabled = false;
@@ -91,6 +102,7 @@ namespace dotNet5781_03B_3729_1237
                     Thread.Sleep(new TimeSpan(0, 0, 1));
                 }
                 var str = tmp.Care();
+                // update GUI
                 this.Dispatcher.Invoke(() =>
                 {
                     tb1StatusBar.Visibility = Visibility.Hidden;
