@@ -47,7 +47,6 @@
         <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
-        
         <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
         <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
         <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
@@ -124,8 +123,7 @@
 
         <TextBlock x:Name="titlebus" Text="Hello to manege bus fleet "
                    Grid.Column="1" Grid.ColumnSpan="2"
-                   Grid.Row="1" FontSize="22" FontWeight="Bold"
-                   />
+                   Grid.Row="1" FontSize="22" FontWeight="Bold"/>
 
         <ListView 
             ItemsSource="{Binding}"
