@@ -49,15 +49,24 @@ namespace dotNet5781_03B_3729_1237
 
             // randem id to the bus
             uint id;
-            for (int i = 0; i < NumBuses; i++)
+            for (int i = 0; i < 5; i++)
             {
-                var DRA = new DateTime(MyRandom.r.Next(2016, 2020), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
+                var DRA = new DateTime(MyRandom.r.Next(2016, 2019), MyRandom.r.Next(1, 12), MyRandom.r.Next(1, 29));
                 if (DRA.Year < 2018)
                     id = (uint)MyRandom.r.Next(1000000, 9999999);
                 else
                     id = (uint)MyRandom.r.Next(10000000, 99999999);
-                buses.Buses.Add(new Bus(DRA, id, (uint)MyRandom.r.Next(10000, 400000)
-                , lastCare: new DateTime(DRA.Year + 1, DRA.Month, DRA.Day)));
+                buses.Buses.Add(new Bus(DRA, id, (uint)MyRandom.r.Next(10000, 400000)));
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                var DRA = new DateTime(MyRandom.r.Next(2016, 2020), MyRandom.r.Next(1, 12), MyRandom.r.Next(1, 29));
+                if (DRA.Year < 2018)
+                    id = (uint)MyRandom.r.Next(1000000, 9999999);
+                else
+                    id = (uint)MyRandom.r.Next(10000000, 99999999);
+                buses.Buses.Add(new Bus(DRA, id, (uint)MyRandom.r.Next(10000, 400000),
+                    lastCare: new DateTime(2020, DRA.Month, DRA.Day)));
             }
             // the function do mass in evrey bus. (mileage, last care, etc..)
             massBuses(buses);
@@ -71,11 +80,11 @@ namespace dotNet5781_03B_3729_1237
             {
                 if (i == 0) // Creates a need to do care
                 {
-                    buses.Buses[0].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
-                    buses.Buses[1].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
-                    buses.Buses[2].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
-                    buses.Buses[3].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
-                    buses.Buses[4].LastCare = new DateTime(MyRandom.r.Next(2018, 2019), MyRandom.r.Next(1, 11), MyRandom.r.Next(1, 28));
+                    buses.Buses[0].LastCare = new DateTime(MyRandom.r.Next(2018, 2020), MyRandom.r.Next(1, 12), MyRandom.r.Next(1, 28));
+                    buses.Buses[1].LastCare = new DateTime(MyRandom.r.Next(2018, 2020), MyRandom.r.Next(1, 12), MyRandom.r.Next(1, 28));
+                    buses.Buses[2].LastCare = new DateTime(MyRandom.r.Next(2018, 2020), MyRandom.r.Next(1, 12), MyRandom.r.Next(1, 28));
+                    buses.Buses[3].LastCare = new DateTime(MyRandom.r.Next(2018, 2020), MyRandom.r.Next(1, 12), MyRandom.r.Next(1, 28));
+                    buses.Buses[4].LastCare = new DateTime(MyRandom.r.Next(2018, 2020), MyRandom.r.Next(1, 12), MyRandom.r.Next(1, 28));
                 }
                 else if (i == 1)//Raises the mileage so that care will be needed soon
                 {
@@ -269,8 +278,15 @@ namespace dotNet5781_03B_3729_1237
             Bus busToDel = buses.SearchBus(delbus.IdDelbus);
             if (busToDel != null)
             {
+                if(busToDel.Time!=0)
+                {
+                    MessageBox.Show("You can't delete the bus!\n is in uses", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 if (MessageBox.Show("are you sure ?", "delete Bus", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
                     buses.Buses.Remove(busToDel);
+                }
                 else return;
             }
             else if(delbus.TbBusId.Text.Length!=0&&busToDel==null)

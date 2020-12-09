@@ -34,20 +34,28 @@ namespace dotNet5781_03B_3729_1237
 
         private void bDoneAddBus_Click(object sender, RoutedEventArgs e)
         {
-            if (ImDRA.Visibility != Visibility.Visible
+            if (rbOld.IsChecked == true && (ImDRA.Visibility != Visibility.Visible
                 || ImIdBusOk.Visibility != Visibility.Visible
                 || ImMileageOk.Visibility != Visibility.Visible
                 || ImDateLastCareOk.Visibility != Visibility.Visible
-                || ImMileageLastCareOk.Visibility != Visibility.Visible)
+                || ImMileageLastCareOk.Visibility != Visibility.Visible))
             {
-                MessageBox.Show("Fill in all the fields", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Fill in all fields correctly", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (rbNew.IsChecked == true && (ImDRA.Visibility != Visibility.Visible
+                || ImIdBusOk.Visibility != Visibility.Visible))
+            {
+                MessageBox.Show("Fill in all fields correctly", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
                 newBus = new Bus(Dra, id);
-                newBus.Mileage = mileage;
-                newBus.LastCareMileage = mileageLastCare;
-                newBus.LastCare = dateLastCare;
+                if (rbOld.IsChecked == true)
+                {
+                    newBus.Mileage = mileage;
+                    newBus.LastCareMileage = mileageLastCare;
+                    newBus.LastCare = dateLastCare;
+                }
                 this.Close();
             }
         }
@@ -60,16 +68,19 @@ namespace dotNet5781_03B_3729_1237
                 return;
             if (Dra > DateTime.Now)
             {
-                MessageBox.Show("you can not enter futher date!", "ERROR DATE", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("You can not enter futher date!", "ERROR DATE", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
                 tBIdBus.IsEnabled = true;
                 ImDRA.Visibility = Visibility.Visible;
                 tBidBus_TextChanged(sender, e);
-                dPDateLastCare_CalendarClosed(sender, e);
-                tBMileage_TextChanged(sender, e);
-                tBMileageLastCare_TextChanged(sender, e);
+                if (rbOld.IsChecked == true)
+                {
+                    dPDateLastCare_CalendarClosed(sender, e);
+                    tBMileage_TextChanged(sender, e);
+                    tBMileageLastCare_TextChanged(sender, e);
+                }
             }
         }
 
@@ -143,7 +154,7 @@ namespace dotNet5781_03B_3729_1237
 
         private void tBMileageLastCare_TextChanged(object sender, EventArgs e)
         {
-            if (tbMileage.Text.Length == 0 || tBMileageLastCare.IsEnabled == false) return;
+            if (tBMileageLastCare.Text.Length == 0 || tBMileageLastCare.IsEnabled == false) return;
             if (sender == null) return;
             if (e == null) return;
             if (uint.TryParse(tBMileageLastCare.Text, out mileageLastCare) && mileage >= mileageLastCare)
@@ -156,6 +167,35 @@ namespace dotNet5781_03B_3729_1237
                 ImMileageLastCareError.Visibility = Visibility.Visible;
                 ImMileageLastCareOk.Visibility = Visibility.Hidden;
             }
+        }
+
+        private void rbNew_Click(object sender, RoutedEventArgs e)
+        {
+            tbMileage.Visibility = Visibility.Hidden;
+            tBMileage.Visibility = Visibility.Hidden;
+            tbMileageLastCare.Visibility = Visibility.Hidden;
+            tBMileageLastCare.Visibility = Visibility.Hidden;
+            tbDateLastCare.Visibility = Visibility.Hidden;
+            dPDateLastCare.Visibility = Visibility.Hidden;
+            ImDateLastCareError.Visibility = Visibility.Hidden;
+            ImDateLastCareOk.Visibility = Visibility.Hidden;
+            ImMileageLastCareError.Visibility = Visibility.Hidden;
+            ImMileageLastCareOk.Visibility = Visibility.Hidden;
+            ImMileageOk.Visibility = Visibility.Hidden;
+            ImMileageError.Visibility = Visibility.Hidden;
+        }
+
+        private void rbOld_Click(object sender, RoutedEventArgs e)
+        {
+            tbMileage.Visibility = Visibility.Visible;
+            tBMileage.Visibility = Visibility.Visible;
+            tbMileageLastCare.Visibility = Visibility.Visible;
+            tBMileageLastCare.Visibility = Visibility.Visible;
+            tbDateLastCare.Visibility = Visibility.Visible;
+            dPDateLastCare.Visibility = Visibility.Visible;
+            dPDateLastCare_CalendarClosed(sender, e);
+            tBMileage_TextChanged(sender, e);
+            tBMileageLastCare_TextChanged(sender, e);
         }
     }
 }
