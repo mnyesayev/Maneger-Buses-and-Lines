@@ -273,7 +273,6 @@ namespace dotNet5781_03B_3729_1237
         private void Click_bDelBus(object sender, RoutedEventArgs e)
         {
             wDelbus delbus = new wDelbus();
-
             delbus.ShowDialog();
             Bus busToDel = buses.SearchBus(delbus.IdDelbus);
             if (busToDel != null)
