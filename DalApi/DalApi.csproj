@@ -41,9 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsecutiveStops.cs" />
     <Compile Include="DalApi.cs" />
     <Compile Include="BusDO.cs" />
+    <Compile Include="DriverDO.cs" />
+    <Compile Include="GoBusDO.cs" />
+    <Compile Include="LineDO.cs" />
+    <Compile Include="OutLineDO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BusStopDO.cs" />
+    <Compile Include="StopLineDO.cs" />
+    <Compile Include="UserDO.cs" />
+    <Compile Include="UserGoDO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
