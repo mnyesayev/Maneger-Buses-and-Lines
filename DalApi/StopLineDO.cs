@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    public class StopLineDO
+    /// <summary>
+    /// The class represents a line stop/station, in the DO layer
+    /// </summary>
+    public class StopLine
     {
-        int idLine;
-        int codeStop;
-        int numStopInLine;
-
-        public int IdLine { get => idLine; set => idLine = value; }
-        public int CodeStop { get => codeStop; set => codeStop = value; }
-        public int NumStopInLine { get => numStopInLine; set => numStopInLine = value; }
-
-        public StopLineDO(int idLine, int codeStop, int numStopInLine)
-        {
-            IdLine = idLine;
-            CodeStop = codeStop;
-            NumStopInLine = numStopInLine;
-        }
+        /// <summary>
+        /// Represents the inner unique number of the "Line"
+        /// </summary>
+        public int IdLine { get; set; }
+        /// <summary>
+        /// Represents the unique code of the "BusStop"
+        /// </summary>
+        public int CodeStop { get; set; }
+        /// <summary>
+        /// Represents the number Stop/station in line
+        /// </summary>
+        public int NumStopInLine { get; set; }
     }
 }

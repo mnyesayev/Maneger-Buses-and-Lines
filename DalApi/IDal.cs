@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalApi;
-using DS;
-using DO;
-namespace Dal
+
+namespace DalApi
 {
-    public class Dal
+    public interface IDal
     {
+        void Create<T>(T t);
+        void update<T>(T t);
+        void del<T>(T t);
     }
 }

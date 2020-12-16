@@ -41,8 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsecutiveStops.cs" />
-    <Compile Include="DalApi.cs" />
+    <Compile Include="ConsecutiveStopsDO.cs" />
+    <Compile Include="EnumsDO.cs" />
+    <Compile Include="IDal.cs" />
     <Compile Include="BusDO.cs" />
     <Compile Include="DalConfig.cs" />
     <Compile Include="DalFactory.cs" />

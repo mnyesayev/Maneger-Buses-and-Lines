@@ -7,59 +7,40 @@ using System.Threading.Tasks;
 namespace DO
 {
     /// <summary>
-    /// The class presents a station, in the DO layer
+    /// The class represents a station, in the DO layer
     /// </summary>
-    public class BusStopDO
+    public class BusStop
     {
-        int codeBusStop;
-        double longitude;
-        double latitude;
-        string nameBusStop;
-        string address;
-        string moreInfo;
+        /// <summary>
+        ///  Represents if this class active
+        /// </summary>
+        public bool Active { get; set; }
         /// <summary>
         /// Represents the unique number of the "BusStop"
         /// </summary>
-        public int CodeBusStop { get => codeBusStop; set => codeBusStop = value; }
+        public int CodeBusStop { get ; set ; }
         /// <summary>
         /// Represents the longitude location
         /// </summary>
-        public double Longitude { get => longitude; set => longitude = value; }
+        public double Longitude { get ; set ; }
         /// <summary>
         /// Represents the latitude location
         /// </summary>
-        public double Latitude { get => latitude; set => latitude = value; }
+        public double Latitude { get ; set ; }
         /// <summary>
         /// Represents the name of Bus stop/station
         /// </summary>
-        public string NameBusStop { get => nameBusStop; set => nameBusStop = value; }
+        public string NameBusStop { get ; set; }
         /// <summary>
         /// Represents the address of Bus stop/station
         /// </summary>
-        public string Address { get => address; set => address = value; }
+        public string Address { get ; set ; }
         /// <summary>
         /// Represents more info about the stop/station 
         /// such as: Roof, disabled access, digital panel, etc.
         /// </summary>
-        public string MoreInfo { get => moreInfo; set => moreInfo = value; }
-        /// <summary>
-        /// Ctor of BusStopDO
-        /// </summary>
-        /// <param name="codeBusStop">a unique number of the "BusStop"</param>
-        /// <param name="longitude">a longitude location</param>
-        /// <param name="latitude">a latitude location</param>
-        /// <param name="nameBusStop">a name of Bus stop/station</param>
-        /// <param name="address">a address of Bus stop/station</param>
-        /// <param name="moreInfo">a more info about the stop/station</param>
-        public BusStopDO(int codeBusStop = 0, double longitude = 0, double latitude = 0,
-        string nameBusStop = "", string address = "", string moreInfo = "")
-        {
-            CodeBusStop = codeBusStop;
-            Longitude = longitude;
-            Latitude = latitude;
-            NameBusStop = nameBusStop;
-            Address = address;
-            MoreInfo = moreInfo;
-        }
+        public string MoreInfo { get ; set ; }
+        
+        
     }
 }

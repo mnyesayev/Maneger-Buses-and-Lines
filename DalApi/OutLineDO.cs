@@ -6,23 +6,30 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    public class OutLineDO
+    /// <summary>
+    ///the class represents a out line (hours and frequency),in the DO layer 
+    /// </summary>
+    public class OutLine
     {
-        int idLine;
-        TimeSpan startTime;
-        TimeSpan frequency;
-        TimeSpan endTime;
-        public int IdLine { get => idLine; set => idLine = value; }
-        public TimeSpan StartTime { get => startTime; set => startTime = value; }
-        public TimeSpan Frequency { get => frequency; set => frequency = value; }
-        public TimeSpan EndTime { get => endTime; set => endTime = value; }
-
-        public OutLineDO(int idLine,TimeSpan startTime,TimeSpan frequency,TimeSpan endTime)
-        {
-             IdLine=idLine;
-             StartTime=startTime;
-             Frequency=frequency;
-             EndTime=endTime;
-        }
+        /// <summary>
+        ///  Represents if this class active
+        /// </summary>
+        public bool Active { get; set; }
+        /// <summary>
+        /// Represents the unique inner number of the "Line"
+        /// </summary>
+        public int IdLine { get; set ; }
+        /// <summary>
+        /// Represents the time of start line
+        /// </summary>
+        public TimeSpan StartTime { get ; set ; }
+        /// <summary>
+        /// Represents the frequency of line per hour
+        /// </summary>
+        public int Frequency { get ; set ; }
+        /// <summary>
+        /// Represents the time of end line
+        /// </summary>
+        public TimeSpan EndTime { get ; set ; }
     }
 }

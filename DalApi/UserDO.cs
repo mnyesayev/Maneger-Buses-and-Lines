@@ -6,25 +6,27 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    public enum Authorizations
+   
+    /// <summary>
+    /// The class represents a user in program, in the DO layer
+    /// </summary>
+    public class User
     {
-        User, PremiumUser, Admin, MainAdmin, IT
-    }
-    public class UserDO
-    {
-        string userName;
-        string password;
-        Authorizations authorization;
-
-        public string UserName { get => userName; set => userName = value; }
-        public string Password { get => password; set => password = value; }
-        public Authorizations Authorization { get => authorization; set => authorization = value; }
-
-        public UserDO(string userName, string password, Authorizations authorization = Authorizations.User)
-        {
-            UserName = userName;
-            Password = password;
-            Authorization = authorization;
-        }
+        /// <summary>
+        ///  Represents if this class active
+        /// </summary>
+        public bool Active { get; set; }
+        /// <summary>
+        /// Represents the unique user name of the "User"
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// Represents the unique password of the "User"
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
+        /// Represents the authorization of the "User"
+        /// </summary>
+        public Authorizations Authorization { get; set; }
     }
 }

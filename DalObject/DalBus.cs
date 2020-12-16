@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
+using DS;
+using DO;
 
-namespace BO
+namespace Dal
 {
-    public class Class1
+    sealed class DalBus:IDal
     {
+
     }
 }

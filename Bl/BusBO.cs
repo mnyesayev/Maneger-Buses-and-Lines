@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DalApi;
 
-namespace DO
+namespace BO
 {
-   
     /// <summary>
-    /// The class represents a single ,in the DO layer.
+    /// The class represents a single ,in the BO layer.
     /// </summary>
-    public class Bus 
+    public class Bus
     {
+
         /// <summary>
         ///  Represents if this class active
         /// </summary>
@@ -25,7 +26,6 @@ namespace DO
         ///  Represents the date of ascent to the road.
         /// </summary>
         public DateTime DateRoadAscent { get; set; }
-
         /// <summary>
         ///  Represents the amount of mileage that the bus passed from entering the Road
         /// </summary>
@@ -47,7 +47,6 @@ namespace DO
         /// </summary>
         public States State { get; set; }
     }
+
+
 }
-
-
-

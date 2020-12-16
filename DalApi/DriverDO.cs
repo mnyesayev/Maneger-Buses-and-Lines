@@ -6,21 +6,26 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    public class DriverDO
+    /// <summary>
+    /// The class represents a driver, in the DO layer
+    /// </summary>
+    public class Driver
     {
-        int id;
-        string name;
-        int seniority;
-
-        public int Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public int Seniority { get => seniority; set => seniority = value; }
-
-        public DriverDO(int id, string name, int seniority)
-        {
-            Id = id;
-            Name = name;
-            Seniority = seniority;
-        }
+        /// <summary>
+        ///  Represents if this class active
+        /// </summary>
+        public bool Active { get; set; }
+        /// <summary>
+        /// Represents the unique number of the "Driver"
+        /// </summary> 
+        public int Id { get; set; }
+        /// <summary>
+        /// Represents the name of the driver
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// Represents the seniority of the driver
+        /// </summary>
+        public int Seniority { get; set; }
     }
 }

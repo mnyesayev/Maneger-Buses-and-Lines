@@ -43,7 +43,8 @@
   <ItemGroup>
     <Compile Include="Bl.cs" />
     <Compile Include="BlFactory.cs" />
-    <Compile Include="BO.cs" />
+    <Compile Include="BusBO.cs" />
+    <Compile Include="EnumsBO.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

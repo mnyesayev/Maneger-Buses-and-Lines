@@ -6,34 +6,20 @@ using System.Threading.Tasks;
 
 namespace DO
 {
+    /// <summary>
+    ///The class displays a user's trip,in the DO layer. 
+    /// </summary>
     public class UserGoDO
     {
-        int idDriveGo;
-        string userName;
-        int idLine;
-        int codeStopUp;
-        int codeStopDown;
-        TimeSpan timeUp;
-        TimeSpan timeDown;
-
-        public UserGoDO(int idDriveGo, string userName, int idLine, int codeStopUp,
-                        int codeStopDown, TimeSpan timeUp, TimeSpan timeDown)
-        {
-            IdDriveGo=idDriveGo;
-            UserName=userName;
-            IdLine=idLine;
-            CodeStopUp=codeStopUp;
-            CodeStopDown=codeStopDown;
-            TimeUp=timeUp;
-            TimeDown=TimeDown;
-        }
-
-        public int IdDriveGo { get => idDriveGo; set => idDriveGo = value; }
-        public string UserName { get => userName; set => userName = value; }
-        public int IdLine { get => idLine; set => idLine = value; }
-        public int CodeStopUp { get => codeStopUp; set => codeStopUp = value; }
-        public int CodeStopDown { get => codeStopDown; set => codeStopDown = value; }
-        public TimeSpan TimeUp { get => timeUp; set => timeUp = value; }
-        public TimeSpan TimeDown { get => timeDown; set => timeDown = value; }
+        /// <summary>
+        ///  Represents if this class active
+        /// </summary>
+        public int IdDriveGo { get; set; }
+        public string UserName { get; set; }
+        public int IdLine { get; set; }
+        public int CodeStopUp { get; set; }
+        public int CodeStopDown { get; set; }
+        public TimeSpan TimeUp { get; set; }
+        public TimeSpan TimeDown { get; set; }
     }
 }
