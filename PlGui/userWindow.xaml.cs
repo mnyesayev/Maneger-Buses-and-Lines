@@ -10,27 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BO;
-using BlApi;
 
 namespace PlGui
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for userWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class userWindow : Window
     {
-        public MainWindow()
+        public userWindow()
         {
             InitializeComponent();
-        }
-
-        private void bLogIn_Click(object sender, RoutedEventArgs e)
-        {
-            logInWindow logInWindow = new logInWindow();
-            logInWindow.Show();
         }
     }
 }

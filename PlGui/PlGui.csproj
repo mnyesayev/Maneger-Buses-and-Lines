@@ -55,6 +55,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="adminWindow.xaml.cs">
+      <DependentUpon>adminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IT_Window.xaml.cs">
+      <DependentUpon>IT_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="logInWindow.xaml.cs">
+      <DependentUpon>logInWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="userWindow.xaml.cs">
+      <DependentUpon>userWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="adminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IT_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="logInWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +91,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="userWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -99,6 +127,24 @@
       <Project>{c5268cd6-a544-4fbf-a8d2-18d55af42a49}</Project>
       <Name>Bl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\bus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\trash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\ok.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
