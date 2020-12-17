@@ -12,7 +12,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="images\backbus.jpg"/>
         </Grid.Background>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
@@ -50,6 +50,14 @@
                 Background="#FF64CCF1" 
                 Foreground="White" 
                 Style="{DynamicResource ButtonStyle1}"/>
+        <Button x:Name="bGuestMode" Content="Guest mode" HorizontalAlignment="Center"
+                VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="4" 
+                Grid.Row="5" Width="270" Height="50" FontWeight="Bold"
+                FontSize="18" 
+                Background="#FF64CCF1" 
+                Foreground="White" 
+                Style="{DynamicResource ButtonStyle1}"/>
 
+   
     </Grid>
 </Window>
