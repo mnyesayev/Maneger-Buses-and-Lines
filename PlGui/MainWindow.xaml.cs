@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 using BO;
 using BlApi;
 
@@ -29,9 +30,37 @@ namespace PlGui
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
+            tbTitleMainWindow.Visibility = Visibility.Hidden;
+            bGuestMode.Visibility = Visibility.Hidden;
+            bSignup.Visibility = Visibility.Hidden;
+            bLogIn.Visibility = Visibility.Hidden;
+            bLogIn.Visibility = Visibility.Hidden;
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    BAlouded.Visibility = Visibility.Visible;
+                    
+                    
+                });
+
+                Thread.Sleep(500);
+                this.Dispatcher.Invoke(() =>
+                {
+                    BAlouded.Visibility = Visibility.Hidden;
+                    blogIn.Visibility = Visibility.Visible;
+                    tBPassword.Visibility = Visibility.Visible;
+                    tbpassword.Visibility = Visibility.Visible;
+                    tbUserName.Visibility = Visibility.Visible;
+                    tBUserName.Visibility = Visibility.Visible;
+                    tbTitleLOgInWindow.Visibility = Visibility.Visible;
+                });
+
+            }).Start();
             
-            logInWindow logInWindow = new logInWindow();
-            logInWindow.Show();
+            // logInWindow logInWindow = new logInWindow();
+            //logInWindow.Show();
+           
         }
     }
 }

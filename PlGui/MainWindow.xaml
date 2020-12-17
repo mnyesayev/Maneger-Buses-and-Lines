@@ -1,10 +1,18 @@
 ﻿<Window x:Class="PlGui.MainWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="18"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Travel and go Ltd." Height="350" Width="500" Icon="images\bus.png"
         WindowStartupLocation="CenterScreen" 
         ResizeMode="CanMinimize">
@@ -35,29 +43,70 @@
 
         <TextBlock x:Name="tbTitleMainWindow" Grid.Column="1" Grid.ColumnSpan="6"
                    Grid.Row="1" Text="Welcome to Travel and go Ltd." FontSize="22" FontWeight="Bold"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" 
+                   Foreground="White" Visibility="Visible"/>
         <Button x:Name="bGuestMode" Content="Guest mode" HorizontalAlignment="Center"
                 VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" 
-                Grid.Row="3" Width="120" Height="50" FontWeight="Bold"
-                FontSize="18" Click="bLogIn_Click"
+                Grid.Row="3" Width="140" Height="50" FontWeight="Bold"
+                FontSize="18" Visibility="Visible"
                 Background="#FF64CCF1" 
                 Foreground="White" 
-                Style="{DynamicResource ButtonStyle1}"/>
+                BorderThickness="0" 
+                materialDesign:ButtonAssist.CornerRadius="25"/>
         <Button x:Name="bSignup" Content="Sign up" HorizontalAlignment="Center"
                 VerticalAlignment="Center" Grid.Column="4" Grid.ColumnSpan="2" 
-                Grid.Row="3" Width="120" Height="50" FontWeight="Bold"
-                FontSize="18" 
+                Grid.Row="3" Width="140" Height="50" FontWeight="Bold"
+                FontSize="18" Visibility="Visible"
                 Background="#FF64CCF1" 
                 Foreground="White" 
-                Style="{DynamicResource ButtonStyle1}"/>
+                BorderThickness="0" materialDesign:ButtonAssist.CornerRadius="25"/>
         <Button x:Name="bLogIn" Content="Log in" HorizontalAlignment="Center"
                 VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="4" 
-                Grid.Row="5" Width="270" Height="50" FontWeight="Bold"
-                FontSize="18" 
+                Grid.Row="5" Width="290" Height="50" FontWeight="Bold"
+                FontSize="18" Visibility="Visible"
                 Background="#FF64CCF1" 
                 Foreground="White" 
-                Style="{DynamicResource ButtonStyle1}"/>
+                materialDesign:ButtonAssist.CornerRadius="25"
+                BorderThickness="0" Click="bLogIn_Click"/>
 
-   
+
+        <Button x:Name="BAlouded" Style="{StaticResource MaterialDesignFloatingActionButton}"
+               materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+               materialDesign:ButtonProgressAssist.Value="-1"
+               materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+               Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="2" Background="Transparent" BorderThickness="0" BorderBrush="Transparent"
+               Grid.RowSpan="3" Visibility="Hidden"/>
+
+        <TextBlock x:Name="tbTitleLOgInWindow" Grid.Column="1" Grid.ColumnSpan="6"
+                   Grid.Row="1" Text="Sign in" FontSize="22" FontWeight="Bold"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"
+                   Visibility="Hidden"/>
+
+        <TextBlock x:Name="tBUserName" Text="Username:" Grid.Column="1" 
+                   Grid.Row="2" FontSize="20" Grid.ColumnSpan="2" 
+                   HorizontalAlignment="Center" Foreground="White"
+                   VerticalAlignment="Center" Visibility="Hidden"/>
+        <TextBox x:Name="tbUserName" Grid.Row="2" Grid.Column="3"
+                 Grid.ColumnSpan="4" BorderThickness="2" TextWrapping="WrapWithOverflow"
+                 BorderBrush="{x:Null}" Margin="0,10,0,10"
+                 Background="#FFF6F6F6" Visibility="Hidden"/>
+
+        <TextBlock x:Name="tBPassword" Text="Password:" Grid.Column="1" 
+                   Grid.Row="3" FontSize="20" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" Visibility="Hidden"  Foreground="White"/>
+        <PasswordBox x:Name="tbpassword" Grid.Row="3" Grid.Column="3"
+                 Grid.ColumnSpan="4" BorderThickness="2"
+                 BorderBrush="{x:Null}" Margin="0,10,0,10"
+                 Background="#FFF6F6F6" 
+                 Visibility="Hidden"/>
+
+        <Button x:Name="blogIn" Content="Log in" HorizontalAlignment="Center"
+                VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="4" 
+                Grid.Row="5" Width="290" Height="50" FontWeight="Bold"
+                FontSize="18" Visibility="Hidden"
+                Background="#FF64CCF1" 
+                Foreground="White" 
+                materialDesign:ButtonAssist.CornerRadius="25"
+                BorderThickness="0" />
     </Grid>
 </Window>
