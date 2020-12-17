@@ -30,6 +30,7 @@ namespace PlGui
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
+            
             tbTitleMainWindow.Visibility = Visibility.Hidden;
             bGuestMode.Visibility = Visibility.Hidden;
             bSignup.Visibility = Visibility.Hidden;

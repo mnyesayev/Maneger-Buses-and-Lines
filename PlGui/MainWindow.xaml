@@ -16,7 +16,7 @@
         Title="Travel and go Ltd." Height="350" Width="500" Icon="images\bus.png"
         WindowStartupLocation="CenterScreen" 
         ResizeMode="CanMinimize">
-    <Grid>
+    <Grid x:Name="mainGrid">
         <Grid.Background>
             <ImageBrush ImageSource="images\backbus.jpg"/>
         </Grid.Background>
@@ -88,7 +88,8 @@
                    VerticalAlignment="Center" Visibility="Hidden"/>
         <TextBox x:Name="tbUserName" Grid.Row="2" Grid.Column="3"
                  Grid.ColumnSpan="4" BorderThickness="2" TextWrapping="WrapWithOverflow"
-                 BorderBrush="{x:Null}" Margin="0,10,0,10"
+                 BorderBrush="{x:Null}" Margin="0,10,0,10" 
+                 materialDesign:HintAssist.Hint="Username"
                  Background="#FFF6F6F6" Visibility="Hidden"/>
 
         <TextBlock x:Name="tBPassword" Text="Password:" Grid.Column="1" 
@@ -97,8 +98,9 @@
         <PasswordBox x:Name="tbpassword" Grid.Row="3" Grid.Column="3"
                  Grid.ColumnSpan="4" BorderThickness="2"
                  BorderBrush="{x:Null}" Margin="0,10,0,10"
-                 Background="#FFF6F6F6" 
-                 Visibility="Hidden"/>
+                 Background="#FFF6F6F6"  materialDesign:HintAssist.Hint="Password"
+                 materialDesign:TextFieldAssist.HasClearButton="True"
+                 Visibility="Hidden" />
 
         <Button x:Name="blogIn" Content="Log in" HorizontalAlignment="Center"
                 VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="4" 
@@ -108,5 +110,7 @@
                 Foreground="White" 
                 materialDesign:ButtonAssist.CornerRadius="25"
                 BorderThickness="0" />
+
+
     </Grid>
 </Window>
