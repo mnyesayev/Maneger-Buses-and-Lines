@@ -18,7 +18,7 @@ namespace DO
         /// <summary>
         /// Represents the unique number of the "BusStop"
         /// </summary>
-        public int CodeBusStop { get ; set ; }
+        public int Code { get ; set ; }
         /// <summary>
         /// Represents the longitude location
         /// </summary>
@@ -30,7 +30,7 @@ namespace DO
         /// <summary>
         /// Represents the name of Bus stop/station
         /// </summary>
-        public string NameBusStop { get ; set; }
+        public string Name { get ; set; }
         /// <summary>
         /// Represents the address of Bus stop/station
         /// </summary>

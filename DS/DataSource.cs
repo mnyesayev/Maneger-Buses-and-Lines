@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,18 +49,18 @@ namespace DS
 
         private static void initBusStops()
         {
-            int numStops = 50;
-            for (int i = 0; i < numStops; i++)
+            int i = 0;
+            foreach (var item
+                in File.ReadLines(@"stops.txt"))
             {
-                BusStops.Add(new BusStop()
-                {
-                    Active = true,
-                    CodeBusStop = MyRandom.r.Next(1, 999999),
-                    Latitude = MyRandom.GetDoubleRandom(34.3, 35.5),
-                    Longitude = MyRandom.GetDoubleRandom(31, 33.3),
-                    NameBusStop = $"{i}",
-                    Address=$"{i}"
-                });
+                if (i++ == 0) continue;
+                BusStops.Add(new BusStop() { Active=true});
+                var subitem = item.Split(',');
+                BusStops[i - 2].Code = int.Parse(subitem[1]);
+                BusStops[i - 2].Name = subitem[2];
+                BusStops[i - 2].Address = subitem[3];
+                BusStops[i - 2].Latitude = double.Parse(subitem[4]);
+                BusStops[i - 2].Longitude = double.Parse(subitem[5]);
             }
         }
 
