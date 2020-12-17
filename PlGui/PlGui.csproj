@@ -146,5 +146,20 @@
   <ItemGroup>
     <Resource Include="images\ok.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\stops.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\backbus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\login.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\loginbac.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\loginim.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

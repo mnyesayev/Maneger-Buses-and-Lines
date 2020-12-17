@@ -6,8 +6,60 @@
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
         Title="log in" Height="400" Width="300" 
-        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
+        Icon="images\login.ico" FontSize="22" FontFamily="ariel" Background="SkyBlue">
     <Grid>
-        
+
+       
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="tbTitleLogInWindow" Grid.Column="1" Grid.ColumnSpan="6"
+                   Grid.Row="1" Text="Sign in" FontSize="26" FontWeight="Bold"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+
+        <TextBlock x:Name="tBUserName" Text="Username:" Grid.Column="2" 
+                   Grid.Row="2" FontSize="20" Grid.ColumnSpan="4" HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"/>
+        <TextBox x:Name="tbUserName" Grid.Row="3" Grid.Column="2"
+                 Grid.ColumnSpan="4" BorderThickness="2" TextWrapping="WrapWithOverflow"
+                 BorderBrush="{x:Null}" 
+                 Background="#FFF6F6F6" />
+
+        <TextBlock x:Name="tBPassword" Text="Password:" Grid.Column="2" 
+                   Grid.Row="4" FontSize="20" Grid.ColumnSpan="4" HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"/>
+        <PasswordBox x:Name="tbpassword" Grid.Row="5" Grid.Column="2"
+                 Grid.ColumnSpan="4" BorderThickness="2"
+                 BorderBrush="{x:Null}" 
+                 Background="#FFF6F6F6" />
+
+        <Button x:Name="blogIn" Content="Log in" 
+                Grid.Row="7" Grid.Column="2" 
+                Grid.ColumnSpan="4" 
+                Background="#FF64CCF1" 
+                Foreground="White" 
+                Style="{DynamicResource ButtonStyle1}"/>
     </Grid>
+    
+    
 </Window>
