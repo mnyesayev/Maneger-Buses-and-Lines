@@ -29,6 +29,7 @@ namespace PlGui
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
+            
             logInWindow logInWindow = new logInWindow();
             logInWindow.Show();
         }
