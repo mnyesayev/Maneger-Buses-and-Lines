@@ -102,9 +102,18 @@
                  materialDesign:TextFieldAssist.HasClearButton="True"
                  Visibility="Hidden" />
 
+        <Button x:Name="blogInBack" Content="Go back" HorizontalAlignment="Center"
+                VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" 
+                Grid.Row="5" Width="120" Height="50" FontWeight="Bold"
+                FontSize="18" Visibility="Hidden"
+                Background="#FF64CCF1" 
+                Foreground="White" 
+                materialDesign:ButtonAssist.CornerRadius="25"
+                BorderThickness="0" Click="blogInBack_Click" />
+
         <Button x:Name="blogIn" Content="Log in" HorizontalAlignment="Center"
-                VerticalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="4" 
-                Grid.Row="5" Width="290" Height="50" FontWeight="Bold"
+                VerticalAlignment="Center" Grid.Column="4" Grid.ColumnSpan="2" 
+                Grid.Row="5" Width="120" Height="50" FontWeight="Bold"
                 FontSize="18" Visibility="Hidden"
                 Background="#FF64CCF1" 
                 Foreground="White" 

@@ -54,14 +54,47 @@ namespace PlGui
                     tbpassword.Visibility = Visibility.Visible;
                     tbUserName.Visibility = Visibility.Visible;
                     tBUserName.Visibility = Visibility.Visible;
+                    blogInBack.Visibility = Visibility.Visible;
                     tbTitleLOgInWindow.Visibility = Visibility.Visible;
                 });
 
             }).Start();
             
-            // logInWindow logInWindow = new logInWindow();
-            //logInWindow.Show();
-           
+        }
+
+        private void blogInBack_Click(object sender, RoutedEventArgs e)
+        {
+            blogIn.Visibility = Visibility.Hidden;
+            tBPassword.Visibility = Visibility.Hidden;
+            tbpassword.Visibility = Visibility.Hidden;
+            tbUserName.Visibility = Visibility.Hidden;
+            tBUserName.Visibility = Visibility.Hidden;
+            blogInBack.Visibility = Visibility.Hidden;
+            tbTitleLOgInWindow.Visibility = Visibility.Hidden;
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    BAlouded.Visibility = Visibility.Visible;
+
+
+                });
+
+                Thread.Sleep(500);
+                this.Dispatcher.Invoke(() =>
+                {
+                    BAlouded.Visibility = Visibility.Hidden;
+
+                    tbTitleMainWindow.Visibility = Visibility.Visible;
+                    bGuestMode.Visibility = Visibility.Visible;
+                    bSignup.Visibility = Visibility.Visible;
+                    bLogIn.Visibility = Visibility.Visible;
+                    bLogIn.Visibility = Visibility.Visible;
+
+                    
+                });
+
+            }).Start();
         }
     }
 }
