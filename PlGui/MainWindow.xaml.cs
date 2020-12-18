@@ -30,68 +30,34 @@ namespace PlGui
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
-            
-            tbTitleMainWindow.Visibility = Visibility.Hidden;
-            bGuestMode.Visibility = Visibility.Hidden;
-            bSignup.Visibility = Visibility.Hidden;
-            bLogIn.Visibility = Visibility.Hidden;
-            bLogIn.Visibility = Visibility.Hidden;
+
+            mainGrid.Visibility = Visibility.Hidden;
             new Thread(() =>
             {
-                this.Dispatcher.Invoke(() =>
-                {
-                    BAlouded.Visibility = Visibility.Visible;
-                    
-                    
-                });
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
 
                 Thread.Sleep(500);
                 this.Dispatcher.Invoke(() =>
                 {
-                    BAlouded.Visibility = Visibility.Hidden;
-                    blogIn.Visibility = Visibility.Visible;
-                    tBPassword.Visibility = Visibility.Visible;
-                    tbpassword.Visibility = Visibility.Visible;
-                    tbUserName.Visibility = Visibility.Visible;
-                    tBUserName.Visibility = Visibility.Visible;
-                    blogInBack.Visibility = Visibility.Visible;
-                    tbTitleLOgInWindow.Visibility = Visibility.Visible;
+                    loudGrid.Visibility = Visibility.Hidden;
+                    logInGrid.Visibility = Visibility.Visible;
                 });
 
             }).Start();
-            
         }
 
         private void blogInBack_Click(object sender, RoutedEventArgs e)
         {
-            blogIn.Visibility = Visibility.Hidden;
-            tBPassword.Visibility = Visibility.Hidden;
-            tbpassword.Visibility = Visibility.Hidden;
-            tbUserName.Visibility = Visibility.Hidden;
-            tBUserName.Visibility = Visibility.Hidden;
-            blogInBack.Visibility = Visibility.Hidden;
-            tbTitleLOgInWindow.Visibility = Visibility.Hidden;
+            logInGrid.Visibility = Visibility.Hidden;
             new Thread(() =>
             {
-                this.Dispatcher.Invoke(() =>
-                {
-                    BAlouded.Visibility = Visibility.Visible;
-
-
-                });
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
 
                 Thread.Sleep(500);
                 this.Dispatcher.Invoke(() =>
                 {
-                    BAlouded.Visibility = Visibility.Hidden;
-
-                    tbTitleMainWindow.Visibility = Visibility.Visible;
-                    bGuestMode.Visibility = Visibility.Visible;
-                    bSignup.Visibility = Visibility.Visible;
-                    bLogIn.Visibility = Visibility.Visible;
-                    bLogIn.Visibility = Visibility.Visible;
-
-                    
+                    loudGrid.Visibility = Visibility.Hidden;
+                    mainGrid.Visibility = Visibility.Visible;
                 });
 
             }).Start();
