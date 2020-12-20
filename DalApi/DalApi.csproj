@@ -48,14 +48,14 @@
     <Compile Include="DalConfig.cs" />
     <Compile Include="DalFactory.cs" />
     <Compile Include="DriverDO.cs" />
-    <Compile Include="GoBusDO.cs" />
+    <Compile Include="BusOnTrip.cs" />
     <Compile Include="LineDO.cs" />
-    <Compile Include="OutLineDO.cs" />
+    <Compile Include="LineTripDO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BusStopDO.cs" />
     <Compile Include="StopLineDO.cs" />
     <Compile Include="UserDO.cs" />
-    <Compile Include="UserGoDO.cs" />
+    <Compile Include="UserTripDO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

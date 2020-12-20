@@ -23,5 +23,16 @@ namespace DO
         /// Represents the number Stop/station in line
         /// </summary>
         public int NumStopInLine { get; set; }
+
+        /*
+        /// <summary>
+        /// Represents the unique code of the prev stop
+        /// </summary>
+        public int PrevStop { get; set; }
+        /// <summary>
+        /// Represents the uniqu code of the next stop
+        /// </summary>
+        public int NextStop { get; set; }
+        */
     }
 }

@@ -16,8 +16,8 @@ namespace DS
         public static int LineCounter => ++lineCounter;
         static int userTripCounter = 0;
         public static int UserTripCounter => ++userTripCounter;
-        static int goBusCounter = 0;
-        public static int GoBusCounter => ++goBusCounter;
+        static int busOnTripCounter = 0;
+        public static int BusOnTripCounter => ++busOnTripCounter;
 
     }
 }

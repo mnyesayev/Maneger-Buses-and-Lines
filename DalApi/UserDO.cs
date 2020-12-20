@@ -16,6 +16,11 @@ namespace DO
         ///  Represents if this class active
         /// </summary>
         public bool Active { get; set; }
+
+       
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        
         /// <summary>
         /// Represents the unique user name of the "User"
         /// </summary>
@@ -28,5 +33,10 @@ namespace DO
         /// Represents the authorization of the "User"
         /// </summary>
         public Authorizations Authorization { get; set; }
+        /// <summary>
+        /// Represents a user answer ID at registration
+        /// In case he forgot the password
+        /// </summary>
+        public string IdAnswer { get; set; }
     }
 }

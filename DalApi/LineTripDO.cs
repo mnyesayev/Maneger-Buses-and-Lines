@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace DO
 {
     /// <summary>
-    ///the class represents a out line (hours and frequency),in the DO layer 
+    ///the class represents a line Trip (hours and frequency),in the DO layer 
     /// </summary>
-    public class OutLine
+    public class LineTrip
     {
         /// <summary>
         ///  Represents if this class active
