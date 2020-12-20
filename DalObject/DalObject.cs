@@ -25,7 +25,8 @@ namespace Dal
 
         public Bus GetBus(int id)
         {
-            throw new NotImplementedException();
+            return DataSource.Buses.Find((Bus) => { return Bus.Id == id; }).Clone();
+            //else throw..
         }
 
         public IEnumerable<Bus> GetBuses()

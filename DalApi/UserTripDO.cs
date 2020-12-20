@@ -9,7 +9,7 @@ namespace DO
     /// <summary>
     ///The class displays a user's trip,in the DO layer. 
     /// </summary>
-    public class UserGoDO
+    public class UserTripDO
     {
         /// <summary>
         ///  Represents if this class active

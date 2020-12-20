@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace DO
 {
     /// <summary>
-    /// The class presents a bus on the go, in the DO layer
+    /// The class presents a bus on the trip, in the DO layer
     /// </summary>
-    public class GoBus
+    public class BusOnTrip
     {
 
 
@@ -18,9 +18,9 @@ namespace DO
         /// </summary>
         public bool Active { get; set; }
         /// <summary>
-        /// Represents the unique number of the "GoBus"
+        /// Represents the unique number of the "BusOnTrip"
         /// </summary>
-        public int IdGoBus { get; set; }
+        public int IdTrip { get; set; }
         /// <summary>
         /// Represents the unique number of the "Bus"
         /// </summary>
