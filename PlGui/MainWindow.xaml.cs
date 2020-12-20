@@ -30,37 +30,37 @@ namespace PlGui
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
-            tbTitleMainWindow.Visibility = Visibility.Hidden;
-            bGuestMode.Visibility = Visibility.Hidden;
-            bSignup.Visibility = Visibility.Hidden;
-            bLogIn.Visibility = Visibility.Hidden;
-            bLogIn.Visibility = Visibility.Hidden;
+
+            mainGrid.Visibility = Visibility.Hidden;
             new Thread(() =>
             {
-                this.Dispatcher.Invoke(() =>
-                {
-                    BAlouded.Visibility = Visibility.Visible;
-                    
-                    
-                });
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
 
                 Thread.Sleep(500);
                 this.Dispatcher.Invoke(() =>
                 {
-                    BAlouded.Visibility = Visibility.Hidden;
-                    blogIn.Visibility = Visibility.Visible;
-                    tBPassword.Visibility = Visibility.Visible;
-                    tbpassword.Visibility = Visibility.Visible;
-                    tbUserName.Visibility = Visibility.Visible;
-                    tBUserName.Visibility = Visibility.Visible;
-                    tbTitleLOgInWindow.Visibility = Visibility.Visible;
+                    loudGrid.Visibility = Visibility.Hidden;
+                    logInGrid.Visibility = Visibility.Visible;
                 });
 
             }).Start();
-            
-            // logInWindow logInWindow = new logInWindow();
-            //logInWindow.Show();
-           
+        }
+
+        private void blogInBack_Click(object sender, RoutedEventArgs e)
+        {
+            logInGrid.Visibility = Visibility.Hidden;
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+
+                Thread.Sleep(500);
+                this.Dispatcher.Invoke(() =>
+                {
+                    loudGrid.Visibility = Visibility.Hidden;
+                    mainGrid.Visibility = Visibility.Visible;
+                });
+
+            }).Start();
         }
     }
 }
