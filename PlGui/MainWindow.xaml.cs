@@ -46,6 +46,39 @@ namespace PlGui
             }).Start();
         }
 
+        private void bSignup_Click(object sender, RoutedEventArgs e)
+        {
+            mainGrid.Visibility = Visibility.Hidden;
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+
+                Thread.Sleep(500);
+                this.Dispatcher.Invoke(() =>
+                {
+                    loudGrid.Visibility = Visibility.Hidden;
+                    signUpGrid.Visibility = Visibility.Visible;
+                });
+
+            }).Start();
+        }
+
+        private void bGuestMode_Click(object sender, RoutedEventArgs e)
+        {
+            mainGrid.Visibility = Visibility.Hidden;
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+
+                Thread.Sleep(500);
+                this.Dispatcher.Invoke(() =>
+                {
+                    loudGrid.Visibility = Visibility.Hidden;
+                    guestModeGrid.Visibility = Visibility.Visible;
+                });
+
+            }).Start();
+        }
         private void blogInBack_Click(object sender, RoutedEventArgs e)
         {
             logInGrid.Visibility = Visibility.Hidden;
@@ -62,5 +95,25 @@ namespace PlGui
 
             }).Start();
         }
+
+        private void SignUpBack_Click(object sender, RoutedEventArgs e)
+        {
+            signUpGrid.Visibility = Visibility.Hidden;
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+
+                Thread.Sleep(500);
+                this.Dispatcher.Invoke(() =>
+                {
+                    loudGrid.Visibility = Visibility.Hidden;
+                    mainGrid.Visibility = Visibility.Visible;
+                });
+
+            }).Start();
+
+        }
+
+      
     }
 }
