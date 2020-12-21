@@ -11,11 +11,6 @@ namespace BO
     /// </summary>
     public class Bus
     {
-
-        /// <summary>
-        ///  Represents if this class active
-        /// </summary>
-        public bool Active { get; set; }
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law

@@ -48,7 +48,7 @@
     <Compile Include="IDal.cs" />
     <Compile Include="BusDO.cs" />
     <Compile Include="DriverDO.cs" />
-    <Compile Include="BusOnTrip.cs" />
+    <Compile Include="BusOnTripDO.cs" />
     <Compile Include="LineDO.cs" />
     <Compile Include="LineTripDO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

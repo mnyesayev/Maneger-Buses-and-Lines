@@ -44,9 +44,17 @@
     <Compile Include="Bl.cs" />
     <Compile Include="BlFactory.cs" />
     <Compile Include="BusBO.cs" />
+    <Compile Include="BusStopBO.cs" />
+    <Compile Include="BusOnTripBO.cs" />
+    <Compile Include="DriverBO.cs" />
     <Compile Include="EnumsBO.cs" />
     <Compile Include="IBL.cs" />
+    <Compile Include="LineBO.cs" />
+    <Compile Include="LineTripBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StopLineBO.cs" />
+    <Compile Include="UserBO.cs" />
+    <Compile Include="UserTripBO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DalApi\DalApi.csproj">

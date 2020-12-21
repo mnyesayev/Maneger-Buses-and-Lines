@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DO
+namespace BO
 {
-    /// <summary>
-    /// The class represents a line stop/station, in the DO layer
-    /// </summary>
-    public class StopLine
+    class StopLine
     {
         /// <summary>
         /// Represents the inner unique number of the "Line"
@@ -32,6 +29,5 @@ namespace DO
         /// Represents the uniqu code of the next stop
         /// </summary>
         public int NextStop { get; set; }
-        
     }
 }

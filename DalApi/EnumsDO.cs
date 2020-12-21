@@ -27,4 +27,8 @@ namespace DO
     {
         LightTrain, Train = 2, Bus, Taxi = 8, FlexibleServiceLine = 715
     }
+    public enum Areas
+    {
+        General, North, South, Center, Jerusalem, Lowland, JudeaAndSamaria
+    }
 }

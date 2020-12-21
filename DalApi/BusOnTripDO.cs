@@ -11,8 +11,6 @@ namespace DO
     /// </summary>
     public class BusOnTrip
     {
-
-
         /// <summary>
         ///  Represents if this class active
         /// </summary>
