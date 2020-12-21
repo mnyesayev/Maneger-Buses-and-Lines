@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    class User
+    public class User
     {
         /// <summary>
         ///  Represents if this class active

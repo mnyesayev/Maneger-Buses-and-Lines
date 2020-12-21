@@ -9,7 +9,7 @@ namespace Dal
 {
     static class Cloning
     {
-        internal static T Clone<T>(this T original)
+        internal static T Clone<T>(this T original)where T:new()
         {
             T target = (T)Activator.CreateInstance(original.GetType());
             foreach (var item in target.GetType().GetProperties())

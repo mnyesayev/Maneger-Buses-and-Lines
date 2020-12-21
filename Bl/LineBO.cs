@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    class Line
+    public class Line
     {
         /// <summary>
         /// Represents the inner unique number of the "Line"

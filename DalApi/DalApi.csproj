@@ -45,6 +45,7 @@
     <Compile Include="DalConfig.cs" />
     <Compile Include="DalFactory.cs" />
     <Compile Include="EnumsDO.cs" />
+    <Compile Include="ExceptionsDO.cs" />
     <Compile Include="IDal.cs" />
     <Compile Include="BusDO.cs" />
     <Compile Include="DriverDO.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    class BusStop
+    public class BusStop
     {
         /// <summary>
         /// Represents the unique number of the "BusStop"

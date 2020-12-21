@@ -53,6 +53,15 @@ namespace DS
             BusOnTrips = new List<BusOnTrip>();
             LineTrips = new List<LineTrip>();
             Users = new List<User>();
+            Users.Add(new User()
+            {
+                Active = true,
+                Authorization = Authorizations.IT,
+                Birthday = DateTime.Now,
+                UserName = "david&matan",
+                Password = "37291237",
+                Phone = "052-123456"
+            });
             initUsers();
         }
 

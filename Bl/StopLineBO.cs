@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    class StopLine
+    public class StopLine
     {
         /// <summary>
         /// Represents the inner unique number of the "Line"

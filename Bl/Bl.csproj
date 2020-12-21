@@ -41,13 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bl.cs" />
     <Compile Include="BlFactory.cs" />
+    <Compile Include="BLImp.cs" />
     <Compile Include="BusBO.cs" />
     <Compile Include="BusStopBO.cs" />
     <Compile Include="BusOnTripBO.cs" />
+    <Compile Include="Clone.cs" />
     <Compile Include="DriverBO.cs" />
     <Compile Include="EnumsBO.cs" />
+    <Compile Include="ExeceptionsBO.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="LineBO.cs" />
     <Compile Include="LineTripBO.cs" />
