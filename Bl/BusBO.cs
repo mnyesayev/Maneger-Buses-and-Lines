@@ -45,6 +45,8 @@ namespace BO
         /// Represents the state of the bus
         /// </summary>
         public States State { get; set; }
+
+        public string Image { get; set; }
     }
 
 

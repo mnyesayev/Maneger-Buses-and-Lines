@@ -42,11 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsecutiveStopsDO.cs" />
+    <Compile Include="DalConfig.cs" />
+    <Compile Include="DalFactory.cs" />
     <Compile Include="EnumsDO.cs" />
     <Compile Include="IDal.cs" />
     <Compile Include="BusDO.cs" />
-    <Compile Include="DalConfig.cs" />
-    <Compile Include="DalFactory.cs" />
     <Compile Include="DriverDO.cs" />
     <Compile Include="BusOnTrip.cs" />
     <Compile Include="LineDO.cs" />

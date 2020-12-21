@@ -19,6 +19,7 @@ namespace DO
 
        
         public string LastName { get; set; }
+
         public string FirstName { get; set; }
         
         /// <summary>
@@ -34,9 +35,12 @@ namespace DO
         /// </summary>
         public Authorizations Authorization { get; set; }
         /// <summary>
-        /// Represents a user answer ID at registration
-        /// In case he forgot the password
+        /// Represents the phone  of the "User"
         /// </summary>
-        public string IdAnswer { get; set; }
+        public string Phone { get; set; }
+        /// <summary>
+        /// Represents the birthday  of the "User"
+        /// </summary>
+        public DateTime Birthday { get; set; }
     }
 }
