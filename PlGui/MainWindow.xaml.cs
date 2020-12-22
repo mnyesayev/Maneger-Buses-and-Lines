@@ -57,7 +57,7 @@ namespace PlGui
                 this.Dispatcher.Invoke(() =>
                 {
                     loudGrid.Visibility = Visibility.Hidden;
-                    signUpGrid.Visibility = Visibility.Visible;
+                    SignUpGrid.Visibility = Visibility.Visible;
                 });
 
             }).Start();
@@ -96,9 +96,27 @@ namespace PlGui
             }).Start();
         }
 
+        private void SignUpPart2Back_Click(object sender, RoutedEventArgs e)
+        {
+            signUpGridPart2.Visibility = Visibility.Hidden;
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+
+                Thread.Sleep(500);
+                this.Dispatcher.Invoke(() =>
+                {
+                    loudGrid.Visibility = Visibility.Hidden;
+                    SignUpGrid.Visibility = Visibility.Visible;
+                });
+
+            }).Start();
+
+        }
+
         private void SignUpBack_Click(object sender, RoutedEventArgs e)
         {
-            signUpGrid.Visibility = Visibility.Hidden;
+            SignUpGrid.Visibility = Visibility.Hidden;
             new Thread(() =>
             {
                 this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
@@ -111,9 +129,40 @@ namespace PlGui
                 });
 
             }).Start();
-
         }
 
-      
+        private void signUpNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (SutbFirstName.Text.Length < 1 )
+            {
+                SutbFirstName.BorderBrush = Brushes.OrangeRed;
+                return;
+            }
+            if (SutbLastName.Text.Length < 1)
+            {
+                SutbLastName.BorderBrush = Brushes.OrangeRed;
+                return;
+            }
+            if (SutbPhoneNumber.Text.Length != 10 || !int.TryParse(SutbPhoneNumber.Text, out int i) )
+            {
+                SutbPhoneNumber.BorderBrush = Brushes.OrangeRed;
+                return;
+            }
+            else SutbPhoneNumber.BorderBrush = Brushes.Transparent;
+
+            SignUpGrid.Visibility = Visibility.Hidden;
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+
+                Thread.Sleep(500);
+                this.Dispatcher.Invoke(() =>
+                {
+                    loudGrid.Visibility = Visibility.Hidden;
+                    signUpGridPart2.Visibility = Visibility.Visible;
+                });
+
+            }).Start();
+        }
     }
 }
