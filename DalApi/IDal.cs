@@ -22,13 +22,15 @@ namespace DalApi
         #endregion
 
         #region BusStop
-
+        DO.BusStop GetBusStop(int code);
+        void updateBusStop(DO.BusStop busStop);
+        void deleteBusStop(int code);
         #endregion
 
         #region Driver
         IEnumerable<DO.Driver> GetDrivers();
         IEnumerable<DO.Driver> GetDriversBy(Predicate<DO.Driver> predicate);
-        DO.Driver GetDriver();
+        DO.Driver GetDriver(int id);
         void UpdateDriver(DO.Driver newDriver);
         void DeleteDriver(int id);
         #endregion
@@ -38,7 +40,11 @@ namespace DalApi
         void deleteUser(string phone, DateTime dateTime);
         void addUser(DO.User user);
         void updateUser(DO.User user);
+        IEnumerable<DO.User> GetUsers();
+        IEnumerable<DO.User> GetUsersBy(Predicate<DO.User> predicate);
         #endregion
+
+
 
 
     }

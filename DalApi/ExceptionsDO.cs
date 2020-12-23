@@ -29,4 +29,28 @@ namespace DO
             base(message, innerException) => Id = id;
         public override string ToString() => base.ToString() + $", have problem with Bus: {Id}";
     }
+
+    [Serializable]
+    public class DriverExceptionDO : Exception
+    {
+        public int Id;
+        public DriverExceptionDO(int id) : base() => Id = id;
+        public DriverExceptionDO(int id, string message) :
+            base(message) => Id = id;
+        public DriverExceptionDO(int id, string message, Exception innerException) :
+            base(message, innerException) => Id = id;
+        public override string ToString() => base.ToString() + $", have problem with Driver: {Id}";
+    }
+
+    [Serializable]
+    public class BusStopExceptionDO : Exception
+    {
+        public int Code;
+        public BusStopExceptionDO(int code) : base() => Code = code;
+        public BusStopExceptionDO(int code, string message) :
+            base(message) => Code = code;
+        public BusStopExceptionDO(int code, string message, Exception innerException) :
+            base(message, innerException) => Code = code;
+        public override string ToString() => base.ToString() + $", have problem with BusStop: {Code}";
+    }
 }
