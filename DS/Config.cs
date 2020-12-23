@@ -10,7 +10,7 @@ namespace DS
     /// <summary>
     /// the class manager counters for DO objects
     /// </summary>
-    static class Config
+    public static class Config
     {
         static int lineCounter = 0;
         public static int LineCounter => ++lineCounter;
@@ -18,6 +18,8 @@ namespace DS
         public static int UserTripCounter => ++userTripCounter;
         static int busOnTripCounter = 0;
         public static int BusOnTripCounter => ++busOnTripCounter;
+        static int lineTripCounter = 0;
+        public static int LineTripCounter => ++lineTripCounter;
 
     }
 }
