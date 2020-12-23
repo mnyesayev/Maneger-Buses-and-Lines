@@ -38,8 +38,8 @@ namespace Dal
 
         public void UpdateBus(Bus newBus)
         {
-            var OldBus = DataSource.Buses.Find((Bus) => { return Bus.Id == newBus.Id; });
-            OldBus = newBus;
+            int index = DataSource.Buses.FindIndex((Bus) => { return Bus.Id == newBus.Id; });
+            DataSource.Buses[index] = newBus;
         }
 
         public Bus GetBus(int id)
@@ -123,6 +123,12 @@ namespace Dal
         public void DeleteDriver(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public void updateUser(User user)
+        {
+            int index = DataSource.Users.FindIndex((User) => { return User.UserName == user.UserName; });
+            DataSource.Users[index] = user;
         }
     }
 }

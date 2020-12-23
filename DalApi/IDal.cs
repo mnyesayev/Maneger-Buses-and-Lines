@@ -37,6 +37,7 @@ namespace DalApi
         DO.User GetUser(string userName);
         void deleteUser(string phone, DateTime dateTime);
         void addUser(DO.User user);
+        void updateUser(DO.User user);
         #endregion
 
 
