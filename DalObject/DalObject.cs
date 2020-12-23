@@ -36,7 +36,11 @@ namespace Dal
             bus.Active = false;
         }
 
-
+        public void UpdateBus(Bus newBus)
+        {
+            var OldBus = DataSource.Buses.Find((Bus) => { return Bus.Id == newBus.Id; });
+            OldBus = newBus;
+        }
 
         public Bus GetBus(int id)
         {
@@ -88,6 +92,37 @@ namespace Dal
             if(user.Active==false)
                 throw new UserExceptionDO(phone, "userName is already not Active");
             user.Active = false;
+        }
+
+        public IEnumerable<Driver> GetDrivers()
+        {
+            return from Driver in DataSource.Drivers
+                   where Driver.Active == true
+                   select Driver.Clone();
+        }
+
+        public IEnumerable<Driver> GetDriversBy(Predicate<Driver> predicate)
+        {
+            return from Driver in DataSource.Drivers
+                   where predicate(Driver)
+                   where Driver.Active == true
+                   select Driver.Clone();
+        }
+
+        public Driver GetDriver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateDriver(Driver newDriver)
+        {
+            var oldDriver = DataSource.Drivers.Find((Driver) => { return Driver.Id == newDriver.Id; });
+            oldDriver = newDriver;
+        }
+
+        public void DeleteDriver(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
