@@ -46,7 +46,7 @@ namespace DalApi
         #endregion
 
         #region Line
-        int createLine();
+        int createLine(DO.Line line);
         DO.Line GetLine(int idLine);
         IEnumerable<DO.Line> GetLines();
         IEnumerable<DO.Line> GetLinesBy(Predicate<DO.Line> predicate);
@@ -70,11 +70,11 @@ namespace DalApi
         #endregion
 
         #region LineTrip
-        int createLineTrip();
+        int createLineTrip(DO.LineTrip lineTrip);
         DO.LineTrip GetLineTrip(int idLine, TimeSpan startTime);
         IEnumerable<DO.LineTrip> GetLineTrips();
         IEnumerable<DO.LineTrip> GetLineTripsBy(Predicate<DO.LineTrip> predicate);
-        void updateLine(DO.LineTrip lineTrip);
+        void updateLineTrip(DO.LineTrip lineTrip);
         void deleteLineTrip(int idLine, TimeSpan startTime);
         #endregion
     }
