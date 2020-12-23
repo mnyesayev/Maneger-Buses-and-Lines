@@ -305,7 +305,7 @@
                 Background="#FF64CCF1" 
                 Foreground="White" 
                 materialDesign:ButtonAssist.CornerRadius="15"
-                BorderThickness="0" />
+                BorderThickness="0" Click="SignUp_Click" />
 
         </Grid>
 

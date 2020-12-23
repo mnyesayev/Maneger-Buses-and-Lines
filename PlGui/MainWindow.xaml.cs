@@ -133,22 +133,27 @@ namespace PlGui
 
         private void signUpNext_Click(object sender, RoutedEventArgs e)
         {
+            bool returnback = false;
             if (SutbFirstName.Text.Length < 1 )
             {
                 SutbFirstName.BorderBrush = Brushes.OrangeRed;
-                return;
+                returnback = true;
             }
+            else SutbFirstName.BorderBrush = Brushes.Transparent;
             if (SutbLastName.Text.Length < 1)
             {
                 SutbLastName.BorderBrush = Brushes.OrangeRed;
-                return;
+                returnback = true;
             }
+            else SutbLastName.BorderBrush = Brushes.Transparent;
             if (SutbPhoneNumber.Text.Length != 10 || !int.TryParse(SutbPhoneNumber.Text, out int i) )
             {
                 SutbPhoneNumber.BorderBrush = Brushes.OrangeRed;
-                return;
+                returnback = true;
             }
             else SutbPhoneNumber.BorderBrush = Brushes.Transparent;
+            if (returnback)
+                return;
 
             SignUpGrid.Visibility = Visibility.Hidden;
             new Thread(() =>
@@ -160,6 +165,24 @@ namespace PlGui
                 {
                     loudGrid.Visibility = Visibility.Hidden;
                     signUpGridPart2.Visibility = Visibility.Visible;
+                });
+
+            }).Start();
+        }
+
+        private void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
+            signUpGridPart2.Visibility = Visibility.Hidden;
+            new Thread(() =>
+            {
+                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+
+                Thread.Sleep(500);
+                this.Dispatcher.Invoke(() =>
+                {
+                    loudGrid.Visibility = Visibility.Hidden;
+                    guestModeGrid.Visibility = Visibility.Visible;
                 });
 
             }).Start();
