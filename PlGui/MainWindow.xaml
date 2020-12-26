@@ -231,7 +231,7 @@
 
         </Grid>
 
-        <Grid x:Name="signUpGridPart2" Visibility="Hidden">
+        <Grid x:Name="signUpGridPart2" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
@@ -315,7 +315,7 @@
         </Grid>
 
 
-        <Grid x:Name="userGrid" Visibility="Visible">
+        <Grid x:Name="userGrid" Visibility="Hidden">
             <Grid.Background>
                 <ImageBrush ImageSource="images\stops.jpg"/>
             </Grid.Background>
@@ -343,9 +343,12 @@
             </Grid.RowDefinitions>
 
             <materialDesign:PackIcon Kind="AccountCircle"  Grid.Row="1"
-                    VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="7" Height="40" Width="40"/>
+                    VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="7" Height="40" Width="40"/>
 
-            <Button x:Name="account" Content="{Binding}" />
+            <Button x:Name="account" Content="David" Grid.Column="7"
+                    Grid.Row="2" VerticalAlignment="Top" 
+                    Height="30" FontSize="12" Background="Transparent" BorderThickness="0"
+                    VerticalContentAlignment="Top" HorizontalContentAlignment="Center"/>
         </Grid>
         <Grid x:Name="loudGrid" Visibility="Hidden" >
 

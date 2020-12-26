@@ -172,7 +172,8 @@ namespace PlGui
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
+          
+
             signUpGridPart2.Visibility = Visibility.Hidden;
             new Thread(() =>
             {
@@ -182,6 +183,10 @@ namespace PlGui
                 this.Dispatcher.Invoke(() =>
                 {
                     loudGrid.Visibility = Visibility.Hidden;
+                    Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
+                    Application.Current.MainWindow.Height = 640;
+                    Application.Current.MainWindow.Width = 850;
+                    Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     userGrid.Visibility = Visibility.Visible;
                 });
 
