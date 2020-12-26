@@ -48,6 +48,8 @@ namespace BlApi
             throw new NotImplementedException();
         }
 
+       
+
         IEnumerable<Line> IBL.GetLines()
         {
             var lines = from Line in dal.GetLines()
@@ -69,7 +71,7 @@ namespace BlApi
                                     ,NextStop=StopLine.NextStop
                                     ,PrevStop=StopLine.PrevStop
                                 }
-                                select newStopLine;
+                                select  newStopLine;
                 line.StopsInLine = stopLines;
             }
             return lines;
