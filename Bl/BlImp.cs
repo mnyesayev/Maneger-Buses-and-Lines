@@ -50,12 +50,7 @@ namespace BlApi
 
         bool IBL.addStopLine(int idLine, int codeStop, int index)
         {
-            var curLineDO = dal.GetLine(idLine);
-            if(curLineDO!=null)
-            {
-
-            }
-            return false;
+            throw new NotImplementedException();
         }
 
         IEnumerable<Line> IBL.GetLines()
