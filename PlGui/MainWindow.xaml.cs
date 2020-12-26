@@ -175,11 +175,12 @@ namespace PlGui
           
 
             signUpGridPart2.Visibility = Visibility.Hidden;
+           
             new Thread(() =>
             {
                 this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
 
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
                 this.Dispatcher.Invoke(() =>
                 {
                     loudGrid.Visibility = Visibility.Hidden;
@@ -187,6 +188,8 @@ namespace PlGui
                     Application.Current.MainWindow.Height = 640;
                     Application.Current.MainWindow.Width = 850;
                     Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    Application.Current.MainWindow.Top = 100;
+                    Application.Current.MainWindow.Left = 200;
                     userGrid.Visibility = Visibility.Visible;
                 });
 

@@ -342,13 +342,15 @@
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
-            <materialDesign:PackIcon Kind="AccountCircle"  Grid.Row="1"
-                    VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="7" Height="40" Width="40"/>
+            <StackPanel Grid.Row="1" Grid.Column="7" Grid.RowSpan="2">
+            <materialDesign:PackIcon Kind="AccountCircle"  
+                    VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Width="40"/>
 
-            <Button x:Name="account" Content="David" Grid.Column="7"
-                    Grid.Row="2" VerticalAlignment="Top" 
+            <Button x:Name="account" Content="David" 
+                    VerticalAlignment="Top" 
                     Height="30" FontSize="12" Background="Transparent" BorderThickness="0"
                     VerticalContentAlignment="Top" HorizontalContentAlignment="Center"/>
+            </StackPanel>
         </Grid>
         <Grid x:Name="loudGrid" Visibility="Hidden" >
 
