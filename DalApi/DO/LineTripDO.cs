@@ -16,6 +16,10 @@ namespace DO
         /// </summary>
         public bool Active { get; set; }
         /// <summary>
+        /// Represents the unique  number of the "LineTrip"
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
         /// Represents the unique inner number of the "Line"
         /// </summary>
         public int IdLine { get; set ; }

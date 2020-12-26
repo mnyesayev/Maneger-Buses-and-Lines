@@ -41,22 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsecutiveStopsDO.cs" />
+    <Compile Include="DO\ConsecutiveStopsDO.cs" />
     <Compile Include="DalConfig.cs" />
     <Compile Include="DalFactory.cs" />
-    <Compile Include="EnumsDO.cs" />
-    <Compile Include="ExceptionsDO.cs" />
+    <Compile Include="DO\EnumsDO.cs" />
+    <Compile Include="DO\Exceptions.cs" />
     <Compile Include="IDal.cs" />
-    <Compile Include="BusDO.cs" />
-    <Compile Include="DriverDO.cs" />
-    <Compile Include="BusOnTripDO.cs" />
-    <Compile Include="LineDO.cs" />
-    <Compile Include="LineTripDO.cs" />
+    <Compile Include="DO\BusDO.cs" />
+    <Compile Include="DO\DriverDO.cs" />
+    <Compile Include="DO\BusOnTripDO.cs" />
+    <Compile Include="DO\LineDO.cs" />
+    <Compile Include="DO\LineTripDO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BusStopDO.cs" />
-    <Compile Include="StopLineDO.cs" />
-    <Compile Include="UserDO.cs" />
-    <Compile Include="UserTripDO.cs" />
+    <Compile Include="DO\BusStopDO.cs" />
+    <Compile Include="DO\StopLineDO.cs" />
+    <Compile Include="DO\UserDO.cs" />
+    <Compile Include="DO\UserTripDO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
