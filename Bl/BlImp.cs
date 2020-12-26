@@ -48,10 +48,7 @@ namespace BlApi
             throw new NotImplementedException();
         }
 
-        bool IBL.addStopLine(int idLine, int codeStop, int index)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         IEnumerable<Line> IBL.GetLines()
         {
