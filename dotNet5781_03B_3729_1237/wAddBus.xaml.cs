@@ -91,14 +91,14 @@ namespace dotNet5781_03B_3729_1237
             if (sender == null) return;
             if (e == null) return;
             if (Dra.Year >= 2018 && tBIdBus.Text.Length == 8 && uint.TryParse(tBIdBus.Text, out id)
-                && id > 10000000 && id < 99999999)
+                && id >= 10000000 && id <= 99999999)
             {
                 ImIdBusError.Visibility = Visibility.Hidden;
                 ImIdBusOk.Visibility = Visibility.Visible;
                 tBMileage.IsEnabled = true;
             }
             else if (Dra.Year < 2018 && tBIdBus.Text.Length == 7 && uint.TryParse(tBIdBus.Text, out id)
-                && id > 1000000 && id < 9999999)
+                && id >= 1000000 && id <= 9999999)
             {
                 ImIdBusError.Visibility = Visibility.Hidden;
                 ImIdBusOk.Visibility = Visibility.Visible;
