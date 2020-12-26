@@ -21,7 +21,7 @@
             <ImageBrush ImageSource="images\backbus.jpg"/>
         </Grid.Background>
 
-        <Grid x:Name="mainGrid" Visibility="Visible">
+        <Grid x:Name="mainGrid" Visibility="Hidden">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -314,6 +314,39 @@
 
         </Grid>
 
+
+        <Grid x:Name="userGrid" Visibility="Visible">
+            <Grid.Background>
+                <ImageBrush ImageSource="images\stops.jpg"/>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <materialDesign:PackIcon Kind="AccountCircle"  Grid.Row="1"
+                    VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="7" Height="40" Width="40"/>
+
+            <Button x:Name="account" Content="{Binding}" />
+        </Grid>
         <Grid x:Name="loudGrid" Visibility="Hidden" >
 
             <Button x:Name="BAlouded" Style="{StaticResource MaterialDesignFloatingActionButton}"

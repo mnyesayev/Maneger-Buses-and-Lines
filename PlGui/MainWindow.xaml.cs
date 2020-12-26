@@ -182,7 +182,7 @@ namespace PlGui
                 this.Dispatcher.Invoke(() =>
                 {
                     loudGrid.Visibility = Visibility.Hidden;
-                    guestModeGrid.Visibility = Visibility.Visible;
+                    userGrid.Visibility = Visibility.Visible;
                 });
 
             }).Start();
