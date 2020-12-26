@@ -83,6 +83,7 @@ namespace BlApi
         User IBL.GetUser(string userName, string password)
         {
             throw new NotImplementedException();
+
         }
 
         void IBL.insertDistanceAndTime(int code1, int code2, double distance, TimeSpan time)
