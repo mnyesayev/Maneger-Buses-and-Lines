@@ -73,7 +73,7 @@
                 BorderThickness="0" Click="bLogIn_Click"/>
         </Grid>
 
-        <Grid x:Name="logInGrid" Visibility="Hidden">
+        <Grid x:Name="logInGrid" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
@@ -140,6 +140,14 @@
                 Foreground="White" 
                 materialDesign:ButtonAssist.CornerRadius="25"
                 BorderThickness="0" />
+            <Button x:Name="forgetPasswordButton"
+                    Background="Transparent" Grid.Column="2"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="4" HorizontalAlignment="Left"
+                    Margin="35.2,10.2,0,29.8"
+                    Grid.Row="5" Content="forget password ?" 
+                   FontSize="15" BorderThickness="0" Height="Auto"
+                   Width="178" Click="forgetPasswordButton_Click" />
         </Grid>
 
 
@@ -231,7 +239,7 @@
 
         </Grid>
 
-        <Grid x:Name="signUpGridPart2" Visibility="Visible">
+        <Grid x:Name="signUpGridPart2" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
@@ -310,8 +318,37 @@
         </Grid>
 
         <Grid x:Name="guestModeGrid" Visibility="Hidden">
-            <Image Source="images\stops.jpg" Stretch="Fill"/>
+            <Grid.Background>
+                <ImageBrush ImageSource="images\stops.jpg"/>
+            </Grid.Background>
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <materialDesign:PackIcon Kind="AccountQuestionOutline" 
+                                     Grid.Row="1" Grid.Column="7"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Top"/>
         </Grid>
 
 
@@ -343,13 +380,13 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="1" Grid.Column="7" Grid.RowSpan="2">
-            <materialDesign:PackIcon Kind="AccountCircle"  
+                <materialDesign:PackIcon Kind="AccountCircle"  
                     VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Width="40"/>
 
-            <Button x:Name="account" Content="David" 
+                <Button x:Name="account" Content="David" 
                     VerticalAlignment="Top" 
                     Height="30" FontSize="12" Background="Transparent" BorderThickness="0"
-                    VerticalContentAlignment="Top" HorizontalContentAlignment="Center"/>
+                    VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />
             </StackPanel>
         </Grid>
         <Grid x:Name="loudGrid" Visibility="Hidden" >

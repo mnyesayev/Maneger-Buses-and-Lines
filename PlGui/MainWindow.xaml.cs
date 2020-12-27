@@ -74,6 +74,12 @@ namespace PlGui
                 this.Dispatcher.Invoke(() =>
                 {
                     loudGrid.Visibility = Visibility.Hidden;
+                    Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
+                    Application.Current.MainWindow.Height = 640;
+                    Application.Current.MainWindow.Width = 850;
+                    Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    Application.Current.MainWindow.Top = 100;
+                    Application.Current.MainWindow.Left = 200;
                     guestModeGrid.Visibility = Visibility.Visible;
                 });
 
@@ -194,6 +200,12 @@ namespace PlGui
                 });
 
             }).Start();
+        }
+
+        private void forgetPasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            forgetPasswordWindow forgetPasswordWindow = new forgetPasswordWindow();
+            forgetPasswordWindow.Show();
         }
     }
 }
