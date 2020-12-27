@@ -73,7 +73,7 @@
                 BorderThickness="0" Click="bLogIn_Click"/>
         </Grid>
 
-        <Grid x:Name="logInGrid" Visibility="Visible">
+        <Grid x:Name="logInGrid" Visibility="Hidden" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
@@ -317,7 +317,7 @@
 
         </Grid>
 
-        <Grid x:Name="guestModeGrid" Visibility="Hidden">
+        <Grid x:Name="guestModeGrid" Visibility="Visible">
             <Grid.Background>
                 <ImageBrush ImageSource="images\stops.jpg"/>
             </Grid.Background>
@@ -346,9 +346,21 @@
             </Grid.RowDefinitions>
 
             <materialDesign:PackIcon Kind="AccountQuestionOutline" 
-                                     Grid.Row="1" Grid.Column="7"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Top"/>
+                        Height="30" Width="30" 
+                        Grid.Row="1" Grid.Column="7"
+                        HorizontalAlignment="Right" VerticalAlignment="Top"/>
+
+            <ListView x:Name="ListviewBuses" ItemsSource="{Binding}"
+                      Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"
+                      Grid.RowSpan="6" Background="AliceBlue">
+         
+            </ListView>
+            <ListView x:Name="ListViewLines" ItemsSource="{Binding}"
+                      Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="3"
+                      Grid.RowSpan="6" Background="AliceBlue">
+                
+            </ListView>
+
         </Grid>
 
 
