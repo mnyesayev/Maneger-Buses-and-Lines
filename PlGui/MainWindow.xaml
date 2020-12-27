@@ -21,7 +21,7 @@
             <ImageBrush ImageSource="images\backbus.jpg"/>
         </Grid.Background>
 
-        <Grid x:Name="mainGrid" Visibility="Hidden">
+        <Grid x:Name="mainGrid" Visibility="Visible">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -317,7 +317,7 @@
 
         </Grid>
 
-        <Grid x:Name="guestModeGrid" Visibility="Visible">
+        <Grid x:Name="guestModeGrid" Visibility="Hidden">
             <Grid.Background>
                 <ImageBrush ImageSource="images\stops.jpg"/>
             </Grid.Background>
