@@ -439,6 +439,26 @@
                     Height="30" FontSize="12" Background="Transparent" BorderThickness="0"
                     VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />
             </StackPanel>
+            <TabControl Name="adminTabControl" TabStripPlacement="Top" Grid.Row="1"
+                        Grid.Column="1" Grid.ColumnSpan="6" BorderThickness="0"
+                        Grid.RowSpan="7" Background="Transparent" 
+                         materialDesign:ColorZoneAssist.Mode="PrimaryDark">
+                <TabItem Header="buses"
+                         Height="35" Width="128" HorizontalAlignment="Right">
+                    
+                </TabItem>
+                <TabItem Header="buses"
+                         Height="35" Width="128" HorizontalAlignment="Right">
+
+                </TabItem>
+                <TabItem Header="buses"
+                         Height="35" Width="128" HorizontalAlignment="Right">
+
+                </TabItem>
+
+
+
+            </TabControl>
         </Grid>
         <Grid x:Name="loudGrid" Visibility="Hidden" >
 
