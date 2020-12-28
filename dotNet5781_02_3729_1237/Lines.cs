@@ -32,8 +32,7 @@ namespace dotNet5781_02_3729_1237
         /// </summary>
         /// <param name="line"></param>
         /// <returns>a bool var.</returns>
-        public bool Ad
-            ine(Line line)
+        public bool AddLine(Line line)
         {
             try
             {

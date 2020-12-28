@@ -56,8 +56,7 @@ namespace dotNet5781_03A_3729_1237
                 listStations.Add(new BusStation(MyRandom.r.Next(1, 999999)));
             // create 10 lines
             for (int x = 0, y = 10; x < 10; ++x, ++y)
-                busLines.Ad
-                    ine(new Line(listStations[x], listStations[y], MyRandom.r.Next(1, 999)));
+                busLines.AddLine(new Line(listStations[x], listStations[y], MyRandom.r.Next(1, 999)));
             init(20, 40, 0);
             cbBusLines.ItemsSource = busLines;
             cbBusLines.DisplayMemberPath = "NumLine";//name of my property in ex 2

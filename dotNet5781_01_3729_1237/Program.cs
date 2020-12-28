@@ -34,8 +34,7 @@ namespace dotNet5781_01_3729_1237
                 // get the number
 
                 int temp;
-                while (!int.TryParse(Console.Rea
-                    ine(), out temp))
+                while (!int.TryParse(Console.ReadLine(), out temp))
                     Console.WriteLine("Wrong input! Try Again.");
                 userChoise = (Choises)temp;
 

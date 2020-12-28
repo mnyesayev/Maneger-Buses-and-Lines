@@ -35,8 +35,7 @@ namespace dotNet5781_02_3729_1237
         /// <param name="t"></param>
         public static void Cin(out int t)
         {
-            while (!int.TryParse(Console.Rea
-                ine(), out t))
+            while (!int.TryParse(Console.ReadLine(), out t))
                 Console.WriteLine("Wrong input! Try Again.");
         }
     }
