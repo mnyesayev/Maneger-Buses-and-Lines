@@ -12,10 +12,7 @@ namespace DO
     /// </summary>
     public class User
     {
-        /// <summary>
-        ///  Represents if this class active
-        /// </summary>
-        public bool Active { get; set; }
+        
 
        
         public string LastName { get; set; }
@@ -42,5 +39,9 @@ namespace DO
         /// Represents the birthday  of the "User"
         /// </summary>
         public DateTime Birthday { get; set; }
+        /// <summary>
+        ///  Represents if this class active
+        /// </summary>
+        public bool Active { get; set; }
     }
 }
