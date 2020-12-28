@@ -132,14 +132,14 @@
                 materialDesign:ButtonAssist.CornerRadius="25"
                 BorderThickness="0" Click="blogInBack_Click" />
 
-            <Button x:Name="blogIn" Content="Log in" HorizontalAlignment="Center"
+            <Button x:Name="blogInEnter" Content="Log in" HorizontalAlignment="Center"
                 VerticalAlignment="Center" Grid.Column="4" Grid.ColumnSpan="2" 
                 Grid.Row="6" Grid.RowSpan="2" Width="120" Height="50" FontWeight="Bold"
                 FontSize="18" 
                 Background="#FF64CCF1" 
                 Foreground="White" 
                 materialDesign:ButtonAssist.CornerRadius="25"
-                BorderThickness="0" />
+                BorderThickness="0" Click="blogInEnter_Click"  />
             <Button x:Name="forgetPasswordButton"
                     Background="Transparent" Grid.Column="2"
                     Grid.RowSpan="2"
@@ -396,6 +396,45 @@
                     VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Width="40"/>
 
                 <Button x:Name="account" Content="David" 
+                    VerticalAlignment="Top" 
+                    Height="30" FontSize="12" Background="Transparent" BorderThickness="0"
+                    VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />
+            </StackPanel>
+        </Grid>
+
+
+        <Grid x:Name="adminGrid" Visibility="Hidden">
+            <Grid.Background>
+                <ImageBrush ImageSource="images\stops.jpg"/>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="1" Grid.Column="7" Grid.RowSpan="2">
+                <materialDesign:PackIcon Kind="AccountStar"  
+                    VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Width="40"/>
+
+                <Button x:Name="accountAdmin" Content="{Binding Path=firstName}" 
                     VerticalAlignment="Top" 
                     Height="30" FontSize="12" Background="Transparent" BorderThickness="0"
                     VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />

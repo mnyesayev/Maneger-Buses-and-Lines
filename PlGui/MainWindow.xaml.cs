@@ -27,6 +27,7 @@ namespace PlGui
         {
             InitializeComponent();
         }
+        IBL ibl = BlFactory.GetBL("1");
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
@@ -140,7 +141,7 @@ namespace PlGui
         private void signUpNext_Click(object sender, RoutedEventArgs e)
         {
             bool returnback = false;
-            if (SutbFirstName.Text.Length < 1 )
+            if (SutbFirstName.Text.Length < 1)
             {
                 SutbFirstName.BorderBrush = Brushes.OrangeRed;
                 returnback = true;
@@ -152,7 +153,7 @@ namespace PlGui
                 returnback = true;
             }
             else SutbLastName.BorderBrush = Brushes.Transparent;
-            if (SutbPhoneNumber.Text.Length != 10 || !int.TryParse(SutbPhoneNumber.Text, out int i) )
+            if (SutbPhoneNumber.Text.Length != 10 || !int.TryParse(SutbPhoneNumber.Text, out int i))
             {
                 SutbPhoneNumber.BorderBrush = Brushes.OrangeRed;
                 returnback = true;
@@ -178,10 +179,10 @@ namespace PlGui
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-          
+
 
             signUpGridPart2.Visibility = Visibility.Hidden;
-           
+
             new Thread(() =>
             {
                 this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
@@ -206,6 +207,42 @@ namespace PlGui
         {
             forgetPasswordWindow forgetPasswordWindow = new forgetPasswordWindow();
             forgetPasswordWindow.Show();
+        }
+
+        private void blogInEnter_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbUserName.Text.Length == 0 || tbpassword.Password.Length == 0)
+                return;
+            User user = ibl.GetUser(tbUserName.Text, tbpassword.Password);
+            if (user != null)
+            {
+                if (user.Authorization == Authorizations.User)
+                    return; // must to fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+                if (user.Authorization == Authorizations.Admin)
+                {
+                    logInGrid.Visibility = Visibility.Hidden;
+                    new Thread(() =>
+                    {
+                        this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+
+                        Thread.Sleep(500);
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            loudGrid.Visibility = Visibility.Hidden;
+                            Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
+                            Application.Current.MainWindow.Height = 640;
+                            Application.Current.MainWindow.Width = 850;
+                            Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                            Application.Current.MainWindow.Top = 100;
+                            Application.Current.MainWindow.Left = 200;
+                            accountAdmin.Content = user.FirstName;
+                            adminGrid.Visibility = Visibility.Visible;
+                        });
+
+                    }).Start();
+                }
+
+            }
         }
     }
 }

@@ -56,8 +56,9 @@ namespace DS
             Users.Add(new User()
             {
                 Active = true,
-                Authorization = Authorizations.IT,
+                Authorization = Authorizations.Admin,
                 Birthday = DateTime.Now,
+                FirstName = "Admin",
                 UserName = "david&matan",
                 Password = "37291237",
                 Phone = "052-123456"
