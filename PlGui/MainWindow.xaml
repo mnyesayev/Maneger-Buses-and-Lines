@@ -353,12 +353,12 @@
             <ListView x:Name="ListviewBuses" ItemsSource="{Binding}"
                       Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"
                       Grid.RowSpan="6" Background="AliceBlue">
-         
+
             </ListView>
             <ListView x:Name="ListViewLines" ItemsSource="{Binding}"
                       Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="3"
                       Grid.RowSpan="6" Background="AliceBlue">
-                
+
             </ListView>
 
         </Grid>
@@ -443,15 +443,32 @@
                         Grid.Column="1" Grid.ColumnSpan="6" BorderThickness="0"
                         Grid.RowSpan="7" Background="Transparent" 
                          materialDesign:ColorZoneAssist.Mode="PrimaryDark">
-                <TabItem Header="buses"
-                         Height="35" Width="128" HorizontalAlignment="Right">
-                    
-                </TabItem>
-                <TabItem Header="buses"
+                <TabItem Header="Buses"
                          Height="35" Width="128" HorizontalAlignment="Right">
 
                 </TabItem>
-                <TabItem Header="buses"
+                <TabItem Header="Lines"
+                         Height="35" Width="128" HorizontalAlignment="Right">
+                    <ListView>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Background" Value="Azure"></Setter>
+                                        <Setter Property="BorderThickness" Value="0"></Setter>
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn x:Name="gvcNumId" Header="Line" Width="auto"  
+                                    DisplayMemberBinding="{Binding Path=hh,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <GridViewColumn x:Name="gvcStartStop" Header="Starting station" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=hh, StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <GridViewColumn x:Name="gvcEndStop" Header="Last Stop" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=hh,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Header="Stations"
                          Height="35" Width="128" HorizontalAlignment="Right">
 
                 </TabItem>
