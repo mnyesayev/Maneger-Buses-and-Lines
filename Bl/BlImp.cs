@@ -21,6 +21,8 @@ namespace BlApi
                 return null;
         }
 
+        
+
         public User GetUser(string userName, string password)
         {
             var user = dal.GetUser(userName);
@@ -58,40 +60,31 @@ namespace BlApi
             throw new NotImplementedException();
         }
 
-       
+        public IEnumerable<StopLine> GetStopsInLine(int id)
+        {
+            return from StopLine in dal.GetStopLinesBy((StopLine)
+                               => { return StopLine.IdLine == id; })
+                            let newStopLine = new BO.StopLine()
+                            {
+                                CodeStop = StopLine.CodeStop
+                                ,IdLine = StopLine.IdLine
+                                ,Name = getName(StopLine.CodeStop)
+                                ,NumStopInLine = StopLine.NumStopInLine
+                                ,NextStop = StopLine.NextStop
+                                ,PrevStop = StopLine.PrevStop
+                            }
+                            select newStopLine;
+        }
 
         IEnumerable<Line> IBL.GetLines()
         {
-            var lines = from Line in dal.GetLines()
+            return from Line in dal.GetLines()
                         let newLine=new BO.Line()
                         { IdLine=Line.IdLine,NumLine=Line.NumLine
                         ,Area=(BO.Areas)Line.Area,CodeAgency=(BO.Agency)Line.CodeAgency
+                        ,StopsInLine=GetStopsInLine(Line.IdLine)
                         }
                         select newLine;
-
-            for (int i = 0; i < lines.Count(); i++)
-            {
-                var stopLines = from StopLine in dal.GetStopLinesBy((StopLine)
-                               => { return StopLine.IdLine == lines.ElementAt(i).IdLine; })
-                                let newStopLine = new BO.StopLine()
-                                {
-                                    CodeStop = StopLine.CodeStop
-                                    ,
-                                    IdLine = StopLine.IdLine
-                                    ,
-                                    Name = getName(StopLine.CodeStop)
-                                    ,
-                                    NumStopInLine = StopLine.NumStopInLine
-                                    ,
-                                    NextStop = StopLine.NextStop
-                                    ,
-                                    PrevStop = StopLine.PrevStop
-                                }
-                                select newStopLine;
-                Bl.Cloning.CopyPropertiesTo(stopLines, lines.ElementAt(i).StopsInLine);
- 
-            } 
-            return lines;
         }
 
         void IBL.insertDistanceAndTime(int code1, int code2, double distance, TimeSpan time)

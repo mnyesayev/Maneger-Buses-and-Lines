@@ -17,6 +17,9 @@ namespace PO
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+        string numLine;
+        Agency codeAgency;
+        Areas area;
         /// <summary>
         /// Represents the inner unique number of the "Line"
         /// </summary>
@@ -24,15 +27,15 @@ namespace PO
         /// <summary>
         /// Represents the number of the Line
         /// </summary>
-        public string NumLine { get { return NumLine; } set{NumLine = value; OnPropertyChanged(); }}
+        public string NumLine { get { return numLine; } set{ numLine = value; OnPropertyChanged(); }}
         /// <summary>
         /// Represents the agency of the Line
         /// </summary>
-        public Agency CodeAgency { get { return CodeAgency; } set { CodeAgency = value; OnPropertyChanged(); } }
+        public Agency CodeAgency { get { return codeAgency; } set { codeAgency = value;  OnPropertyChanged(); } }
         /// <summary>
         /// Represents the area of the Line
         /// </summary>
-        public Areas Area {  get { return Area; } set{ Area = value; OnPropertyChanged(); } }
+        public Areas Area {  get { return area; } set{ area = value;  OnPropertyChanged(); } }
         /// <summary>
         /// Represents all stops in the Line
         /// </summary>
@@ -40,7 +43,7 @@ namespace PO
         /// <summary>
         /// Represents the more info of about the Line
         /// </summary>
-        public string MoreInfo { get { return MoreInfo; } set { MoreInfo = value; OnPropertyChanged(); } }
+        public string MoreInfo { get { return MoreInfo; } set {  OnPropertyChanged(); } }
     
         public string NameFirstLineStop { get { return StopsInLine[0].Name;} }
 

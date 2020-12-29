@@ -462,9 +462,9 @@
                                 <GridViewColumn x:Name="gvcNumId" Header="Line" Width="auto"  
                                     DisplayMemberBinding="{Binding Path=NumLine,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                                 <GridViewColumn x:Name="gvcStartStop" Header="Starting station" Width="auto"
-                                    DisplayMemberBinding="{Binding Path=hh, StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    DisplayMemberBinding="{Binding Path=NameFirstLineStop, StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 <GridViewColumn x:Name="gvcEndStop" Header="Last Stop" Width="auto"
-                                    DisplayMemberBinding="{Binding Path=hh,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    DisplayMemberBinding="{Binding Path=NameLastLineStop,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

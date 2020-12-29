@@ -297,7 +297,7 @@ namespace DS
             StopLines.Add(new StopLine() { PrevStop = 21123, IdLine = 6, CodeStop = 25867, NumStopInLine = 10 });
             #endregion
             #region numLine200
-            StopLines.Add(new StopLine() { NextStop = 60290, IdLine = 7, CodeStop = 30320, NumStopInLine = 1 });
+            StopLines.Add(new StopLine() { NextStop = 60290, IdLine = 7, CodeStop = 60320, NumStopInLine = 1 });
             StopLines.Add(new StopLine() { PrevStop = 30320, NextStop = 34017, IdLine = 7, CodeStop = 60290, NumStopInLine = 2 });
             StopLines.Add(new StopLine() { PrevStop = 60290, NextStop = 33740, IdLine = 7, CodeStop = 34017, NumStopInLine = 3 });
             StopLines.Add(new StopLine() { PrevStop = 34017, NextStop = 33432, IdLine = 7, CodeStop = 33740, NumStopInLine = 4 });

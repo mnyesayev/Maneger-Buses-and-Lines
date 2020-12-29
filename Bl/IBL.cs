@@ -16,8 +16,10 @@ namespace BlApi
         #endregion
 
         void insertDistanceAndTime(int code1,int code2,double distance,TimeSpan time);
-
+        #region Line
         IEnumerable<Line> GetLines();
+        IEnumerable<StopLine> GetStopsInLine(int id);
+        #endregion
         bool changeStopLine(int idLine, int codeStop, int index);
         bool addStopLine(int idLine ,int codeStop,int index);
         bool deleteStopLine(int idLine ,int codeStop,int index);
