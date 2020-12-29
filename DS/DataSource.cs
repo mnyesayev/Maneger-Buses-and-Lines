@@ -59,8 +59,8 @@ namespace DS
                 Authorization = Authorizations.Admin,
                 Birthday = DateTime.Now,
                 FirstName = "Admin",
-                UserName = "david&matan",
-                Password = "37291237",
+                UserName = "123456",
+                Password = "123456",
                 Phone = "052-123456"
             });
             initUsers();
