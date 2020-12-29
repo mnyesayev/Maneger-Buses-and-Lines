@@ -49,7 +49,7 @@
     <Compile Include="Cloning.cs" />
     <Compile Include="BO\DriverBO.cs" />
     <Compile Include="BO\EnumsBO.cs" />
-    <Compile Include="BO\ExeceptionsBO.cs" />
+    <Compile Include="BO\Exceptions.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="BO\LineBO.cs" />
     <Compile Include="BO\LineTripBO.cs" />

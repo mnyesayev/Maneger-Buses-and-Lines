@@ -83,11 +83,11 @@ namespace Dal
         public User GetUser(string userName)
         {
             var user = DataSource.Users.Find((User) => { return User.Active && User.UserName == userName; });
-            if (user==null)
+            if (user == null)
                 return null;
             return user.Clone();
         }
-        public void addUser(User user)
+        public void AddUser(User user)
         {
             int index = DataSource.Users.FindIndex((User) => { return User.UserName == user.UserName; });
             if (index == -1)
@@ -98,7 +98,7 @@ namespace Dal
             if (DataSource.Users[index].Active == true)
                 throw new UserExceptionDO(user.UserName, "the User is already exists");
         }
-        public void deleteUser(string phone, DateTime dateTime)
+        public void DeleteUser(string phone, DateTime dateTime)
         {
             int index = DataSource.Users.FindIndex((User) => { return (User.Active && User.Phone == phone && User.Birthday == dateTime); });
             if (index == -1)
@@ -107,7 +107,7 @@ namespace Dal
             }
             DataSource.Users[index].Active = false;
         }
-        public void updateUser(User user)
+        public void UpdateUser(User user)
         {
             int index = DataSource.Users.FindIndex((User) => { return User.Active && User.UserName == user.UserName; });
             if (index == -1)
@@ -131,7 +131,7 @@ namespace Dal
         #endregion
 
         #region BusStop
-   
+
         public BusStop GetBusStop(int code)
         {
             var busStop = DataSource.BusStops.Find((BusStop) => { return BusStop.Active && BusStop.Code == code; });
@@ -140,7 +140,7 @@ namespace Dal
             return busStop.Clone();
         }
 
-        public void updateBusStop(BusStop busStop)
+        public void UpdateBusStop(BusStop busStop)
         {
             int index = DataSource.BusStops.FindIndex((BusStop) => { return BusStop.Active && BusStop.Code == busStop.Code; });
             if (index == -1)
@@ -148,7 +148,7 @@ namespace Dal
             DataSource.BusStops[index] = busStop;
         }
 
-        public void deleteBusStop(int code)
+        public void DeleteBusStop(int code)
         {
             int index = DataSource.BusStops.FindIndex((BusStop) => { return BusStop.Active && BusStop.Code == code; });
             if (index == -1)
@@ -158,7 +158,7 @@ namespace Dal
         #endregion
 
         #region Driver
-        public void addDriver(DO.Driver driver)
+        public void AddDriver(DO.Driver driver)
         {
             int index = DataSource.Drivers.FindIndex((Driver) => { return Driver.Id == driver.Id; });
             if (index == -1)
@@ -208,7 +208,7 @@ namespace Dal
         #endregion
 
         #region Line
-        public int createLine(DO.Line line)
+        public int CreateLine(DO.Line line)
         {
             line.IdLine = Config.LineCounter;
             DataSource.Lines.Add(line);
@@ -235,7 +235,7 @@ namespace Dal
                    where Line.Active == true
                    select Line.Clone();
         }
-        public void updateLine(DO.Line line)
+        public void UpdateLine(DO.Line line)
         {
             int index = DataSource.Lines.FindIndex((Line) => { return Line.Active && Line.IdLine == line.IdLine; });
             if (index == -1)
@@ -243,7 +243,7 @@ namespace Dal
             DataSource.Lines[index] = line;
 
         }
-        public void deleteLine(int idLine)
+        public void DeleteLine(int idLine)
         {
             int index = DataSource.Lines.FindIndex((Line) => { return Line.Active && Line.IdLine == idLine; });
             if (index == -1)
@@ -253,6 +253,19 @@ namespace Dal
         #endregion
 
         #region StopLine
+        public void AddStopLine(StopLine stopLine)
+        {
+            var index = DataSource.StopLines.FindIndex((StopLine) =>
+            {
+                return StopLine.IdLine == stopLine.IdLine && StopLine.CodeStop == stopLine.CodeStop;
+            });
+            if (index == -1)
+            {
+                DataSource.StopLines.Add(stopLine);
+                return;
+            }
+            throw new StopLineExceptionDO(stopLine.IdLine, stopLine.CodeStop, "the stop Line is already exists");
+        }
         public StopLine GetStopLine(int idLine, int codeStop)
         {
             var stopLine = DataSource.StopLines.Find((StopLine) =>
@@ -272,7 +285,7 @@ namespace Dal
                    where predicate(StopLine)
                    select StopLine.Clone();
         }
-        public void updateStopLine(DO.StopLine stopLine)
+        public void UpdateStopLine(DO.StopLine stopLine)
         {
             int index = DataSource.StopLines.FindIndex((StopLine) =>
             { return StopLine.IdLine == stopLine.IdLine && StopLine.CodeStop == stopLine.CodeStop; });
@@ -280,7 +293,7 @@ namespace Dal
                 throw new StopLineExceptionDO(stopLine.IdLine, stopLine.CodeStop, "system not found the stop line");
             DataSource.StopLines[index] = stopLine;
         }
-        public void deleteStopLine(int idLine, int codeStop)
+        public void DeleteStopLine(int idLine, int codeStop)
         {
             int index = DataSource.StopLines.FindIndex((StopLine) =>
             { return StopLine.IdLine == idLine && StopLine.CodeStop == codeStop; });
@@ -291,6 +304,20 @@ namespace Dal
         #endregion
 
         #region ConsecutiveStops
+        public void AddConsecutiveStops(ConsecutiveStops consecutiveStops)
+        {
+            int index = DataSource.LstConsecutiveStops.FindIndex((ConsecutiveStops) =>
+              {
+                  return ConsecutiveStops.CodeBusStop1 == consecutiveStops.CodeBusStop1
+                   && ConsecutiveStops.CodeBusStop2 == consecutiveStops.CodeBusStop2;
+              });
+            if (index == -1)
+            {
+                DataSource.LstConsecutiveStops.Add(consecutiveStops);
+                return;
+            }
+            throw new ConsecutiveStopsExceptionDO(consecutiveStops.CodeBusStop1, consecutiveStops.CodeBusStop2, "the driver is already exists");
+        }
         public ConsecutiveStops GetConsecutiveStops(int codeStop1, int codeStop2)
         {
             var conStops = DataSource.LstConsecutiveStops.Find((ConsecutiveStops) =>
@@ -313,7 +340,7 @@ namespace Dal
                    where predicate(ConsecutiveStops)
                    select ConsecutiveStops.Clone();
         }
-        public void updateConsecutiveStops(ConsecutiveStops consecutiveStops)
+        public void UpdateConsecutiveStops(ConsecutiveStops consecutiveStops)
         {
             int index = DataSource.LstConsecutiveStops.FindIndex((ConsecutiveStops) =>
             {
@@ -321,12 +348,13 @@ namespace Dal
                 && ConsecutiveStops.CodeBusStop2 == consecutiveStops.CodeBusStop2;
             });
             if (index == -1)
-                throw new ConsecutiveStopsExceptionDO(consecutiveStops.CodeBusStop1, consecutiveStops.CodeBusStop2);
+                throw new ConsecutiveStopsExceptionDO(consecutiveStops.CodeBusStop1, consecutiveStops.CodeBusStop2, "system not found the consecutiveStops");
+            DataSource.LstConsecutiveStops[index] = consecutiveStops;
         }
         #endregion
 
         #region LineTrip
-        public int createLineTrip(LineTrip lineTrip)
+        public int CreateLineTrip(LineTrip lineTrip)
         {
             lineTrip.Id = Config.LineTripCounter;
             DataSource.LineTrips.Add(lineTrip);
@@ -355,25 +383,23 @@ namespace Dal
                    where LineTrip.Active == true
                    select LineTrip.Clone();
         }
-        public void updateLineTrip(DO.LineTrip lineTrip)
+        public void UpdateLineTrip(DO.LineTrip lineTrip)
         {
             int index = DataSource.LineTrips.FindIndex((LineTrip) => { return LineTrip.Active && LineTrip.Id == lineTrip.Id; });
             if (index == -1)
                 throw new LineTripExceptionDO(lineTrip.Id, "system not found the line trip");
             DataSource.LineTrips[index] = lineTrip;
         }
-        public void deleteLineTrip(int idLine, TimeSpan startTime)
+        public void DeleteLineTrip(int idLine, TimeSpan startTime)
         {
             var index = DataSource.LineTrips.FindIndex((LineTrip) =>
             {
                 return LineTrip.Active && LineTrip.IdLine == idLine && LineTrip.StartTime == startTime;
             });
             if (index == -1)
-                throw new LineTripExceptionDO(idLine, "the line trip is not exists"); 
+                throw new LineTripExceptionDO(idLine, "the line trip is not exists");
             DataSource.LineTrips[index].Active = false;
         }
-
-       
         #endregion
     }
 }

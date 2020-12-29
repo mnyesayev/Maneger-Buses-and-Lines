@@ -10,9 +10,9 @@ namespace BlApi
 {
     public class BlImp : IBL
     {
-        IDal dal = DalFactory.GetDal();
+        readonly IDal dal = DalFactory.GetDal();
 
-        public string getName(int code)
+        public string GetName(int code)
         {
             var stop = dal.GetBusStop(code);
             if (stop != null)
@@ -35,27 +35,35 @@ namespace BlApi
             return null;
         }
 
-        bool IBL.addStopLine(int idLine, int codeStop, int index)
+        bool IBL.AddStopLine(int idLine, int codeStop, int index)
+        {
+            var stopsInLine = GetStopsInLine(idLine);
+            if (stopsInLine == null)
+                return false;
+            if (stopsInLine.Count() < index + 1)
+                return false;
+            else
+            {
+                return false;
+            }
+        }
+
+        void IBL.AddUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        void IBL.addUser(User user)
+        bool IBL.ChangeStopLine(int idLine, int codeStop, int index)
         {
             throw new NotImplementedException();
         }
 
-        bool IBL.changeStopLine(int idLine, int codeStop, int index)
+        bool IBL.DeleteStopLine(int idLine, int codeStop, int index)
         {
             throw new NotImplementedException();
         }
 
-        bool IBL.deleteStopLine(int idLine, int codeStop, int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IBL.deleteUser(string userName)
+        void IBL.DeleteUser(string userName)
         {
             throw new NotImplementedException();
         }
@@ -68,7 +76,7 @@ namespace BlApi
                             {
                                 CodeStop = StopLine.CodeStop
                                 ,IdLine = StopLine.IdLine
-                                ,Name = getName(StopLine.CodeStop)
+                                ,Name = GetName(StopLine.CodeStop)
                                 ,NumStopInLine = StopLine.NumStopInLine
                                 ,NextStop = StopLine.NextStop
                                 ,PrevStop = StopLine.PrevStop
@@ -87,17 +95,17 @@ namespace BlApi
                         select newLine;
         }
 
-        void IBL.insertDistanceAndTime(int code1, int code2, double distance, TimeSpan time)
+        void IBL.InsertDistanceAndTime(int code1, int code2, double distance, TimeSpan time)
         {
             throw new NotImplementedException();
         }
 
-        string IBL.recoverPassword(string phone, DateTime birthday)
+        string IBL.RecoverPassword(string phone, DateTime birthday)
         {
             throw new NotImplementedException();
         }
 
-        void IBL.updateName(int code, string name)
+        void IBL.UpdateName(int code, string name)
         {
             throw new NotImplementedException();
         }

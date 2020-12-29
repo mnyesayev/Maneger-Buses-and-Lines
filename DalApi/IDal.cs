@@ -23,12 +23,12 @@ namespace DalApi
 
         #region BusStop
         DO.BusStop GetBusStop(int code);
-        void updateBusStop(DO.BusStop busStop);
-        void deleteBusStop(int code);
+        void UpdateBusStop(DO.BusStop busStop);
+        void DeleteBusStop(int code);
         #endregion
 
         #region Driver
-        void addDriver(DO.Driver driver);
+        void AddDriver(DO.Driver driver);
         IEnumerable<DO.Driver> GetDrivers();
         IEnumerable<DO.Driver> GetDriversBy(Predicate<DO.Driver> predicate);
         DO.Driver GetDriver(int id);
@@ -38,44 +38,46 @@ namespace DalApi
 
         #region User
         DO.User GetUser(string userName);
-        void deleteUser(string phone, DateTime dateTime);
-        void addUser(DO.User user);
-        void updateUser(DO.User user);
+        void DeleteUser(string phone, DateTime dateTime);
+        void AddUser(DO.User user);
+        void UpdateUser(DO.User user);
         IEnumerable<DO.User> GetUsers();
         IEnumerable<DO.User> GetUsersBy(Predicate<DO.User> predicate);
         #endregion
 
         #region Line
-        int createLine(DO.Line line);
+        int CreateLine(DO.Line line);
         DO.Line GetLine(int idLine);
         IEnumerable<DO.Line> GetLines();
         IEnumerable<DO.Line> GetLinesBy(Predicate<DO.Line> predicate);
-        void updateLine(DO.Line line);
-        void deleteLine(int idLine);
+        void UpdateLine(DO.Line line);
+        void DeleteLine(int idLine);
         #endregion
 
         #region StopLine
+        void AddStopLine(DO.StopLine stopLine);
         DO.StopLine GetStopLine(int idLine,int codeStop);
         IEnumerable<DO.StopLine> GetStopLines();
         IEnumerable<DO.StopLine> GetStopLinesBy(Predicate<DO.StopLine> predicate);
-        void updateStopLine(DO.StopLine stopLine);
-        void deleteStopLine(int idLine, int codeStop);
+        void UpdateStopLine(DO.StopLine stopLine);
+        void DeleteStopLine(int idLine, int codeStop);
         #endregion
 
         #region ConsecutiveStops
         DO.ConsecutiveStops GetConsecutiveStops(int codeStop1, int codeStop2);
+        void AddConsecutiveStops(DO.ConsecutiveStops consecutiveStops);
         IEnumerable<DO.ConsecutiveStops> GetConsecutiveStops();
         IEnumerable<DO.ConsecutiveStops> GetConsecutiveStopsBy(Predicate<DO.ConsecutiveStops> predicate);
-        void updateConsecutiveStops(DO.ConsecutiveStops consecutiveStops);
+        void UpdateConsecutiveStops(DO.ConsecutiveStops consecutiveStops);
         #endregion
 
         #region LineTrip
-        int createLineTrip(DO.LineTrip lineTrip);
+        int CreateLineTrip(DO.LineTrip lineTrip);
         DO.LineTrip GetLineTrip(int idLine, TimeSpan startTime);
         IEnumerable<DO.LineTrip> GetLineTrips();
         IEnumerable<DO.LineTrip> GetLineTripsBy(Predicate<DO.LineTrip> predicate);
-        void updateLineTrip(DO.LineTrip lineTrip);
-        void deleteLineTrip(int idLine, TimeSpan startTime);
+        void UpdateLineTrip(DO.LineTrip lineTrip);
+        void DeleteLineTrip(int idLine, TimeSpan startTime);
         #endregion
     }
 }
