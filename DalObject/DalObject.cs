@@ -57,7 +57,7 @@ namespace Dal
         public Bus GetBus(int id)
         {
             var bus = DataSource.Buses.Find((Bus) => { return Bus.Active && Bus.Id == id; });
-            if (bus.Id != id)
+            if (bus == null)
                 return null;
             return bus.Clone();
         }
@@ -83,7 +83,7 @@ namespace Dal
         public User GetUser(string userName)
         {
             var user = DataSource.Users.Find((User) => { return User.Active && User.UserName == userName; });
-            if (user.UserName != userName)
+            if (user==null)
                 return null;
             return user.Clone();
         }
@@ -131,10 +131,11 @@ namespace Dal
         #endregion
 
         #region BusStop
+   
         public BusStop GetBusStop(int code)
         {
             var busStop = DataSource.BusStops.Find((BusStop) => { return BusStop.Active && BusStop.Code == code; });
-            if (busStop.Code != code)
+            if (busStop == null)
                 return null;
             return busStop.Clone();
         }
@@ -184,7 +185,7 @@ namespace Dal
         public Driver GetDriver(int id)
         {
             var driver = DataSource.Drivers.Find((Driver) => { return Driver.Active && Driver.Id == id; });
-            if (driver.Id != id)
+            if (driver == null)
                 return null;
             return driver.Clone();
         }
@@ -216,7 +217,7 @@ namespace Dal
         public DO.Line GetLine(int idLine)
         {
             var line = DataSource.Lines.Find((Line) => { return Line.Active && Line.IdLine == idLine; });
-            if (line.IdLine != idLine)
+            if (line == null)
                 return null;
             return line.Clone();
 
@@ -256,7 +257,7 @@ namespace Dal
         {
             var stopLine = DataSource.StopLines.Find((StopLine) =>
                             { return StopLine.IdLine == idLine && StopLine.CodeStop == codeStop; });
-            if (stopLine.CodeStop != codeStop)
+            if (stopLine == null)
                 return null;
             return stopLine.Clone();
         }
@@ -290,14 +291,14 @@ namespace Dal
         #endregion
 
         #region ConsecutiveStops
-        public DO.ConsecutiveStops GetConsecutiveStops(int codeStop1, int codeStop2)
+        public ConsecutiveStops GetConsecutiveStops(int codeStop1, int codeStop2)
         {
             var conStops = DataSource.LstConsecutiveStops.Find((ConsecutiveStops) =>
             {
                 return ConsecutiveStops.CodeBusStop1 == codeStop1
                 && ConsecutiveStops.CodeBusStop2 == codeStop2;
             });
-            if (conStops.CodeBusStop1 != codeStop1)
+            if (conStops == null)
                 return null;
             return conStops.Clone();
         }
@@ -337,7 +338,7 @@ namespace Dal
             {
                 return LineTrip.Active && LineTrip.IdLine == idLine && LineTrip.StartTime == startTime;
             });
-            if (lineTrip.IdLine != idLine)
+            if (lineTrip == null)
                 return null;
             return lineTrip.Clone();
         }
@@ -371,6 +372,8 @@ namespace Dal
                 throw new LineTripExceptionDO(idLine, "the line trip is not exists"); 
             DataSource.LineTrips[index].Active = false;
         }
+
+       
         #endregion
     }
 }

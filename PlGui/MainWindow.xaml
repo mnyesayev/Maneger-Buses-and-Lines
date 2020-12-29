@@ -350,12 +350,12 @@
                         Grid.Row="1" Grid.Column="7"
                         HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
-            <ListView x:Name="ListviewBuses" ItemsSource="{Binding}"
+            <ListView x:Name="ListviewBusesG" ItemsSource="{Binding}"
                       Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"
                       Grid.RowSpan="6" Background="AliceBlue">
 
             </ListView>
-            <ListView x:Name="ListViewLines" ItemsSource="{Binding}"
+            <ListView x:Name="ListViewLinesG" ItemsSource="{Binding}"
                       Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="3"
                       Grid.RowSpan="6" Background="AliceBlue">
 
@@ -449,7 +449,8 @@
                 </TabItem>
                 <TabItem Header="Lines"
                          Height="35" Width="128" HorizontalAlignment="Right">
-                    <ListView>
+                    <ListView x:Name="ListViewLines"
+                              ItemsSource="{Binding}">
                         <ListView.View>
                             <GridView>
                                 <GridView.ColumnHeaderContainerStyle>
@@ -459,7 +460,7 @@
                                     </Style>
                                 </GridView.ColumnHeaderContainerStyle>
                                 <GridViewColumn x:Name="gvcNumId" Header="Line" Width="auto"  
-                                    DisplayMemberBinding="{Binding Path=hh,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    DisplayMemberBinding="{Binding Path=NumLine,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                                 <GridViewColumn x:Name="gvcStartStop" Header="Starting station" Width="auto"
                                     DisplayMemberBinding="{Binding Path=hh, StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 <GridViewColumn x:Name="gvcEndStop" Header="Last Stop" Width="auto"

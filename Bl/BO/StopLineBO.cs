@@ -20,7 +20,10 @@ namespace BO
         /// Represents the number Stop/station in line
         /// </summary>
         public int NumStopInLine { get; set; }
-
+        /// <summary>
+        /// Represents the name of stop in route line
+        /// </summary>
+        public string Name { get; set; }
         /// <summary>
         /// Represents the unique code of the prev stop
         /// </summary>

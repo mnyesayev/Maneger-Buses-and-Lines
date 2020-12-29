@@ -11,13 +11,23 @@ namespace BlApi
     public class BlImp : IBL
     {
         IDal dal = DalFactory.GetDal();
+
+        public string getName(int code)
+        {
+            var stop = dal.GetBusStop(code);
+            if (stop != null)
+                return stop.Name;
+            else
+                return null;
+        }
+
         public User GetUser(string userName, string password)
         {
             var user = dal.GetUser(userName);
             if (user != null && user.Password == password)
             {
                 var newUserBO = new User();
-                Bl.Clone.CopyPropertiesTo(user, newUserBO);
+                Bl.Cloning.CopyPropertiesTo(user, newUserBO);
                 return newUserBO;
             }
             return null;
@@ -59,21 +69,28 @@ namespace BlApi
                         }
                         select newLine;
 
-            foreach (var line in lines)
+            for (int i = 0; i < lines.Count(); i++)
             {
                 var stopLines = from StopLine in dal.GetStopLinesBy((StopLine)
-                                =>{ return StopLine.IdLine == line.IdLine; })
-                                let newStopLine=new BO.StopLine()
+                               => { return StopLine.IdLine == lines.ElementAt(i).IdLine; })
+                                let newStopLine = new BO.StopLine()
                                 {
-                                    CodeStop=StopLine.CodeStop
-                                    ,IdLine=StopLine.IdLine
-                                    ,NumStopInLine=StopLine.NumStopInLine
-                                    ,NextStop=StopLine.NextStop
-                                    ,PrevStop=StopLine.PrevStop
+                                    CodeStop = StopLine.CodeStop
+                                    ,
+                                    IdLine = StopLine.IdLine
+                                    ,
+                                    Name = getName(StopLine.CodeStop)
+                                    ,
+                                    NumStopInLine = StopLine.NumStopInLine
+                                    ,
+                                    NextStop = StopLine.NextStop
+                                    ,
+                                    PrevStop = StopLine.PrevStop
                                 }
-                                select  newStopLine;
-                line.StopsInLine = stopLines;
-            }
+                                select newStopLine;
+                Bl.Cloning.CopyPropertiesTo(stopLines, lines.ElementAt(i).StopsInLine);
+ 
+            } 
             return lines;
         }
 

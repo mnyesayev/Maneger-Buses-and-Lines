@@ -15,7 +15,10 @@ using System.Windows.Shapes;
 using System.Threading;
 using BO;
 using BlApi;
-
+using System.Collections.ObjectModel;
+/// <summary>
+/// need to do PO!!!!!
+/// </summary>
 namespace PlGui
 {
     /// <summary>
@@ -23,11 +26,18 @@ namespace PlGui
     /// </summary>
     public partial class MainWindow : Window
     {
+        public IBL ibl = BlFactory.GetBL("1");
         public MainWindow()
         {
             InitializeComponent();
+            ObservableCollection<PO.Line> Lines=new ObservableCollection<PO.Line>();
+            foreach (var item in ibl.GetLines())
+            {
+                Lines.Add(new PO.Line());
+                Cloning.DeepCopyTo(item, Lines[Lines.Count - 1]);
+            }
+            ListViewLines.DataContext = Lines;
         }
-        IBL ibl = BlFactory.GetBL("1");
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
@@ -243,6 +253,8 @@ namespace PlGui
                 }
 
             }
+            if (user == null)
+                MessageBox.Show(" ");
         }
     }
 }

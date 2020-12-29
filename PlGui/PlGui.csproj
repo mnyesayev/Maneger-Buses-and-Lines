@@ -66,12 +66,14 @@
     <Compile Include="adminWindow.xaml.cs">
       <DependentUpon>adminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Cloning.cs" />
     <Compile Include="IT_Window.xaml.cs">
       <DependentUpon>IT_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="forgetPasswordWindow.xaml.cs">
       <DependentUpon>forgetPasswordWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PO\LinePO.cs" />
     <Compile Include="userWindow.xaml.cs">
       <DependentUpon>userWindow.xaml</DependentUpon>
     </Compile>

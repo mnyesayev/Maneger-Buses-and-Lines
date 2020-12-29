@@ -32,5 +32,7 @@ namespace BO
         /// Represents the more info of about the Line
         /// </summary>
         public string MoreInfo { get; set; }
+        public string NameFirstLineStop { get; }
+        public string NameLastLineStop { get; }
     }
 }

@@ -7,8 +7,21 @@ using System.Threading.Tasks;
 
 namespace Bl
 {
-    public static class Clone
+    public static class Cloning
     {
+        internal static T Clone<T>(this T original) where T : new()
+        {
+            T target = new T();
+            //T copyToObject = (T)Activator.CreateInstance(typeof(T));
+
+            foreach (PropertyInfo sourcePropertyInfo in typeof(T).GetProperties())
+            {
+                PropertyInfo destPropertyInfo = target.GetType().GetProperty(sourcePropertyInfo.Name);
+                destPropertyInfo.SetValue(target, sourcePropertyInfo.GetValue(original, null), null);
+            }
+            return target;
+        }
+
         public static void CopyPropertiesTo<T, S>(this S from, T to)
         {
             foreach (PropertyInfo propTo in to.GetType().GetProperties())
