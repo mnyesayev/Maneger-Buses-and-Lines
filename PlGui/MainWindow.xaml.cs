@@ -30,7 +30,7 @@ namespace PlGui
         public MainWindow()
         {
             InitializeComponent();
-            ObservableCollection<PO.Line> Lines=new ObservableCollection<PO.Line>();
+            ObservableCollection<PO.Line> Lines = new ObservableCollection<PO.Line>();
             foreach (var item in ibl.GetLines())
             {
                 Lines.Add(new PO.Line());
@@ -254,7 +254,14 @@ namespace PlGui
 
             }
             if (user == null)
-                worngUserNameOrPassordTextBlock.Visibility = Visibility.Visible;
+            {
+                new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() => { worngUserNameOrPassordTextBlock.Visibility = Visibility.Visible; });
+                    Thread.Sleep(5000);
+                    this.Dispatcher.Invoke(() => { worngUserNameOrPassordTextBlock.Visibility = Visibility.Hidden; });
+                }).Start();
+            }
         }
     }
 }

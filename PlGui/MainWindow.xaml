@@ -109,9 +109,8 @@
                        Text="wrong username or password!"
                        Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="5"
                        HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                       FontSize="16" Margin="0,0,0,10" 
-                       Visibility="Hidden" Foreground="#DD12E1FF" 
-                       AutomationProperties.HelpText="try again" />
+                       FontSize="16"  Margin="0,0,0,10" Background="Transparent"
+                       Visibility="Hidden" Foreground="#DD12E1FF"/>
 
             <TextBlock x:Name="tBUserName" Text="Username:" Grid.Column="1" 
                    Grid.Row="3" FontSize="20" Grid.ColumnSpan="2" 
@@ -464,27 +463,43 @@
                 </TabItem>
                 <TabItem Header="Lines"
                          Height="35" Width="128" HorizontalAlignment="Right">
-                    <ListView x:Name="ListViewLines"
-                              ItemsSource="{Binding}" Margin="0,0, 200,0">
-                        <ListView.View>
-                            <GridView>
-                                <GridView.ColumnHeaderContainerStyle>
-                                    <Style TargetType="{x:Type GridViewColumnHeader}">
-                                        <Setter Property="Background" Value="Azure"></Setter>
-                                        <Setter Property="BorderThickness" Value="0"></Setter>
-                                    </Style>
-                                </GridView.ColumnHeaderContainerStyle>
-                                <GridViewColumn x:Name="gvcNumId" Header="Line" Width="auto"  
+                    <UniformGrid Columns="2" Rows="1">
+                        <ListView x:Name="ListViewLines"
+                              ItemsSource="{Binding}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn x:Name="gvcNumId" Header="Line" Width="auto"  
                                     DisplayMemberBinding="{Binding Path=NumLine,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                                <GridViewColumn x:Name="gvcStartStop" Header="Starting station" Width="auto"
+                                    <GridViewColumn x:Name="gvcStartStop" Header="Starting station" Width="auto"
                                     DisplayMemberBinding="{Binding Path=NameFirstLineStop, StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                <GridViewColumn x:Name="gvcEndStop" Header="Last Stop" Width="auto"
+                                    <GridViewColumn x:Name="gvcEndStop" Header="Last Stop" Width="auto"
                                     DisplayMemberBinding="{Binding Path=NameLastLineStop,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            </GridView>
-                        </ListView.View>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
 
-                    </ListView>
-
+                        <ListView x:Name="ListViewStopsOfLine" ItemsSource="{Binding}"
+                                  HorizontalAlignment="Right">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn Header="Stops" Width="auto" x:Name="gvcStopsInLine"
+                                                 DisplayMemberBinding="{Binding Path=hh}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </UniformGrid>
                 </TabItem>
                 <TabItem Header="Stations"
                          Height="35" Width="128" HorizontalAlignment="Right">
