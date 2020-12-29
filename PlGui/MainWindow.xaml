@@ -21,6 +21,7 @@
             <ImageBrush ImageSource="images\backbus.jpg"/>
         </Grid.Background>
 
+        <!--#region welcome window-->
         <Grid x:Name="mainGrid" Visibility="Visible">
 
             <Grid.ColumnDefinitions>
@@ -72,7 +73,9 @@
                 materialDesign:ButtonAssist.CornerRadius="25"
                 BorderThickness="0" Click="bLogIn_Click"/>
         </Grid>
+        <!--#endregion -->
 
+        <!--#region Log in-->
         <Grid x:Name="logInGrid" Visibility="Hidden" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -101,6 +104,14 @@
                    Grid.Row="1" Text="Sign in" FontSize="22" FontWeight="Bold"
                    HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"
                   />
+
+            <TextBlock x:Name="worngUserNameOrPassordTextBlock" 
+                       Text="wrong username or password!"
+                       Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="5"
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                       FontSize="16" Margin="0,0,0,10" 
+                       Visibility="Hidden" Foreground="#DD12E1FF" 
+                       AutomationProperties.HelpText="try again" />
 
             <TextBlock x:Name="tBUserName" Text="Username:" Grid.Column="1" 
                    Grid.Row="3" FontSize="20" Grid.ColumnSpan="2" 
@@ -149,8 +160,9 @@
                    FontSize="15" BorderThickness="0" Height="Auto"
                    Width="178" Click="forgetPasswordButton_Click" />
         </Grid>
+        <!--#endregion -->
 
-
+        <!--#region Sign up-->
         <Grid x:Name="SignUpGrid" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -316,7 +328,9 @@
                 BorderThickness="0" Click="SignUp_Click" />
 
         </Grid>
+        <!--#endregion -->
 
+        <!--#region Guest-->
         <Grid x:Name="guestModeGrid" Visibility="Hidden">
             <Grid.Background>
                 <ImageBrush ImageSource="images\stops.jpg"/>
@@ -360,10 +374,10 @@
                       Grid.RowSpan="6" Background="AliceBlue">
 
             </ListView>
-
         </Grid>
+        <!--#endregion -->
 
-
+        <!--#region User-->
         <Grid x:Name="userGrid" Visibility="Hidden">
             <Grid.Background>
                 <ImageBrush ImageSource="images\stops.jpg"/>
@@ -401,8 +415,9 @@
                     VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />
             </StackPanel>
         </Grid>
+        <!--#endregion -->
 
-
+        <!--#region Admin-->
         <Grid x:Name="adminGrid" Visibility="Hidden">
             <Grid.Background>
                 <ImageBrush ImageSource="images\stops.jpg"/>
@@ -450,7 +465,7 @@
                 <TabItem Header="Lines"
                          Height="35" Width="128" HorizontalAlignment="Right">
                     <ListView x:Name="ListViewLines"
-                              ItemsSource="{Binding}">
+                              ItemsSource="{Binding}" Margin="0,0, 200,0">
                         <ListView.View>
                             <GridView>
                                 <GridView.ColumnHeaderContainerStyle>
@@ -467,7 +482,9 @@
                                     DisplayMemberBinding="{Binding Path=NameLastLineStop,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                             </GridView>
                         </ListView.View>
+
                     </ListView>
+
                 </TabItem>
                 <TabItem Header="Stations"
                          Height="35" Width="128" HorizontalAlignment="Right">
@@ -478,6 +495,9 @@
 
             </TabControl>
         </Grid>
+        <!--#endregion -->
+
+        <!--#region Loading-->
         <Grid x:Name="loudGrid" Visibility="Hidden" >
 
             <Button x:Name="BAlouded" Style="{StaticResource MaterialDesignFloatingActionButton}"
@@ -485,8 +505,9 @@
                materialDesign:ButtonProgressAssist.Value="-1"
                materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                 Background="Transparent" BorderThickness="0" BorderBrush="Transparent"
-               Grid.RowSpan="3"/>
+               Grid.RowSpan="3" />
         </Grid>
+        <!--#endregion -->
 
     </Grid>
 </Window>

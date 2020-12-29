@@ -27,7 +27,6 @@ namespace PlGui
 
         private void bShowmMyPassword_Click(object sender, RoutedEventArgs e)
         {
-
             showPasswordTextBlock.Visibility = Visibility.Visible;
             showPasswordTextBlock.Text = "123456789";
             new Thread(() =>

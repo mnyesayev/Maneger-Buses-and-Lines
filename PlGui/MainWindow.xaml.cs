@@ -254,7 +254,7 @@ namespace PlGui
 
             }
             if (user == null)
-                MessageBox.Show(" ");
+                worngUserNameOrPassordTextBlock.Visibility = Visibility.Visible;
         }
     }
 }
