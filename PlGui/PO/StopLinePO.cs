@@ -15,7 +15,8 @@ namespace PO
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-    {
+        string name;
+        int code;
         /// <summary>
         /// Represents the inner unique number of the "Line"
         /// </summary>
@@ -23,7 +24,7 @@ namespace PO
         /// <summary>
         /// Represents the unique code of the "BusStop"
         /// </summary>
-        public int CodeStop { get; set; }
+        public int CodeStop { get { return code; } set { if (code != value) { code = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the number Stop/station in line
         /// </summary>
@@ -31,7 +32,7 @@ namespace PO
         /// <summary>
         /// Represents the name of stop in route line
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get { return name; } set {if (name != value) { name = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the unique code of the prev stop
         /// </summary>

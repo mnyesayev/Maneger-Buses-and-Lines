@@ -10,7 +10,7 @@ using BO;
 
 namespace PO
 {
-    public class Line:INotifyPropertyChanged
+    public class Line : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -20,6 +20,7 @@ namespace PO
         string numLine;
         Agency codeAgency;
         Areas area;
+        string moreInfo;
         /// <summary>
         /// Represents the inner unique number of the "Line"
         /// </summary>
@@ -27,26 +28,26 @@ namespace PO
         /// <summary>
         /// Represents the number of the Line
         /// </summary>
-        public string NumLine { get { return numLine; } set{ numLine = value; OnPropertyChanged(); }}
+        public string NumLine { get { return numLine; } set { if (numLine != value) { numLine = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the agency of the Line
         /// </summary>
-        public Agency CodeAgency { get { return codeAgency; } set { codeAgency = value;  OnPropertyChanged(); } }
+        public Agency CodeAgency { get { return codeAgency; } set { if (codeAgency != value) { codeAgency = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the area of the Line
         /// </summary>
-        public Areas Area {  get { return area; } set{ area = value;  OnPropertyChanged(); } }
+        public Areas Area { get { return area; } set { if (area != value) { area = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents all stops in the Line
         /// </summary>
-        public ObservableCollection<StopLine> StopsInLine { get; } = new ObservableCollection<StopLine>(); 
+        public ObservableCollection<StopLine> StopsInLine { get; } = new ObservableCollection<StopLine>();
         /// <summary>
         /// Represents the more info of about the Line
         /// </summary>
-        public string MoreInfo { get { return MoreInfo; } set {  OnPropertyChanged(); } }
-    
-        public string NameFirstLineStop { get { return StopsInLine[0].Name;} }
+        public string MoreInfo { get { return moreInfo; } set { if (moreInfo != value) { moreInfo = value; OnPropertyChanged(); } } }
 
-        public string NameLastLineStop { get { return StopsInLine[StopsInLine.Count-1].Name;} }
+        public string NameFirstLineStop { get { return StopsInLine[0].Name; } }
+
+        public string NameLastLineStop { get { return StopsInLine[StopsInLine.Count - 1].Name; } }
     }
 }

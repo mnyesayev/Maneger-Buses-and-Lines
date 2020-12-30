@@ -251,6 +251,13 @@ namespace Dal
             DataSource.Lines[index] = line;
 
         }
+        public void UpdateLine(int idLine, Action<Line> action)
+        {
+            int index = DataSource.Lines.FindIndex((Line) => { return Line.Active && Line.IdLine == idLine; });
+            if (index == -1)
+                throw new LineExceptionDO(idLine, "system not found the line");
+            action(DataSource.Lines[index]);  
+        }
         public void DeleteLine(int idLine)
         {
             int index = DataSource.Lines.FindIndex((Line) => { return Line.Active && Line.IdLine == idLine; });
@@ -301,6 +308,14 @@ namespace Dal
             if (index == -1)
                 throw new StopLineExceptionDO(stopLine.IdLine, stopLine.CodeStop, "system not found the stop line");
             DataSource.StopLines[index] = stopLine;
+        }
+        public void UpdateStopLine(int idLine, int codeStop, Action<StopLine> action)
+        {
+            int index = DataSource.StopLines.FindIndex((StopLine) =>
+            { return StopLine.IdLine == idLine && StopLine.CodeStop == codeStop; });
+            if (index == -1)
+                throw new StopLineExceptionDO(idLine, codeStop, "system not found the stop line");
+            action(DataSource.StopLines[index]);
         }
         public void DeleteStopLine(int idLine, int codeStop)
         {

@@ -263,5 +263,16 @@ namespace PlGui
                 }).Start();
             }
         }
+
+        private void ListViewLines_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if(ListViewLines.SelectedItem is PO.Line)
+            {
+                PO.Line line = (PO.Line)ListViewLines.SelectedItem;
+                ListViewStopsOfLine.DataContext = line.StopsInLine;
+                ListViewStopsOfLine.Visibility = Visibility.Visible;
+            }
+            return;
+        }
     }
 }

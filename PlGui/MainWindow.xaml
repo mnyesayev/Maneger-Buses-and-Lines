@@ -484,7 +484,7 @@
                          Height="35" Width="128" HorizontalAlignment="Right">
                     <UniformGrid Columns="2" Rows="1">
                         <ListView x:Name="ListViewLines" 
-                              ItemsSource="{Binding}">
+                              ItemsSource="{Binding}" MouseUp="ListViewLines_MouseUp">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>

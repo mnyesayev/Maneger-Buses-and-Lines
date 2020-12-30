@@ -53,6 +53,7 @@ namespace DalApi
         IEnumerable<DO.Line> GetLines();
         IEnumerable<DO.Line> GetLinesBy(Predicate<DO.Line> predicate);
         void UpdateLine(DO.Line line);
+        void UpdateLine(int idLine,Action<DO.Line> action);
         void DeleteLine(int idLine);
         #endregion
 
@@ -62,6 +63,7 @@ namespace DalApi
         IEnumerable<DO.StopLine> GetStopLines();
         IEnumerable<DO.StopLine> GetStopLinesBy(Predicate<DO.StopLine> predicate);
         void UpdateStopLine(DO.StopLine stopLine);
+        void UpdateStopLine(int idLine,int codeStop,Action<DO.StopLine> action);
         void DeleteStopLine(int idLine, int codeStop);
         #endregion
 

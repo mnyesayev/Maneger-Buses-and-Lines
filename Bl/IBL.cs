@@ -20,15 +20,14 @@ namespace BlApi
         IEnumerable<Line> GetLines();
         IEnumerable<StopLine> GetStopsInLine(int id);
         #endregion
-        bool ChangeStopLine(int idLine, int codeStop, int index);
-        bool AddStopLine(int idLine ,int codeStop,int index);
-        bool DeleteStopLine(int idLine ,int codeStop,int index);
-        
-        void UpdateName(int code,string name);
-
+        #region StopLine
+        Line ChangeStopLine(int idLine, int codeStop1, int codeStop2, int index1, int index2);
+        Line AddStopLine(int idLine ,int codeStop,int index);
+        Line DeleteStopLine(int idLine ,int codeStop,int index);
+        #endregion
         #region BusStop
         string GetNameStop(int code);
-
+        void UpdateName(int code, string name);
         #endregion
     }
 }
