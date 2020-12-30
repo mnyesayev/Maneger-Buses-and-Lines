@@ -12,8 +12,6 @@ namespace Bl
         internal static T Clone<T>(this T original) where T : new()
         {
             T target = new T();
-            //T copyToObject = (T)Activator.CreateInstance(typeof(T));
-
             foreach (PropertyInfo sourcePropertyInfo in typeof(T).GetProperties())
             {
                 PropertyInfo destPropertyInfo = target.GetType().GetProperty(sourcePropertyInfo.Name);
@@ -40,12 +38,5 @@ namespace Bl
             from.CopyPropertiesTo(to);
             return to;
         }
-        //public static BO.StudentCourse CopyToStudentCourse(this DO.Course course, DO.StudentInCourse sic)
-        //{
-        //    BO.StudentCourse result = (BO.StudentCourse)course.CopyPropertiesToNew(typeof(BO.StudentCourse));
-        //    // propertys' names changed? copy them here...
-        //    result.Grade = sic.Grade;
-        //    return result;
-        //}
     }
 }

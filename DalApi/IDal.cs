@@ -26,6 +26,7 @@ namespace DalApi
         IEnumerable<DO.BusStop> GetStops();
         IEnumerable<DO.BusStop> GetStopsBy(Predicate<DO.BusStop> predicate);
         void UpdateBusStop(DO.BusStop busStop);
+        void UpdateBusStop(int code, Action<DO.BusStop> action);
         void DeleteBusStop(int code);
         #endregion
 
@@ -40,6 +41,7 @@ namespace DalApi
 
         #region User
         DO.User GetUser(string userName);
+        DO.User GetUser(string phone, DateTime dateTime);
         void DeleteUser(string phone, DateTime dateTime);
         void AddUser(DO.User user);
         void UpdateUser(DO.User user);
