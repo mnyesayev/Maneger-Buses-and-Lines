@@ -448,7 +448,7 @@
                 <materialDesign:PackIcon Kind="AccountStar"  
                     VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Width="40"/>
 
-                <Button x:Name="accountAdmin" Content="{Binding Path=firstName}" 
+                <Button x:Name="accountAdmin" Content="{Binding Path=FirstName}" 
                     VerticalAlignment="Top" 
                     Height="30" FontSize="12" Background="Transparent" BorderThickness="0"
                     VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />
@@ -456,15 +456,34 @@
             <TabControl Name="adminTabControl" TabStripPlacement="Top" Grid.Row="1"
                         Grid.Column="1" Grid.ColumnSpan="6" BorderThickness="0"
                         Grid.RowSpan="7" Background="Transparent" 
-                         materialDesign:ColorZoneAssist.Mode="PrimaryDark">
+                        materialDesign:ColorZoneAssist.Mode="PrimaryDark">
                 <TabItem Header="Buses"
                          Height="35" Width="128" HorizontalAlignment="Right">
+                    <ListView x:Name="ListViewBuses" 
+                              ItemsSource="{Binding}">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Background" Value="Transparent"></Setter>
+                                        <Setter Property="BorderThickness" Value="0"></Setter>
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn x:Name="gvcLicense" Header="License" Width="auto"  
+                                    DisplayMemberBinding="{Binding Path=Id,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <GridViewColumn x:Name="gvcDRA" Header="Date Road Ascent" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=DateRoadAscent, StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <GridViewColumn x:Name="gvcMileage" Header="Total Mileage" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=Mileage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
                 </TabItem>
                 <TabItem Header="Lines"
                          Height="35" Width="128" HorizontalAlignment="Right">
-                    <UniformGrid Columns="2" Rows="1">
-                        <ListView x:Name="ListViewLines"
+                    <UniformGrid Columns="1" Rows="1">
+                        <ListView x:Name="ListViewLines" 
                               ItemsSource="{Binding}">
                             <ListView.View>
                                 <GridView>
@@ -477,7 +496,7 @@
                                     <GridViewColumn x:Name="gvcNumId" Header="Line" Width="auto"  
                                     DisplayMemberBinding="{Binding Path=NumLine,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                                     <GridViewColumn x:Name="gvcStartStop" Header="Starting station" Width="auto"
-                                    DisplayMemberBinding="{Binding Path=NameFirstLineStop, StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    DisplayMemberBinding="{Binding Path=NameFirstLineStop,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     <GridViewColumn x:Name="gvcEndStop" Header="Last Stop" Width="auto"
                                     DisplayMemberBinding="{Binding Path=NameLastLineStop,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 </GridView>
@@ -485,7 +504,7 @@
                         </ListView>
 
                         <ListView x:Name="ListViewStopsOfLine" ItemsSource="{Binding}"
-                                  HorizontalAlignment="Right">
+                                  HorizontalAlignment="Right" Visibility="Hidden">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
@@ -494,8 +513,8 @@
                                             <Setter Property="BorderThickness" Value="0"></Setter>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
-                                    <GridViewColumn Header="Stops" Width="auto" x:Name="gvcStopsInLine"
-                                                 DisplayMemberBinding="{Binding Path=hh}"/>
+                                    <GridViewColumn Header="Code" Width="auto"
+                                                 DisplayMemberBinding="{Binding Path=CodeStop ,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -503,11 +522,65 @@
                 </TabItem>
                 <TabItem Header="Stations"
                          Height="35" Width="128" HorizontalAlignment="Right">
+                    <UniformGrid Columns="1" Rows="1">
+                        <ListView x:Name="ListViewStops" 
+                              ItemsSource="{Binding}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn x:Name="gvcCode" Header="Code" Width="auto"  
+                                    DisplayMemberBinding="{Binding Path=Code,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    <GridViewColumn x:Name="gvcName" Header="Name" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=Name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn x:Name="gvcAddress" Header="Address" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=Address,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
 
+                        <ListView x:Name="ListViewLinesPassInStop" ItemsSource="{Binding}"
+                                  HorizontalAlignment="Right" Visibility="Hidden">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </UniformGrid>
                 </TabItem>
-
-
-
+                <TabItem Header="Drivers"
+                         Height="35" Width="128" HorizontalAlignment="Right">
+                    <ListView x:Name="ListViewDrivers" 
+                              ItemsSource="{Binding}">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Background" Value="Transparent"></Setter>
+                                        <Setter Property="BorderThickness" Value="0"></Setter>
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn x:Name="gvcIdDirver" Header="ID" Width="auto"  
+                                    DisplayMemberBinding="{Binding Path=Id,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <GridViewColumn x:Name="gvcNameDriver" Header="Name" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=Name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <GridViewColumn x:Name="gvcSeniority" Header="Seniority" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=Seniority,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
             </TabControl>
         </Grid>
         <!--#endregion -->

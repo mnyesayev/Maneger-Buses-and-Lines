@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public class DriverBO
+    public class Driver
     {
         /// <summary>
         /// Represents the unique number of the "Driver"
