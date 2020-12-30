@@ -27,7 +27,7 @@ namespace BlApi
         void UpdateName(int code,string name);
 
         #region BusStop
-        string GetName(int code);
+        string GetNameStop(int code);
 
         #endregion
     }

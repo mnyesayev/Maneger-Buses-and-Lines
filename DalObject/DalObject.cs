@@ -72,8 +72,7 @@ namespace Dal
         public IEnumerable<Bus> GetBusesBy(Predicate<Bus> predicate)
         {
             return from Bus in DataSource.Buses
-                   where predicate(Bus)
-                   where Bus.Active == true
+                   where predicate(Bus)&&Bus.Active == true
                    select Bus.Clone();
         }
 
@@ -124,14 +123,25 @@ namespace Dal
         public IEnumerable<User> GetUsersBy(Predicate<DO.User> predicate)
         {
             return from user in DataSource.Users
-                   where predicate(user)
-                   where user.Active == true
+                   where predicate(user)&&user.Active == true
                    select user.Clone();
         }
         #endregion
 
         #region BusStop
+        public IEnumerable<BusStop> GetStops()
+        {
+            return from Stop in DataSource.BusStops
+                   where Stop.Active == true
+                   select Stop.Clone();
+        }
 
+        public IEnumerable<BusStop> GetStopsBy(Predicate<BusStop> predicate)
+        {
+            return from Stop in DataSource.BusStops
+                   where Stop.Active == true&&predicate(Stop)
+                   select Stop.Clone();
+        }
         public BusStop GetBusStop(int code)
         {
             var busStop = DataSource.BusStops.Find((BusStop) => { return BusStop.Active && BusStop.Code == code; });
@@ -177,8 +187,7 @@ namespace Dal
         public IEnumerable<Driver> GetDriversBy(Predicate<Driver> predicate)
         {
             return from Driver in DataSource.Drivers
-                   where predicate(Driver)
-                   where Driver.Active == true
+                   where predicate(Driver) && Driver.Active == true
                    select Driver.Clone();
         }
 
@@ -231,8 +240,7 @@ namespace Dal
         public IEnumerable<DO.Line> GetLinesBy(Predicate<DO.Line> predicate)
         {
             return from Line in DataSource.Lines
-                   where predicate(Line)
-                   where Line.Active == true
+                   where predicate(Line) && Line.Active == true
                    select Line.Clone();
         }
         public void UpdateLine(DO.Line line)
@@ -283,6 +291,7 @@ namespace Dal
         {
             return from StopLine in DataSource.StopLines
                    where predicate(StopLine)
+                   orderby StopLine.NumStopInLine
                    select StopLine.Clone();
         }
         public void UpdateStopLine(DO.StopLine stopLine)
@@ -379,8 +388,7 @@ namespace Dal
         public IEnumerable<DO.LineTrip> GetLineTripsBy(Predicate<DO.LineTrip> predicate)
         {
             return from LineTrip in DataSource.LineTrips
-                   where predicate(LineTrip)
-                   where LineTrip.Active == true
+                   where predicate(LineTrip) && LineTrip.Active == true
                    select LineTrip.Clone();
         }
         public void UpdateLineTrip(DO.LineTrip lineTrip)

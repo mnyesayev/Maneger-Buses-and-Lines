@@ -12,7 +12,7 @@ namespace BlApi
     {
         readonly IDal dal = DalFactory.GetDal();
 
-        public string GetName(int code)
+        public string GetNameStop(int code)
         {
             var stop = dal.GetBusStop(code);
             if (stop != null)
@@ -76,11 +76,12 @@ namespace BlApi
                             {
                                 CodeStop = StopLine.CodeStop
                                 ,IdLine = StopLine.IdLine
-                                ,Name = GetName(StopLine.CodeStop)
+                                ,Name = GetNameStop(StopLine.CodeStop)
                                 ,NumStopInLine = StopLine.NumStopInLine
                                 ,NextStop = StopLine.NextStop
                                 ,PrevStop = StopLine.PrevStop
                             }
+                            orderby newStopLine.NumStopInLine
                             select newStopLine;
         }
 

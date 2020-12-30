@@ -23,6 +23,8 @@ namespace DalApi
 
         #region BusStop
         DO.BusStop GetBusStop(int code);
+        IEnumerable<DO.BusStop> GetStops();
+        IEnumerable<DO.BusStop> GetStopsBy(Predicate<DO.BusStop> predicate);
         void UpdateBusStop(DO.BusStop busStop);
         void DeleteBusStop(int code);
         #endregion
