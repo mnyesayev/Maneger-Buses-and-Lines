@@ -482,7 +482,7 @@
                 </TabItem>
                 <TabItem Header="Lines"
                          Height="35" Width="128" HorizontalAlignment="Right">
-                    <UniformGrid Columns="1" Rows="1">
+                    <UniformGrid Columns="2" Rows="1">
                         <ListView x:Name="ListViewLines" 
                               ItemsSource="{Binding}">
                             <ListView.View>
@@ -504,7 +504,7 @@
                         </ListView>
 
                         <ListView x:Name="ListViewStopsOfLine" ItemsSource="{Binding}"
-                                  HorizontalAlignment="Right" Visibility="Hidden">
+                                  HorizontalAlignment="Right" Visibility="Hidden" Margin="200,0,0,0">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
@@ -513,8 +513,11 @@
                                             <Setter Property="BorderThickness" Value="0"></Setter>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
+ 
                                     <GridViewColumn Header="Code" Width="auto"
                                                  DisplayMemberBinding="{Binding Path=CodeStop ,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="Name" Width="auto"
+                                                 DisplayMemberBinding="{Binding Path=Name ,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
