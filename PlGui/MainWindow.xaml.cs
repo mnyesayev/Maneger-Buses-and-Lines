@@ -245,7 +245,7 @@ namespace PlGui
                             Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                             Application.Current.MainWindow.Top = 100;
                             Application.Current.MainWindow.Left = 200;
-                            accountAdmin.Content = user.FirstName;
+                            accountAdmin.ToolTip = user.FirstName;
                             adminGrid.Visibility = Visibility.Visible;
                         });
 
@@ -273,6 +273,21 @@ namespace PlGui
                 ListViewStopsOfLine.Visibility = Visibility.Visible;
             }
             return;
+        }
+
+        private void AddLine_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Still under construction", "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        private void DeleteLine_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Still under construction", "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        private void ChangeLine_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Still under construction", "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }

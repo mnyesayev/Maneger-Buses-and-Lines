@@ -422,7 +422,7 @@
                 <ImageBrush ImageSource="images\stops.jpg"/>
             </Grid.Background>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -430,10 +430,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="10"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -441,24 +441,36 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1" Grid.Column="7" Grid.RowSpan="2">
-                <materialDesign:PackIcon Kind="AccountStar"  
-                    VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Width="40"/>
+            <!--#region Admin title-->
+            <Button x:Name="accountAdmin" Grid.Column="7" Grid.Row="1"
+                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                ToolTip="{Binding}">
+                <materialDesign:PackIcon Kind="AccountStar"  />
 
-                <Button x:Name="accountAdmin" Content="{Binding Path=FirstName}" 
-                    VerticalAlignment="Top" 
-                    Height="30" FontSize="12" Background="Transparent" BorderThickness="0"
-                    VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />
-            </StackPanel>
-            <TabControl Name="adminTabControl" TabStripPlacement="Top" Grid.Row="1"
-                        Grid.Column="1" Grid.ColumnSpan="6" BorderThickness="0"
-                        Grid.RowSpan="7" Background="Transparent" 
+            </Button>
+
+            <Image Source="images\bus.png" Grid.Column="3" Grid.Row="1"
+                  Height="30" Width="30" HorizontalAlignment="Right" Margin="0,0,5,0"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="5"
+                      Foreground="White" VerticalAlignment="Center">
+                Travel and go
+            </TextBlock>
+            <!--#endregion-->
+            
+            <!--#region tab control-->
+            <TabControl Name="adminTabControl" TabStripPlacement="Left" Grid.Row="2"
+                        Grid.Column="1" Grid.ColumnSpan="8" BorderThickness="0"
+                        Grid.RowSpan="6" 
+                        Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
                         materialDesign:ColorZoneAssist.Mode="PrimaryDark">
-                <TabItem Header="Buses"
-                         Height="35" Width="128" HorizontalAlignment="Right">
+               <!--#region tab control buses-->
+                <TabItem Header="Buses" 
+                    Width="80" HorizontalAlignment="Left"
+                         Style="{StaticResource MaterialDesignNavigationRailTabItem}">
                     <ListView x:Name="ListViewBuses" 
                               ItemsSource="{Binding}">
                         <ListView.View>
@@ -480,16 +492,45 @@
                     </ListView>
 
                 </TabItem>
+                <!--#endregion-->
+                
+                <!--#region tab control lines-->
                 <TabItem Header="Lines"
-                         Height="35" Width="128" HorizontalAlignment="Right">
-                    <UniformGrid Columns="2" Rows="1">
-                        <ListView x:Name="ListViewLines" 
+                         Width="80" HorizontalAlignment="Left"
+                         Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="ListViewLines" Grid.Row="1" Grid.Column="1"
+                                  Grid.ColumnSpan="5" Grid.RowSpan="6"
                               ItemsSource="{Binding}" MouseUp="ListViewLines_MouseUp">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="Background" Value="GhostWhite"></Setter>
                                             <Setter Property="BorderThickness" Value="0"></Setter>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
@@ -502,29 +543,51 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-
-                        <ListView x:Name="ListViewStopsOfLine" ItemsSource="{Binding}"
-                                  HorizontalAlignment="Right" Visibility="Hidden" Margin="200,0,0,0">
+                        <ProgressBar Orientation="Vertical" Height="10" x:Name="dividerAdmin" 
+                                     Grid.Column="6" Grid.Row="1" Grid.RowSpan="6"/>
+                        <ListView x:Name="ListViewStopsOfLine" Grid.Row="1" Grid.Column="7"
+                                  Grid.ColumnSpan="3" Grid.RowSpan="6"
+                                  ItemsSource="{Binding}"
+                                  Visibility="Visible">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"></Setter>
-                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                            <Setter Property="Background" Value="Azure"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
- 
+
                                     <GridViewColumn Header="Code" Width="auto"
-                                                 DisplayMemberBinding="{Binding Path=CodeStop ,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                 DisplayMemberBinding="{Binding CodeStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <GridViewColumn Header="Name" Width="auto"
-                                                 DisplayMemberBinding="{Binding Path=Name ,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                 DisplayMemberBinding="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                    </UniformGrid>
+                        <Button x:Name="AddLine" Grid.Column="1" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Add line" Click="AddLine_Click">
+                            <materialDesign:PackIcon Kind="Plus"/>
+                        </Button>
+                        <Button x:Name="DeleteLine" Grid.Column="2" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Delete line" Click="DeleteLine_Click" >
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </Button>
+                        <Button x:Name="ChangeLine" Grid.Column="3" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Change line details" Click="ChangeLine_Click">
+                            <materialDesign:PackIcon Kind="Pencil"/>
+                        </Button>
+                    </Grid>
                 </TabItem>
+                <!--#endregion-->
+                
+                <!--#region tab control stations -->
                 <TabItem Header="Stations"
-                         Height="35" Width="128" HorizontalAlignment="Right">
+                         Width="80" HorizontalAlignment="Left"
+                         Style="{StaticResource MaterialDesignNavigationRailTabItem}">
                     <UniformGrid Columns="1" Rows="1">
                         <ListView x:Name="ListViewStops" 
                               ItemsSource="{Binding}">
@@ -562,8 +625,12 @@
                         </ListView>
                     </UniformGrid>
                 </TabItem>
+                <!--#endregion-->
+                
+                <!--#region tab control drivers-->
                 <TabItem Header="Drivers"
-                         Height="35" Width="128" HorizontalAlignment="Right">
+                         Width="80" HorizontalAlignment="Left"
+                         Style="{StaticResource MaterialDesignNavigationRailTabItem}">
                     <ListView x:Name="ListViewDrivers" 
                               ItemsSource="{Binding}">
                         <ListView.View>
@@ -584,7 +651,9 @@
                         </ListView.View>
                     </ListView>
                 </TabItem>
+                <!--#endregion-->
             </TabControl>
+            <!--#endregion-->
         </Grid>
         <!--#endregion -->
 
