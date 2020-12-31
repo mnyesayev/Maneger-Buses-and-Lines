@@ -52,17 +52,19 @@ namespace DS
             initConsecutiveStops();
             BusOnTrips = new List<BusOnTrip>();
             LineTrips = new List<LineTrip>();
-            Users = new List<User>();
-            Users.Add(new User()
+            Users = new List<User>
             {
-                Active = true,
-                Authorization = Authorizations.Admin,
-                Birthday = DateTime.Now,
-                FirstName = "Admin",
-                UserName = "123456",
-                Password = "123456",
-                Phone = "052-123456"
-            });
+                new User()
+                {
+                    Active = true,
+                    Authorization = Authorizations.Admin,
+                    Birthday = DateTime.Now,
+                    FirstName = "Admin",
+                    UserName = "123456",
+                    Password = "123456",
+                    Phone = "052-123456"
+                }
+            };
             initUsers();
         }
 
@@ -346,81 +348,28 @@ namespace DS
 
         private static void initConsecutiveStops()
         {
-            #region routesLine1
-            int index = 1;
-            for (int i = 0; i < 9; i++)
+            #region routesLine76&1&36
+            int index=1;
+            for (int j = 0; j < 6; j++)
             {
-                LstConsecutiveStops.Add(new ConsecutiveStops()
+                for (int i = 0; i < 9; i++)
                 {
-                    CodeBusStop1 = StopLines[index - 1].CodeStop,
-                    CodeBusStop2 = StopLines[index].CodeStop,
-                    Distance = MyRandom.GetDoubleRandom(0.5, 1.2),
-                    AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
-                });
-                ++index;
-            }
-            ++index;
-            for (int i = 0; i < 9; i++)
-            {
-                LstConsecutiveStops.Add(new ConsecutiveStops()
-                {
-                    CodeBusStop1 = StopLines[index - 1].CodeStop,
-                    CodeBusStop2 = StopLines[index].CodeStop,
-                    Distance = MyRandom.GetDoubleRandom(0.5, 1.2),
-                    AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
-                });
-                ++index;
-            }
-            #endregion
-            #region routesLine76
-            ++index;
-            for (int i = 0; i < 9; i++)
-            {
-                LstConsecutiveStops.Add(new ConsecutiveStops()
-                {
-                    CodeBusStop1 = StopLines[index - 1].CodeStop,
-                    CodeBusStop2 = StopLines[index].CodeStop,
-                    Distance = MyRandom.GetDoubleRandom(0.5, 1.2),
-                    AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
-                });
-                ++index;
-            }
-            ++index;
-            for (int i = 0; i < 9; i++)
-            {
-                LstConsecutiveStops.Add(new ConsecutiveStops()
-                {
-                    CodeBusStop1 = StopLines[index - 1].CodeStop,
-                    CodeBusStop2 = StopLines[index].CodeStop,
-                    Distance = MyRandom.GetDoubleRandom(0.5, 1.2),
-                    AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
-                });
-                ++index;
-            }
-            #endregion
-            #region routesLine36
-            ++index;
-            for (int i = 0; i < 9; i++)
-            {
-                LstConsecutiveStops.Add(new ConsecutiveStops()
-                {
-                    CodeBusStop1 = StopLines[index - 1].CodeStop,
-                    CodeBusStop2 = StopLines[index].CodeStop,
-                    Distance = MyRandom.GetDoubleRandom(0.5, 1.2),
-                    AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
-                });
-                ++index;
-            }
-            ++index;
-            for (int i = 0; i < 9; i++)
-            {
-                LstConsecutiveStops.Add(new ConsecutiveStops()
-                {
-                    CodeBusStop1 = StopLines[index - 1].CodeStop,
-                    CodeBusStop2 = StopLines[index].CodeStop,
-                    Distance = MyRandom.GetDoubleRandom(0.5, 1.2),
-                    AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
-                });
+                    if (LstConsecutiveStops.Any((ConsecutiveStops) =>
+                       ConsecutiveStops.CodeBusStop1 == StopLines[index - 1].CodeStop
+                       && ConsecutiveStops.CodeBusStop2 == StopLines[index].CodeStop))
+                    {
+                        ++index;
+                        continue;
+                    }
+                    LstConsecutiveStops.Add(new ConsecutiveStops()
+                    {
+                        CodeBusStop1 = StopLines[index - 1].CodeStop,
+                        CodeBusStop2 = StopLines[index].CodeStop,
+                        Distance = MyRandom.GetDoubleRandom(0.5, 1.2),
+                        AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
+                    });
+                    ++index;
+                }
                 ++index;
             }
             #endregion

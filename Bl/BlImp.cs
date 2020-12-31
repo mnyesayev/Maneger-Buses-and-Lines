@@ -325,7 +325,7 @@ namespace BlApi
 
         public IEnumerable<StopLine> GetStopsInLine(int id)
         {
-            return from StopLine in dal.GetStopLinesBy((StopLine)=>
+            return from StopLine in dal.GetStopLinesBy((StopLine) =>
             { return StopLine.IdLine == id; })
                    let newStopLine = new BO.StopLine()
                    {
@@ -362,7 +362,33 @@ namespace BlApi
             throw new NotImplementedException();
         }
 
+        #region Bus
+        public IEnumerable<Bus> GetBuses()
+        {
+            return from Bus in dal.GetBuses()
+                   let newBus = new Bus
+                   {
+                       DateRoadAscent = Bus.DateRoadAscent,
+                       Fuel = Bus.Fuel,
+                       Id = Bus.Id,
+                       State = (States)Bus.State,
+                       LastCare = Bus.LastCare,
+                       LastCareMileage = Bus.LastCareMileage,
+                       Mileage = Bus.Mileage
+                   }
+                   orderby newBus.Id
+                   select newBus;
+        }
 
-        
+        public Bus Care()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Bus Fuel()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }
