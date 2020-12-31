@@ -8,6 +8,12 @@ namespace BlApi
 {
     public interface IBL
     {
+        #region
+        IEnumerable<Bus> GetBuses();
+        Bus Care();
+        Bus Fuel();
+        #endregion
+
         #region User
         User GetUser(string userName, string password);
         void AddUser(User user);
@@ -26,8 +32,10 @@ namespace BlApi
         Line DeleteStopLine(int idLine ,int codeStop,int index);
         #endregion
         #region BusStop
+        IEnumerable<Line> GetLinesInStop(int code);
+        IEnumerable<BusStop> GetBusStops();
         string GetNameStop(int code);
-        void UpdateName(int code, string name);
+        BusStop UpdateName(int code, string name);
         #endregion
     }
 }

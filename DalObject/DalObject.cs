@@ -86,6 +86,14 @@ namespace Dal
                 return null;
             return user.Clone();
         }
+        public User GetUser(string phone, DateTime dateTime)
+        {
+            var user = DataSource.Users.Find((User) =>
+            { return User.Active && User.Phone == phone && User.Birthday == dateTime; });
+            if (user == null)
+                return null;
+            return user.Clone();
+        }
         public void AddUser(User user)
         {
             int index = DataSource.Users.FindIndex((User) => { return User.UserName == user.UserName; });
@@ -149,7 +157,13 @@ namespace Dal
                 return null;
             return busStop.Clone();
         }
-
+        public void UpdateBusStop(int code, Action<BusStop> action)
+        {
+            int index = DataSource.BusStops.FindIndex((BusStop) => { return BusStop.Active && BusStop.Code == code; });
+            if (index == -1)
+                throw new BusStopExceptionDO(code, "system not found the busStop");
+            action(DataSource.BusStops[index]);
+        }
         public void UpdateBusStop(BusStop busStop)
         {
             int index = DataSource.BusStops.FindIndex((BusStop) => { return BusStop.Active && BusStop.Code == busStop.Code; });
@@ -423,6 +437,8 @@ namespace Dal
                 throw new LineTripExceptionDO(idLine, "the line trip is not exists");
             DataSource.LineTrips[index].Active = false;
         }
+
+       
         #endregion
     }
 }
