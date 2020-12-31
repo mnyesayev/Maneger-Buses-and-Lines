@@ -471,26 +471,68 @@
                 <TabItem Header="Buses" 
                     Width="80" HorizontalAlignment="Left"
                          Style="{StaticResource MaterialDesignNavigationRailTabItem}">
-                    <ListView x:Name="ListViewBuses" 
-                              ItemsSource="{Binding}">
-                        <ListView.View>
-                            <GridView>
-                                <GridView.ColumnHeaderContainerStyle>
-                                    <Style TargetType="{x:Type GridViewColumnHeader}">
-                                        <Setter Property="Background" Value="Transparent"></Setter>
-                                        <Setter Property="BorderThickness" Value="0"></Setter>
-                                    </Style>
-                                </GridView.ColumnHeaderContainerStyle>
-                                <GridViewColumn x:Name="gvcLicense" Header="License" Width="auto"  
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="ListViewBuses" Grid.Row="1" Grid.Column="1"
+                                  Grid.ColumnSpan="5" Grid.RowSpan="6"
+                              ItemsSource="{Binding}" >
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="GhostWhite"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn x:Name="gvcIdBus" Header="Bus ID" Width="auto"  
                                     DisplayMemberBinding="{Binding Path=Id,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                                <GridViewColumn x:Name="gvcDRA" Header="Date Road Ascent" Width="auto"
-                                    DisplayMemberBinding="{Binding Path=DateRoadAscent, StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                <GridViewColumn x:Name="gvcMileage" Header="Total Mileage" Width="auto"
+                                    <GridViewColumn x:Name="gvcDateRoadAscent" Header="Date road ascent" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=DateRoadAscent,StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn x:Name="gvcMileageBus" Header="Mileage" Width="auto"
                                     DisplayMemberBinding="{Binding Path=Mileage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                       
+                        <Button x:Name="AddBus" Grid.Column="1" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Add Bus">
+                            <materialDesign:PackIcon Kind="Plus"/>
+                        </Button>
+                        <Button x:Name="DeleteBus" Grid.Column="2" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Delete Bus" >
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </Button>
+                        <Button x:Name="ChangeBus" Grid.Column="3" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Change Bus details" >
+                            <materialDesign:PackIcon Kind="Pencil"/>
+                        </Button>
+                    </Grid>
                 </TabItem>
                 <!--#endregion-->
                 
@@ -588,42 +630,89 @@
                 <TabItem Header="Stations"
                          Width="80" HorizontalAlignment="Left"
                          Style="{StaticResource MaterialDesignNavigationRailTabItem}">
-                    <UniformGrid Columns="1" Rows="1">
-                        <ListView x:Name="ListViewStops" 
-                              ItemsSource="{Binding}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="ListViewStations" Grid.Row="1" Grid.Column="1"
+                                  Grid.ColumnSpan="6" Grid.RowSpan="6"
+                              ItemsSource="{Binding}" MouseUp="ListViewLines_MouseUp">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="Background" Value="GhostWhite"></Setter>
                                             <Setter Property="BorderThickness" Value="0"></Setter>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
-                                    <GridViewColumn x:Name="gvcCode" Header="Code" Width="auto"  
+                                    <GridViewColumn x:Name="gvcCodeStop" Header="Code" Width="auto"  
                                     DisplayMemberBinding="{Binding Path=Code,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    <GridViewColumn x:Name="gvcName" Header="Name" Width="auto"
+                                    <GridViewColumn x:Name="gvcNameStop" Header="Name" Width="auto"
                                     DisplayMemberBinding="{Binding Path=Name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn x:Name="gvcAddress" Header="Address" Width="auto"
+                                    <GridViewColumn x:Name="gvcAddressStop" Header="Adress" Width="auto"
                                     DisplayMemberBinding="{Binding Path=Address,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
-
-                        <ListView x:Name="ListViewLinesPassInStop" ItemsSource="{Binding}"
-                                  HorizontalAlignment="Right" Visibility="Hidden">
+                        <ProgressBar Orientation="Vertical" Height="10" 
+                                     Grid.Column="7" Grid.Row="1" Grid.RowSpan="6"/>
+                        <ListView x:Name="ListViewLinesInStop" Grid.Row="1" Grid.Column="7"
+                                  Grid.ColumnSpan="3" Grid.RowSpan="6"
+                                  ItemsSource="{Binding}"
+                                  Visibility="Visible">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"></Setter>
-                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                            <Setter Property="Background" Value="Azure"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
 
+                                    <GridViewColumn Header="Code" Width="auto"
+                                                 DisplayMemberBinding="{Binding CodeStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="Name" Width="auto"
+                                                 DisplayMemberBinding="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                    </UniformGrid>
+                        <Button x:Name="AddStop" Grid.Column="1" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Add Stop">
+                            <materialDesign:PackIcon Kind="Plus"/>
+                        </Button>
+                        <Button x:Name="DeleteStop" Grid.Column="2" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Delete Stop" >
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </Button>
+                        <Button x:Name="ChangeStop" Grid.Column="3" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Change Stop details" >
+                            <materialDesign:PackIcon Kind="Pencil"/>
+                        </Button>
+                    </Grid>
                 </TabItem>
                 <!--#endregion-->
                 
@@ -631,25 +720,70 @@
                 <TabItem Header="Drivers"
                          Width="80" HorizontalAlignment="Left"
                          Style="{StaticResource MaterialDesignNavigationRailTabItem}">
-                    <ListView x:Name="ListViewDrivers" 
-                              ItemsSource="{Binding}">
-                        <ListView.View>
-                            <GridView>
-                                <GridView.ColumnHeaderContainerStyle>
-                                    <Style TargetType="{x:Type GridViewColumnHeader}">
-                                        <Setter Property="Background" Value="Transparent"></Setter>
-                                        <Setter Property="BorderThickness" Value="0"></Setter>
-                                    </Style>
-                                </GridView.ColumnHeaderContainerStyle>
-                                <GridViewColumn x:Name="gvcIdDirver" Header="ID" Width="auto"  
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="ListViewDrivers" Grid.Row="1" Grid.Column="1"
+                                  Grid.ColumnSpan="5" Grid.RowSpan="6"
+                              ItemsSource="{Binding}" >
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="GhostWhite"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn x:Name="gvcIdDirver" Header="ID" Width="auto"  
                                     DisplayMemberBinding="{Binding Path=Id,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                                <GridViewColumn x:Name="gvcNameDriver" Header="Name" Width="auto"
+                                    <GridViewColumn x:Name="gvcNameDriver" Header="Name" Width="auto"
                                     DisplayMemberBinding="{Binding Path=Name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                <GridViewColumn x:Name="gvcSeniority" Header="Seniority" Width="auto"
+                                    <GridViewColumn x:Name="gvcSeniority" Header="Seniority" Width="auto"
                                     DisplayMemberBinding="{Binding Path=Seniority,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <Button x:Name="AddDriver" Grid.Column="1" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Add Driver">
+                            <materialDesign:PackIcon Kind="Plus"/>
+                        </Button>
+                        <Button x:Name="DeleteDriver" Grid.Column="2" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Delete Driver" >
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </Button>
+                        <Button x:Name="ChangeDriver" Grid.Column="3" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Change driver details" >
+                            <materialDesign:PackIcon Kind="Pencil"/>
+                        </Button>
+                    </Grid>
+                   
                 </TabItem>
                 <!--#endregion-->
             </TabControl>

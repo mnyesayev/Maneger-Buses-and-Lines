@@ -30,6 +30,24 @@ namespace PlGui
         public MainWindow()
         {
             InitializeComponent();
+
+            ObservableCollection<PO.BusStop> Stops = new ObservableCollection<PO.BusStop>();
+            foreach (var item in ibl.GetBusStops())
+            {
+                Stops.Add(new PO.BusStop());
+                Cloning.DeepCopyTo(item, Stops[Stops.Count - 1]);
+                if (Stops.Count > 200)
+                    break;
+            }
+            ListViewStations.DataContext = Stops;
+            ObservableCollection<BO.Bus> buses = new ObservableCollection<Bus>();
+            foreach(var item in ibl.GetBuses())
+            {
+                buses.Add(new Bus());
+                Cloning.DeepCopyTo(item, buses[buses.Count-1]);
+            }
+            ListViewBuses.DataContext = buses;
+
             ObservableCollection<PO.Line> Lines = new ObservableCollection<PO.Line>();
             foreach (var item in ibl.GetLines())
             {
@@ -37,6 +55,7 @@ namespace PlGui
                 Cloning.DeepCopyTo(item, Lines[Lines.Count - 1]);
             }
             ListViewLines.DataContext = Lines;
+            ObservableCollection<BO.Driver> drivers = new ObservableCollection<BO.Driver>();
         }
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
@@ -266,7 +285,7 @@ namespace PlGui
 
         private void ListViewLines_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if(ListViewLines.SelectedItem is PO.Line)
+            if (ListViewLines.SelectedItem is PO.Line)
             {
                 PO.Line line = (PO.Line)ListViewLines.SelectedItem;
                 ListViewStopsOfLine.DataContext = line.StopsInLine;
