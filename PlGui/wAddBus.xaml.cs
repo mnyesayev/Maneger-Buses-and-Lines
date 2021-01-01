@@ -109,6 +109,9 @@ namespace PlGui
             else
             {
                 ImIdBusError.Visibility = Visibility.Visible;
+                ImIdBusError.ToolTip = "Date of ascent to the road does not match the license plate";
+                if (!uint.TryParse(tBIdBus.Text, out id))
+                     ImIdBusError.ToolTip = "Try entering numbers only";
                 ImIdBusOk.Visibility = Visibility.Hidden;
                 tBMileage.IsEnabled = false;
             }
@@ -130,6 +133,7 @@ namespace PlGui
             {
                 ImMileageOk.Visibility = Visibility.Hidden;
                 ImMileageError.Visibility = Visibility.Visible;
+                ImMileageError.ToolTip = "Try entering numbers only";
                 dPDateLastCare.IsEnabled = false;
             }
         }
@@ -149,6 +153,10 @@ namespace PlGui
             else
             {
                 ImDateLastCareError.Visibility = Visibility.Visible;
+                if (dPDateLastCare.SelectedDate <= dPDRA.SelectedDate)
+                    ImDateLastCareError.ToolTip = "Date of last treatment before the date of ascent to the road?";
+                if (dPDateLastCare.SelectedDate >= DateTime.Now)
+                    ImDateLastCareError.ToolTip = "Really? Last treatment date is a future date?";
                 ImDateLastCareOk.Visibility = Visibility.Hidden;
                 tBMileageLastCare.IsEnabled = false;
             }
@@ -167,6 +175,11 @@ namespace PlGui
             else
             {
                 ImMileageLastCareError.Visibility = Visibility.Visible;
+                if (!uint.TryParse(tBMileageLastCare.Text, out mileageLastCare))
+                    ImMileageLastCareError.ToolTip = "Try entering numbers only";
+                if (mileage <= mileageLastCare)
+                    ImMileageLastCareError.ToolTip = "Really? Mileage in the last treatment is greater than the mileage now?";
+
                 ImMileageLastCareOk.Visibility = Visibility.Hidden;
             }
         }

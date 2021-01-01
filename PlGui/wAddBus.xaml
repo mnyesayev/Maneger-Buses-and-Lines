@@ -56,15 +56,15 @@
                    Margin="0,0,0,5"  FirstDayOfWeek="Sunday" />
         <Image x:Name="ImDRA" Source="images\ok.png" 
                Grid.Column="3" Grid.Row="3" 
-               Visibility="Hidden"/>
+               Visibility="Hidden" ToolTip="GOOD"/>
         <TextBox x:Name="tBIdBus" Grid.Row="4" Grid.Column="2" IsEnabled="False" 
                     Margin="0,0,0,5" TextChanged="tBidBus_TextChanged"     />
         <Image x:Name="ImIdBusOk" Source="images\ok.png" 
                Grid.Column="3" Grid.Row="4" 
-               Visibility="Hidden"/>
+               Visibility="Hidden" ToolTip="GOOD"/>
         <Image x:Name="ImIdBusError" Source="images\error.png" 
                Grid.Column="3" Grid.Row="4" 
-               Visibility="Hidden"/>
+               Visibility="Hidden" ToolTip="{Binding}"/>
         <TextBox x:Name="tBMileage" Grid.Row="5" Grid.Column="2" IsEnabled="False" 
                    Margin="0,0,0,5" TextChanged="tBMileage_TextChanged" />
         <Image x:Name="ImMileageOk" Source="images\ok.png" 
@@ -72,7 +72,7 @@
                Visibility="Hidden"/>
         <Image x:Name="ImMileageError" Source="images\error.png" 
                Grid.Column="3" Grid.Row="5" 
-               Visibility="Hidden"/>
+               Visibility="Hidden" ToolTip="{Binding}"/>
         <DatePicker x:Name="dPDateLastCare" Grid.Row="6" Grid.Column="2" IsEnabled="False" 
                     Margin="0,0,0,5" CalendarClosed="dPDateLastCare_CalendarClosed"
                     FirstDayOfWeek="Sunday"/>
@@ -81,7 +81,7 @@
                Visibility="Hidden"/>
         <Image x:Name="ImDateLastCareError" Source="images\error.png" 
                Grid.Column="3" Grid.Row="6" 
-               Visibility="Hidden"/>
+               Visibility="Hidden" ToolTip="{Binding}"/>
         <TextBox x:Name="tBMileageLastCare" Grid.Row="7" Grid.Column="2" IsEnabled="False" 
                    Margin="0,0,0,0" TextChanged="tBMileageLastCare_TextChanged" />
         <Image x:Name="ImMileageLastCareOk" Source="images\ok.png" 
@@ -89,7 +89,7 @@
                Visibility="Hidden"/>
         <Image x:Name="ImMileageLastCareError" Source="images\error.png" 
                Grid.Column="3" Grid.Row="7" 
-               Visibility="Hidden"/>
+               Visibility="Hidden" ToolTip="{Binding}"/>
         <Button x:Name="bDoneAddBus" Grid.Row="8" Grid.Column="4"
                 Grid.ColumnSpan="2"
                 Content="Save" Click="bDoneAddBus_Click"
