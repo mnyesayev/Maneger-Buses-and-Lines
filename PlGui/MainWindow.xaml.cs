@@ -309,5 +309,28 @@ namespace PlGui
         {
             MessageBox.Show("Still under construction", "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+
+        private void AddBus_Click(object sender, RoutedEventArgs e)
+        {
+            wAddBus addBus = new wAddBus();
+            addBus.ShowDialog();
+
+        }
+
+        private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(Environment.ExitCode);
+        }
+
+        private void DeleteBus_Click(object sender, RoutedEventArgs e)
+        {
+            wDelbus delbus = new wDelbus();
+            delbus.ShowDialog();
+        }
+
+        private void ChangeBus_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

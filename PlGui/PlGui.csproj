@@ -80,6 +80,18 @@
     <Compile Include="userWindow.xaml.cs">
       <DependentUpon>userWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wAddBus.xaml.cs">
+      <DependentUpon>wAddBus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wBusInfo.xaml.cs">
+      <DependentUpon>wBusInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wDelbus.xaml.cs">
+      <DependentUpon>wDelbus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wStartDrive.xaml.cs">
+      <DependentUpon>wStartDrive.xaml</DependentUpon>
+    </Compile>
     <Page Include="adminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,6 +119,22 @@
     <Page Include="userWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wAddBus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="wBusInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="wDelbus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="wStartDrive.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
