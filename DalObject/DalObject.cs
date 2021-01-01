@@ -139,7 +139,7 @@ namespace Dal
         #region BusStop
         public IEnumerable<BusStop> GetStops()
         {
-            return from Stop in DataSource.BusStops
+            return from Stop in DataSource.BusStops.AsParallel()
                    where Stop.Active == true
                    select Stop.Clone();
         }
@@ -231,7 +231,7 @@ namespace Dal
         #endregion
 
         #region Line
-        public int CreateLine(DO.Line line)
+        public int CreateLine(Line line)
         {
             line.IdLine = Config.LineCounter;
             DataSource.Lines.Add(line);
@@ -282,6 +282,10 @@ namespace Dal
         #endregion
 
         #region StopLine
+        public void AddRouteStops(IEnumerable<StopLine> stops)
+        {
+            DataSource.StopLines.AddRange(stops);
+        }
         public void AddStopLine(StopLine stopLine)
         {
             var index = DataSource.StopLines.FindIndex((StopLine) =>
@@ -338,6 +342,10 @@ namespace Dal
             if (index == -1)
                 throw new StopLineExceptionDO(idLine, codeStop, "the stop line is not exists");
             DataSource.StopLines.RemoveAt(index);
+        }
+        public void DeleteAllStopsInLine(int idLine)
+        {
+            DataSource.StopLines.RemoveAll((StopLine) => StopLine.IdLine == idLine);
         }
         #endregion
 
@@ -437,8 +445,6 @@ namespace Dal
                 throw new LineTripExceptionDO(idLine, "the line trip is not exists");
             DataSource.LineTrips[index].Active = false;
         }
-
-       
         #endregion
     }
 }

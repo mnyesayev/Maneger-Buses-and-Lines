@@ -15,7 +15,7 @@ namespace BlApi
         #region BusStop
         public IEnumerable<BusStop> GetBusStops()
         {
-            return from BusStop in dal.GetStops()
+            return from BusStop in dal.GetStops().AsParallel()
                    let newBusStop = new BusStop
                    {
                        Address = BusStop.Address,
@@ -342,6 +342,7 @@ namespace BlApi
 
         #endregion
 
+        #region Line
         public IEnumerable<Line> GetLines()
         {
             return from Line in dal.GetLines()
@@ -356,6 +357,72 @@ namespace BlApi
                    }
                    select newLine;
         }
+        public Line AddLine(string numLine, Areas area, IEnumerable<StopLine> stops, string moreInfo)
+        {
+            int idLine = dal.CreateLine(new DO.Line()
+            {
+                NumLine = numLine,
+                Active = true,
+                Area = (DO.Areas)area,
+                CodeFirstStop = stops.First().CodeStop,
+                CodeLastStop = stops.Last().CodeStop,
+                MoreInfo = moreInfo
+            });
+            var stopsLine =from StopLine in stops
+            let sL = new DO.StopLine()
+            {
+                IdLine = idLine,
+                PrevStop=(StopLine.NumStopInLine==1)?0:stops.ElementAt(StopLine.NumStopInLine-2).CodeStop,
+                NextStop=(StopLine.NumStopInLine==stops.Count())?0: stops.ElementAt(StopLine.NumStopInLine).CodeStop,
+                CodeStop = StopLine.CodeStop,
+                NumStopInLine = StopLine.NumStopInLine
+            }
+            select sL;
+            dal.AddRouteStops(stopsLine);
+            return new Line()
+            {
+                IdLine = idLine,
+                NumLine = numLine,
+                Area = area,
+                StopsInLine = GetStopsInLine(idLine),
+                MoreInfo = moreInfo
+            };
+        }
+        public bool UpdateLine(int idLine, string numLine, Areas area, Agency agency)
+        {
+            var l = dal.GetLine(idLine);
+            if (l == null) return false;
+            try
+            {
+                dal.UpdateLine(idLine, (Line) => 
+                {
+                    Line.NumLine=numLine;
+                    Line.Area = (DO.Areas)area;
+                    Line.CodeAgency = (DO.Agency)agency;
+                });
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        public bool DeleteLine(int idLine)
+        {
+            var l = dal.GetLine(idLine);
+            if (l == null) return false;
+            try
+            {
+                dal.DeleteLine(idLine);
+                dal.DeleteAllStopsInLine(idLine);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        #endregion
 
         public void InsertDistanceAndTime(int code1, int code2, double distance, TimeSpan time)
         {
@@ -380,6 +447,28 @@ namespace BlApi
                    select newBus;
         }
 
+        public bool CheckFuel(int id, int distance)
+        {
+            var b = dal.GetBus(id);
+            if (b == null)
+                return false;//should be "throw"
+            if (b.Fuel - distance > 0)
+                return false;
+            return true;
+        }
+
+        public bool CheckCare(int id,int distance)
+        {
+            var b=dal.GetBus(id);
+            if (b == null)
+                return false;//should be "throw"
+            if (DateTime.Compare(b.LastCare, DateTime.Now.AddYears(-1)) <= 0)
+                return true;
+            if (b.Mileage + distance - b.LastCareMileage >= 20000)
+                return true;
+            return false;
+        }
+
         public Bus Care()
         {
             throw new NotImplementedException();
@@ -389,6 +478,23 @@ namespace BlApi
         {
             throw new NotImplementedException();
         }
+        #endregion
+
+        #region Driver
+        public IEnumerable<Driver> GetDrivers()
+        {
+            return from Driver in dal.GetDrivers()
+                   let newDriver = new Driver()
+                   {
+                       Id = Driver.Id,
+                       Name = Driver.Name,
+                       Seniority = Driver.Seniority
+                   }
+                   orderby newDriver.Name
+                   select newDriver;
+        }
+
+        
         #endregion
     }
 }
