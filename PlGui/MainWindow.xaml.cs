@@ -32,14 +32,15 @@ namespace PlGui
             InitializeComponent();
 
             ObservableCollection<PO.BusStop> Stops = new ObservableCollection<PO.BusStop>();
-            foreach (var item in ibl.GetBusStops())
-            {
-                Stops.Add(new PO.BusStop());
-                Cloning.DeepCopyTo(item, Stops[Stops.Count - 1]);
-                if (Stops.Count > 200)
-                    break;
-            }
             ListViewStations.DataContext = Stops;
+            new Thread(() => 
+            {
+                foreach (var item in ibl.GetBusStops())
+                {
+                    this.Dispatcher.Invoke(()=> Stops.Add(new PO.BusStop()));
+                    Cloning.DeepCopyTo(item, Stops[Stops.Count - 1]);
+                }
+            }).Start();            
             ObservableCollection<BO.Bus> buses = new ObservableCollection<Bus>();
             foreach(var item in ibl.GetBuses())
             {
