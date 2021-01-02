@@ -532,6 +532,11 @@
                                  ToolTip="Change Bus details" Click="ChangeBus_Click" >
                             <materialDesign:PackIcon Kind="Pencil"/>
                         </Button>
+                        <Button x:Name="SearchBus" Grid.Column="4" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Search Bus" >
+                            <materialDesign:PackIcon Kind="Magnify"/>
+                        </Button>
                     </Grid>
                 </TabItem>
                 <!--#endregion-->
@@ -621,6 +626,11 @@
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Change line details" Click="ChangeLine_Click">
                             <materialDesign:PackIcon Kind="Pencil"/>
+                        </Button>
+                        <Button x:Name="SearchLine" Grid.Column="4" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Search Line" >
+                            <materialDesign:PackIcon Kind="Magnify"/>
                         </Button>
                     </Grid>
                 </TabItem>
@@ -712,6 +722,11 @@
                                  ToolTip="Change Stop details" >
                             <materialDesign:PackIcon Kind="Pencil"/>
                         </Button>
+                        <Button x:Name="SearchStop" Grid.Column="4" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Search Stop" >
+                            <materialDesign:PackIcon Kind="Magnify"/>
+                        </Button>
                     </Grid>
                 </TabItem>
                 <!--#endregion-->
@@ -781,6 +796,11 @@
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Change driver details" >
                             <materialDesign:PackIcon Kind="Pencil"/>
+                        </Button>
+                        <Button x:Name="SearchDriver" Grid.Column="4" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Search driver" >
+                            <materialDesign:PackIcon Kind="AccountSearch"/>
                         </Button>
                     </Grid>
                    
