@@ -57,6 +57,12 @@ namespace PlGui
             }
             ListViewLines.DataContext = Lines;
             ObservableCollection<BO.Driver> drivers = new ObservableCollection<BO.Driver>();
+            foreach (var item in ibl.GetDrivers())
+            {
+                drivers.Add(new BO.Driver());
+                Cloning.DeepCopyTo(item, drivers[drivers.Count - 1]);
+            }
+            ListViewDrivers.DataContext = drivers;
         }
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
