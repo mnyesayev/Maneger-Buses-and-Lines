@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Title="Delete Bus" Height="180" Width="450" FontSize="22"
+        Title="Delete Bus" Height="180" Width="450" FontSize="21"
         FontWeight="Bold" FontFamily="Arial" Icon="images\trash.png"
         WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
