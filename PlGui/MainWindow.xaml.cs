@@ -41,10 +41,10 @@ namespace PlGui
                     Cloning.DeepCopyTo(item, Stops[Stops.Count - 1]);
                 }
             }).Start();            
-            ObservableCollection<BO.Bus> buses = new ObservableCollection<Bus>();
+            ObservableCollection<PO.Bus> buses = new ObservableCollection<PO.Bus>();
             foreach(var item in ibl.GetBuses())
             {
-                buses.Add(new Bus());
+                buses.Add(new PO.Bus());
                 Cloning.DeepCopyTo(item, buses[buses.Count-1]);
             }
             ListViewBuses.DataContext = buses;

@@ -38,10 +38,9 @@ namespace PlGui
                 if (user == null)
                     return;
             }
-            catch(PasswordRecoveryException ex)
+            catch(PasswordRecoveryException)
             {
                 this.Close();
-                Console.WriteLine(ex);
             }
             showPasswordTextBlock.Visibility = Visibility.Visible;
            

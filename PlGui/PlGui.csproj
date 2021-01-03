@@ -73,6 +73,7 @@
     <Compile Include="forgetPasswordWindow.xaml.cs">
       <DependentUpon>forgetPasswordWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PO\BusPO.cs" />
     <Compile Include="PO\BusStopPO.cs" />
     <Compile Include="PO\LinePO.cs" />
     <Compile Include="PO\StopLinePO.cs" />

@@ -508,7 +508,7 @@
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
                                     <GridViewColumn x:Name="gvcIdBus" Header="Bus ID" Width="auto"  
-                                    DisplayMemberBinding="{Binding Path=Id,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    DisplayMemberBinding="{Binding Path=PrintId,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                                     <GridViewColumn x:Name="gvcDateRoadAscent" Header="Date road ascent" Width="auto"
                                     DisplayMemberBinding="{Binding Path=DateRoadAscent,StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     <GridViewColumn x:Name="gvcMileageBus" Header="Mileage" Width="auto"
@@ -691,7 +691,7 @@
                         </ListView>
                         <ProgressBar Orientation="Vertical" Height="10" 
                                      Grid.Column="7" Grid.Row="1" Grid.RowSpan="6"/>
-                        <ListView x:Name="ListViewLinesInStop" Grid.Row="1" Grid.Column="7"
+                        <ListView x:Name="ListViewLinesInStop" Grid.Row="1" Grid.Column="8"
                                   Grid.ColumnSpan="3" Grid.RowSpan="6"
                                   ItemsSource="{Binding}"
                                   Visibility="Visible">
