@@ -28,4 +28,18 @@ namespace BO
             base(message, innerException) => Phone = phone;
         public override string ToString() => base.ToString() + $", have problem with user: {Phone}";
     }
+    [Serializable]
+    public class ConsecutiveStopsException : Exception
+    {
+        public int Code1;
+        public int Code2;
+        public ConsecutiveStopsException(int code1, int code2) : base() { Code1 = code1; Code2 = code2; }
+        public ConsecutiveStopsException(int code1, int code2, string message) :
+              base(message)
+        { Code1 = code1; Code2 = code2; }
+        public ConsecutiveStopsException(int code1, int code2, string message, Exception innerException) :
+              base(message, innerException)
+        { Code1 = code1; Code2 = code2; }
+        public override string ToString() => base.ToString() + $", have problem with ConsecutiveStops: {Code1},{Code2}";
+    }
 }

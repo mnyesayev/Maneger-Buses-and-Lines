@@ -144,17 +144,36 @@ namespace BlApi
             return upLine;
         }
 
-        public Line AddStopLine(int idLine, int codeStop, int index)
+        public Line AddStopLine(int idLine, int codeStop, StopLine stopLine, int index)
         {
             var st = dal.GetStopLine(idLine, codeStop);
             var stopsInLine = dal.GetStopLinesBy((StopLine) => { return StopLine.IdLine == idLine; });
             if (st != null || stopsInLine == null)
                 return null;
-            if (stopsInLine.Count() < index + 1)
-                return null;
+            try
+            {
+                if (index != 1)
+                {
+                    var d1 = GetDistance(stopLine.PrevStop, codeStop);
+                }
+            }
+            catch (ConsecutiveStopsException ex)
+            {
+                throw new ConsecutiveStopsException(stopLine.PrevStop, codeStop, "No time and distance available", ex);
+            }
+            try
+            {
+                var d2 = GetDistance(codeStop, stopLine.CodeStop);
+            }
+            catch (ConsecutiveStopsException ex)
+            {
+                throw new ConsecutiveStopsException(codeStop, stopLine.CodeStop, "No time and distance available", ex);
+            }
+
             var l = dal.GetLine(idLine);
             try
             {
+                //add to head of route
                 if (index == 1)
                 {
                     var head = stopsInLine.First();
@@ -165,36 +184,13 @@ namespace BlApi
                     {
                         if (item.CodeStop == head.CodeStop)
                             continue;
-                        dal.UpdateStopLine(item.IdLine, item.CodeStop, (StopLine) => { StopLine.NumStopInLine++; });
+                        dal.UpdateStopLine(item.IdLine, item.CodeStop, (StopLine) => StopLine.NumStopInLine++);
                     }
                     dal.AddStopLine(new DO.StopLine() { NextStop = head.CodeStop, IdLine = idLine, CodeStop = codeStop, NumStopInLine = 1 });
-                    dal.UpdateLine(idLine, (Line) => { Line.CodeFirstStop = codeStop; });
+                    dal.UpdateLine(idLine, (Line) => Line.CodeFirstStop = codeStop);
                 }
                 if (index != 1)
                 {
-                    if (index == stopsInLine.Count())//add to end of route
-                    {
-                        var tail = stopsInLine.Last();
-                        tail.NextStop = codeStop;
-                        dal.UpdateStopLine(tail);
-                        dal.AddStopLine(new DO.StopLine()
-                        {
-                            PrevStop = tail.CodeStop,
-                            IdLine = idLine,
-                            CodeStop = codeStop,
-                            NumStopInLine = index
-                        });
-                        dal.UpdateLine(idLine, (Line) => { Line.CodeLastStop = codeStop; });
-                        return new Line()
-                        {
-                            Area = (Areas)l.Area,
-                            IdLine = l.IdLine,
-                            CodeAgency = (Agency)l.CodeAgency,
-                            MoreInfo = l.MoreInfo,
-                            NumLine = l.NumLine,
-                            StopsInLine = GetStopsInLine(idLine)
-                        };
-                    }
                     var prev = stopsInLine.ElementAt(index - 1);
                     dal.AddStopLine(new DO.StopLine()
                     {
@@ -223,6 +219,10 @@ namespace BlApi
                             StopLine.NumStopInLine++;
                         });
                     }
+                    if (index - 1 == stopsInLine.Count())
+                    {
+                        dal.UpdateLine(idLine, (Line) => Line.CodeLastStop = codeStop);
+                    }
                 }
             }
             catch (Exception)
@@ -247,9 +247,20 @@ namespace BlApi
             { return StopLine.IdLine == idLine; });
             if (st == null || stopsInLine == null)
                 return null;
-            var l = dal.GetLine(idLine);
             if (stopsInLine.Count() == 2)
                 return null;
+            try
+            {
+                if (index != 1)
+                {
+                    var d1 = GetDistance(st.PrevStop, st.NextStop);
+                }
+            }
+            catch (ConsecutiveStopsException ex)
+            {
+                throw new ConsecutiveStopsException(st.PrevStop, st.CodeStop, "No time and distance available", ex);
+            }
+            var l = dal.GetLine(idLine);
             try
             {
                 if (index == 1)
@@ -281,7 +292,7 @@ namespace BlApi
                     dal.UpdateLine(idLine, (Line) =>
                     { Line.CodeFirstStop = stopsInLine.ElementAt(stopsInLine.Count() - 2).CodeStop; });
                     dal.UpdateStopLine(idLine, stopsInLine.ElementAt(stopsInLine.Count() - 2).CodeStop,
-                        (StopLine) => { st.NextStop = 0; });
+                        (StopLine) =>  st.NextStop = 0);
                     dal.DeleteStopLine(idLine, codeStop);
                 }
                 if (index != 1 && index != stopsInLine.Count())
@@ -334,12 +345,34 @@ namespace BlApi
                        Name = GetNameStop(StopLine.CodeStop),
                        NumStopInLine = StopLine.NumStopInLine,
                        NextStop = StopLine.NextStop,
-                       PrevStop = StopLine.PrevStop
+                       PrevStop = StopLine.PrevStop,
+                       AvregeDriveTimeToNext = GetTime(StopLine.CodeStop, StopLine.NextStop),
+                       DistanceToNext = GetDistance(StopLine.CodeStop, StopLine.NextStop)
                    }
                    orderby newStopLine.NumStopInLine
                    select newStopLine;
         }
+        public double GetDistance(int code1, int code2)
+        {
+            if (code2 == 0) return default;
+            var cs = dal.GetConsecutiveStops(code1, code2);
+            if (cs == null)
+            {
+                throw new ConsecutiveStopsException(code1, code2, "No information is available on these pair of stations");
+            }
+            return cs.Distance;
+        }
 
+        public TimeSpan GetTime(int code1, int code2)
+        {
+            if (code2 == 0) return default;
+            var cs = dal.GetConsecutiveStops(code1, code2);
+            if (cs == null)
+            {
+                throw new ConsecutiveStopsException(code1, code2, "No information is available on these pair of stations");
+            }
+            return cs.AvregeDriveTime;
+        }
         #endregion
 
         #region Line
@@ -368,16 +401,16 @@ namespace BlApi
                 CodeLastStop = stops.Last().CodeStop,
                 MoreInfo = moreInfo
             });
-            var stopsLine =from StopLine in stops
-            let sL = new DO.StopLine()
-            {
-                IdLine = idLine,
-                PrevStop=(StopLine.NumStopInLine==1)?0:stops.ElementAt(StopLine.NumStopInLine-2).CodeStop,
-                NextStop=(StopLine.NumStopInLine==stops.Count())?0: stops.ElementAt(StopLine.NumStopInLine).CodeStop,
-                CodeStop = StopLine.CodeStop,
-                NumStopInLine = StopLine.NumStopInLine
-            }
-            select sL;
+            var stopsLine = from StopLine in stops
+                            let sL = new DO.StopLine()
+                            {
+                                IdLine = idLine,
+                                PrevStop = (StopLine.NumStopInLine == 1) ? 0 : stops.ElementAt(StopLine.NumStopInLine - 2).CodeStop,
+                                NextStop = (StopLine.NumStopInLine == stops.Count()) ? 0 : stops.ElementAt(StopLine.NumStopInLine).CodeStop,
+                                CodeStop = StopLine.CodeStop,
+                                NumStopInLine = StopLine.NumStopInLine
+                            }
+                            select sL;
             dal.AddRouteStops(stopsLine);
             return new Line()
             {
@@ -394,9 +427,9 @@ namespace BlApi
             if (l == null) return false;
             try
             {
-                dal.UpdateLine(idLine, (Line) => 
+                dal.UpdateLine(idLine, (Line) =>
                 {
-                    Line.NumLine=numLine;
+                    Line.NumLine = numLine;
                     Line.Area = (DO.Areas)area;
                     Line.CodeAgency = (DO.Agency)agency;
                 });
@@ -426,7 +459,22 @@ namespace BlApi
 
         public void InsertDistanceAndTime(int code1, int code2, double distance, TimeSpan time)
         {
-            throw new NotImplementedException();
+            var cs= dal.GetConsecutiveStops(code1, code2);
+            if(cs!=null)
+            {
+                dal.UpdateConsecutiveStops(code1, code2, (cstops)=> { cstops.Distance = distance; cstops.AvregeDriveTime = time; });
+                return;
+            }
+            if(cs==null)
+            {
+                dal.AddConsecutiveStops(new DO.ConsecutiveStops()
+                {
+                    CodeBusStop1=code1,
+                    CodeBusStop2=code2,
+                    AvregeDriveTime=time,
+                    Distance=distance
+                });
+            }
         }
 
         #region Bus
@@ -457,9 +505,9 @@ namespace BlApi
             return true;
         }
 
-        public bool CheckCare(int id,int distance)
+        public bool CheckCare(int id, int distance)
         {
-            var b=dal.GetBus(id);
+            var b = dal.GetBus(id);
             if (b == null)
                 return false;//should be "throw"
             if (DateTime.Compare(b.LastCare, DateTime.Now.AddYears(-1)) <= 0)
@@ -494,7 +542,8 @@ namespace BlApi
                    select newDriver;
         }
 
-        
+
+
         #endregion
     }
 }

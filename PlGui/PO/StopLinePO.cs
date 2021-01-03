@@ -38,8 +38,16 @@ namespace PO
         /// </summary>
         public int PrevStop { get; set; }
         /// <summary>
-        /// Represents the uniqu code of the next stop
+        /// Represents the unique code of the next stop
         /// </summary>
         public int NextStop { get; set; }
+        /// <summary>
+        /// Represents the distance to next stop
+        /// </summary>
+        public double DistanceToNext { get; set; }
+        /// <summary>
+        /// Represents the avrege drive time to prev stop
+        /// </summary>
+        public TimeSpan AvregeDriveTimeToNext { get; set; }
     }
 }

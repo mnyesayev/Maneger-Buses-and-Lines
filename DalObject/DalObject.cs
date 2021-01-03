@@ -375,12 +375,12 @@ namespace Dal
                 return null;
             return conStops.Clone();
         }
-        public IEnumerable<DO.ConsecutiveStops> GetConsecutiveStops()
+        public IEnumerable<DO.ConsecutiveStops> GetLstConsecutiveStops()
         {
             return from ConsecutiveStops in DataSource.LstConsecutiveStops
                    select ConsecutiveStops.Clone();
         }
-        public IEnumerable<DO.ConsecutiveStops> GetConsecutiveStopsBy(Predicate<DO.ConsecutiveStops> predicate)
+        public IEnumerable<DO.ConsecutiveStops> GetLstConsecutiveStopsBy(Predicate<DO.ConsecutiveStops> predicate)
         {
             return from ConsecutiveStops in DataSource.LstConsecutiveStops
                    where predicate(ConsecutiveStops)
@@ -396,6 +396,17 @@ namespace Dal
             if (index == -1)
                 throw new ConsecutiveStopsExceptionDO(consecutiveStops.CodeBusStop1, consecutiveStops.CodeBusStop2, "system not found the consecutiveStops");
             DataSource.LstConsecutiveStops[index] = consecutiveStops;
+        }
+        public void UpdateConsecutiveStops(int codeStop1, int codeStop2, Action<ConsecutiveStops> action)
+        {
+            int index = DataSource.LstConsecutiveStops.FindIndex((ConsecutiveStops) =>
+            {
+                return ConsecutiveStops.CodeBusStop1 == codeStop1
+                && ConsecutiveStops.CodeBusStop2 == codeStop2;
+            });
+            if (index == -1)
+                throw new ConsecutiveStopsExceptionDO(codeStop1, codeStop2, "system not found the consecutiveStops");
+            action( DataSource.LstConsecutiveStops[index]);
         }
         #endregion
 

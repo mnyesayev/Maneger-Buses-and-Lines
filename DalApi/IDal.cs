@@ -74,9 +74,10 @@ namespace DalApi
         #region ConsecutiveStops
         DO.ConsecutiveStops GetConsecutiveStops(int codeStop1, int codeStop2);
         void AddConsecutiveStops(DO.ConsecutiveStops consecutiveStops);
-        IEnumerable<DO.ConsecutiveStops> GetConsecutiveStops();
-        IEnumerable<DO.ConsecutiveStops> GetConsecutiveStopsBy(Predicate<DO.ConsecutiveStops> predicate);
+        IEnumerable<DO.ConsecutiveStops> GetLstConsecutiveStops();
+        IEnumerable<DO.ConsecutiveStops> GetLstConsecutiveStopsBy(Predicate<DO.ConsecutiveStops> predicate);
         void UpdateConsecutiveStops(DO.ConsecutiveStops consecutiveStops);
+        void UpdateConsecutiveStops(int codeStop1, int codeStop2,Action<DO.ConsecutiveStops> action);
         #endregion
 
         #region LineTrip

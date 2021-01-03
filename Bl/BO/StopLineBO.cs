@@ -32,5 +32,13 @@ namespace BO
         /// Represents the uniqu code of the next stop
         /// </summary>
         public int NextStop { get; set; }
+        /// <summary>
+        /// Represents the distance to next stop
+        /// </summary>
+        public double DistanceToNext { get; set; }
+        /// <summary>
+        /// Represents the avrege drive time to prev stop
+        /// </summary>
+        public TimeSpan AvregeDriveTimeToNext { get; set; }
     }
 }

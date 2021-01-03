@@ -590,7 +590,7 @@
                         <ListView x:Name="ListViewStopsOfLine" Grid.Row="1" Grid.Column="7"
                                   Grid.ColumnSpan="3" Grid.RowSpan="6"
                                   ItemsSource="{Binding}"
-                                  Visibility="Visible">
+                                  Visibility="Hidden">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
@@ -604,6 +604,10 @@
                                                  DisplayMemberBinding="{Binding CodeStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <GridViewColumn Header="Name" Width="auto"
                                                  DisplayMemberBinding="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="Drive Time" Width="auto"
+                                                 DisplayMemberBinding="{Binding AvregeDriveTimeToNext,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="Distance" Width="auto"
+                                                 DisplayMemberBinding="{Binding DistanceToNext, StringFormat={}{0:F2}km,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
