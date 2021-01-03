@@ -7,6 +7,19 @@ using System.Threading.Tasks;
 namespace BO
 {
     [Serializable]
+    public class DeleteException : Exception
+    {
+        public string NameClass;
+        public string Id;
+        public DeleteException(string nameClass) : base() => NameClass = nameClass;
+        public DeleteException(string nameClass, string message) :
+            base(message) => NameClass = nameClass;
+        public DeleteException(string nameClass, string id, string message, Exception innerException) :
+            base(message, innerException)
+        { NameClass = nameClass; Id = id; }
+        public override string ToString() => base.ToString() + $", have problem with Delete {NameClass}";
+    }
+    [Serializable]
     public class UserException : Exception
     {
         public string UserName;

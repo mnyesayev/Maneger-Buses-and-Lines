@@ -46,7 +46,7 @@ namespace BlApi
         #region StopLine
         IEnumerable<StopLine> GetStopsInLine(int id);
         Line ChangeStopLine(int idLine, int codeStop1, int codeStop2, int index1, int index2);
-        Line AddStopLine(int idLine ,int codeStop,StopLine stopLine,int index);
+        Line AddStopLine(int idLine ,int codeStop,int index);
         Line DeleteStopLine(int idLine ,int codeStop,int index);
         double GetDistance(int code1, int code2);
         TimeSpan GetTime(int code1, int code2);

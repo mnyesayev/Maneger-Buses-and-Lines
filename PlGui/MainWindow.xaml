@@ -534,7 +534,7 @@
                         </Button>
                         <Button x:Name="SearchBus" Grid.Column="4" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Search Bus" >
+                                 ToolTip="Search Bus" Click="SearchBus_Click" >
                             <materialDesign:PackIcon Kind="Magnify"/>
                         </Button>
                     </Grid>
@@ -635,6 +635,21 @@
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search Line" >
                             <materialDesign:PackIcon Kind="Magnify"/>
+                        </Button>
+                        <Button x:Name="AddStopLine" Grid.Column="7" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Add stop line" Click="AddStopLine_Click" >
+                            <materialDesign:PackIcon Kind="Plus"/>
+                        </Button>
+                        <Button x:Name="DeleteStopLine" Grid.Column="8" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Delete stop line"  >
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </Button>
+                        <Button x:Name="ChangeStopLine" Grid.Column="9" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Change stop line details" >
+                            <materialDesign:PackIcon Kind="Pencil"/>
                         </Button>
                     </Grid>
                 </TabItem>

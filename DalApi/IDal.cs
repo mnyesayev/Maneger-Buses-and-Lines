@@ -63,6 +63,7 @@ namespace DalApi
         void AddStopLine(DO.StopLine stopLine);
         void AddRouteStops(IEnumerable<DO.StopLine> stops);
         DO.StopLine GetStopLine(int idLine,int codeStop);
+        DO.StopLine GetStopLineByIndex(int idLine,int index);
         IEnumerable<DO.StopLine> GetStopLines();
         IEnumerable<DO.StopLine> GetStopLinesBy(Predicate<DO.StopLine> predicate);
         void UpdateStopLine(DO.StopLine stopLine);

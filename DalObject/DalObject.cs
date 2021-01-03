@@ -299,6 +299,14 @@ namespace Dal
             }
             throw new StopLineExceptionDO(stopLine.IdLine, stopLine.CodeStop, "the stop Line is already exists");
         }
+        public StopLine GetStopLineByIndex(int idLine, int index)
+        {
+            var stopLine = DataSource.StopLines.Find((StopLine) =>
+            { return StopLine.IdLine == idLine && StopLine.NumStopInLine == index; });
+            if (stopLine == null)
+                return null;
+            return stopLine.Clone();
+        }
         public StopLine GetStopLine(int idLine, int codeStop)
         {
             var stopLine = DataSource.StopLines.Find((StopLine) =>
@@ -456,6 +464,8 @@ namespace Dal
                 throw new LineTripExceptionDO(idLine, "the line trip is not exists");
             DataSource.LineTrips[index].Active = false;
         }
+
+        
         #endregion
     }
 }

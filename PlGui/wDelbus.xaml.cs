@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BlApi;
 namespace PlGui
 {
     /// <summary>
@@ -53,7 +53,7 @@ namespace PlGui
             if (char.IsDigit(c))
                 return;
             e.Handled = true;
-            MessageBox.Show("Only numbers are allowed", "Start drive", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Only numbers are allowed", "Delete Bus", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

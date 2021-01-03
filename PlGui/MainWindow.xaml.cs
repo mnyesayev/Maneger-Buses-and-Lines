@@ -27,11 +27,15 @@ namespace PlGui
     public partial class MainWindow : Window
     {
         public IBL ibl = BlFactory.GetBL("1");
+        ObservableCollection<PO.BusStop> Stops = new ObservableCollection<PO.BusStop>();
+        ObservableCollection<PO.Bus> buses = new ObservableCollection<PO.Bus>();
+        ObservableCollection<PO.Line> Lines = new ObservableCollection<PO.Line>();
+        ObservableCollection<BO.Driver> drivers = new ObservableCollection<BO.Driver>();
+
         public MainWindow()
         {
             InitializeComponent();
 
-            ObservableCollection<PO.BusStop> Stops = new ObservableCollection<PO.BusStop>();
             ListViewStations.DataContext = Stops;
             new Thread(() => 
             {
@@ -41,7 +45,6 @@ namespace PlGui
                     Cloning.DeepCopyTo(item, Stops[Stops.Count - 1]);
                 }
             }).Start();            
-            ObservableCollection<PO.Bus> buses = new ObservableCollection<PO.Bus>();
             foreach(var item in ibl.GetBuses())
             {
                 buses.Add(new PO.Bus());
@@ -49,14 +52,12 @@ namespace PlGui
             }
             ListViewBuses.DataContext = buses;
 
-            ObservableCollection<PO.Line> Lines = new ObservableCollection<PO.Line>();
             foreach (var item in ibl.GetLines())
             {
                 Lines.Add(new PO.Line());
                 Cloning.DeepCopyTo(item, Lines[Lines.Count - 1]);
             }
             ListViewLines.DataContext = Lines;
-            ObservableCollection<BO.Driver> drivers = new ObservableCollection<BO.Driver>();
             foreach (var item in ibl.GetDrivers())
             {
                 drivers.Add(new BO.Driver());
@@ -332,11 +333,31 @@ namespace PlGui
         {
             wDelbus delbus = new wDelbus();
             delbus.ShowDialog();
+            try
+            {
+                ibl.DeleteBus((int)delbus.IdDelbus);
+                buses.Remove(buses.ToList().Find((Bus) => Bus.Id == delbus.IdDelbus));
+            }
+            catch (DeleteException ex)
+            {
+                MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ChangeBus_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void SearchBus_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void AddStopLine_Click(object sender, RoutedEventArgs e)
+        {
+            var addStopLine = new addStopLine(ibl);
+            addStopLine.DataContext = ListViewLines.SelectedItem;
         }
     }
 }

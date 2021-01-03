@@ -144,30 +144,39 @@ namespace BlApi
             return upLine;
         }
 
-        public Line AddStopLine(int idLine, int codeStop, StopLine stopLine, int index)
+        public Line AddStopLine(int idLine, int codeStop, int index)
         {
             var st = dal.GetStopLine(idLine, codeStop);
             var stopsInLine = dal.GetStopLinesBy((StopLine) => { return StopLine.IdLine == idLine; });
             if (st != null || stopsInLine == null)
                 return null;
+            DO.StopLine curStop=null;
+            if (index-1==stopsInLine.Count())
+            {
+                 curStop= dal.GetStopLineByIndex(idLine, index-1);
+            }
+            if(index<=stopsInLine.Count())
+                curStop = dal.GetStopLineByIndex(idLine, index - 1);
+            if (curStop == null)
+                return null;
             try
             {
                 if (index != 1)
                 {
-                    var d1 = GetDistance(stopLine.PrevStop, codeStop);
+                    var d1 = GetDistance(curStop.PrevStop, codeStop);
                 }
             }
             catch (ConsecutiveStopsException ex)
             {
-                throw new ConsecutiveStopsException(stopLine.PrevStop, codeStop, "No time and distance available", ex);
+                throw new ConsecutiveStopsException(curStop.PrevStop, codeStop, "No time and distance available", ex);
             }
             try
             {
-                var d2 = GetDistance(codeStop, stopLine.CodeStop);
+                var d2 = GetDistance(codeStop, curStop.CodeStop);
             }
             catch (ConsecutiveStopsException ex)
             {
-                throw new ConsecutiveStopsException(codeStop, stopLine.CodeStop, "No time and distance available", ex);
+                throw new ConsecutiveStopsException(codeStop, curStop.CodeStop, "No time and distance available", ex);
             }
 
             var l = dal.GetLine(idLine);
@@ -248,7 +257,7 @@ namespace BlApi
             if (st == null || stopsInLine == null)
                 return null;
             if (stopsInLine.Count() == 2)
-                return null;
+                throw new DeleteException("StopLine","You can not delete the station of the line");
             try
             {
                 if (index != 1)
@@ -499,12 +508,11 @@ namespace BlApi
         {
             try
             {
-
+                dal.DeleteBus(id);
             }
-            catch (Exception)
+            catch (DO.BusExceptionDO ex)
             {
-
-                throw;
+                throw new DeleteException("Bus", id.ToString(), ex.Message, ex);
             }
         }
 
