@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Threading;
+using BlApi;
+using BO;
 
 namespace PlGui
 {
@@ -20,15 +22,29 @@ namespace PlGui
     /// </summary>
     public partial class forgetPasswordWindow : Window
     {
+        public IBL ibl = BlFactory.GetBL("1");
         public forgetPasswordWindow()
         {
+
             InitializeComponent();
         }
 
         private void bShowmMyPassword_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                showPasswordTextBlock.Text = ibl.RecoverPassword(tbPhone.Text, tbBirthday.DisplayDate);
+                var user = ibl.GetUser(tbUserName.Text, showPasswordTextBlock.Text);
+                if (user == null)
+                    return;
+            }
+            catch(PasswordRecoveryException ex)
+            {
+                this.Close();
+                Console.WriteLine(ex);
+            }
             showPasswordTextBlock.Visibility = Visibility.Visible;
-            showPasswordTextBlock.Text = "123456789";
+           
             new Thread(() =>
             {
                 Thread.Sleep(10000);

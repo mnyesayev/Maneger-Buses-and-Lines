@@ -59,7 +59,7 @@ namespace DS
                 {
                     Active = true,
                     Authorization = Authorizations.Admin,
-                    Birthday = DateTime.Now,
+                    Birthday = DateTime.Today,
                     FirstName = "Admin",
                     UserName = "123456",
                     Password = "123456",
