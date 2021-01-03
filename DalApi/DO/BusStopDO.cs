@@ -16,6 +16,10 @@ namespace DO
         /// </summary>
         public bool Active { get; set; }
         /// <summary>
+        ///  Represents if passe any line in this stop
+        /// </summary>
+        public bool PassLines { get; set; }
+        /// <summary>
         /// Represents the unique number of the "BusStop"
         /// </summary>
         public int Code { get ; set ; }

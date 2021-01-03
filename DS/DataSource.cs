@@ -40,16 +40,17 @@ namespace DS
         {
             Buses = new List<Bus>();
             initBuses();
-            BusStops = new List<BusStop>();
-            initBusStops();
             Lines = new List<Line>();
             initLines();
             Drivers = new List<Driver>();
             initDrivers();
             StopLines = new List<StopLine>();
             initStopLines();
+            BusStops = new List<BusStop>();
+            initBusStops();
             LstConsecutiveStops = new List<ConsecutiveStops>();
             initConsecutiveStops();
+            
             BusOnTrips = new List<BusOnTrip>();
             LineTrips = new List<LineTrip>();
             Users = new List<User>
@@ -105,22 +106,6 @@ namespace DS
             Drivers.Add(new Driver() { Active = true, Id = 123486789, Name = "Asher buzaglo", Seniority = 4 });
         }
 
-        private static void initBusStops()
-        {
-            int i = 0;
-            foreach (var item
-                in File.ReadLines(@"stops.txt"))
-            {
-                if (i++ == 0) continue;
-                BusStops.Add(new BusStop() { Active = true });
-                var subitem = item.Split(',');
-                BusStops[i - 2].Code = int.Parse(subitem[1]);
-                BusStops[i - 2].Name = subitem[2];
-                BusStops[i - 2].Address = subitem[3];
-                BusStops[i - 2].Latitude = double.Parse(subitem[4]);
-                BusStops[i - 2].Longitude = double.Parse(subitem[5]);
-            }
-        }
 
         private static void initLines()
         {
@@ -344,6 +329,24 @@ namespace DS
             StopLines.Add(new StopLine() { PrevStop = 60352, NextStop = 60314, IdLine = 10, CodeStop = 60294, NumStopInLine = 9 });
             StopLines.Add(new StopLine() { PrevStop = 60294, IdLine = 10, CodeStop = 60314, NumStopInLine = 10 });
             #endregion
+        }
+
+        private static void initBusStops()
+        {
+            int i = 0;
+            foreach (var item
+                in File.ReadLines(@"stops.txt"))
+            {
+                if (i++ == 0) continue;
+                BusStops.Add(new BusStop() { Active = true });
+                var subitem = item.Split(',');
+                BusStops[i - 2].Code = int.Parse(subitem[1]);
+                BusStops[i - 2].PassLines = (StopLines.Any((stopLine) => stopLine.CodeStop == int.Parse(subitem[1]))) ? true : false;
+                BusStops[i - 2].Name = subitem[2];
+                BusStops[i - 2].Address = subitem[3];
+                BusStops[i - 2].Latitude = double.Parse(subitem[4]);
+                BusStops[i - 2].Longitude = double.Parse(subitem[5]);
+            }
         }
 
         private static void initConsecutiveStops()

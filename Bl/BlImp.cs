@@ -22,7 +22,7 @@ namespace BlApi
                        Code = BusStop.Code,
                        Name = BusStop.Name,
                        MoreInfo = BusStop.MoreInfo,
-                       LinesPassInStop = GetLinesInStop(BusStop.Code)
+                       LinesPassInStop =(BusStop.PassLines==true)?GetLinesInStop(BusStop.Code):default
                    }
                    select newBusStop;
         }
