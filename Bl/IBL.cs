@@ -10,6 +10,7 @@ namespace BlApi
     {
         #region Bus
         IEnumerable<Bus> GetBuses();
+        void DeleteBus(int id);
         Bus Care();
         Bus Fuel();
         /// <summary>

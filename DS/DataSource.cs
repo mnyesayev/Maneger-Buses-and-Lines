@@ -63,7 +63,7 @@ namespace DS
                     FirstName = "Admin",
                     UserName = "123456",
                     Password = "123456",
-                    Phone = "052-123456"
+                    Phone = "052-1234567"
                 }
             };
             initUsers();
@@ -87,9 +87,9 @@ namespace DS
                 Buses.Add(new Bus()
                 {
                     DateRoadAscent = new DateTime(2020, 2, 23),
-                    Id = (uint)MyRandom.r.Next(1000000, 99999999),
+                    Id = (uint)MyRandom.r.Next(10000000, 99999999),
                     Fuel = MyRandom.r.Next(50, 1201),
-                    LastCare = new DateTime(2020, MyRandom.r.Next(3, 12), MyRandom.r.Next(1, 29)),
+                    LastCare = new DateTime(2020, MyRandom.r.Next(3, 13), MyRandom.r.Next(1, 29)),
                     LastCareMileage = 22000,
                     Mileage = (uint)MyRandom.r.Next(22000, 42000),
                     State = States.ready,

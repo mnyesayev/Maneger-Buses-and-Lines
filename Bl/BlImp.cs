@@ -495,6 +495,19 @@ namespace BlApi
                    select newBus;
         }
 
+        public void DeleteBus(int id)
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool CheckFuel(int id, int distance)
         {
             var b = dal.GetBus(id);
@@ -541,9 +554,6 @@ namespace BlApi
                    orderby newDriver.Name
                    select newDriver;
         }
-
-
-
         #endregion
     }
 }
