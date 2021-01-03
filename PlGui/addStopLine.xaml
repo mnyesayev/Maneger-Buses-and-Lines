@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
-        mc:Ignorable="d"
-        Title="addStopLine" Height="450" Width="800">
+        mc:Ignorable="d" Icon="images\plus.png"
+        Title="Add stop to line" Height="300" Width="500">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>

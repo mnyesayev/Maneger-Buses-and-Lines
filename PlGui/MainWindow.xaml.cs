@@ -358,6 +358,7 @@ namespace PlGui
         {
             var addStopLine = new addStopLine(ibl);
             addStopLine.DataContext = ListViewLines.SelectedItem;
+            addStopLine.ShowDialog();
         }
     }
 }
