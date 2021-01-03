@@ -351,7 +351,8 @@ namespace PlGui
 
         private void SearchBus_Click(object sender, RoutedEventArgs e)
         {
-           
+            uint id=12345678;
+            ListViewBuses.SelectedItem = buses.ToList().Find((Bus) => Bus.Id == id);
         }
 
         private void AddStopLine_Click(object sender, RoutedEventArgs e)
@@ -359,6 +360,14 @@ namespace PlGui
             var addStopLine = new addStopLine(ibl);
             addStopLine.DataContext = ListViewLines.SelectedItem;
             addStopLine.ShowDialog();
+        }
+
+        private void SearchDriver_Click(object sender, RoutedEventArgs e)
+        {
+
+            uint id = 123456789;
+            ListViewDrivers.SelectedItem = drivers.ToList().Find((Driver) => Driver.Id == id);
+            
         }
     }
 }

@@ -36,6 +36,7 @@ namespace DalApi
         IEnumerable<DO.Driver> GetDriversBy(Predicate<DO.Driver> predicate);
         DO.Driver GetDriver(int id);
         void UpdateDriver(DO.Driver newDriver);
+        void UpdateDriver(int id,Action<DO.Driver> action);
         void DeleteDriver(int id);
         #endregion
 

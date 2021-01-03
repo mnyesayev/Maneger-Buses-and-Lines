@@ -213,6 +213,14 @@ namespace Dal
             return driver.Clone();
         }
 
+        public void UpdateDriver(int id, Action<Driver> action)
+        {
+            int index = DataSource.Drivers.FindIndex((Driver) => { return Driver.Active && Driver.Id == id; });
+            if (index == -1)
+                throw new DriverExceptionDO(id, "system not found the driver");
+            action(DataSource.Drivers[index]);
+        }
+
         public void UpdateDriver(Driver newDriver)
         {
             int index = DataSource.Drivers.FindIndex((Driver) => { return Driver.Active && Driver.Id == newDriver.Id; });
@@ -465,7 +473,8 @@ namespace Dal
             DataSource.LineTrips[index].Active = false;
         }
 
-        
+       
+
         #endregion
     }
 }

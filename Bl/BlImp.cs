@@ -13,6 +13,17 @@ namespace BlApi
         readonly IDal dal = DalFactory.GetDal();
 
         #region BusStop
+        public void DeleteBusStop(int code)
+        {
+            try
+            {
+                dal.DeleteBusStop(code);
+            }
+            catch (DO.BusStopExceptionDO ex)
+            {
+                throw new DeleteException("BusStop", code.ToString(), ex.Message, ex);
+            }
+        }
         public IEnumerable<BusStop> GetBusStops()
         {
             return from BusStop in dal.GetStops().AsParallel()
@@ -22,11 +33,14 @@ namespace BlApi
                        Code = BusStop.Code,
                        Name = BusStop.Name,
                        MoreInfo = BusStop.MoreInfo,
-                       LinesPassInStop =(BusStop.PassLines==true)?GetLinesInStop(BusStop.Code):default
+                       LinesPassInStop = (BusStop.PassLines == true) ? GetLinesInStop(BusStop.Code) : default
                    }
                    select newBusStop;
         }
-
+        public Bus AddBus(Bus bus)
+        {
+            throw new NotImplementedException();
+        }
         public IEnumerable<Line> GetLinesInStop(int code)
         {
             return from Line in GetLines()
@@ -85,14 +99,48 @@ namespace BlApi
         #endregion
 
         #region StopLine
+
         public Line ChangeStopLine(int idLine, int codeStop1, int codeStop2, int index1, int index2)
         {
             var st1 = dal.GetStopLine(idLine, codeStop1);
             var st2 = dal.GetStopLine(idLine, codeStop2);
+            if (st1 == null)
+                throw new IdException("StopLine", $"{st1} +{idLine}", $"no found {st1.CodeStop} station line");
+            if (st2 == null)
+                throw new IdException("StopLine", $"{st2} +{idLine}", $"no found {st2.CodeStop} station line");  
+            try
+            {
+                var d1 = GetDistance(st1.PrevStop, codeStop2);
+            }
+            catch (ConsecutiveStopsException ex)
+            {
+                throw  new ConsecutiveStopsException(st1.PrevStop, codeStop2, "No time and distance available", ex);
+            }
+            try
+            {
+                var d2 = GetDistance(codeStop2, st1.NextStop);
+            }
+            catch (ConsecutiveStopsException ex)
+            {
+                throw new ConsecutiveStopsException(st1.PrevStop, codeStop2, "No time and distance available", ex);
+            }
+            try
+            {
+                var d3 = GetDistance(st2.PrevStop, codeStop1);
+            }
+            catch (ConsecutiveStopsException ex)
+            {
+                throw new ConsecutiveStopsException(st2.PrevStop, codeStop1, "No time and distance available", ex);
+            }
+            try
+            {
+                var d4 = GetDistance(codeStop1, st2.NextStop);
+            }
+            catch (ConsecutiveStopsException ex)
+            {
+                throw new ConsecutiveStopsException(codeStop1, st2.NextStop, "No time and distance available", ex);
+            }
             var l = dal.GetLine(idLine);
-
-            if (l == null || st1 == null || st2 == null)
-                return null;
 
             var temp = st1;
             st1.CodeStop = codeStop2;
@@ -150,12 +198,12 @@ namespace BlApi
             var stopsInLine = dal.GetStopLinesBy((StopLine) => { return StopLine.IdLine == idLine; });
             if (st != null || stopsInLine == null)
                 return null;
-            DO.StopLine curStop=null;
-            if (index-1==stopsInLine.Count())
+            DO.StopLine curStop = null;
+            if (index - 1 == stopsInLine.Count())
             {
-                 curStop= dal.GetStopLineByIndex(idLine, index-1);
+                curStop = dal.GetStopLineByIndex(idLine, index - 1);
             }
-            if(index<=stopsInLine.Count())
+            if (index <= stopsInLine.Count())
                 curStop = dal.GetStopLineByIndex(idLine, index - 1);
             if (curStop == null)
                 return null;
@@ -257,7 +305,7 @@ namespace BlApi
             if (st == null || stopsInLine == null)
                 return null;
             if (stopsInLine.Count() == 2)
-                throw new DeleteException("StopLine","You can not delete the station of the line");
+                throw new DeleteException("StopLine", "You can not delete the station of the line");
             try
             {
                 if (index != 1)
@@ -301,7 +349,7 @@ namespace BlApi
                     dal.UpdateLine(idLine, (Line) =>
                     { Line.CodeFirstStop = stopsInLine.ElementAt(stopsInLine.Count() - 2).CodeStop; });
                     dal.UpdateStopLine(idLine, stopsInLine.ElementAt(stopsInLine.Count() - 2).CodeStop,
-                        (StopLine) =>  st.NextStop = 0);
+                        (StopLine) => st.NextStop = 0);
                     dal.DeleteStopLine(idLine, codeStop);
                 }
                 if (index != 1 && index != stopsInLine.Count())
@@ -468,20 +516,20 @@ namespace BlApi
 
         public void InsertDistanceAndTime(int code1, int code2, double distance, TimeSpan time)
         {
-            var cs= dal.GetConsecutiveStops(code1, code2);
-            if(cs!=null)
+            var cs = dal.GetConsecutiveStops(code1, code2);
+            if (cs != null)
             {
-                dal.UpdateConsecutiveStops(code1, code2, (cstops)=> { cstops.Distance = distance; cstops.AvregeDriveTime = time; });
+                dal.UpdateConsecutiveStops(code1, code2, (cstops) => { cstops.Distance = distance; cstops.AvregeDriveTime = time; });
                 return;
             }
-            if(cs==null)
+            if (cs == null)
             {
                 dal.AddConsecutiveStops(new DO.ConsecutiveStops()
                 {
-                    CodeBusStop1=code1,
-                    CodeBusStop2=code2,
-                    AvregeDriveTime=time,
-                    Distance=distance
+                    CodeBusStop1 = code1,
+                    CodeBusStop2 = code2,
+                    AvregeDriveTime = time,
+                    Distance = distance
                 });
             }
         }
@@ -561,6 +609,55 @@ namespace BlApi
                    }
                    orderby newDriver.Name
                    select newDriver;
+        }
+
+        public Driver AddDriver(int id, string name, int seniority)
+        {
+            if (id > 999999999)
+                throw new AddException("Driver", id.ToString(), "the Id not valid!!");
+            try
+            {
+                dal.AddDriver(new DO.Driver() { Id = id, Name = name, Seniority = seniority, Active = true });
+            }
+            catch (DO.DriverExceptionDO ex)
+            {
+                throw new AddException("Driver", id.ToString(), ex.Message, ex);
+            }
+            return new Driver() { Id = id, Name = name, Seniority = seniority };
+        }
+
+        public void DeleteDriver(int id)
+        {
+            if (id > 999999999)
+                throw new DeleteException("Driver", id.ToString(), "the Id not valid!!");
+            try
+            {
+                dal.DeleteDriver(id);
+            }
+            catch (DO.DriverExceptionDO ex)
+            {
+                throw new DeleteException("Driver", id.ToString(), ex.ToString(), ex);
+            }
+        }
+
+        public void EditDriver(int id, string name, int seniority)
+        {
+            if (id > 999999999)
+                throw new IdException("Driver", id.ToString(), "this id not valid!!");
+            try
+            {
+                dal.UpdateDriver(id, (Driver) =>
+                {
+                    if (Driver.Seniority < seniority)
+                        Driver.Seniority = seniority;
+                    if (name != Driver.Name)
+                        Driver.Name = name;
+                });
+            }
+            catch (DO.DriverExceptionDO ex)
+            {
+                throw new IdException("Driver", id.ToString(), ex.Message, ex);
+            }
         }
         #endregion
     }

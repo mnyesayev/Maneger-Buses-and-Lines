@@ -818,7 +818,7 @@
                         </Button>
                         <Button x:Name="SearchDriver" Grid.Column="4" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Search driver" >
+                                 ToolTip="Search driver" Click="SearchDriver_Click" >
                             <materialDesign:PackIcon Kind="AccountSearch"/>
                         </Button>
                     </Grid>

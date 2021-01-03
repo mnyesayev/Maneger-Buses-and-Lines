@@ -11,6 +11,7 @@ namespace BlApi
         #region Bus
         IEnumerable<Bus> GetBuses();
         void DeleteBus(int id);
+        Bus AddBus(Bus bus);
         Bus Care();
         Bus Fuel();
         /// <summary>
@@ -56,10 +57,14 @@ namespace BlApi
         IEnumerable<BusStop> GetBusStops();
         string GetNameStop(int code);
         BusStop UpdateName(int code, string name);
+        void DeleteBusStop(int code);
         #endregion
 
         #region Driver
         IEnumerable<Driver> GetDrivers();
+        Driver AddDriver(int id, string name, int Seniority);
+        void DeleteDriver(int id);
+        void EditDriver(int id,string name,int seniority);
         #endregion
     }
 }
