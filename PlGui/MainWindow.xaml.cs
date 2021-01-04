@@ -367,7 +367,15 @@ namespace PlGui
 
             uint id = 123456789;
             ListViewDrivers.SelectedItem = drivers.ToList().Find((Driver) => Driver.Id == id);
+            ListViewDrivers.ScrollIntoView(ListViewDrivers.SelectedItem);
             
+        }
+
+        private void SearchStop_Click(object sender, RoutedEventArgs e)
+        {
+            uint id = 60797;
+            ListViewStations.SelectedItem = Stops.ToList().Find((BusStop) => BusStop.Code == id);
+            ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
         }
     }
 }

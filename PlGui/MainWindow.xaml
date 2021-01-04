@@ -743,7 +743,7 @@
                         </Button>
                         <Button x:Name="SearchStop" Grid.Column="4" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Search Stop" >
+                                 ToolTip="Search Stop" Click="SearchStop_Click" >
                             <materialDesign:PackIcon Kind="Magnify"/>
                         </Button>
                     </Grid>
