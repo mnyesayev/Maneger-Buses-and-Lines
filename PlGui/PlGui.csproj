@@ -93,6 +93,15 @@
     <Compile Include="wDelbus.xaml.cs">
       <DependentUpon>wDelbus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wSearchBus.xaml.cs">
+      <DependentUpon>wSearchBus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wSearchLine.xaml.cs">
+      <DependentUpon>wSearchLine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wSearchStop.xaml.cs">
+      <DependentUpon>wSearchStop.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wStartDrive.xaml.cs">
       <DependentUpon>wStartDrive.xaml</DependentUpon>
     </Compile>
@@ -139,6 +148,18 @@
     <Page Include="wDelbus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="wSearchBus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wSearchLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wSearchStop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wStartDrive.xaml">
       <Generator>MSBuild:Compile</Generator>

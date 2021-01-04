@@ -1,0 +1,88 @@
+﻿<Window x:Class="PlGui.wBusInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlGui" 
+        mc:Ignorable="d"
+        Title="Bus Info" Height="450" Width="800"
+        Icon="images\info.png" FontSize="17" Background="Azure">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="Tilte" Text="Bus Information" 
+                   Grid.Column="1" Grid.Row="1" 
+                   Grid.ColumnSpan="5" FontSize="22"
+                   HorizontalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock x:Name="tb1busId" Text="bus ID:" 
+                   Grid.Column="1" Grid.Row="2"/>
+        <TextBlock x:Name="tb2busId"   Text="{Binding Path=PrintId}"
+                   Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right"/>
+        <TextBlock x:Name="tb1DRA" Text="Date of road ascent:"
+                   Grid.Column="1" Grid.Row="3"/>
+        <TextBlock x:Name="tb2DRA" Text="{Binding Path=DateRoadAscent,StringFormat=dd/MM/yyyy}"
+                   Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right"/>
+        <TextBlock x:Name="tb1Mileage" Text="Total Mileage:"
+                   Grid.Column="1" Grid.Row="4"/>
+        <TextBlock x:Name="tb2Mileage" Text="{Binding Path=Mileage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                   Grid.Column="2" Grid.Row="4" HorizontalAlignment="Right"/>
+        <TextBlock x:Name="tb1DateLastCare" Text="The last care was at:"
+                   Grid.Column="1" Grid.Row="5"/>
+        <TextBlock x:Name="tb2DateLastCare" Text="{Binding Path=LastCare,StringFormat=dd/MM/yyyy, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                   Grid.Column="2" Grid.Row="5" HorizontalAlignment="Right"/>
+        <TextBlock x:Name="tb1MileageLastCare" Text="Mileage in last care:"
+                   Grid.Column="1" Grid.Row="6"/>
+        <TextBlock x:Name="tb2MileageLastCare" Text="{Binding Path = LastCareMileage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                   Grid.Column="2" Grid.Row="6" HorizontalAlignment="Right"/>
+        <TextBlock x:Name="tb1fuel" Text="Have fuel for:"
+                   Grid.Column="4" Grid.Row="2"/>
+        <ProgressBar x:Name="pb2fuel" Minimum="0" Maximum="1200" Value="{Binding Path= Fuel, Mode=OneWay,UpdateSourceTrigger=PropertyChanged }" 
+                   Grid.Column="5" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,20" 
+                     Background="White" BorderBrush="Black" Foreground="#FF66E87E" />
+        <TextBlock x:Name="tb2fuel"  Text="{Binding ElementName=pb2fuel, Path=Value, StringFormat={}{0:0}km }" 
+                   Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20"/>
+        <TextBlock x:Name="tb1status" Text="Bus status:"
+                   Grid.Column="4" Grid.Row="3"/>
+
+        <TextBlock x:Name="tb2status" Text="{Binding Path=State,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                   Grid.Column="5" Grid.Row="3" HorizontalAlignment="Right"/>
+        <Image x:Name="Im2Status" Source="{Binding Path= Image,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" 
+               HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="5" Grid.Row="3"
+               Width="30" Height="30"/>
+        <TextBlock x:Name="tb1StatusBar" Text="Will be ready in:" 
+                   Grid.Column="4" Grid.Row="4" Visibility="Hidden"/>
+        <TextBlock x:Name="tb2StatusBar" Text="{Binding Path= Time,StringFormat=#;;;,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" 
+                   Grid.Column="5" Grid.Row="4" Visibility="Visible"/>
+        <Button x:Name="bRefuel" Content="Refuel" 
+                Grid.Column="1" Grid.ColumnSpan="2" IsEnabled="False"
+                Grid.Row="7">
+            <!--Click="bRefuel_Click"-->
+        </Button> 
+        <Button x:Name="bCare" Content="Care" 
+                Grid.Column="4" Grid.ColumnSpan="2"
+                Grid.Row="7" >
+            <!--Click="bCare_Click"-->
+        </Button>
+               
+    </Grid>
+    
+</Window>

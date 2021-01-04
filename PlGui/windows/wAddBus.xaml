@@ -1,0 +1,98 @@
+﻿<Window x:Class="PlGui.wAddBus"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlGui"
+        mc:Ignorable="d"
+        Title="Add new bus" Icon="images\plus.png" 
+        Height="350" Width="500" Background="AliceBlue"
+        FontSize="16" WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="1" Grid.Column="1"
+                   Grid.ColumnSpan="3" Margin="0,0,0,10"
+                   Text="Enter all the data in order"
+                   FontWeight="Bold"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" 
+                   Text="Select a bus:"/>
+        <TextBlock x:Name="tbDRA" Grid.Row="3" Grid.Column="1" 
+                   Text="Date road ascent:" />
+        <TextBlock x:Name="tbIdBus" Grid.Row="4" Grid.Column="1" 
+                   Text="Id bus:" />
+        <TextBlock x:Name="tbMileage" Grid.Row="5" Grid.Column="1" 
+                   Text="Total mileage:"/>
+        <TextBlock x:Name="tbDateLastCare" Grid.Row="6" Grid.Column="1" 
+                   Text="Date last care:" />
+        <TextBlock x:Name="tbMileageLastCare" Grid.Row="7" Grid.Column="1" 
+                   Text="Mileage in last care:" />
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2">
+            <RadioButton x:Name="rbNew" Content="New"  Click="rbNew_Click" />
+            <RadioButton x:Name="rbOld" Content="Old" Margin="10,0,0,0" IsChecked="True" Click="rbOld_Click"/>
+        </StackPanel>
+        <DatePicker x:Name="dPDRA" Grid.Row="3" Grid.Column="2" CalendarClosed="dPDRA_calendrer_closed" 
+                   Margin="0,0,0,5"  FirstDayOfWeek="Sunday" />
+        <Image x:Name="ImDRA" Source="images\ok.png" 
+               Grid.Column="3" Grid.Row="3" 
+               Visibility="Hidden" ToolTip="GOOD"/>
+        <TextBox x:Name="tBIdBus" Grid.Row="4" Grid.Column="2" IsEnabled="False" 
+                    Margin="0,0,0,5" TextChanged="tBidBus_TextChanged"     />
+        <Image x:Name="ImIdBusOk" Source="images\ok.png" 
+               Grid.Column="3" Grid.Row="4" 
+               Visibility="Hidden" ToolTip="GOOD"/>
+        <Image x:Name="ImIdBusError" Source="images\error.png" 
+               Grid.Column="3" Grid.Row="4" 
+               Visibility="Hidden" ToolTip="{Binding}"/>
+        <TextBox x:Name="tBMileage" Grid.Row="5" Grid.Column="2" IsEnabled="False" 
+                   Margin="0,0,0,5" TextChanged="tBMileage_TextChanged" />
+        <Image x:Name="ImMileageOk" Source="images\ok.png" 
+               Grid.Column="3" Grid.Row="5" 
+               Visibility="Hidden"/>
+        <Image x:Name="ImMileageError" Source="images\error.png" 
+               Grid.Column="3" Grid.Row="5" 
+               Visibility="Hidden" ToolTip="{Binding}"/>
+        <DatePicker x:Name="dPDateLastCare" Grid.Row="6" Grid.Column="2" IsEnabled="False" 
+                    Margin="0,0,0,5" CalendarClosed="dPDateLastCare_CalendarClosed"
+                    FirstDayOfWeek="Sunday"/>
+        <Image x:Name="ImDateLastCareOk" Source="images\ok.png" 
+               Grid.Column="3" Grid.Row="6" 
+               Visibility="Hidden"/>
+        <Image x:Name="ImDateLastCareError" Source="images\error.png" 
+               Grid.Column="3" Grid.Row="6" 
+               Visibility="Hidden" ToolTip="{Binding}"/>
+        <TextBox x:Name="tBMileageLastCare" Grid.Row="7" Grid.Column="2" IsEnabled="False" 
+                   Margin="0,0,0,0" TextChanged="tBMileageLastCare_TextChanged" />
+        <Image x:Name="ImMileageLastCareOk" Source="images\ok.png" 
+               Grid.Column="3" Grid.Row="7" 
+               Visibility="Hidden"/>
+        <Image x:Name="ImMileageLastCareError" Source="images\error.png" 
+               Grid.Column="3" Grid.Row="7" 
+               Visibility="Hidden" ToolTip="{Binding}"/>
+        <Button x:Name="bDoneAddBus" Grid.Row="8" Grid.Column="4"
+                Grid.ColumnSpan="2"
+                Content="Save" Click="bDoneAddBus_Click"
+                />
+    </Grid>
+</Window>

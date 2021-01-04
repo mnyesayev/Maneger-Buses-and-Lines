@@ -37,18 +37,18 @@ namespace PlGui
             InitializeComponent();
 
             ListViewStations.DataContext = Stops;
-            new Thread(() => 
+            new Thread(() =>
             {
                 foreach (var item in ibl.GetBusStops())
                 {
-                    this.Dispatcher.Invoke(()=> Stops.Add(new PO.BusStop()));
+                    this.Dispatcher.Invoke(() => Stops.Add(new PO.BusStop()));
                     Cloning.DeepCopyTo(item, Stops[Stops.Count - 1]);
                 }
-            }).Start();            
-            foreach(var item in ibl.GetBuses())
+            }).Start();
+            foreach (var item in ibl.GetBuses())
             {
                 buses.Add(new PO.Bus());
-                Cloning.DeepCopyTo(item, buses[buses.Count-1]);
+                Cloning.DeepCopyTo(item, buses[buses.Count - 1]);
             }
             ListViewBuses.DataContext = buses;
 
@@ -351,8 +351,27 @@ namespace PlGui
 
         private void SearchBus_Click(object sender, RoutedEventArgs e)
         {
-            uint id=12345678;
-            ListViewBuses.SelectedItem = buses.ToList().Find((Bus) => Bus.Id == id);
+
+            wSearchBus searchBus = new wSearchBus();
+            searchBus.Show();
+            new Thread(() =>
+            {
+
+                bool flag = true;
+                while (flag)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        ListViewBuses.SelectedItem = buses.ToList().Find((Bus) => Bus.Id == searchBus.busID);
+                        ListViewBuses.ScrollIntoView(ListViewBuses.SelectedItem);
+
+                        if (!searchBus.IsVisible)
+                            flag = false;
+                    });
+                    Thread.Sleep(500);
+                }
+            }).Start();
+
         }
 
         private void AddStopLine_Click(object sender, RoutedEventArgs e)
@@ -368,14 +387,55 @@ namespace PlGui
             uint id = 123456789;
             ListViewDrivers.SelectedItem = drivers.ToList().Find((Driver) => Driver.Id == id);
             ListViewDrivers.ScrollIntoView(ListViewDrivers.SelectedItem);
-            
+
         }
 
         private void SearchStop_Click(object sender, RoutedEventArgs e)
         {
-            uint id = 60797;
-            ListViewStations.SelectedItem = Stops.ToList().Find((BusStop) => BusStop.Code == id);
-            ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
+            wSearchStop searchStop = new wSearchStop();
+            searchStop.Show();
+
+            new Thread(() =>
+            {
+
+                bool flag = true;
+                while (flag)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        ListViewStations.SelectedItem = Stops.ToList().Find((BusStop) => BusStop.Code == searchStop.CodeStop);
+                        ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
+
+                        if (!searchStop.IsVisible)
+                            flag = false;
+                    });
+                    Thread.Sleep(500);
+                }
+            }).Start();
+
+        }
+
+        private void SearchLine_Click(object sender, RoutedEventArgs e)
+        {
+            wSearchLine searchLine = new wSearchLine();
+            searchLine.Show();
+            new Thread(() =>
+            {
+
+                bool flag = true;
+                while (flag)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        ListViewLines.SelectedItem = Lines.ToList().Find((Line) => Line.NumLine == searchLine.numLine);
+                        ListViewLines.ScrollIntoView(ListViewLines.SelectedItem);
+
+                        if (!searchLine.IsVisible)
+                            flag = false;
+                    });
+                    Thread.Sleep(500);
+                }
+            }).Start();
         }
     }
 }

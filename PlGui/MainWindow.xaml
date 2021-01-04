@@ -507,7 +507,7 @@
                                             <Setter Property="BorderThickness" Value="0"></Setter>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
-                                    <GridViewColumn x:Name="gvcIdBus" Header="Bus ID" Width="auto"  
+                                    <GridViewColumn x:Name="gvcIdBus" Header="Bus ID" Width="100"  
                                     DisplayMemberBinding="{Binding Path=PrintId,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                                     <GridViewColumn x:Name="gvcDateRoadAscent" Header="Date road ascent" Width="auto"
                                     DisplayMemberBinding="{Binding Path=DateRoadAscent,StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
@@ -633,7 +633,7 @@
                         </Button>
                         <Button x:Name="SearchLine" Grid.Column="4" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Search Line" >
+                                 ToolTip="Search Line" Click="SearchLine_Click" >
                             <materialDesign:PackIcon Kind="Magnify"/>
                         </Button>
                         <Button x:Name="AddStopLine" Grid.Column="7" Grid.Row="7"
