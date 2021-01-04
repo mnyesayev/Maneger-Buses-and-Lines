@@ -7,6 +7,7 @@
         mc:Ignorable="d" Icon="images\plus.png"
         Title="Add stop to line" Height="300" Width="500">
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="150"/>

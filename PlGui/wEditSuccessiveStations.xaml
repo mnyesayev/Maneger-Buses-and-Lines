@@ -1,0 +1,59 @@
+﻿<Window x:Class="PlGui.wEditSuccessiveStations"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlGui"
+        mc:Ignorable="d"
+        Title="Edit successive stations" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="titleSuccessiveStations"
+                   Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="5"
+                   Text="Edit Successive stations" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" FontSize="22"
+                   Foreground="Green" FontWeight="Bold"/>
+
+        <TextBlock x:Name="stop1succ" Grid.Column="6"
+                   Grid.Row="3" Grid.RowSpan="3"
+                   Grid.ColumnSpan="2" Text="{Binding}"
+                   Background="Red"/>
+
+        <TextBlock x:Name="stop2succ" Grid.Column="1"
+                   Grid.Row="3" Grid.RowSpan="3"
+                   Grid.ColumnSpan="2" Text="{Binding}"
+                   Background="Red"/>
+        <Border x:Name="timeSucc" CornerRadius="5"
+                Grid.Column="3" Grid.ColumnSpan="3"
+                Grid.Row="3" Grid.RowSpan="3">
+            
+
+        </Border>
+ 
+
+
+    </Grid>
+</Window>

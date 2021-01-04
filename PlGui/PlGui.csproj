@@ -93,6 +93,9 @@
     <Compile Include="wDelbus.xaml.cs">
       <DependentUpon>wDelbus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wEditSuccessiveStations.xaml.cs">
+      <DependentUpon>wEditSuccessiveStations.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wSearchBus.xaml.cs">
       <DependentUpon>wSearchBus.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,10 @@
     <Page Include="wDelbus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="wEditSuccessiveStations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wSearchBus.xaml">
       <SubType>Designer</SubType>
