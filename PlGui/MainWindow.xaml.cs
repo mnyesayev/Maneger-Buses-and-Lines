@@ -353,7 +353,7 @@ namespace PlGui
         {
 
             wSearchBus searchBus = new wSearchBus();
-            searchBus.ShowDialog();
+            searchBus.Show();
             new Thread(() =>
             {
 
@@ -362,13 +362,14 @@ namespace PlGui
                 {
                     this.Dispatcher.Invoke(() =>
                     {
+                        SearchBus.IsEnabled = false;
                         ListViewBuses.SelectedItem = buses.ToList().Find((Bus) => Bus.Id == searchBus.busID);
                         ListViewBuses.ScrollIntoView(ListViewBuses.SelectedItem);
-
                         if (!searchBus.IsVisible)
                             flag = false;
                     });
                     Thread.Sleep(500);
+                    this.Dispatcher.Invoke(() => SearchBus.IsEnabled = true);
                 }
             }).Start();
 
@@ -383,7 +384,7 @@ namespace PlGui
 
         private void SearchDriver_Click(object sender, RoutedEventArgs e)
         {
-
+          
             uint id = 123456789;
             ListViewDrivers.SelectedItem = drivers.ToList().Find((Driver) => Driver.Id == id);
             ListViewDrivers.ScrollIntoView(ListViewDrivers.SelectedItem);
@@ -397,10 +398,10 @@ namespace PlGui
 
             new Thread(() =>
             {
-
                 bool flag = true;
                 while (flag)
                 {
+                    this.Dispatcher.Invoke(() => SearchStop.IsEnabled = false);
                     if (searchStop.itsNumber == true)
                         this.Dispatcher.Invoke(() =>
                         {
@@ -410,7 +411,7 @@ namespace PlGui
                             if (!searchStop.IsVisible)
                                 flag = false;
                         });
-                      else
+                    else
                         this.Dispatcher.Invoke(() =>
                         {
                             ListViewStations.SelectedItem = Stops.ToList().Find((BusStop) => BusStop.Name == searchStop.NameStop);
@@ -419,11 +420,9 @@ namespace PlGui
                             if (!searchStop.IsVisible)
                                 flag = false;
                         });
-
-
                     Thread.Sleep(500);
-                   
                 }
+                this.Dispatcher.Invoke(() => SearchStop.IsEnabled = true);
             }).Start();
 
         }
@@ -440,6 +439,7 @@ namespace PlGui
                 {
                     this.Dispatcher.Invoke(() =>
                     {
+                        SearchLine.IsEnabled = false;
                         ListViewLines.SelectedItem = Lines.ToList().Find((Line) => Line.NumLine == searchLine.numLine);
                         ListViewLines.ScrollIntoView(ListViewLines.SelectedItem);
 
@@ -448,12 +448,13 @@ namespace PlGui
                     });
                     Thread.Sleep(500);
                 }
+                this.Dispatcher.Invoke(() => SearchLine.IsEnabled = true);
             }).Start();
         }
 
         private void ListViewBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(ListViewBuses.SelectedItem is PO.Bus)
+            if (ListViewBuses.SelectedItem is PO.Bus)
             {
                 wBusInfo busInfo = new wBusInfo(ibl);
                 busInfo.DataContext = ListViewBuses.SelectedItem as PO.Bus;

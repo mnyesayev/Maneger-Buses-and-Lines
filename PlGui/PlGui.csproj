@@ -99,6 +99,9 @@
     <Compile Include="wSearchBus.xaml.cs">
       <DependentUpon>wSearchBus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wSearchDriver.xaml.cs">
+      <DependentUpon>wSearchDriver.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wSearchLine.xaml.cs">
       <DependentUpon>wSearchLine.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wSearchBus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wSearchDriver.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
