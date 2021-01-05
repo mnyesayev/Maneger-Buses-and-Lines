@@ -394,7 +394,7 @@ namespace PlGui
         private void SearchStop_Click(object sender, RoutedEventArgs e)
         {
             wSearchStop searchStop = new wSearchStop();
-            searchStop.ShowDialog();
+            searchStop.Show();
 
             new Thread(() =>
             {
@@ -430,7 +430,7 @@ namespace PlGui
         private void SearchLine_Click(object sender, RoutedEventArgs e)
         {
             wSearchLine searchLine = new wSearchLine();
-            searchLine.ShowDialog();
+            searchLine.Show();
             new Thread(() =>
             {
 
