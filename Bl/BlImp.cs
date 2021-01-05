@@ -107,14 +107,14 @@ namespace BlApi
             if (st1 == null)
                 throw new IdException("StopLine", $"{st1} +{idLine}", $"no found {st1.CodeStop} station line");
             if (st2 == null)
-                throw new IdException("StopLine", $"{st2} +{idLine}", $"no found {st2.CodeStop} station line");  
+                throw new IdException("StopLine", $"{st2} +{idLine}", $"no found {st2.CodeStop} station line");
             try
             {
                 var d1 = GetDistance(st1.PrevStop, codeStop2);
             }
             catch (ConsecutiveStopsException ex)
             {
-                throw  new ConsecutiveStopsException(st1.PrevStop, codeStop2, "No time and distance available", ex);
+                throw new ConsecutiveStopsException(st1.PrevStop, codeStop2, "No time and distance available", ex);
             }
             try
             {
@@ -658,6 +658,106 @@ namespace BlApi
             {
                 throw new IdException("Driver", id.ToString(), ex.Message, ex);
             }
+        }
+        #endregion
+
+        #region LineTrip
+        public IEnumerable<LineTrip> GetLineTrips()
+        {
+            return from LineTrip in dal.GetLineTrips()
+                   let newLineTrip = new LineTrip()
+                   {
+                       Id = LineTrip.Id,
+                       IdLine = LineTrip.IdLine,
+                       numLine = GetNumLine(LineTrip.IdLine),
+                       Frequency = LineTrip.Frequency,
+                       DepartureSchedule = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency)
+                   }
+                   orderby newLineTrip.numLine
+                   select newLineTrip;
+        }
+        IEnumerable<TimeSpan> getSchedule(TimeSpan startTime, TimeSpan endTime, int f)
+        {
+            List<TimeSpan> timeSpans = new List<TimeSpan>();
+            var t1 = startTime;
+            var m = 60 / f;
+            int tm, th;
+            timeSpans.Add(startTime);
+            while (t1 < endTime)
+            {
+                if (t1.Minutes + m > 59)
+                {
+                    tm = 60 - t1.Minutes + m;
+                    th = t1.Hours + 1;
+                    timeSpans.Add(startTime.Add(new TimeSpan(th, tm, t1.Seconds)));
+                    t1 = timeSpans[timeSpans.Count - 1];
+                    continue;
+                }
+                timeSpans.Add(startTime.Add(new TimeSpan(t1.Hours, t1.Minutes + m, t1.Seconds)));
+            }
+            timeSpans.Add(endTime);
+            return timeSpans;
+        }
+        public string GetNumLine(int idLine)
+        {
+            var l = dal.GetLine(idLine);
+            if (l == null)
+                return null;
+            return l.NumLine;
+        }
+        public LineTrip UpdateLineSchedule(int id, TimeSpan startTime, TimeSpan endTime, int f)
+        {
+            if (startTime > endTime || f < 0)
+            {
+                return null;
+            }
+            try
+            {
+                dal.UpdateLineTrip(id, (LineTrip) =>
+                 {
+                     if (LineTrip.StartTime != startTime)
+                         LineTrip.StartTime = startTime;
+                     if (LineTrip.EndTime != LineTrip.EndTime)
+                         LineTrip.StartTime = startTime;
+                     if (LineTrip.Frequency != f)
+                         LineTrip.Frequency = f;
+                 });
+            }
+            catch (DO.LineTripExceptionDO ex)
+            {
+                throw new IdException("LineTrip", id.ToString(), ex.Message, ex);
+            }
+            var lt = dal.GetLineTrip(id);
+            return new LineTrip()
+            {
+                Id = lt.Id,
+                IdLine = lt.IdLine,
+                numLine = GetNumLine(lt.IdLine),
+                Frequency = lt.Frequency,
+                DepartureSchedule = getSchedule(lt.StartTime, lt.EndTime, lt.Frequency)
+            };
+        }
+
+        public LineTrip AddLineTrip(int idLine, TimeSpan start, TimeSpan end, int f)
+        {
+            if (start > end || f < 0)
+                return null;
+            var id = dal.CreateLineTrip(new DO.LineTrip()
+            {
+                Active = true,
+                IdLine = idLine,
+                StartTime = start,
+                EndTime = end,
+                Frequency = f
+            });
+            return new LineTrip()
+            {
+                Frequency = f,
+                Id = id,
+                IdLine = idLine,
+                numLine = GetNumLine(idLine),
+                DepartureSchedule = getSchedule(start, end, f)
+            };
         }
         #endregion
     }

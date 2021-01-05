@@ -50,7 +50,6 @@ namespace DS
             initBusStops();
             LstConsecutiveStops = new List<ConsecutiveStops>();
             initConsecutiveStops();
-            
             BusOnTrips = new List<BusOnTrip>();
             LineTrips = new List<LineTrip>();
             Users = new List<User>

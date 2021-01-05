@@ -66,5 +66,12 @@ namespace BlApi
         void DeleteDriver(int id);
         void EditDriver(int id,string name,int seniority);
         #endregion
+
+        #region LineTrip
+        IEnumerable<LineTrip> GetLineTrips();
+        string GetNumLine(int idLine);
+        LineTrip AddLineTrip(int idLine, TimeSpan start, TimeSpan end,int f);
+        LineTrip UpdateLineSchedule(int idLine ,TimeSpan startTime, TimeSpan endTime, int f);
+        #endregion
     }
 }
