@@ -353,7 +353,7 @@ namespace PlGui
         {
 
             wSearchBus searchBus = new wSearchBus();
-            searchBus.Show();
+            searchBus.ShowDialog();
             new Thread(() =>
             {
 
@@ -393,7 +393,7 @@ namespace PlGui
         private void SearchStop_Click(object sender, RoutedEventArgs e)
         {
             wSearchStop searchStop = new wSearchStop();
-            searchStop.Show();
+            searchStop.ShowDialog();
 
             new Thread(() =>
             {
@@ -401,15 +401,28 @@ namespace PlGui
                 bool flag = true;
                 while (flag)
                 {
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        ListViewStations.SelectedItem = Stops.ToList().Find((BusStop) => BusStop.Code == searchStop.CodeStop);
-                        ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
+                    if (searchStop.itsNumber == true)
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            ListViewStations.SelectedItem = Stops.ToList().Find((BusStop) => BusStop.Code == searchStop.CodeStop);
+                            ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
 
-                        if (!searchStop.IsVisible)
-                            flag = false;
-                    });
+                            if (!searchStop.IsVisible)
+                                flag = false;
+                        });
+                      else
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            ListViewStations.SelectedItem = Stops.ToList().Find((BusStop) => BusStop.Name == searchStop.NameStop);
+                            ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
+
+                            if (!searchStop.IsVisible)
+                                flag = false;
+                        });
+
+
                     Thread.Sleep(500);
+                   
                 }
             }).Start();
 
@@ -418,7 +431,7 @@ namespace PlGui
         private void SearchLine_Click(object sender, RoutedEventArgs e)
         {
             wSearchLine searchLine = new wSearchLine();
-            searchLine.Show();
+            searchLine.ShowDialog();
             new Thread(() =>
             {
 

@@ -14,10 +14,12 @@ using System.Windows.Shapes;
 
 namespace PlGui
 {
-   
+
     public partial class wSearchStop : Window
     {
         public int CodeStop;
+        public string NameStop;
+        public bool itsNumber = false;
         public wSearchStop()
         {
             InitializeComponent();
@@ -25,10 +27,17 @@ namespace PlGui
 
         private void TbStopCode_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+
             if (!int.TryParse(TbStopCode.Text, out CodeStop))
-                return;
-            else CodeStop = int.Parse(TbStopCode.Text);
+            {
+                NameStop = TbStopCode.Text;
+                itsNumber = false;
+            }
+            else
+            {
+                CodeStop = int.Parse(TbStopCode.Text);
+                itsNumber = true;
+            }
         }
     }
 }

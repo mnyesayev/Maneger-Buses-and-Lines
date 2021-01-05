@@ -57,7 +57,7 @@
                    Grid.Column="4" Grid.Row="2"/>
         <ProgressBar x:Name="pb2fuel" Minimum="0" Maximum="1200" Value="{Binding Path= Fuel, Mode=OneWay,UpdateSourceTrigger=PropertyChanged }" 
                    Grid.Column="5" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,20" 
-                     Background="White" BorderBrush="Black" Foreground="#FF66E87E" />
+                     Background="White" BorderBrush="Black" Foreground="#FF66E87E" Height="30"/>
         <TextBlock x:Name="tb2fuel"  Text="{Binding ElementName=pb2fuel, Path=Value, StringFormat={}{0:0}km }" 
                    Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20"/>
         <TextBlock x:Name="tb1status" Text="Bus status:"
