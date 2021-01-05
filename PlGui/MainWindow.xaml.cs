@@ -437,5 +437,17 @@ namespace PlGui
                 }
             }).Start();
         }
+
+        private void ListViewBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(ListViewBuses.SelectedItem is PO.Bus)
+            {
+                wBusInfo busInfo = new wBusInfo(ibl);
+                busInfo.DataContext = ListViewBuses.SelectedItem as PO.Bus;
+                if ((ListViewBuses.SelectedItem as PO.Bus).Fuel < 1200)
+                    busInfo.bRefuel.IsEnabled = true;
+                busInfo.Show();
+            }
+        }
     }
 }

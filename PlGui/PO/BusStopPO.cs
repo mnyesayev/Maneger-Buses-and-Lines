@@ -17,6 +17,9 @@ namespace PO
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         int code;
+        string name;
+        string address;
+        string moreInfo;
         /// <summary>
         /// Represents the unique number of the "BusStop"
         /// </summary>
@@ -24,16 +27,17 @@ namespace PO
         /// <summary>
         /// Represents the name of Bus stop/station
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get { return name; } set { if (name != value) { name = value;OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the address of Bus stop/station
         /// </summary>
-        public string Address { get; set; }
+        public string Address { get { return address; } set { if (address != value) { address = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents more info about the stop/station 
         /// such as: Roof, disabled access, digital panel, etc.
         /// </summary>
-        public string MoreInfo { get; set; }
+        public string MoreInfo { get { return moreInfo; } set{ if (moreInfo != value) { moreInfo = value; OnPropertyChanged(); } }}
+
         /// <summary>
         /// Represents the lines that pass in the stop/station 
         /// </summary>

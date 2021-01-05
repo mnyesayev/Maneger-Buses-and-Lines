@@ -498,7 +498,7 @@
                         </Grid.RowDefinitions>
                         <ListView x:Name="ListViewBuses" Grid.Row="1" Grid.Column="1"
                                   Grid.ColumnSpan="5" Grid.RowSpan="6"
-                              ItemsSource="{Binding}" >
+                              ItemsSource="{Binding}" MouseDoubleClick="ListViewBuses_MouseDoubleClick" >
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>

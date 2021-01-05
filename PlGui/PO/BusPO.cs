@@ -1,14 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using BO;
 namespace PO
 {
-    class Bus
+    class Bus : INotifyPropertyChanged
     {
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+        uint id;
+        uint mileage;
+        int fuel;
+        uint lastCareMileage;
+        DateTime dateRoadAscent;
+        DateTime lastCare;
+        States state;
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law
@@ -18,7 +31,7 @@ namespace PO
         /// Represents the bus license number in string
         ///  by years as provided by law
         /// </summary>
-        public string PrintId 
+        public string PrintId
         {
             get
             {
@@ -61,7 +74,7 @@ namespace PO
         /// Represents the state of the bus
         /// </summary>
         //public States State { get; set; }
-
+        public States State { get { return state; } set { if (state != value) { state = value; OnPropertyChanged(); } } }
         public string Image { get; set; }
     }
 }
