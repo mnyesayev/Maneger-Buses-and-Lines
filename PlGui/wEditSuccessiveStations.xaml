@@ -51,7 +51,7 @@
             materialDesign:HintAssist.Hint="Select time" Is24Hours="{Binding IsChecked, ElementName=Is24HourCheckbox}"
             x:Name="WithSecondsTimePicker"
             WithSeconds="True"
-            Width="100"  Grid.Row="3" Grid.Column="3"/>
+            Width="100"  Grid.Row="4" Grid.Column="4" Margin="8,47,0,22.4" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>

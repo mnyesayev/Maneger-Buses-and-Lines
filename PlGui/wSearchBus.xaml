@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PlGui"
+        xmlns:local="clr-namespace:PlGui"  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Search Bus" Height="100" Width="300"
         FontWeight="Bold" FontFamily="Arial"
@@ -26,7 +26,8 @@
        
         <TextBox x:Name="TbBusId" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
                  FontWeight="Bold" VerticalAlignment="Stretch" 
-                 FontSize="15" TextChanged="TbBusId_TextChanged" />
+                 FontSize="15" TextChanged="TbBusId_TextChanged" 
+                 materialDesign:HintAssist.Hint="Enter Bus ID"/>
 
     </Grid>
 </Window>

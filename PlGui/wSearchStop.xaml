@@ -3,10 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PlGui"
+        xmlns:local="clr-namespace:PlGui"  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-       Title="Search Stop" Height="100" Width="300"
-        FontWeight="Bold" FontFamily="Arial"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="18"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Search Stop" Height="100" Width="300"
+        FontWeight="Bold"
         WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
@@ -26,7 +33,8 @@
 
         <TextBox x:Name="TbStopCode" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
                  FontWeight="Bold" VerticalAlignment="Stretch" 
-                 FontSize="15" TextChanged="TbStopCode_TextChanged" />
+                 FontSize="12" TextChanged="TbStopCode_TextChanged" 
+                 materialDesign:HintAssist.Hint="Enter code stop or name stop"/>
 
     </Grid>
 </Window>
