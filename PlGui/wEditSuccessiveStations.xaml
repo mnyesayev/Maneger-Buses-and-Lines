@@ -37,21 +37,63 @@
                    VerticalAlignment="Center" FontSize="22"
                    Foreground="Green" FontWeight="Bold"/>
 
-        <TextBlock x:Name="stop1succ" Grid.Column="6"
+        <Border x:Name="stop1succ" Grid.Column="6"
                    Grid.Row="3" Grid.RowSpan="3"
-                   Grid.ColumnSpan="2" Text="{Binding}"
-                   Background="Red"/>
+                   Grid.ColumnSpan="2" BorderThickness="2"
+                CornerRadius="5"
+                   BorderBrush="Green" Margin="2"/>
 
-        <TextBlock x:Name="stop2succ" Grid.Column="1"
+        <Border x:Name="stop2succ" Grid.Column="1"
                    Grid.Row="3" Grid.RowSpan="3"
-                   Grid.ColumnSpan="2" Text="{Binding}"
-                   Background="Red"/>
+                   Grid.ColumnSpan="2" 
+                   BorderThickness="2" CornerRadius="5"
+                BorderBrush="Green" Margin="2"/>
 
-        <materialDesign:TimePicker 
+        <materialDesign:TimePicker
             materialDesign:HintAssist.Hint="Select time" Is24Hours="{Binding IsChecked, ElementName=Is24HourCheckbox}"
-            x:Name="WithSecondsTimePicker"
+            x:Name="TimePicker"
             WithSeconds="True"
-            Width="100"  Grid.Row="4" Grid.Column="4" Margin="8,47,0,22.4" Grid.RowSpan="2"/>
+            Width="100"  Grid.Row="5" Grid.Column="4"/>
 
+        <TextBox x:Name="TBKmDis" Grid.Row="3" Grid.Column="4"
+                 Height="30" materialDesign:HintAssist.Hint="KM"
+                 />
+
+        <materialDesign:PackIcon Kind="ArrowLeft"
+                                 Grid.Row="3" Grid.Column="5"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Width="30" Height="50" />
+
+        <materialDesign:PackIcon Kind="ArrowLeft"
+                                 Grid.Row="3" Grid.Column="3"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Width="30" Height="50" />
+
+        <materialDesign:PackIcon Kind="ArrowLeft"
+                                 Grid.Row="5" Grid.Column="5"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Width="30" Height="50" />
+
+        <materialDesign:PackIcon Kind="ArrowLeft"
+                                 Grid.Row="5" Grid.Column="3"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Width="30" Height="50" />
+        <Button x:Name="saveSucc"
+                Grid.Row="8" Grid.Column="1"
+                Grid.ColumnSpan="2" Background="Green"
+                ToolTip="Save">
+            <materialDesign:PackIcon Kind="ContentSave" />
+        </Button>
+        <Button x:Name="cencelSucc"
+                Grid.Row="8" Grid.Column="6"
+                Grid.ColumnSpan="2" ToolTip="cancel"
+                Background="Green">
+            <materialDesign:PackIcon Kind="CloseCircleOutline"/>
+        </Button>
+        
     </Grid>
 </Window>
