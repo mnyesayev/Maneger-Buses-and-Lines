@@ -433,11 +433,11 @@ namespace Dal
             DataSource.LineTrips.Add(lineTrip);
             return DataSource.LineTrips[DataSource.LineTrips.Count - 1].Id;
         }
-        public LineTrip GetLineTrip(int idLine, TimeSpan startTime)
+        public LineTrip GetLineTrip(int id)
         {
             var lineTrip = DataSource.LineTrips.Find((LineTrip) =>
             {
-                return LineTrip.Active && LineTrip.IdLine == idLine && LineTrip.StartTime == startTime;
+                return LineTrip.Active && LineTrip.Id == id;
             });
             if (lineTrip == null)
                 return null;
@@ -462,6 +462,14 @@ namespace Dal
                 throw new LineTripExceptionDO(lineTrip.Id, "system not found the line trip");
             DataSource.LineTrips[index] = lineTrip;
         }
+
+        public void UpdateLineTrip(int id, Action<LineTrip> action)
+        {
+            int index = DataSource.LineTrips.FindIndex((LineTrip) => { return LineTrip.Active && LineTrip.Id == id; });
+            if (index == -1)
+                throw new LineTripExceptionDO(id, "system not found the line trip");
+            action(DataSource.LineTrips[index]);
+        }
         public void DeleteLineTrip(int idLine, TimeSpan startTime)
         {
             var index = DataSource.LineTrips.FindIndex((LineTrip) =>
@@ -472,9 +480,6 @@ namespace Dal
                 throw new LineTripExceptionDO(idLine, "the line trip is not exists");
             DataSource.LineTrips[index].Active = false;
         }
-
-       
-
         #endregion
     }
 }
