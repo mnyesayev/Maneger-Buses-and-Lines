@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PlGui"
+        xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"        xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -716,7 +716,7 @@
                         </ListView>
                         <ScrollViewer Grid.Row="1" Grid.Column="4" 
                                       Margin="10,0,0,10" Grid.RowSpan="6" Grid.ColumnSpan="4">
-                            <WebBrowser x:Name="webStop"/>
+                            <cefSharp:ChromiumWebBrowser x:Name="webStop" />
                         </ScrollViewer>
                         <ListView x:Name="ListViewLinesInStop" Grid.Row="1" Grid.Column="8"
                                   Grid.ColumnSpan="3" Grid.RowSpan="6"

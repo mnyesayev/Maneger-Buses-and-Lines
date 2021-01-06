@@ -548,7 +548,7 @@ namespace PlGui
                 stringB.Append($"{busStop.Latitude},{busStop.Longitude}");
                 try
                 {
-                    webStop.Navigate(stringB.ToString());
+                    webStop.Address = stringB.ToString();
                 }
                 catch (Exception ex)
                 { 
