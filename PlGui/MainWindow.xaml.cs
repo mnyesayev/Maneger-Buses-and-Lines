@@ -377,8 +377,10 @@ namespace PlGui
 
         private void AddStopLine_Click(object sender, RoutedEventArgs e)
         {
-            var addStopLine = new addStopLine(ibl);
-            addStopLine.DataContext = ListViewLines.SelectedItem;
+            var addStopLine = new addStopLine(ibl, Lines, ListViewStopsOfLine)
+            {
+                DataContext = ListViewLines.SelectedItem
+            };
             addStopLine.ShowDialog();
         }
 

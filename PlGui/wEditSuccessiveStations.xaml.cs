@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BlApi;
 namespace PlGui
 {
     /// <summary>
@@ -19,9 +19,23 @@ namespace PlGui
     /// </summary>
     public partial class wEditSuccessiveStations : Window
     {
-        public wEditSuccessiveStations()
+        IBL bl;
+        public wEditSuccessiveStations(IBL bl)
         {
             InitializeComponent();
+            this.bl = bl;
+        }
+
+        private void saveSucc_Click(object sender, RoutedEventArgs e)
+        {
+            if (TBKmDis.Text.Length == 0 || TimePicker.Text.Length == 0)
+                return;
+            if (TimeSpan.TryParse(TimePicker.Text, out TimeSpan time) && double.TryParse(TBKmDis.Text, out double dis))
+            {
+                bl.InsertDistanceAndTime(int.Parse(tbcode1.Text), int.Parse(tbcode2.Text), dis, time);
+                this.Close();
+            }
+            else { MessageBox.Show("Enter only valid values!!", "Save Error", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
     }
 }

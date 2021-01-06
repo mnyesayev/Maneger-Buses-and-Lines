@@ -35,6 +35,7 @@ namespace BlApi
                        MoreInfo = BusStop.MoreInfo,
                        LinesPassInStop = (BusStop.PassLines == true) ? GetLinesInStop(BusStop.Code) : default
                    }
+                   orderby newBusStop.Code
                    select newBusStop;
         }
         public Bus AddBus(Bus bus)
@@ -195,8 +196,12 @@ namespace BlApi
         public Line AddStopLine(int idLine, int codeStop, int index)
         {
             var st = dal.GetStopLine(idLine, codeStop);
-            var stopsInLine = dal.GetStopLinesBy((StopLine) => { return StopLine.IdLine == idLine; });
+            List<DO.StopLine> stopsInLine = new List<DO.StopLine>(
+                dal.GetStopLinesBy((StopLine) => StopLine.IdLine == idLine));
             if (st != null || stopsInLine == null)
+                return null;
+            var busStop = dal.GetBusStop(codeStop);
+            if (busStop == null)
                 return null;
             DO.StopLine curStop = null;
             if (index - 1 == stopsInLine.Count())
@@ -204,7 +209,7 @@ namespace BlApi
                 curStop = dal.GetStopLineByIndex(idLine, index - 1);
             }
             if (index <= stopsInLine.Count())
-                curStop = dal.GetStopLineByIndex(idLine, index - 1);
+                curStop = dal.GetStopLineByIndex(idLine, index);
             if (curStop == null)
                 return null;
             try
@@ -248,7 +253,7 @@ namespace BlApi
                 }
                 if (index != 1)
                 {
-                    var prev = stopsInLine.ElementAt(index - 1);
+                    var prev = stopsInLine.ElementAt(index - 2);
                     dal.AddStopLine(new DO.StopLine()
                     {
                         PrevStop = prev.CodeStop,
@@ -259,10 +264,10 @@ namespace BlApi
                     });
                     prev.NextStop = codeStop;
                     dal.UpdateStopLine(prev);
-                    for (int i = index; i < stopsInLine.Count(); i++)
+                    for (int i = index-1; i < stopsInLine.Count(); i++)
                     {
                         var t = stopsInLine.ElementAt(i);
-                        if (i == index)
+                        if (i == index-1)
                         {
                             dal.UpdateStopLine(t.IdLine, t.CodeStop, (StopLine) =>
                             {
@@ -286,6 +291,7 @@ namespace BlApi
             {
                 return null;
             }
+            dal.UpdateBusStop(codeStop, (BusStop) => BusStop.PassLines = true);
             return new Line()
             {
                 Area = (Areas)l.Area,

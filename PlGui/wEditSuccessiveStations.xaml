@@ -41,16 +41,21 @@
                    Grid.Row="3" Grid.RowSpan="3"
                    Grid.ColumnSpan="2" BorderThickness="2"
                 CornerRadius="5"
-                   BorderBrush="Green" Margin="2"/>
+                   BorderBrush="Green" Margin="2">
+            <TextBlock x:Name="tbcode1"/>
+        </Border>
 
         <Border x:Name="stop2succ" Grid.Column="1"
                    Grid.Row="3" Grid.RowSpan="3"
                    Grid.ColumnSpan="2" 
                    BorderThickness="2" CornerRadius="5"
-                BorderBrush="Green" Margin="2"/>
+                BorderBrush="Green" Margin="2">
+            <TextBlock x:Name="tbcode2"/>
+        </Border>
 
         <materialDesign:TimePicker
-            materialDesign:HintAssist.Hint="Select time" Is24Hours="{Binding IsChecked, ElementName=Is24HourCheckbox}"
+            materialDesign:HintAssist.Hint="Select time" 
+            Is24Hours="True"
             x:Name="TimePicker"
             WithSeconds="True"
             Width="100"  Grid.Row="5" Grid.Column="4"/>
@@ -85,7 +90,7 @@
         <Button x:Name="saveSucc"
                 Grid.Row="8" Grid.Column="1"
                 Grid.ColumnSpan="2" Background="Green"
-                ToolTip="Save">
+                ToolTip="Save" Click="saveSucc_Click" >
             <materialDesign:PackIcon Kind="ContentSave" />
         </Button>
         <Button x:Name="cencelSucc"

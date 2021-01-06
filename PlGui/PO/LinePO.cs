@@ -17,10 +17,14 @@ namespace PO
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+        ObservableCollection<StopLine> stopsInLine = new ObservableCollection<StopLine>();
+
         string numLine;
         Agency codeAgency;
         Areas area;
         string moreInfo;
+        string first;
+        string last;
         /// <summary>
         /// Represents the inner unique number of the "Line"
         /// </summary>
@@ -40,14 +44,36 @@ namespace PO
         /// <summary>
         /// Represents all stops in the Line
         /// </summary>
-        public ObservableCollection<StopLine> StopsInLine { get; } = new ObservableCollection<StopLine>();
+        public ObservableCollection<StopLine> StopsInLine { get { return stopsInLine; } set { stopsInLine = new ObservableCollection<StopLine>(value); } }
         /// <summary>
         /// Represents the more info of about the Line
         /// </summary>
         public string MoreInfo { get { return moreInfo; } set { if (moreInfo != value) { moreInfo = value; OnPropertyChanged(); } } }
 
-        public string NameFirstLineStop { get { return StopsInLine[0].Name; } }
+        public string NameFirstLineStop
+        {
+            get { return StopsInLine[0].Name; }
+            set
+            {
+                if (value != first)
+                {
+                    first = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-        public string NameLastLineStop { get { return StopsInLine[StopsInLine.Count - 1].Name; } }
+        public string NameLastLineStop
+        {
+            get { return StopsInLine[StopsInLine.Count - 1].Name; }
+            set
+            {
+                if (value != last)
+                {
+                    last = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
     }
 }
