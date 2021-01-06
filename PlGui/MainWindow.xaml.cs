@@ -26,7 +26,7 @@ namespace PlGui
     /// </summary>
     public partial class MainWindow : Window
     {
-        public IBL ibl = BlFactory.GetBL("1");
+        public IBL bl = BlFactory.GetBL("1");
         ObservableCollection<PO.BusStop> Stops = new ObservableCollection<PO.BusStop>();
         ObservableCollection<PO.Bus> buses = new ObservableCollection<PO.Bus>();
         ObservableCollection<PO.Line> Lines = new ObservableCollection<PO.Line>();
@@ -39,26 +39,26 @@ namespace PlGui
             ListViewStations.DataContext = Stops;
             new Thread(() =>
             {
-                foreach (var item in ibl.GetBusStops())
+                foreach (var item in bl.GetBusStops())
                 {
                     this.Dispatcher.Invoke(() => Stops.Add(new PO.BusStop()));
                     Cloning.DeepCopyTo(item, Stops[Stops.Count - 1]);
                 }
             }).Start();
-            foreach (var item in ibl.GetBuses())
+            foreach (var item in bl.GetBuses())
             {
                 buses.Add(new PO.Bus());
                 Cloning.DeepCopyTo(item, buses[buses.Count - 1]);
             }
             ListViewBuses.DataContext = buses;
 
-            foreach (var item in ibl.GetLines())
+            foreach (var item in bl.GetLines())
             {
                 Lines.Add(new PO.Line());
                 Cloning.DeepCopyTo(item, Lines[Lines.Count - 1]);
             }
             ListViewLines.DataContext = Lines;
-            foreach (var item in ibl.GetDrivers())
+            foreach (var item in bl.GetDrivers())
             {
                 drivers.Add(new BO.Driver());
                 Cloning.DeepCopyTo(item, drivers[drivers.Count - 1]);
@@ -250,7 +250,7 @@ namespace PlGui
         {
             if (tbUserName.Text.Length == 0 || tbpassword.Password.Length == 0)
                 return;
-            User user = ibl.GetUser(tbUserName.Text, tbpassword.Password);
+            User user = bl.GetUser(tbUserName.Text, tbpassword.Password);
             if (user != null)
             {
                 if (user.Authorization == Authorizations.User)
@@ -267,11 +267,7 @@ namespace PlGui
                         {
                             loudGrid.Visibility = Visibility.Hidden;
                             Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
-                            Application.Current.MainWindow.Height = 640;
-                            Application.Current.MainWindow.Width = 850;
-                            Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                            Application.Current.MainWindow.Top = 100;
-                            Application.Current.MainWindow.Left = 200;
+                            Application.Current.MainWindow.WindowState = WindowState.Maximized;
                             accountAdmin.ToolTip = user.FirstName;
                             adminGrid.Visibility = Visibility.Visible;
                         });
@@ -298,6 +294,7 @@ namespace PlGui
                 PO.Line line = (PO.Line)ListViewLines.SelectedItem;
                 ListViewStopsOfLine.DataContext = line.StopsInLine;
                 ListViewStopsOfLine.Visibility = Visibility.Visible;
+                AddStopLine.Visibility = Visibility.Visible;
             }
             return;
         }
@@ -309,7 +306,18 @@ namespace PlGui
 
         private void DeleteLine_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Still under construction", "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
+            PO.Line l = (PO.Line)(sender as Button).DataContext;
+
+            if (MessageBox.Show($"Are you sure to delete Line {l.NumLine}?"
+                , "Delete Line", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                return;
+            if (bl.DeleteLine(l.IdLine))
+            {
+                Lines.Remove(l);
+                ListViewStopsOfLine.Visibility = Visibility.Hidden;
+                AddStopLine.Visibility = Visibility.Hidden;
+            }
+
         }
 
         private void ChangeLine_Click(object sender, RoutedEventArgs e)
@@ -320,8 +328,20 @@ namespace PlGui
         private void AddBus_Click(object sender, RoutedEventArgs e)
         {
             wAddBus addBus = new wAddBus();
+            Bus newBus = null;
             addBus.ShowDialog();
-
+            try
+            {
+                newBus = bl.AddBus(addBus.NewBus);
+            }
+            catch (AddException ex)
+            {
+                MessageBox.Show(ex.Message, "Add Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            var temp = new PO.Bus();
+            Cloning.DeepCopyTo(newBus, temp);
+            buses.Add(temp);
         }
 
         private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -335,7 +355,7 @@ namespace PlGui
             delbus.ShowDialog();
             try
             {
-                ibl.DeleteBus((int)delbus.IdDelbus);
+                bl.DeleteBus((int)delbus.IdDelbus);
                 buses.Remove(buses.ToList().Find((Bus) => Bus.Id == delbus.IdDelbus));
             }
             catch (DeleteException ex)
@@ -377,7 +397,7 @@ namespace PlGui
 
         private void AddStopLine_Click(object sender, RoutedEventArgs e)
         {
-            var addStopLine = new addStopLine(ibl, Lines, ListViewStopsOfLine)
+            var addStopLine = new addStopLine(bl, Lines, ListViewStopsOfLine)
             {
                 DataContext = ListViewLines.SelectedItem
             };
@@ -386,7 +406,7 @@ namespace PlGui
 
         private void SearchDriver_Click(object sender, RoutedEventArgs e)
         {
-          
+
             uint id = 123456789;
             ListViewDrivers.SelectedItem = drivers.ToList().Find((Driver) => Driver.Id == id);
             ListViewDrivers.ScrollIntoView(ListViewDrivers.SelectedItem);
@@ -458,12 +478,84 @@ namespace PlGui
         {
             if (ListViewBuses.SelectedItem is PO.Bus)
             {
-                wBusInfo busInfo = new wBusInfo(ibl);
+                wBusInfo busInfo = new wBusInfo(bl);
                 busInfo.DataContext = ListViewBuses.SelectedItem as PO.Bus;
                 if ((ListViewBuses.SelectedItem as PO.Bus).Fuel < 1200)
                     busInfo.bRefuel.IsEnabled = true;
                 busInfo.Show();
             }
+        }
+
+        private void DeleteStopLine_Click(object sender, RoutedEventArgs e)
+        {
+            var StopLine = (PO.StopLine)(sender as Button).DataContext;
+            BO.Line upline;
+            try
+            {
+                upline = bl.DeleteStopLine(StopLine.IdLine, StopLine.CodeStop, StopLine.NumStopInLine);
+                if (upline == null)
+                    return;
+            }
+            catch (DeleteException ex)
+            {
+                MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            int index = Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
+            var temp = new PO.Line();
+            Cloning.DeepCopyTo(upline, temp);
+            Lines[index].StopsInLine = temp.StopsInLine;
+            Lines[index].NameFirstLineStop = temp.NameFirstLineStop;
+            Lines[index].NameLastLineStop = temp.NameLastLineStop;
+            ListViewStopsOfLine.DataContext = Lines[index].StopsInLine;
+        }
+
+        private void tbUserName_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                tbpassword.Focus();
+
+        }
+
+        private void tbpassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                blogInEnter_Click(sender, null);
+        }
+
+        private void EditDAT_Click(object sender, RoutedEventArgs e)
+        {
+            PO.StopLine sl = (PO.StopLine)(sender as Button).DataContext;
+            wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
+            wEdit.tbcode1.Text = sl.CodeStop.ToString();
+            wEdit.tbcode2.Text = sl.NextStop.ToString();
+            wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString();
+            wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
+            wEdit.ShowDialog();
+        }
+
+        private void ListViewStations_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (ListViewStations.SelectedItem is PO.BusStop)
+            {
+                PO.BusStop busStop = (PO.BusStop)ListViewStations.SelectedItem;
+                if (busStop.LinesPassInStop.Count != 0)
+                {
+                    ListViewLinesInStop.DataContext = busStop.LinesPassInStop;
+                    ListViewLinesInStop.Visibility = Visibility.Visible;
+                }
+                StringBuilder stringB = new StringBuilder("https://www.google.co.il/maps/place/");
+                stringB.Append($"{busStop.Latitude},{busStop.Longitude}");
+                try
+                {
+                    webStop.Navigate(stringB.ToString());
+                }
+                catch (Exception ex)
+                { 
+                    
+                }
+            }
+            return;
         }
     }
 }

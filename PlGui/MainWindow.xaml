@@ -16,6 +16,7 @@
         Title="Travel and go Ltd." Height="350" Width="500" Icon="images\bus.png"
         WindowStartupLocation="CenterScreen" 
         ResizeMode="CanMinimize" Closing="MainWindow1_Closing">
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="images\backbus.jpg"/>
@@ -120,7 +121,7 @@
                  Grid.ColumnSpan="4" BorderThickness="2" TextWrapping="WrapWithOverflow"
                  BorderBrush="{x:Null}" Margin="0,0,0,40" Grid.RowSpan="2"
                  materialDesign:HintAssist.Hint="Username"
-                 Background="#FFF6F6F6" />
+                 Background="#FFF6F6F6" KeyUp="tbUserName_KeyUp"/>
 
             <TextBlock x:Name="tBPassword" Text="Password:" Grid.Column="1" 
                    Grid.Row="4" Grid.RowSpan="2" FontSize="20" Grid.ColumnSpan="2" 
@@ -130,7 +131,7 @@
                  Grid.ColumnSpan="4" BorderThickness="2" Grid.RowSpan="2"
                  BorderBrush="{x:Null}" Margin="0,20,0,20"
                  Background="#FFF6F6F6"  materialDesign:HintAssist.Hint="Password"
-                 materialDesign:TextFieldAssist.HasClearButton="True"
+                 materialDesign:TextFieldAssist.HasClearButton="True" KeyUp="tbpassword_KeyUp"
                   />
 
             <Button x:Name="blogInBack" Content="Go back" HorizontalAlignment="Center"
@@ -460,14 +461,14 @@
                 Travel and go
             </TextBlock>
             <!--#endregion-->
-            
+
             <!--#region tab control-->
             <TabControl Name="adminTabControl" TabStripPlacement="Left" Grid.Row="2"
                         Grid.Column="1" Grid.ColumnSpan="8" BorderThickness="0"
                         Grid.RowSpan="6" 
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
                         materialDesign:ColorZoneAssist.Mode="PrimaryDark">
-               <!--#region tab control buses-->
+                <!--#region tab control buses-->
                 <TabItem Header="Buses" 
                     Width="80" HorizontalAlignment="Left"
                          Style="{StaticResource MaterialDesignNavigationRailTabItem}">
@@ -516,7 +517,7 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                       
+
                         <Button x:Name="AddBus" Grid.Column="1" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Add Bus" Click="AddBus_Click">
@@ -540,7 +541,7 @@
                     </Grid>
                 </TabItem>
                 <!--#endregion-->
-                
+
                 <!--#region tab control lines-->
                 <TabItem Header="Lines"
                          Width="80" HorizontalAlignment="Left"
@@ -587,6 +588,17 @@
                                     DisplayMemberBinding="{Binding Path=NameFirstLineStop,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                     <GridViewColumn x:Name="gvcEndStop" Header="Last Stop" Width="auto"
                                     DisplayMemberBinding="{Binding Path=NameLastLineStop,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="Delete" Width="auto">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="DeleteLine" 
+                                                    Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                                    ToolTip="Delete line" Click="DeleteLine_Click" >
+                                                    <materialDesign:PackIcon Kind="Delete"/>
+                                                </Button>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -613,6 +625,24 @@
                                                  DisplayMemberBinding="{Binding AvregeDriveTimeToNext,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <GridViewColumn Header="Distance" Width="auto"
                                                  DisplayMemberBinding="{Binding DistanceToNext, StringFormat={}{0:F2}km,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="Options" Width="auto">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button x:Name="DeleteStopLine" 
+                                                    Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                                    ToolTip="Delete Stop Line" Click="DeleteStopLine_Click" >
+                                                        <materialDesign:PackIcon Kind="Delete"/>
+                                                    </Button>
+                                                    <Button x:Name="ChangeStopLine" Grid.Column="3" Grid.Row="7"
+                                                     Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                                     ToolTip="Change Stop Line details" Click="EditDAT_Click" >
+                                                        <materialDesign:PackIcon Kind="Pencil"/>
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -621,16 +651,8 @@
                                  ToolTip="Add line" Click="AddLine_Click">
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
-                        <Button x:Name="DeleteLine" Grid.Column="2" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Delete line" Click="DeleteLine_Click" >
-                            <materialDesign:PackIcon Kind="Delete"/>
-                        </Button>
-                        <Button x:Name="ChangeLine" Grid.Column="3" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Change line details" Click="ChangeLine_Click">
-                            <materialDesign:PackIcon Kind="Pencil"/>
-                        </Button>
+                       
+                       
                         <Button x:Name="SearchLine" Grid.Column="4" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search Line" Click="SearchLine_Click" >
@@ -638,23 +660,13 @@
                         </Button>
                         <Button x:Name="AddStopLine" Grid.Column="7" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Add stop line" Click="AddStopLine_Click" >
-                            <materialDesign:PackIcon Kind="Plus"/>
-                        </Button>
-                        <Button x:Name="DeleteStopLine" Grid.Column="8" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Delete stop line"  >
-                            <materialDesign:PackIcon Kind="Delete"/>
-                        </Button>
-                        <Button x:Name="ChangeStopLine" Grid.Column="9" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Change stop line details" >
-                            <materialDesign:PackIcon Kind="Pencil"/>
+                                 ToolTip="Add stop line" Visibility="Hidden" Click="AddStopLine_Click" >
+                            <materialDesign:PackIcon Kind="Plus" />
                         </Button>
                     </Grid>
                 </TabItem>
                 <!--#endregion-->
-                
+
                 <!--#region tab control stations -->
                 <TabItem Header="Stations"
                          Width="80" HorizontalAlignment="Left"
@@ -668,7 +680,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="10"/>
@@ -685,8 +697,8 @@
                             <RowDefinition Height="10"/>
                         </Grid.RowDefinitions>
                         <ListView x:Name="ListViewStations" Grid.Row="1" Grid.Column="1"
-                                  Grid.ColumnSpan="6" Grid.RowSpan="6"
-                              ItemsSource="{Binding}" MouseUp="ListViewLines_MouseUp">
+                                  Grid.ColumnSpan="2" Grid.RowSpan="6"
+                              ItemsSource="{Binding}" MouseUp="ListViewStations_MouseUp">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
@@ -695,21 +707,21 @@
                                             <Setter Property="BorderThickness" Value="0"></Setter>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
-                                    <GridViewColumn x:Name="gvcCodeStop" Header="Code" Width="auto"  
+                                    <GridViewColumn x:Name="gvcCodeStop" Header="Code" Width="80"  
                                     DisplayMemberBinding="{Binding Path=Code,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                                     <GridViewColumn x:Name="gvcNameStop" Header="Name" Width="auto"
                                     DisplayMemberBinding="{Binding Path=Name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn x:Name="gvcAddressStop" Header="Adress" Width="auto"
-                                    DisplayMemberBinding="{Binding Path=Address,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <ProgressBar Orientation="Vertical" Height="10" 
-                                     Grid.Column="7" Grid.Row="1" Grid.RowSpan="6"/>
+                        <ScrollViewer Grid.Row="1" Grid.Column="4" 
+                                      Margin="10,0,0,10" Grid.RowSpan="6" Grid.ColumnSpan="4">
+                            <WebBrowser x:Name="webStop"/>
+                        </ScrollViewer>
                         <ListView x:Name="ListViewLinesInStop" Grid.Row="1" Grid.Column="8"
                                   Grid.ColumnSpan="3" Grid.RowSpan="6"
                                   ItemsSource="{Binding}"
-                                  Visibility="Visible">
+                                  Visibility="Hidden">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
@@ -718,11 +730,22 @@
                                             <Setter Property="BorderThickness" Value="0"/>
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>
-
-                                    <GridViewColumn Header="Code" Width="auto"
-                                                 DisplayMemberBinding="{Binding CodeStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn Header="Name" Width="auto"
-                                                 DisplayMemberBinding="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="Lines in stop" Width="auto">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button  Content="{Binding NumLine, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             BorderThickness="2" BorderBrush="Purple" Width="80" Height="40" Margin="5,0,0,0"/>
+                                                    <TextBlock  Text="{Binding NameFirstLineStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="5,0,0,0" VerticalAlignment="Center" />
+                                                    <materialDesign:PackIcon Kind="ArrowLeftRight" Margin="1" VerticalAlignment="Center" />
+                                                    <TextBlock  Text="{Binding NameLastLineStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                                    
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -731,17 +754,8 @@
                                  ToolTip="Add Stop">
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
-                        <Button x:Name="DeleteStop" Grid.Column="2" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Delete Stop" >
-                            <materialDesign:PackIcon Kind="Delete"/>
-                        </Button>
-                        <Button x:Name="ChangeStop" Grid.Column="3" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Change Stop details" >
-                            <materialDesign:PackIcon Kind="Pencil"/>
-                        </Button>
-                        <Button x:Name="SearchStop" Grid.Column="4" Grid.Row="7"
+                   
+                        <Button x:Name="SearchStop" Grid.Column="2" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search Stop" Click="SearchStop_Click" >
                             <materialDesign:PackIcon Kind="Magnify"/>
@@ -749,7 +763,7 @@
                     </Grid>
                 </TabItem>
                 <!--#endregion-->
-                
+
                 <!--#region tab control drivers-->
                 <TabItem Header="Drivers"
                          Width="80" HorizontalAlignment="Left"
@@ -822,7 +836,7 @@
                             <materialDesign:PackIcon Kind="AccountSearch"/>
                         </Button>
                     </Grid>
-                   
+
                 </TabItem>
                 <!--#endregion-->
             </TabControl>

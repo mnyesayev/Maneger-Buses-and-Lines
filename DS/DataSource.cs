@@ -60,8 +60,8 @@ namespace DS
                     Authorization = Authorizations.Admin,
                     Birthday = DateTime.Today,
                     FirstName = "Admin",
-                    UserName = "123456",
-                    Password = "123456",
+                    UserName = "1",
+                    Password = "1",
                     Phone = "052-1234567"
                 }
             };

@@ -13,6 +13,7 @@ namespace BlApi
         readonly IDal dal = DalFactory.GetDal();
 
         #region BusStop
+
         public void DeleteBusStop(int code)
         {
             try
@@ -29,7 +30,8 @@ namespace BlApi
             return from BusStop in dal.GetStops().AsParallel()
                    let newBusStop = new BusStop
                    {
-                       Address = BusStop.Address,
+                       Latitude = BusStop.Latitude,
+                       Longitude=BusStop.Longitude,
                        Code = BusStop.Code,
                        Name = BusStop.Name,
                        MoreInfo = BusStop.MoreInfo,
@@ -38,10 +40,7 @@ namespace BlApi
                    orderby newBusStop.Code
                    select newBusStop;
         }
-        public Bus AddBus(Bus bus)
-        {
-            throw new NotImplementedException();
-        }
+
         public IEnumerable<Line> GetLinesInStop(int code)
         {
             return from Line in GetLines()
@@ -264,10 +263,10 @@ namespace BlApi
                     });
                     prev.NextStop = codeStop;
                     dal.UpdateStopLine(prev);
-                    for (int i = index-1; i < stopsInLine.Count(); i++)
+                    for (int i = index - 1; i < stopsInLine.Count(); i++)
                     {
                         var t = stopsInLine.ElementAt(i);
-                        if (i == index-1)
+                        if (i == index - 1)
                         {
                             dal.UpdateStopLine(t.IdLine, t.CodeStop, (StopLine) =>
                             {
@@ -306,22 +305,17 @@ namespace BlApi
         public Line DeleteStopLine(int idLine, int codeStop, int index)
         {
             var st = dal.GetStopLine(idLine, codeStop);
-            var stopsInLine = dal.GetStopLinesBy((StopLine) =>
-            { return StopLine.IdLine == idLine; });
-            if (st == null || stopsInLine == null)
+            var stopsInLine = new List<DO.StopLine>(dal.GetStopLinesBy((StopLine) =>
+            StopLine.IdLine == idLine));
+            if (st == null || stopsInLine.Count == 0)
                 return null;
             if (stopsInLine.Count() == 2)
-                throw new DeleteException("StopLine", "You can not delete the station of the line");
-            try
+                throw new DeleteException("StopLine",codeStop.ToString(), "You can not delete the line station \nConsider deleting the line instead!");
+            if (index > 1)
             {
-                if (index != 1)
-                {
-                    var d1 = GetDistance(st.PrevStop, st.NextStop);
-                }
-            }
-            catch (ConsecutiveStopsException ex)
-            {
-                throw new ConsecutiveStopsException(st.PrevStop, st.CodeStop, "No time and distance available", ex);
+                var distance = GetDistance(st.PrevStop, st.CodeStop) + GetDistance(st.CodeStop, st.NextStop);
+                var time = GetTime(st.PrevStop, st.CodeStop) + GetTime(st.CodeStop, st.NextStop);
+                InsertDistanceAndTime(st.PrevStop, st.NextStop, distance, time);
             }
             var l = dal.GetLine(idLine);
             try
@@ -353,20 +347,21 @@ namespace BlApi
                 if (index == stopsInLine.Count())
                 {
                     dal.UpdateLine(idLine, (Line) =>
-                    { Line.CodeFirstStop = stopsInLine.ElementAt(stopsInLine.Count() - 2).CodeStop; });
-                    dal.UpdateStopLine(idLine, stopsInLine.ElementAt(stopsInLine.Count() - 2).CodeStop,
-                        (StopLine) => st.NextStop = 0);
+                    { Line.CodeFirstStop = stopsInLine.ElementAt(index- 2).CodeStop; });
+                    dal.UpdateStopLine(idLine, stopsInLine.ElementAt(index - 2).CodeStop,
+                        (StopLine) => StopLine.NextStop = 0);
                     dal.DeleteStopLine(idLine, codeStop);
                 }
                 if (index != 1 && index != stopsInLine.Count())
                 {
                     var prev = stopsInLine.ElementAt(index - 2);
                     prev.NextStop = st.NextStop;
+                    dal.UpdateStopLine(prev);
                     dal.DeleteStopLine(idLine, codeStop);
-                    for (int i = index + 1; i < stopsInLine.Count(); i++)
+                    for (int i = index; i < stopsInLine.Count(); i++)
                     {
                         var t = stopsInLine.ElementAt(i);
-                        if (i == index + 1)
+                        if (i == index)
                         {
                             dal.UpdateStopLine(t.IdLine, t.CodeStop, (StopLine) =>
                             {
@@ -541,6 +536,25 @@ namespace BlApi
         }
 
         #region Bus
+        public Bus AddBus(int id, DateTime dra, Action<Bus> action)
+        {
+            var temp = new Bus() { Id = (uint)id, DateRoadAscent = dra };
+            throw new NotImplementedException();
+        }
+        public Bus AddBus(Bus bus)
+        {
+            try
+            {
+                DO.Bus busDo = new DO.Bus();
+                Bl.Cloning.CopyPropertiesTo(bus, busDo);
+                dal.CreateBus(busDo);
+            }
+            catch (DO.BusExceptionDO ex)
+            {
+                throw new AddException("Bus", bus.Id.ToString(), $"the bus {ex.Id} already exits", ex);
+            }
+            return bus;
+        }
         public IEnumerable<Bus> GetBuses()
         {
             return from Bus in dal.GetBuses()
@@ -765,6 +779,8 @@ namespace BlApi
                 DepartureSchedule = getSchedule(start, end, f)
             };
         }
+
+
         #endregion
     }
 }

@@ -23,7 +23,7 @@ namespace Dal
         #region Bus
         public void CreateBus(Bus bus)
         {
-            int index = DataSource.Buses.FindIndex((Bus) => { return Bus.Id == Bus.Id; });
+            int index = DataSource.Buses.FindIndex((Bus) => { return Bus.Id == bus.Id; });
             if (index == -1)
             {
                 DataSource.Buses.Add(bus);

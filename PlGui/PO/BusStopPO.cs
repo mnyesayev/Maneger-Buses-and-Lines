@@ -29,9 +29,13 @@ namespace PO
         /// </summary>
         public string Name { get { return name; } set { if (name != value) { name = value;OnPropertyChanged(); } } }
         /// <summary>
-        /// Represents the address of Bus stop/station
+        /// Represents the longitude location
         /// </summary>
-        public string Address { get { return address; } set { if (address != value) { address = value; OnPropertyChanged(); } } }
+        public double Longitude { get; set; }
+        /// <summary>
+        /// Represents the latitude location
+        /// </summary>
+        public double Latitude { get; set; }
         /// <summary>
         /// Represents more info about the stop/station 
         /// such as: Roof, disabled access, digital panel, etc.

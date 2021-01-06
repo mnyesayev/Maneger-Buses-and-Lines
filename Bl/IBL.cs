@@ -12,6 +12,7 @@ namespace BlApi
         IEnumerable<Bus> GetBuses();
         void DeleteBus(int id);
         Bus AddBus(Bus bus);
+        Bus AddBus(int id, DateTime dra,Action<Bus> action);
         Bus Care();
         Bus Fuel();
         /// <summary>

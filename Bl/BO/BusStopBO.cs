@@ -17,9 +17,13 @@ namespace BO
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Represents the address of Bus stop/station
+        /// Represents the longitude location
         /// </summary>
-        public string Address { get; set; }
+        public double Longitude { get; set; }
+        /// <summary>
+        /// Represents the latitude location
+        /// </summary>
+        public double Latitude { get; set; }
         /// <summary>
         /// Represents more info about the stop/station 
         /// such as: Roof, disabled access, digital panel, etc.

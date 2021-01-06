@@ -57,6 +57,8 @@ namespace PlGui
                 wEditSuccessive.tbcode1.Text = ex.Code1.ToString();
                 wEditSuccessive.tbcode2.Text = ex.Code2.ToString();
                 wEditSuccessive.ShowDialog();
+                if (wEditSuccessive.IsVisible == false)
+                    return;
             }
             while (isSuccessed == false)
             {
@@ -72,6 +74,8 @@ namespace PlGui
                     wEditSuccessive.tbcode1.Text = ex.Code1.ToString();
                     wEditSuccessive.tbcode2.Text = ex.Code2.ToString();
                     wEditSuccessive.ShowDialog();
+                    if (wEditSuccessive.IsVisible == false)
+                        return;
                 }
             }
             int index=Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
