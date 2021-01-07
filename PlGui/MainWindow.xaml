@@ -714,8 +714,8 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <ScrollViewer Grid.Row="1" Grid.Column="4" 
-                                      Margin="10,0,0,10" Grid.RowSpan="6" Grid.ColumnSpan="4">
+                        <ScrollViewer Grid.Row="1" Grid.Column="3" 
+                                      Margin="10,0,0,10" Grid.RowSpan="6" Grid.ColumnSpan="5">
                             <cefSharp:ChromiumWebBrowser x:Name="webStop" />
                         </ScrollViewer>
                         <ListView x:Name="ListViewLinesInStop" Grid.Row="1" Grid.Column="8"
