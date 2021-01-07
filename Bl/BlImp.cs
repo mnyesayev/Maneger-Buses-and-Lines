@@ -13,7 +13,19 @@ namespace BlApi
         readonly IDal dal = DalFactory.GetDal();
 
         #region BusStop
-
+        public BusStop GetStop(int code)
+        {
+            var busStop=dal.GetBusStop(code);
+            return new BusStop()
+            {
+                Latitude = busStop.Latitude,
+                Longitude = busStop.Longitude,
+                Code = busStop.Code,
+                Name = busStop.Name,
+                MoreInfo = busStop.MoreInfo,
+                LinesPassInStop = (busStop.PassLines == true) ? GetLinesInStop(busStop.Code) : default
+            };
+        }
         public void DeleteBusStop(int code)
         {
             try
@@ -779,8 +791,6 @@ namespace BlApi
                 DepartureSchedule = getSchedule(start, end, f)
             };
         }
-
-
         #endregion
     }
 }

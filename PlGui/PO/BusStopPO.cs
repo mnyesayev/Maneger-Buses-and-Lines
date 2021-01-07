@@ -18,8 +18,8 @@ namespace PO
         }
         int code;
         string name;
-        string address;
         string moreInfo;
+        ObservableCollection<Line> lines = new ObservableCollection<Line>();
         /// <summary>
         /// Represents the unique number of the "BusStop"
         /// </summary>
@@ -45,7 +45,7 @@ namespace PO
         /// <summary>
         /// Represents the lines that pass in the stop/station 
         /// </summary>
-        public ObservableCollection<Line> LinesPassInStop { get; }= new ObservableCollection<Line>();
+        public ObservableCollection<Line> LinesPassInStop { get { return lines; }set { lines = new ObservableCollection<Line>(value); } }
     }
 
 }

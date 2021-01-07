@@ -501,20 +501,24 @@ namespace PlGui
                 MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            int index = Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
+            var upstop=bl.GetStop(StopLine.CodeStop);
+            int indexLine = Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
+            int indexStop=Stops.ToList().FindIndex((BusStop)=>BusStop.Code==StopLine.CodeStop);
             var temp = new PO.Line();
+            var temp2 = new PO.BusStop();
             Cloning.DeepCopyTo(upline, temp);
-            Lines[index].StopsInLine = temp.StopsInLine;
-            Lines[index].NameFirstLineStop = temp.NameFirstLineStop;
-            Lines[index].NameLastLineStop = temp.NameLastLineStop;
-            ListViewStopsOfLine.DataContext = Lines[index].StopsInLine;
+            Cloning.DeepCopyTo(upstop, temp2);
+            Lines[indexLine].StopsInLine = temp.StopsInLine;
+            Lines[indexLine].NameFirstLineStop = temp.NameFirstLineStop;
+            Lines[indexLine].NameLastLineStop = temp.NameLastLineStop;
+            ListViewStopsOfLine.DataContext = Lines[indexLine].StopsInLine;
+            Stops[indexStop].LinesPassInStop = temp2.LinesPassInStop;
         }
 
         private void tbUserName_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
                 tbpassword.Focus();
-
         }
 
         private void tbpassword_KeyUp(object sender, KeyEventArgs e)
@@ -529,7 +533,7 @@ namespace PlGui
             wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
             wEdit.tbcode1.Text = sl.CodeStop.ToString();
             wEdit.tbcode2.Text = sl.NextStop.ToString();
-            wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString();
+            wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
             wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
             wEdit.ShowDialog();
         }
@@ -544,13 +548,17 @@ namespace PlGui
                     ListViewLinesInStop.DataContext = busStop.LinesPassInStop;
                     ListViewLinesInStop.Visibility = Visibility.Visible;
                 }
+                if(busStop.LinesPassInStop.Count == 0)
+                {
+                    ListViewLinesInStop.Visibility = Visibility.Hidden;
+                }
                 StringBuilder stringB = new StringBuilder("https://www.google.co.il/maps/place/");
                 stringB.Append($"{busStop.Latitude},{busStop.Longitude}");
                 try
                 {
                     webStop.Address = stringB.ToString();
                 }
-                catch (Exception ex)
+                catch (Exception )
                 { 
                     
                 }
