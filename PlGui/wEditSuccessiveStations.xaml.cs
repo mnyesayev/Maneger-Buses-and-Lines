@@ -20,6 +20,7 @@ namespace PlGui
     public partial class wEditSuccessiveStations : Window
     {
         IBL bl;
+        public bool IsSave { get;private set; }
         public wEditSuccessiveStations(IBL bl)
         {
             InitializeComponent();
@@ -33,9 +34,16 @@ namespace PlGui
             if (TimeSpan.TryParse(TimePicker.Text, out TimeSpan time) && double.TryParse(TBKmDis.Text, out double dis))
             {
                 bl.InsertDistanceAndTime(int.Parse(tbcode1.Text), int.Parse(tbcode2.Text), dis, time);
+                IsSave = true;
                 this.Close();
             }
             else { MessageBox.Show("Enter only valid values!!", "Save Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+        }
+
+        private void cencelSucc_Click(object sender, RoutedEventArgs e)
+        {
+            IsSave=false;
+            this.Close();
         }
     }
 }

@@ -24,6 +24,7 @@ namespace PlGui
         IBL bl;
         ObservableCollection<PO.Line> Lines;
         ListView ListViewStops;
+        public bool IsSuccessed { get; private set; }
         public addStopLine(IBL bl,ObservableCollection<PO.Line> lines,ListView listStops)
         {
             InitializeComponent();
@@ -38,7 +39,7 @@ namespace PlGui
                 return;
 
             var idLine = (this.DataContext as PO.Line).IdLine;
-            bool isSuccessed = false;
+            IsSuccessed = false;
             BO.Line upline = null;
             try
             {
@@ -49,7 +50,7 @@ namespace PlGui
                     MessageBox.Show($"stop {code} not exits in system", "Add Error", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
-                isSuccessed = true;
+                IsSuccessed = true;
             }
             catch (BO.ConsecutiveStopsException ex)
             {
@@ -57,16 +58,19 @@ namespace PlGui
                 wEditSuccessive.tbcode1.Text = ex.Code1.ToString();
                 wEditSuccessive.tbcode2.Text = ex.Code2.ToString();
                 wEditSuccessive.ShowDialog();
-                if (wEditSuccessive.IsVisible == false)
+                if (wEditSuccessive.IsSave == false)
+                {
+                    this.Close();
                     return;
+                }
             }
-            while (isSuccessed == false)
+            while (IsSuccessed == false)
             {
                 try
                 {
                     int code =int.Parse(tBCode.Text);
                     upline=bl.AddStopLine(idLine, code, int.Parse(tBNewIndex.Text));
-                    isSuccessed = true;
+                    IsSuccessed = true;
                 }
                 catch (BO.ConsecutiveStopsException ex)
                 {
@@ -74,8 +78,11 @@ namespace PlGui
                     wEditSuccessive.tbcode1.Text = ex.Code1.ToString();
                     wEditSuccessive.tbcode2.Text = ex.Code2.ToString();
                     wEditSuccessive.ShowDialog();
-                    if (wEditSuccessive.IsVisible == false)
+                    if (wEditSuccessive.IsSave == false)
+                    {
+                        this.Close();
                         return;
+                    }
                 }
             }
             int index=Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);

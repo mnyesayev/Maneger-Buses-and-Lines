@@ -96,7 +96,7 @@
         <Button x:Name="cencelSucc"
                 Grid.Row="8" Grid.Column="6"
                 Grid.ColumnSpan="2" ToolTip="cancel"
-                Background="Green">
+                Background="Green" Click="cencelSucc_Click">
             <materialDesign:PackIcon Kind="CloseCircleOutline"/>
         </Button>
         
