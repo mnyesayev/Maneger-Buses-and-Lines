@@ -316,8 +316,20 @@ namespace PlGui
                 Lines.Remove(l);
                 ListViewStopsOfLine.Visibility = Visibility.Hidden;
                 AddStopLine.Visibility = Visibility.Hidden;
+                new Thread(() =>
+                {
+                    var tempLST = from stopLine in l.StopsInLine
+                                  select stopLine.CodeStop;
+                    foreach (var item in tempLST)
+                    {
+                        var index = Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
+                        var upStop = bl.GetStop(item);
+                        var temp = new PO.BusStop();
+                        Cloning.DeepCopyTo(upStop, temp);
+                        Stops[index].LinesPassInStop = temp.LinesPassInStop;
+                    }
+                }).Start();
             }
-
         }
 
         private void ChangeLine_Click(object sender, RoutedEventArgs e)
@@ -402,10 +414,10 @@ namespace PlGui
                 DataContext = ListViewLines.SelectedItem
             };
             addStopLine.ShowDialog();
-            if(addStopLine.IsSuccessed)
+            if (addStopLine.IsSuccessed)
             {
                 var indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == int.Parse(addStopLine.tBCode.Text));
-                var upstop=bl.GetStop(int.Parse(addStopLine.tBCode.Text));
+                var upstop = bl.GetStop(int.Parse(addStopLine.tBCode.Text));
                 PO.BusStop temp = new PO.BusStop();
                 Cloning.DeepCopyTo(upstop, temp);
                 Stops[indexStop].LinesPassInStop = temp.LinesPassInStop;
@@ -509,9 +521,9 @@ namespace PlGui
                 MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            var upstop=bl.GetStop(StopLine.CodeStop);
+            var upstop = bl.GetStop(StopLine.CodeStop);
             int indexLine = Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
-            int indexStop=Stops.ToList().FindIndex((BusStop)=>BusStop.Code==StopLine.CodeStop);
+            int indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
             var temp = new PO.Line();
             var temp2 = new PO.BusStop();
             Cloning.DeepCopyTo(upline, temp);
@@ -544,6 +556,22 @@ namespace PlGui
             wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
             wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
             wEdit.ShowDialog();
+            if (wEdit.IsSave)
+            {
+                foreach (var item in Lines)
+                {
+                    var index = item.StopsInLine.ToList().FindIndex((StopLine) =>
+                      { return StopLine.CodeStop == sl.CodeStop && StopLine.NextStop == sl.NextStop; });
+                    if (index != -1)
+                    {
+                        var upstopLine = bl.GetStopInLine(sl.CodeStop, item.IdLine);
+                        var temp = new PO.StopLine();
+                        upstopLine.DeepCopyTo(temp);
+                        item.StopsInLine[index].DistanceToNext = temp.DistanceToNext;
+                        item.StopsInLine[index].AvregeDriveTimeToNext = temp.AvregeDriveTimeToNext;
+                    }
+                }
+            }
         }
 
         private void ListViewStations_MouseUp(object sender, MouseButtonEventArgs e)
@@ -556,7 +584,7 @@ namespace PlGui
                     ListViewLinesInStop.DataContext = busStop.LinesPassInStop;
                     ListViewLinesInStop.Visibility = Visibility.Visible;
                 }
-                if(busStop.LinesPassInStop.Count == 0)
+                if (busStop.LinesPassInStop.Count == 0)
                 {
                     ListViewLinesInStop.Visibility = Visibility.Hidden;
                 }
@@ -566,9 +594,9 @@ namespace PlGui
                 {
                     webStop.Address = stringB.ToString();
                 }
-                catch (Exception )
-                { 
-                    
+                catch (Exception)
+                {
+
                 }
             }
             return;

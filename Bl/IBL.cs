@@ -47,6 +47,7 @@ namespace BlApi
         #endregion
         #region StopLine
         IEnumerable<StopLine> GetStopsInLine(int id);
+        StopLine GetStopInLine(int code, int idLine);
         Line ChangeStopLine(int idLine, int codeStop1, int codeStop2, int index1, int index2);
         Line AddStopLine(int idLine ,int codeStop,int index);
         Line DeleteStopLine(int idLine ,int codeStop,int index);

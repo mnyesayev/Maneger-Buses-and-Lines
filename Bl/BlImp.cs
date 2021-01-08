@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using DalApi;
+using BlApi;
 
-namespace BlApi
+namespace Bl
 {
     public class BlImp : IBL
     {
@@ -403,7 +404,17 @@ namespace BlApi
                 StopsInLine = GetStopsInLine(idLine)
             };
         }
-
+        public StopLine GetStopInLine(int code, int idLine)
+        {
+            var doStopLine = dal.GetStopLine(idLine, code);
+            if (doStopLine == null) return null;
+            var newStopLine = new StopLine();
+            doStopLine.CopyPropertiesTo(newStopLine);
+            newStopLine.Name = GetNameStop(code);
+            newStopLine.AvregeDriveTimeToNext = GetTime(newStopLine.CodeStop, newStopLine.NextStop);
+            newStopLine.DistanceToNext = GetDistance(newStopLine.CodeStop, newStopLine.NextStop);
+            return newStopLine;
+        }
         public IEnumerable<StopLine> GetStopsInLine(int id)
         {
             return from StopLine in dal.GetStopLinesBy((StopLine) =>
@@ -791,6 +802,8 @@ namespace BlApi
                 DepartureSchedule = getSchedule(start, end, f)
             };
         }
+
+       
         #endregion
     }
 }
