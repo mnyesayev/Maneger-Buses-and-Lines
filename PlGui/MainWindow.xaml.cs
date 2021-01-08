@@ -26,7 +26,7 @@ namespace PlGui
     /// </summary>
     public partial class MainWindow : Window
     {
-        public IBL bl = BlFactory.GetBL("1");
+        public IBL bl = BlFactory.GetBL();
         ObservableCollection<PO.BusStop> Stops = new ObservableCollection<PO.BusStop>();
         ObservableCollection<PO.Bus> buses = new ObservableCollection<PO.Bus>();
         ObservableCollection<PO.Line> Lines = new ObservableCollection<PO.Line>();

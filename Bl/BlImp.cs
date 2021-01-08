@@ -9,23 +9,25 @@ using BlApi;
 
 namespace Bl
 {
-    public class BlImp : IBL
+    sealed class BlImp : IBL
     {
         readonly IDal dal = DalFactory.GetDal();
+        #region Singelton
+        static readonly BlImp instance = new BlImp();
+        static BlImp() { }// static ctor to ensure instance init is done just before first usage
+        BlImp() { } // default => private
+        public static BlImp Instance { get => instance; }// The public Instance property to use
 
+        #endregion
         #region BusStop
         public BusStop GetStop(int code)
         {
-            var busStop=dal.GetBusStop(code);
-            return new BusStop()
-            {
-                Latitude = busStop.Latitude,
-                Longitude = busStop.Longitude,
-                Code = busStop.Code,
-                Name = busStop.Name,
-                MoreInfo = busStop.MoreInfo,
-                LinesPassInStop = (busStop.PassLines == true) ? GetLinesInStop(busStop.Code) : default
-            };
+            var DObusStop=dal.GetBusStop(code);
+            if (DObusStop == null) return null;
+            var BObusStop = new BusStop();
+            DObusStop.CopyPropertiesTo(BObusStop);
+            BObusStop.LinesPassInStop = (DObusStop.PassLines == true) ? GetLinesInStop(BObusStop.Code) : default;
+            return BObusStop;     
         }
         public void DeleteBusStop(int code)
         {
@@ -112,99 +114,6 @@ namespace Bl
         #endregion
 
         #region StopLine
-
-        public Line ChangeStopLine(int idLine, int codeStop1, int codeStop2, int index1, int index2)
-        {
-            var st1 = dal.GetStopLine(idLine, codeStop1);
-            var st2 = dal.GetStopLine(idLine, codeStop2);
-            if (st1 == null)
-                throw new IdException("StopLine", $"{st1} +{idLine}", $"no found {st1.CodeStop} station line");
-            if (st2 == null)
-                throw new IdException("StopLine", $"{st2} +{idLine}", $"no found {st2.CodeStop} station line");
-            try
-            {
-                var d1 = GetDistance(st1.PrevStop, codeStop2);
-            }
-            catch (ConsecutiveStopsException ex)
-            {
-                throw new ConsecutiveStopsException(st1.PrevStop, codeStop2, "No time and distance available", ex);
-            }
-            try
-            {
-                var d2 = GetDistance(codeStop2, st1.NextStop);
-            }
-            catch (ConsecutiveStopsException ex)
-            {
-                throw new ConsecutiveStopsException(st1.PrevStop, codeStop2, "No time and distance available", ex);
-            }
-            try
-            {
-                var d3 = GetDistance(st2.PrevStop, codeStop1);
-            }
-            catch (ConsecutiveStopsException ex)
-            {
-                throw new ConsecutiveStopsException(st2.PrevStop, codeStop1, "No time and distance available", ex);
-            }
-            try
-            {
-                var d4 = GetDistance(codeStop1, st2.NextStop);
-            }
-            catch (ConsecutiveStopsException ex)
-            {
-                throw new ConsecutiveStopsException(codeStop1, st2.NextStop, "No time and distance available", ex);
-            }
-            var l = dal.GetLine(idLine);
-
-            var temp = st1;
-            st1.CodeStop = codeStop2;
-            st1.NextStop = st2.NextStop;
-            st1.PrevStop = st2.PrevStop;
-            st1.NumStopInLine = index2;
-            st2.CodeStop = codeStop1;
-            st2.NumStopInLine = index1;
-            st2.PrevStop = temp.PrevStop;
-            st2.NextStop = temp.NextStop;
-
-            try
-            {
-                dal.UpdateStopLine(st1);
-                dal.UpdateStopLine(st2);
-                if (l.CodeFirstStop == codeStop1 && l.CodeLastStop == codeStop2)
-                {
-                    l.CodeFirstStop = codeStop2;
-                    l.CodeLastStop = codeStop1;
-                    dal.UpdateLine(l);
-                }
-                if (l.CodeFirstStop == codeStop1)
-                {
-                    l.CodeFirstStop = codeStop2;
-                    dal.UpdateLine(l);
-                }
-                if (l.CodeLastStop == codeStop2)
-                {
-                    l.CodeLastStop = codeStop1;
-                    dal.UpdateLine(l);
-                }
-            }
-            catch (DO.StopLineExceptionDO)
-            {
-                return null;
-            }
-            catch (DO.LineExceptionDO)
-            {
-                return null;
-            }
-            var upLine = new Line()
-            {
-                IdLine = l.IdLine,
-                NumLine = l.NumLine,
-                Area = (BO.Areas)l.Area,
-                CodeAgency = (BO.Agency)l.CodeAgency,
-                StopsInLine = GetStopsInLine(l.IdLine)
-            };
-            return upLine;
-        }
-
         public Line AddStopLine(int idLine, int codeStop, int index)
         {
             var st = dal.GetStopLine(idLine, codeStop);

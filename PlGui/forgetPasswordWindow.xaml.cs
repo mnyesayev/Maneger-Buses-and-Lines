@@ -22,10 +22,9 @@ namespace PlGui
     /// </summary>
     public partial class forgetPasswordWindow : Window
     {
-        public IBL ibl = BlFactory.GetBL("1");
+        public IBL ibl = BlFactory.GetBL();
         public forgetPasswordWindow()
         {
-
             InitializeComponent();
         }
 
