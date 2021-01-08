@@ -3,10 +3,87 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PlGui"
+        xmlns:local="clr-namespace:PlGui" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Line Info" Height="450" Width="800">
+        Title="Line info" Height="450" Width="800"
+        Icon="images\info.png">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="titleLineInfo"
+                   Grid.Row="1" Grid.Column="2"
+                   Grid.ColumnSpan="5" 
+                   Text="Line info" Foreground="Purple"
+                   FontSize="25" HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <TextBlock Text="Line number:" Grid.Column="1"
+                   Grid.Row="2" VerticalAlignment="Center"
+                   HorizontalAlignment="Right" FontSize="16"/>
+        <ComboBox Name="ComboBoxLineInfo" Grid.Column="2"
+                  Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
+                  Width="80" BorderBrush="Purple" ItemsSource="{Binding}" 
+                  Margin="6 0 0 0"/>
+        <TextBlock Text="From:" Grid.Column="1" Grid.Row="3" 
+                   Grid.ColumnSpan="2" FontSize="16" HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+        <materialDesign:PackIcon Kind="ArrowDown" Grid.Row="4"
+                                     Grid.Column="1" Grid.ColumnSpan="2"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     Width="40" Height="40"/>
+        <TextBlock Text="To:" Grid.Column="1" Grid.Row="5" 
+                   Grid.ColumnSpan="2" FontSize="16" HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+        <Border BorderBrush="Purple" Grid.Column="3" Grid.Row="2"
+                Grid.ColumnSpan="3" Grid.RowSpan="5" BorderThickness="2"
+                CornerRadius="5"/>
+        <ListView x:Name="listViewLineInfo" 
+                 Grid.Column="3" Grid.Row="2" ItemsSource="{Binding}" 
+                  Grid.ColumnSpan="3" Grid.RowSpan="5">
+            
+        </ListView>
+        <Button x:Name="addStopToLineInInfo"
+                Grid.Row="7" Grid.Column="4" 
+                Style="{StaticResource MaterialDesignIconButton}"
+                ToolTip="Add stop to the Line" Width="60" Height="50">
+            <materialDesign:PackIcon Kind="Plus" />
+        </Button>
+
+        <Border BorderBrush="Purple" BorderThickness="2" CornerRadius="5"
+                Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="5"
+                Margin="20 0 0 0"/>
+        <TextBlock Text="Line frequency" Grid.Column="6" Grid.Row="2"
+                   Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                   FontSize="16" Foreground="Purple" Margin="20 0 0 0"
+                   FontWeight="Bold"/>
+
+        <ListView x:Name="listViewLineFrequency" Grid.Row="3" Grid.Column="6"
+                  Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="20 0 0 0"
+                  ItemsSource="{Binding}">
+            
+        </ListView>
     </Grid>
 </Window>
