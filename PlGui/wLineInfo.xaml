@@ -33,7 +33,7 @@
 
         <TextBlock x:Name="titleLineInfo"
                    Grid.Row="1" Grid.Column="2"
-                   Grid.ColumnSpan="5" 
+                   Grid.ColumnSpan="5" FontWeight="Bold"
                    Text="Line info" Foreground="Purple"
                    FontSize="25" HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
@@ -73,7 +73,7 @@
         </Button>
 
         <Border BorderBrush="Purple" BorderThickness="2" CornerRadius="5"
-                Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="5"
+                Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="3" Grid.RowSpan="4"
                 Margin="20 0 0 0"/>
         <TextBlock Text="Line frequency" Grid.Column="6" Grid.Row="2"
                    Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"
