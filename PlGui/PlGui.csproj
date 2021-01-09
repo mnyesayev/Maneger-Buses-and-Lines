@@ -92,6 +92,9 @@
     <Compile Include="wAddBus.xaml.cs">
       <DependentUpon>wAddBus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wAddLine.xaml.cs">
+      <DependentUpon>wAddLine.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wBusInfo.xaml.cs">
       <DependentUpon>wBusInfo.xaml</DependentUpon>
     </Compile>
@@ -154,6 +157,10 @@
     <Page Include="wAddBus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="wAddLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wBusInfo.xaml">
       <Generator>MSBuild:Compile</Generator>

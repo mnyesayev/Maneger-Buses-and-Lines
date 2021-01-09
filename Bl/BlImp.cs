@@ -131,6 +131,8 @@ namespace Bl
             }
             if (index <= stopsInLine.Count())
                 curStop = dal.GetStopLineByIndex(idLine, index);
+            if (index > stopsInLine.Count())
+                throw new AddException("StopLine", $"{index}", "The index exceeds the station limit");
             if (curStop == null)
                 return null;
             try

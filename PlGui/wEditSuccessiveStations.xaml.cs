@@ -29,7 +29,7 @@ namespace PlGui
 
         private void saveSucc_Click(object sender, RoutedEventArgs e)
         {
-            if (TBKmDis.Text.Length == 0 || TimePicker.Text.Length == 0)
+            if (TBKmDis.Text.Length == 0 || TimePicker == null)
                 return;
             if (TimeSpan.TryParse(TimePicker.Text, out TimeSpan time) && double.TryParse(TBKmDis.Text, out double dis))
             {

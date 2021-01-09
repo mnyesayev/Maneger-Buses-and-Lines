@@ -37,6 +37,7 @@ namespace PlGui
         {
             if (tBCode.Text.Length == 0 || tBNewIndex.Text.Length == 0)
                 return;
+            tBNewIndex.Background = default;
 
             var idLine = (this.DataContext as PO.Line).IdLine;
             IsSuccessed = false;
@@ -44,7 +45,15 @@ namespace PlGui
             try
             {
                 int code = int.Parse(tBCode.Text);
-                upline=bl.AddStopLine(idLine, code, int.Parse(tBNewIndex.Text));
+                try
+                {
+                    upline = bl.AddStopLine(idLine, code, int.Parse(tBNewIndex.Text));
+                }
+                catch (BO.AddException)
+                {
+                    tBNewIndex.Background = Brushes.Red;
+                    return;
+                }
                 if (upline == null)
                 {
                     MessageBox.Show($"stop {code} not exits in system", "Add Error", MessageBoxButton.OK, MessageBoxImage.Information);

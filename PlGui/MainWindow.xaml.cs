@@ -301,7 +301,9 @@ namespace PlGui
 
         private void AddLine_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Still under construction", "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
+            wAddLine addLine = new wAddLine(bl, Lines);
+            addLine.ShowDialog();
+          //if ()
         }
 
         private void DeleteLine_Click(object sender, RoutedEventArgs e)
