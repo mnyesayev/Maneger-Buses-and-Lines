@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BlApi;
 namespace PlGui
 {
     /// <summary>
@@ -19,9 +19,11 @@ namespace PlGui
     /// </summary>
     public partial class wLineInfo : Window
     {
-        public wLineInfo()
+        IBL bl;
+        public wLineInfo(IBL bl)
         {
             InitializeComponent();
+            this.bl = bl;
         }
 
         private void TextBlock_SizeChanged(object sender, SizeChangedEventArgs e)

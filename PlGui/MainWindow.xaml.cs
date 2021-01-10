@@ -596,5 +596,16 @@ namespace PlGui
             }
             return;
         }
+
+        private void ListViewLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(ListViewLines.SelectedItem is PO.Line)
+            {
+                wLineInfo lineInfo = new wLineInfo(bl);
+                lineInfo.DataContext = ListViewLines.SelectedItem;
+                lineInfo.ShowDialog();
+            }
+            return;
+        }
     }
 }

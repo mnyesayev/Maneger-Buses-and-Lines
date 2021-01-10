@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PlGui" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PlGui" 
+        xmlns:po="clr-namespace:PO" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Line info" Height="450" Width="800"
+        Title="Line info" Height="450" Width="800" 
         Icon="images\info.png">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -44,7 +46,8 @@
                   Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
                   Width="80" BorderBrush="Purple" ItemsSource="{Binding}" 
                   Margin="6 0 0 0"/>
-        <TextBlock Text="From:" Grid.Column="1" Grid.Row="3" 
+        <TextBlock x:Name="tBFirstStop" Text="{Binding Path=NameFirstLineStop}" 
+                   Grid.Column="1" Grid.Row="3" 
                    Grid.ColumnSpan="2" FontSize="16" HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
 
@@ -53,7 +56,7 @@
                                      VerticalAlignment="Center"
                                      HorizontalAlignment="Center"
                                      Width="40" Height="40"/>
-        <TextBlock Text="To:" Grid.Column="1" Grid.Row="5" 
+        <TextBlock Text="{Binding Path=NameLastLineStop}" Grid.Column="1" Grid.Row="5" 
                    Grid.ColumnSpan="2" FontSize="16" HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
 

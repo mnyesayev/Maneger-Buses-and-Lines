@@ -573,7 +573,8 @@
                         </Grid.RowDefinitions>
                         <ListView x:Name="ListViewLines" Grid.Row="1" Grid.Column="1"
                                   Grid.ColumnSpan="5" Grid.RowSpan="6"
-                              ItemsSource="{Binding}" MouseUp="ListViewLines_MouseUp">
+                              ItemsSource="{Binding}" MouseUp="ListViewLines_MouseUp" 
+                                  MouseDoubleClick="ListViewLines_MouseDoubleClick">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
