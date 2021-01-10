@@ -301,7 +301,7 @@ namespace PlGui
 
         private void AddLine_Click(object sender, RoutedEventArgs e)
         {
-            wAddLine addLine = new wAddLine(bl, Lines);
+            wAddLine addLine = new wAddLine(bl, Lines,Stops);
             addLine.ShowDialog();
           //if ()
         }
@@ -411,19 +411,12 @@ namespace PlGui
 
         private void AddStopLine_Click(object sender, RoutedEventArgs e)
         {
-            var addStopLine = new addStopLine(bl, Lines, ListViewStopsOfLine)
+            var addStopLine = new addStopLine(bl, Lines, Stops,ListViewStopsOfLine)
             {
                 DataContext = ListViewLines.SelectedItem
             };
             addStopLine.ShowDialog();
-            if (addStopLine.IsSuccessed)
-            {
-                var indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == int.Parse(addStopLine.tBCode.Text));
-                var upstop = bl.GetStop(int.Parse(addStopLine.tBCode.Text));
-                PO.BusStop temp = new PO.BusStop();
-                Cloning.DeepCopyTo(upstop, temp);
-                Stops[indexStop].LinesPassInStop = temp.LinesPassInStop;
-            }
+           
         }
 
         private void SearchDriver_Click(object sender, RoutedEventArgs e)

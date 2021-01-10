@@ -23,13 +23,15 @@ namespace PlGui
     {
         IBL bl;
         ObservableCollection<PO.Line> Lines;
+        ObservableCollection<PO.BusStop> Stops;
         ListView ListViewStops;
         public bool IsSuccessed { get; private set; }
-        public addStopLine(IBL bl,ObservableCollection<PO.Line> lines,ListView listStops)
+        public addStopLine(IBL bl,ObservableCollection<PO.Line> lines, ObservableCollection<PO.BusStop> stops,ListView listStops)
         {
             InitializeComponent();
             this.bl = bl;
             Lines = lines;
+            Stops = stops;
             ListViewStops = listStops;
         }
 
@@ -95,11 +97,13 @@ namespace PlGui
                 }
             }
             int index=Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
+            var indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == int.Parse(tBCode.Text));
             var temp = new PO.Line();
             Cloning.DeepCopyTo(upline, temp);
             Lines[index].StopsInLine=temp.StopsInLine;
             Lines[index].NameFirstLineStop = temp.NameFirstLineStop;
             Lines[index].NameLastLineStop = temp.NameLastLineStop;
+            Stops[indexStop].LinesPassInStop.Add(temp);
             ListViewStops.DataContext = Lines[index].StopsInLine;
             this.Close();
         }

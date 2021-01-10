@@ -22,14 +22,15 @@ namespace PlGui
     public partial class wAddLine : Window
     {
         IBL bl;
-        ObservableCollection<PO.Line> lines = new ObservableCollection<PO.Line>();
+        ObservableCollection<PO.Line> Lines = new ObservableCollection<PO.Line>();
+        ObservableCollection<PO.BusStop> Stops = new ObservableCollection<PO.BusStop>();
         public bool IsSuccssed { get; private set; }
-        public wAddLine(IBL bL, ObservableCollection<PO.Line> Lines)
+        public wAddLine(IBL bL, ObservableCollection<PO.Line> lines,ObservableCollection<PO.BusStop> stops)
         {
             InitializeComponent();
             bl = bL;
-            lines = Lines; 
-
+            Lines = lines;
+            Stops = stops;
             List<BO.Areas> areas = new List<BO.Areas>();
             for (int i = 0; i < 7; i++)
                 areas.Add((BO.Areas)i);
@@ -103,7 +104,11 @@ namespace PlGui
                 PO.Line newLine = new PO.Line();
                 var upLine = bl.AddLine(tbAddLineNumber.Text, area, stops, "");
                 upLine.DeepCopyTo(newLine);
-                lines.Add(newLine);
+                Lines.Add(newLine);
+                var index1=Stops.ToList().FindIndex((BusStop) => BusStop.Code == code1);
+                var index2=Stops.ToList().FindIndex((BusStop) => BusStop.Code == code2);
+                Stops[index1].LinesPassInStop.Add(newLine);
+                Stops[index2].LinesPassInStop.Add(newLine);
                 this.Close();
                 
             }
