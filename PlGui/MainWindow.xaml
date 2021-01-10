@@ -530,7 +530,7 @@
                         </Button>
                         <Button x:Name="ChangeBus" Grid.Column="3" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Change Bus details" Click="ChangeBus_Click" >
+                                 ToolTip="Change Bus details"  >
                             <materialDesign:PackIcon Kind="Pencil"/>
                         </Button>
                         <Button x:Name="SearchBus" Grid.Column="4" Grid.Row="7"
@@ -607,7 +607,7 @@
                                      Grid.Column="6" Grid.Row="1" Grid.RowSpan="6"/>
                         <ListView x:Name="ListViewStopsOfLine" Grid.Row="1" Grid.Column="7"
                                   Grid.ColumnSpan="3" Grid.RowSpan="6"
-                                  ItemsSource="{Binding}"
+                                  ItemsSource="{Binding Path=StopsInLine}"
                                   Visibility="Hidden">
                             <ListView.View>
                                 <GridView>
@@ -721,7 +721,7 @@
                         </ScrollViewer>
                         <ListView x:Name="ListViewLinesInStop" Grid.Row="1" Grid.Column="8"
                                   Grid.ColumnSpan="3" Grid.RowSpan="6"
-                                  ItemsSource="{Binding}"
+                                  ItemsSource="{Binding Path=LinesPassInStop}"
                                   Visibility="Hidden">
                             <ListView.View>
                                 <GridView>

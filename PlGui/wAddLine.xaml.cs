@@ -34,7 +34,6 @@ namespace PlGui
             List<BO.Areas> areas = new List<BO.Areas>();
             for (int i = 0; i < 7; i++)
                 areas.Add((BO.Areas)i);
-
             cbAddLineArea.ItemsSource = areas;
 
         }
@@ -98,7 +97,7 @@ namespace PlGui
             stops.Add(new BO.StopLine { CodeStop = code1, NextStop = code2, DistanceToNext = dis, 
                 AvregeDriveTimeToNext= time, NumStopInLine =1 });
             stops.Add(new BO.StopLine { CodeStop = code2, PrevStop = code1, NumStopInLine =2 });
-            var area = (BO.Areas)(cbAddLineArea.SelectedItem);
+            var area = (BO.Areas)cbAddLineArea.SelectedItem;
             try
             {
                 PO.Line newLine = new PO.Line();
@@ -110,9 +109,8 @@ namespace PlGui
                 Stops[index1].LinesPassInStop.Add(newLine);
                 Stops[index2].LinesPassInStop.Add(newLine);
                 this.Close();
-                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Something is wrong here");
             }

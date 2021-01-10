@@ -24,15 +24,13 @@ namespace PlGui
         IBL bl;
         ObservableCollection<PO.Line> Lines;
         ObservableCollection<PO.BusStop> Stops;
-        ListView ListViewStops;
         public bool IsSuccessed { get; private set; }
-        public addStopLine(IBL bl,ObservableCollection<PO.Line> lines, ObservableCollection<PO.BusStop> stops,ListView listStops)
+        public addStopLine(IBL bl,ObservableCollection<PO.Line> lines, ObservableCollection<PO.BusStop> stops)
         {
             InitializeComponent();
             this.bl = bl;
             Lines = lines;
             Stops = stops;
-            ListViewStops = listStops;
         }
 
         private void buttonAddStopLine_Click(object sender, RoutedEventArgs e)
@@ -97,14 +95,25 @@ namespace PlGui
                 }
             }
             int index=Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
-            var indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == int.Parse(tBCode.Text));
             var temp = new PO.Line();
             Cloning.DeepCopyTo(upline, temp);
             Lines[index].StopsInLine=temp.StopsInLine;
             Lines[index].NameFirstLineStop = temp.NameFirstLineStop;
             Lines[index].NameLastLineStop = temp.NameLastLineStop;
-            Stops[indexStop].LinesPassInStop.Add(temp);
-            ListViewStops.DataContext = Lines[index].StopsInLine;
+            //ListViewStops.DataContext = Lines[index];
+            new Thread(() =>
+            {
+                var tempLST = from stopLine in upline.StopsInLine
+                              select stopLine.CodeStop;
+                foreach (var item in tempLST)
+                {
+                    var indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
+                    var upStop = bl.GetStop(item);
+                    var tempBusStop = new PO.BusStop();
+                    Cloning.DeepCopyTo(upStop, tempBusStop);
+                    Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
+                }
+            }).Start();
             this.Close();
         }
     }

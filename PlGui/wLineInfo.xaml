@@ -44,8 +44,15 @@
                    HorizontalAlignment="Right" FontSize="16"/>
         <ComboBox Name="ComboBoxLineInfo" Grid.Column="2"
                   Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
-                  Width="80" BorderBrush="Purple" ItemsSource="{Binding Path=NumLine}" 
-                  Margin="6 0 0 0" IsEditable="False" IsReadOnly="True" />
+                  Width="80" BorderBrush="Purple" ItemsSource="{Binding}" 
+                  Margin="6 0 0 0" IsEditable="False" IsReadOnly="True" SelectionChanged="ComboBoxLineInfo_SelectionChanged" 
+                  >
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="po:Line">
+                    <TextBlock Text="{Binding Path=NumLine}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBlock x:Name="tBFirstStop" Text="{Binding Path=NameFirstLineStop}" 
                    Grid.Column="1" Grid.Row="3" 
                    Grid.ColumnSpan="2" FontSize="16" HorizontalAlignment="Center"
@@ -64,7 +71,7 @@
                 Grid.ColumnSpan="3" Grid.RowSpan="5" BorderThickness="2"
                 CornerRadius="5"/>
         <ListView x:Name="listViewLineInfo" 
-                 Grid.Column="3" Grid.Row="2" ItemsSource="{Binding}" 
+                 Grid.Column="3" Grid.Row="2" ItemsSource="{Binding Path=StopsInLine}" 
                   Grid.ColumnSpan="3" Grid.RowSpan="5">
             <ListView.View>
                 <GridView>

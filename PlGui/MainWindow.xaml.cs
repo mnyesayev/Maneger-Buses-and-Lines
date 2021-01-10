@@ -292,7 +292,7 @@ namespace PlGui
             if (ListViewLines.SelectedItem is PO.Line)
             {
                 PO.Line line = (PO.Line)ListViewLines.SelectedItem;
-                ListViewStopsOfLine.DataContext = line.StopsInLine;
+                ListViewStopsOfLine.DataContext = line;
                 ListViewStopsOfLine.Visibility = Visibility.Visible;
                 AddStopLine.Visibility = Visibility.Visible;
             }
@@ -301,9 +301,8 @@ namespace PlGui
 
         private void AddLine_Click(object sender, RoutedEventArgs e)
         {
-            wAddLine addLine = new wAddLine(bl, Lines,Stops);
+            wAddLine addLine = new wAddLine(bl, Lines, Stops);
             addLine.ShowDialog();
-          //if ()
         }
 
         private void DeleteLine_Click(object sender, RoutedEventArgs e)
@@ -378,11 +377,6 @@ namespace PlGui
             }
         }
 
-        private void ChangeBus_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void SearchBus_Click(object sender, RoutedEventArgs e)
         {
 
@@ -411,12 +405,12 @@ namespace PlGui
 
         private void AddStopLine_Click(object sender, RoutedEventArgs e)
         {
-            var addStopLine = new addStopLine(bl, Lines, Stops,ListViewStopsOfLine)
+            var addStopLine = new addStopLine(bl, Lines, Stops)
             {
                 DataContext = ListViewLines.SelectedItem
             };
             addStopLine.ShowDialog();
-           
+
         }
 
         private void SearchDriver_Click(object sender, RoutedEventArgs e)
@@ -516,18 +510,33 @@ namespace PlGui
                 MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            var upstop = bl.GetStop(StopLine.CodeStop);
             int indexLine = Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
-            int indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
             var temp = new PO.Line();
-            var temp2 = new PO.BusStop();
             Cloning.DeepCopyTo(upline, temp);
-            Cloning.DeepCopyTo(upstop, temp2);
             Lines[indexLine].StopsInLine = temp.StopsInLine;
             Lines[indexLine].NameFirstLineStop = temp.NameFirstLineStop;
             Lines[indexLine].NameLastLineStop = temp.NameLastLineStop;
-            ListViewStopsOfLine.DataContext = Lines[indexLine].StopsInLine;
-            Stops[indexStop].LinesPassInStop = temp2.LinesPassInStop;
+            //for old stop
+            var indexdeleteStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
+            var upstop = bl.GetStop(StopLine.CodeStop);
+            var tempStop1 = new PO.BusStop();
+            upstop.DeepCopyTo(tempStop1);
+            Stops[indexdeleteStop].LinesPassInStop = tempStop1.LinesPassInStop;
+            //for other stops
+            new Thread(() => 
+            {
+                var tempLST = from stopLine in upline.StopsInLine
+                              select stopLine.CodeStop;
+                foreach (var item in tempLST)
+                {
+                    var indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
+                    var upStop = bl.GetStop(item);
+                    var tempBusStop = new PO.BusStop();
+                    Cloning.DeepCopyTo(upStop, tempBusStop);
+                    Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
+                }
+            }).Start();
+          
         }
 
         private void tbUserName_KeyUp(object sender, KeyEventArgs e)
@@ -576,7 +585,7 @@ namespace PlGui
                 PO.BusStop busStop = (PO.BusStop)ListViewStations.SelectedItem;
                 if (busStop.LinesPassInStop.Count != 0)
                 {
-                    ListViewLinesInStop.DataContext = busStop.LinesPassInStop;
+                    ListViewLinesInStop.DataContext = busStop;
                     ListViewLinesInStop.Visibility = Visibility.Visible;
                 }
                 if (busStop.LinesPassInStop.Count == 0)
@@ -585,24 +594,19 @@ namespace PlGui
                 }
                 StringBuilder stringB = new StringBuilder("https://www.google.co.il/maps/place/");
                 stringB.Append($"{busStop.Latitude},{busStop.Longitude}");
-                try
-                {
-                    webStop.Address = stringB.ToString();
-                }
-                catch (Exception)
-                {
-
-                }
+                webStop.Address = stringB.ToString();
             }
             return;
         }
 
         private void ListViewLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(ListViewLines.SelectedItem is PO.Line)
+            if (ListViewLines.SelectedItem is PO.Line)
             {
                 wLineInfo lineInfo = new wLineInfo(bl, Lines, Stops);
                 lineInfo.DataContext = ListViewLines.SelectedItem;
+                lineInfo.ComboBoxLineInfo.DataContext = Lines;
+                lineInfo.ComboBoxLineInfo.SelectedItem = lineInfo.DataContext;
                 lineInfo.ShowDialog();
             }
             return;
@@ -610,11 +614,13 @@ namespace PlGui
 
         private void bStop_lineInfo_Click(object sender, RoutedEventArgs e)
         {
-            if ((PO.Line)(sender as Button).DataContext is PO.Line)
+            if ((sender as Button).DataContext is PO.Line)
             {
                 wLineInfo lineInfo = new wLineInfo(bl, Lines, Stops);
-                lineInfo.DataContext = (PO.Line)(sender as Button).DataContext;
-               // lineInfo.listViewLineInfo.DataContext = ((PO.Line)(sender as PO.Line)).StopsInLine;
+                var l=(PO.Line) (sender as Button).DataContext;
+                lineInfo.DataContext = l;
+                lineInfo.ComboBoxLineInfo.DataContext = Lines;
+                lineInfo.ComboBoxLineInfo.SelectedItem = lineInfo.DataContext;
                 lineInfo.ShowDialog();
             }
             return;

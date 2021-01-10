@@ -45,7 +45,7 @@ namespace PO
         /// <summary>
         /// Represents the lines that pass in the stop/station 
         /// </summary>
-        public ObservableCollection<Line> LinesPassInStop { get { return lines; }set { lines = new ObservableCollection<Line>(value); } }
+        public ObservableCollection<Line> LinesPassInStop { get { return lines; }set { if (lines != value) { lines = new ObservableCollection<Line>(value);OnPropertyChanged(); } } }
     }
 
 }
