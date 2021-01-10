@@ -44,7 +44,8 @@ namespace PO
         /// <summary>
         /// Represents all stops in the Line
         /// </summary>
-        public ObservableCollection<StopLine> StopsInLine { get { return stopsInLine; } set { stopsInLine = new ObservableCollection<StopLine>(value); } }
+        public ObservableCollection<StopLine> StopsInLine { get { return stopsInLine; } set { if (stopsInLine != value) 
+                { stopsInLine = new ObservableCollection<StopLine>(value); OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the more info of about the Line
         /// </summary>

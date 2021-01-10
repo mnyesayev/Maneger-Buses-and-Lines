@@ -735,8 +735,8 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Button  Content="{Binding NumLine, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                                             BorderThickness="2" BorderBrush="Purple" Width="80" Height="40" Margin="5,0,0,0"/>
+                                                    <Button x:Name="bStop_lineInfo"  Content="{Binding NumLine, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             BorderThickness="2" BorderBrush="Purple" Width="80" Height="40" Margin="5,0,0,0" Click="bStop_lineInfo_Click" />
                                                     <TextBlock  Text="{Binding NameFirstLineStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                                 Margin="5,0,0,0" VerticalAlignment="Center" />
                                                     <materialDesign:PackIcon Kind="ArrowLeftRight" Margin="1" VerticalAlignment="Center" />

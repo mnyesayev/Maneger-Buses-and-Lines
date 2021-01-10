@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,15 +21,36 @@ namespace PlGui
     public partial class wLineInfo : Window
     {
         IBL bl;
-        public wLineInfo(IBL bl)
+
+        ObservableCollection<PO.Line> Lines;
+        ObservableCollection<PO.BusStop> Stops;
+      
+       
+        public wLineInfo(IBL bl, ObservableCollection<PO.Line> lines, ObservableCollection<PO.BusStop> stops)
         {
             InitializeComponent();
             this.bl = bl;
+            Lines = lines;
+            Stops = stops;
+          
         }
 
-        private void TextBlock_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void DeleteStopLine_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void ChangeStopLine_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void addStopToLineInInfo_CLick(object sender, RoutedEventArgs e)
+        {
+            var addStopLine = new addStopLine(bl, Lines, Stops, listViewLineInfo);
+            
+            addStopLine.DataContext = this.DataContext;
+            addStopLine.ShowDialog();
         }
     }
 }

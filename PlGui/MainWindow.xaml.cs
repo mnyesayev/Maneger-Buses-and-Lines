@@ -601,8 +601,20 @@ namespace PlGui
         {
             if(ListViewLines.SelectedItem is PO.Line)
             {
-                wLineInfo lineInfo = new wLineInfo(bl);
+                wLineInfo lineInfo = new wLineInfo(bl, Lines, Stops);
                 lineInfo.DataContext = ListViewLines.SelectedItem;
+                lineInfo.ShowDialog();
+            }
+            return;
+        }
+
+        private void bStop_lineInfo_Click(object sender, RoutedEventArgs e)
+        {
+            if ((PO.Line)(sender as Button).DataContext is PO.Line)
+            {
+                wLineInfo lineInfo = new wLineInfo(bl, Lines, Stops);
+                lineInfo.DataContext = (PO.Line)(sender as Button).DataContext;
+               // lineInfo.listViewLineInfo.DataContext = ((PO.Line)(sender as PO.Line)).StopsInLine;
                 lineInfo.ShowDialog();
             }
             return;
