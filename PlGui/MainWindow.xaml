@@ -752,7 +752,7 @@
                         </ListView>
                         <Button x:Name="AddStop" Grid.Column="1" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Add Stop">
+                                 ToolTip="Add Stop" Click="AddStop_Click">
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
                    

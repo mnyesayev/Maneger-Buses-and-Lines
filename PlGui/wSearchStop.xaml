@@ -34,7 +34,8 @@
         <TextBox x:Name="TbStopCode" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
                  FontWeight="Bold" VerticalAlignment="Stretch" 
                  FontSize="12" TextChanged="TbStopCode_TextChanged" 
-                 materialDesign:HintAssist.Hint="Enter code stop or name stop"/>
+                 materialDesign:HintAssist.Hint="Enter code stop or name stop" KeyUp="TbStopCode_KeyUp"
+                 />
 
     </Grid>
 </Window>

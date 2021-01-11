@@ -31,6 +31,7 @@ namespace PlGui
             this.bl = bl;
             Lines = lines;
             Stops = stops;
+            
         }
 
         private void buttonAddStopLine_Click(object sender, RoutedEventArgs e)

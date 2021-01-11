@@ -5,37 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         xmlns:po="clr-namespace:PO"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Icon="images\plus.png"
-        Title="Add stop to line" Height="300" Width="500">
+        Title="Add stop to line" Height="250" Width="450"
+        FontSize="15">
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="tbNewIndex" Grid.Column="1" Grid.Row="2" Text="Insert new index:"/>
-        <TextBlock x:Name="tbNewCode" Grid.Column="1" Grid.Row="4" Text="choise code of stop:"/>
-        <TextBox x:Name="tBNewIndex" Grid.Column="2" Grid.Row="2" />
-        <TextBox x:Name="tBCode" Grid.Column="2" Grid.Row="4" />
+        <TextBlock Text="Add new stop to Line"
+                   Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="6"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Foreground="Green" FontSize="16"/>
+        <TextBlock x:Name="tbNewIndex"
+                   Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" 
+                   Text="Insert new index:" VerticalAlignment="Center"
+                   HorizontalAlignment="Center"  />
+        <TextBlock x:Name="tbNewCode" 
+                   Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4"
+                   Text="choise code of stop:"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Center"/>
+        <TextBox x:Name="tBNewIndex" Grid.Column="3" 
+                 Grid.ColumnSpan="2" Grid.Row="2" Margin="10 0 0 0"
+                  Foreground="Blue" VerticalAlignment="Center"
+                 materialDesign:HintAssist.Hint=""/>
+        <TextBox x:Name="tBCode" Grid.Column="3" Grid.Row="4"
+                  Grid.ColumnSpan="2" Margin="10 0 0 0" Foreground="Blue"
+                 VerticalAlignment="Top"
+                 materialDesign:HintAssist.Hint="Enter stop code"/>
         <Button x:Name="buttonAddStopLine" Grid.ColumnSpan="2" Content="Save &amp; Add" Grid.Column="4" HorizontalAlignment="Center" 
-                Grid.Row="7" VerticalAlignment="Center" Width="110" Click="buttonAddStopLine_Click"/>
+                Grid.Row="5" VerticalAlignment="Center" Width="110" 
+                Click="buttonAddStopLine_Click" Margin="0 5 0 0"
+               />
     </Grid>
 
 </Window>

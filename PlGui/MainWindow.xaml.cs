@@ -625,5 +625,11 @@ namespace PlGui
             }
             return;
         }
+
+        private void AddStop_Click(object sender, RoutedEventArgs e)
+        {
+            wAddStop addStop = new wAddStop();
+            addStop.ShowDialog();
+        }
     }
 }

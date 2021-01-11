@@ -15,25 +15,18 @@ using System.Windows.Shapes;
 namespace PlGui
 {
     /// <summary>
-    /// Interaction logic for wSearchLine.xaml
+    /// Interaction logic for wAddStop.xaml
     /// </summary>
-    public partial class wSearchLine : Window
+    public partial class wAddStop : Window
     {
-        public string numLine;
-        public wSearchLine()
+        public wAddStop()
         {
             InitializeComponent();
         }
 
-        private void TbLineCode_TextChanged(object sender, TextChangedEventArgs e)
+        private void bAddStop_Click(object sender, RoutedEventArgs e)
         {
-           numLine = TbLineCode.Text;
-        }
 
-        private void TbLineCode_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                this.Close();
         }
     }
 }
