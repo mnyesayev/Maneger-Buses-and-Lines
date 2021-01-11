@@ -425,7 +425,7 @@ namespace PlGui
                     this.Dispatcher.Invoke(() =>
                     {
                         SearchDriver.IsEnabled = false;
-                        ListViewDrivers.SelectedItem = drivers.ToList().Find((Driver) => Driver.Id == searchDriverWindow.DriverID);
+                        ListViewDrivers.SelectedItem = Lists.Drivers.ToList().Find((Driver) => Driver.Id == searchDriverWindow.DriverID);
                         ListViewDrivers.ScrollIntoView(ListViewDrivers.SelectedItem);
                         if (!searchDriverWindow.IsVisible)
                             flag = false;
