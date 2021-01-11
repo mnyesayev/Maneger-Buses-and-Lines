@@ -4,7 +4,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"        xmlns:local="clr-namespace:PlGui"
+        xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"        
+        xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -520,20 +521,12 @@
 
                         <Button x:Name="AddBus" Grid.Column="1" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Add Bus" Click="AddBus_Click">
+                                 ToolTip="Add Bus" Click="AddBus_Click" IsEnabled="False">
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
-                        <Button x:Name="DeleteBus" Grid.Column="2" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Delete Bus" Click="DeleteBus_Click" >
-                            <materialDesign:PackIcon Kind="Delete"/>
-                        </Button>
-                        <Button x:Name="ChangeBus" Grid.Column="3" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Change Bus details"  >
-                            <materialDesign:PackIcon Kind="Pencil"/>
-                        </Button>
-                        <Button x:Name="SearchBus" Grid.Column="4" Grid.Row="7"
+                        
+                        
+                        <Button x:Name="SearchBus" Grid.Column="2" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search Bus" Click="SearchBus_Click" >
                             <materialDesign:PackIcon Kind="Magnify"/>
@@ -665,24 +658,6 @@
                                                  DisplayMemberBinding="{Binding AvregeDriveTimeToNext,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <GridViewColumn x:Name="Distance" Header="Distance" Width="0"
                                                  DisplayMemberBinding="{Binding DistanceToNext, StringFormat={}{0:F2}km,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <!--<GridViewColumn Header="Options" Width="auto">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Button x:Name="DeleteStopLine" 
-                                                    Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                                    ToolTip="Delete Stop Line" Click="DeleteStopLine_Click" >
-                                                        <materialDesign:PackIcon Kind="Delete"/>
-                                                    </Button>
-                                                    <Button x:Name="ChangeStopLine" Grid.Column="3" Grid.Row="7"
-                                                     Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                                     ToolTip="Change Stop Line details" Click="EditDAT_Click" >
-                                                        <materialDesign:PackIcon Kind="Pencil"/>
-                                                    </Button>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>-->
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -693,7 +668,7 @@
                         </Button>
                        
                        
-                        <Button x:Name="SearchLine" Grid.Column="4" Grid.Row="7"
+                        <Button x:Name="SearchLine" Grid.Column="2" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search Line" Click="SearchLine_Click" >
                             <materialDesign:PackIcon Kind="Magnify"/>
@@ -857,20 +832,10 @@
 
                         <Button x:Name="AddDriver" Grid.Column="1" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Add Driver">
+                                 ToolTip="Add Driver" IsEnabled="False">
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
-                        <Button x:Name="DeleteDriver" Grid.Column="2" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Delete Driver" >
-                            <materialDesign:PackIcon Kind="Delete"/>
-                        </Button>
-                        <Button x:Name="ChangeDriver" Grid.Column="3" Grid.Row="7"
-                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Change driver details" >
-                            <materialDesign:PackIcon Kind="Pencil"/>
-                        </Button>
-                        <Button x:Name="SearchDriver" Grid.Column="4" Grid.Row="7"
+                        <Button x:Name="SearchDriver" Grid.Column="2" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search driver" Click="SearchDriver_Click" >
                             <materialDesign:PackIcon Kind="AccountSearch"/>

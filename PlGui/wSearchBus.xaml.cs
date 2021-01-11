@@ -32,5 +32,11 @@ namespace PlGui
                 return;
             else busID = uint.Parse(TbBusId.Text);
         }
+
+        private void TbBusId_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                this.Close();
+        }
     }
 }

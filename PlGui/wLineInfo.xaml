@@ -129,24 +129,6 @@
                                                  DisplayMemberBinding="{Binding AvregeDriveTimeToNext,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <GridViewColumn x:Name="Distance" Header="Distance" Width="0" 
                                                  DisplayMemberBinding="{Binding DistanceToNext, StringFormat={}{0:F2}km,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <!--<GridViewColumn Header="Options" Width="auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="DeleteStopLine" 
-                                                    Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                                    ToolTip="Delete Stop Line" Click="DeleteStopLine_Click" >
-                                        <materialDesign:PackIcon Kind="Delete"/>
-                                    </Button>
-                                    <Button x:Name="ChangeStopLine" Grid.Column="3" Grid.Row="7"
-                                                     Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                                     ToolTip="Change Stop Line details" Click="ChangeStopLine_Click" >
-                                        <materialDesign:PackIcon Kind="Pencil"/>
-                                    </Button>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
                 </GridView>
             </ListView.View>
 

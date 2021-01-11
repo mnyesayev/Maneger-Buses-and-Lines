@@ -27,16 +27,11 @@ namespace PlGui
     public partial class MainWindow : Window 
     {
         public IBL bl = BlFactory.GetBL();
-        //ObservableCollection<PO.BusStop> Stops= new ObservableCollection<PO.BusStop>();
-        //ObservableCollection<PO.Bus> Buses = new ObservableCollection<PO.Bus>();
-        //ObservableCollection<PO.Line> Lines  = new ObservableCollection<PO.Line>();
-        //ObservableCollection<BO.Driver> Drivers  = new ObservableCollection<BO.Driver>();
         PO.Lists Lists = new PO.Lists();
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = Lists;
-            //ListViewStations.DataContext = Lists.Stops;
             new Thread(() =>
             {
                 foreach (var item in bl.GetBusStops())
@@ -50,20 +45,17 @@ namespace PlGui
                 Lists.Buses.Add(new PO.Bus());
                 Cloning.DeepCopyTo(item, Lists.Buses[Lists.Buses.Count - 1]);
             }
-            //ListViewBuses.DataContext = Lists.Buses;
-
+           
             foreach (var item in bl.GetLines())
             {
                 Lists.Lines.Add(new PO.Line());
                 Cloning.DeepCopyTo(item, Lists.Lines[Lists.Lines.Count - 1]);
             }
-            //ListViewLines.DataContext = Lines;
             foreach (var item in bl.GetDrivers())
             {
                 Lists.Drivers.Add(new BO.Driver());
                 Cloning.DeepCopyTo(item, Lists.Drivers[Lists.Drivers.Count - 1]);
             }
-            //ListViewDrivers.DataContext = Drivers;
         }
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)

@@ -27,7 +27,8 @@
         <TextBox x:Name="TbBusId" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
                  FontWeight="Bold" VerticalAlignment="Stretch" 
                  FontSize="15" TextChanged="TbBusId_TextChanged" 
-                 materialDesign:HintAssist.Hint="Enter Bus ID"/>
+                 materialDesign:HintAssist.Hint="Enter Bus ID" KeyUp="TbBusId_KeyUp"
+                 />
 
     </Grid>
 </Window>
