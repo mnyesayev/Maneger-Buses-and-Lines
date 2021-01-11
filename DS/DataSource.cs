@@ -367,7 +367,7 @@ namespace DS
                     {
                         CodeBusStop1 = StopLines[index - 1].CodeStop,
                         CodeBusStop2 = StopLines[index].CodeStop,
-                        Distance = MyRandom.GetDoubleRandom(0.5, 1.2),
+                        Distance =Math.Round(MyRandom.GetDoubleRandom(0.5, 1.2),2),
                         AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
                     });
                     ++index;
@@ -382,7 +382,7 @@ namespace DS
                 {
                     CodeBusStop1 = StopLines[index - 1].CodeStop,
                     CodeBusStop2 = StopLines[index].CodeStop,
-                    Distance = MyRandom.GetDoubleRandom(1.8, 8),
+                    Distance = Math.Round(MyRandom.GetDoubleRandom(1.8, 8),2),
                     AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
                 });
                 ++index;
@@ -394,7 +394,7 @@ namespace DS
                 {
                     CodeBusStop1 = StopLines[index - 1].CodeStop,
                     CodeBusStop2 = StopLines[index].CodeStop,
-                    Distance = MyRandom.GetDoubleRandom(0.5, 1.2),
+                    Distance =Math.Round( MyRandom.GetDoubleRandom(0.5, 1.2),2),
                     AvregeDriveTime = TimeSpan.FromMinutes(MyRandom.GetDoubleRandom(2, 5))
                 });
                 ++index;

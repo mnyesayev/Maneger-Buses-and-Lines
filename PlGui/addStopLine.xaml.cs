@@ -37,8 +37,8 @@ namespace PlGui
         {
             if (tBCode.Text.Length == 0 || tBNewIndex.Text.Length == 0)
                 return;
-            tBNewIndex.Background = default;
-            tBCode.Background = default;
+            tBNewIndex.BorderBrush = default;
+            tBCode.BorderBrush = default;
             var idLine = (this.DataContext as PO.Line).IdLine;
             IsSuccessed = false;
             BO.Line upline = null;
@@ -56,9 +56,9 @@ namespace PlGui
             catch (BO.AddException ex)
             {
                 if (ex.Id == tBNewIndex.Text)
-                    tBNewIndex.Background = Brushes.Red;
+                    tBNewIndex.BorderBrush = Brushes.Red;
                 if (ex.Id == tBCode.Text)
-                    tBCode.Background = Brushes.Red;
+                    tBCode.BorderBrush = Brushes.Red;
                 return;
             }
             catch (BO.ConsecutiveStopsException ex)

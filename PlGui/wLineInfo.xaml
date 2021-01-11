@@ -75,7 +75,6 @@
                   Grid.ColumnSpan="3" Grid.RowSpan="5">
             <ListView.ContextMenu>
                 <ContextMenu>
-                    
                     <MenuItem Header="Delete" Click="DeleteStopLine_Click"
                               ToolTip="Delete Stop Line" >
                         <MenuItem.Icon>
@@ -86,6 +85,18 @@
                               ToolTip="Change Stop Line details">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="Pencil"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Add after" ToolTip="Add after this stop" 
+                              Click="addAfterStopToLine_Click">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="TableRowPlusAfter"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Add before" ToolTip="Add before this stop" Click="addBeforeStopToLine_Click" 
+                              >
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="TableRowPlusBefore"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
@@ -144,7 +155,7 @@
         <Button x:Name="addStopToLineInInfo"
                 Grid.Row="7" Grid.Column="4" 
                 Style="{StaticResource MaterialDesignIconButton}"
-                ToolTip="Add stop to the Line" Width="60" Height="50" Click="addStopToLineInInfo_CLick">
+                ToolTip="Add stop to the Line" Width="60" Height="50" Click="addStopToLineInInfo_Click">
             <materialDesign:PackIcon Kind="Plus" />
         </Button>
 

@@ -48,11 +48,6 @@ namespace PlGui
                 MessageBox.Show("The last stop input Invalid!", "Last Stop ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (!int.TryParse(tbAddLineNumber.Text, out int numLine) || numLine <= 0)
-            {
-                MessageBox.Show("The number of line Invalid!", "Line Number ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
             if (!(cbAddLineArea.SelectedItem is BO.Areas))
                 return;
 

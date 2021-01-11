@@ -379,6 +379,7 @@ namespace PlGui
         {
 
             wSearchBus searchBus = new wSearchBus();
+            searchBus.TbBusId.Focus();
             searchBus.Show();
             new Thread(() =>
             {
@@ -415,6 +416,7 @@ namespace PlGui
         {
 
             wSearchDriver searchDriverWindow = new wSearchDriver();
+            searchDriverWindow.TbDriverId.Focus();
             searchDriverWindow.Show();
             new Thread(() =>
             {
@@ -439,6 +441,7 @@ namespace PlGui
         private void SearchStop_Click(object sender, RoutedEventArgs e)
         {
             wSearchStop searchStop = new wSearchStop();
+            searchStop.TbStopCode.Focus();
             searchStop.Show();
 
             new Thread(() =>
@@ -475,6 +478,7 @@ namespace PlGui
         private void SearchLine_Click(object sender, RoutedEventArgs e)
         {
             wSearchLine searchLine = new wSearchLine();
+            searchLine.TbLineCode.Focus();
             searchLine.Show();
             new Thread(() =>
             {
@@ -511,7 +515,8 @@ namespace PlGui
 
         private void DeleteStopLine_Click(object sender, RoutedEventArgs e)
         {
-            var StopLine = (PO.StopLine)(sender as Button).DataContext;
+            //var StopLine = (PO.StopLine)(sender as Button).DataContext;
+            var StopLine = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
             BO.Line upline;
             try
             {
@@ -567,7 +572,7 @@ namespace PlGui
 
         private void EditDAT_Click(object sender, RoutedEventArgs e)
         {
-            PO.StopLine sl = (PO.StopLine)(sender as Button).DataContext;
+            PO.StopLine sl = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
             wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
             wEdit.tbcode1.Text = sl.CodeStop.ToString();
             wEdit.tbcode2.Text = sl.NextStop.ToString();
@@ -645,6 +650,33 @@ namespace PlGui
         {
             wAddStop addStop = new wAddStop(bl, Lists);
             addStop.ShowDialog();
+        }
+
+        private void addAfterStopToLine_Click(object sender, RoutedEventArgs e)
+        {
+            var addStopLine = new addStopLine(bl, Lists);
+            addStopLine.DataContext = this.DataContext;
+            addStopLine.tBNewIndex.Text = (ListViewStopsOfLine.SelectedIndex + 2).ToString();
+            addStopLine.ShowDialog();
+        }
+        private void addBeforeStopToLine_Click(object sender, RoutedEventArgs e)
+        {
+            var addStopLine = new addStopLine(bl, Lists);
+            addStopLine.DataContext = this.DataContext;
+            addStopLine.tBNewIndex.Text = (ListViewStopsOfLine.SelectedIndex + 1).ToString();
+            addStopLine.ShowDialog();
+        }
+
+        private void HideDistanceAndTime_Click(object sender, RoutedEventArgs e)
+        {
+            DriveTime.Width = 0;
+            Distance.Width = 0;
+        }
+
+        private void ShowDistanceAndTime_Click(object sender, RoutedEventArgs e)
+        {
+            DriveTime.Width = 100;
+            Distance.Width = 100;
         }
     }
 }

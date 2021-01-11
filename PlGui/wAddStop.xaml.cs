@@ -31,6 +31,10 @@ namespace PlGui
 
         private void bAddStop_Click(object sender, RoutedEventArgs e)
         {
+            tbNewStopCode.BorderBrush = default;
+            tbNewStoplatitude.BorderBrush = default;
+            tbNewStoplongitude.BorderBrush = default;
+            tbNewStopName.BorderBrush = default;
             if (!int.TryParse(tbNewStopCode.Text, out int code))
                 return;
             if (!double.TryParse(tbNewStoplatitude.Text, out double lat))
@@ -41,7 +45,8 @@ namespace PlGui
             try
             {
                 busStop = new BO.BusStop() { Code = code, Longitude = lon, Latitude = lat, Name = tbNewStopName.Text };
-                if (busStop == null)
+                var upStop= bl.AddStop(busStop);
+                if (upStop == null)
                 {
                     MessageBox.Show($"the stop {code} already exits in system", "Add Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
@@ -50,13 +55,13 @@ namespace PlGui
             catch (BO.AddException ex)
             {
                 if (ex.Id == tbNewStopCode.Text)
-                    tbNewStopCode.Background = Brushes.Red;
+                    tbNewStopCode.BorderBrush = Brushes.Red;
                 if (ex.Id == tbNewStoplatitude.Text)
-                    tbNewStoplatitude.Background = Brushes.Red;
+                    tbNewStoplatitude.BorderBrush = Brushes.Red;
                 if (ex.Id == tbNewStoplongitude.Text)
-                    tbNewStoplongitude.Background = Brushes.Red;
+                    tbNewStoplongitude.BorderBrush = Brushes.Red;
                 if (ex.Id == tbNewStopName.Text)
-                    tbNewStopName.Background = Brushes.Red;
+                    tbNewStopName.BorderBrush = Brushes.Red;
                 return;
             }
             var newStop = new PO.BusStop();

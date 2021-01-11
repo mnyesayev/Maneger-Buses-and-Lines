@@ -102,7 +102,7 @@ namespace PlGui
             }
         }
 
-        private void addStopToLineInInfo_CLick(object sender, RoutedEventArgs e)
+        private void addStopToLineInInfo_Click(object sender, RoutedEventArgs e)
         {
             var addStopLine = new addStopLine(bl,Lists);
             addStopLine.DataContext = this.DataContext;
@@ -127,6 +127,22 @@ namespace PlGui
         {
             DriveTime.Width = 0;
             Distance.Width = 0;
+        }
+
+        private void addAfterStopToLine_Click(object sender, RoutedEventArgs e)
+        {
+            var addStopLine = new addStopLine(bl, Lists);
+            addStopLine.DataContext = this.DataContext;
+            addStopLine.tBNewIndex.Text = (listViewLineInfo.SelectedIndex + 2).ToString();
+            addStopLine.ShowDialog();
+        }
+
+        private void addBeforeStopToLine_Click(object sender, RoutedEventArgs e)
+        {
+            var addStopLine = new addStopLine(bl, Lists);
+            addStopLine.DataContext = this.DataContext;
+            addStopLine.tBNewIndex.Text = (listViewLineInfo.SelectedIndex + 1).ToString();
+            addStopLine.ShowDialog();
         }
     }
 }

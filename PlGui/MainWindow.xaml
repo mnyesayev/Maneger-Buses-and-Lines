@@ -609,6 +609,45 @@
                                   Grid.ColumnSpan="3" Grid.RowSpan="6"
                                   ItemsSource="{Binding Path=StopsInLine}"
                                   Visibility="Hidden">
+                            <ListView.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Delete" 
+                              ToolTip="Delete Stop Line" Click="DeleteStopLine_Click" >
+                                        <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="Delete"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Edit" Click="EditDAT_Click"
+                              ToolTip="Change Stop Line details">
+                                        <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="Pencil"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Add after" ToolTip="Add after this stop" 
+                                              Click="addAfterStopToLine_Click">
+                                        <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="TableRowPlusAfter"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Add before" ToolTip="Add before this stop" 
+                                              Click="addBeforeStopToLine_Click">
+                                        <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="TableRowPlusBefore"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator/>
+                                    <MenuItem Header="Show distance and time" Click="ShowDistanceAndTime_Click" >
+                                        <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="Eye" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Hide distance and time" Click="HideDistanceAndTime_Click" >
+                                        <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="EyeOff" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </ListView.ContextMenu>
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
@@ -622,11 +661,11 @@
                                                  DisplayMemberBinding="{Binding CodeStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <GridViewColumn Header="Name" Width="auto"
                                                  DisplayMemberBinding="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn Header="Drive Time" Width="auto"
+                                    <GridViewColumn x:Name="DriveTime" Header="Drive Time" Width="0"
                                                  DisplayMemberBinding="{Binding AvregeDriveTimeToNext,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn Header="Distance" Width="auto"
+                                    <GridViewColumn x:Name="Distance" Header="Distance" Width="0"
                                                  DisplayMemberBinding="{Binding DistanceToNext, StringFormat={}{0:F2}km,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn Header="Options" Width="auto">
+                                    <!--<GridViewColumn Header="Options" Width="auto">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
@@ -643,7 +682,7 @@
                                                 </StackPanel>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                    </GridViewColumn>-->
                                 </GridView>
                             </ListView.View>
                         </ListView>
