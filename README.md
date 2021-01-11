@@ -1,3 +1,4 @@
 # dotNet5781_3729_1237
-Hello to gitHub!
-goodbye nhhh
+For log in to first step of project:
+                      User Name: "1"
+                      Password:  "1"
