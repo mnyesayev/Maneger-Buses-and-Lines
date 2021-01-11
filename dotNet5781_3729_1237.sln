@@ -31,6 +31,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 		bin\stops.txt = bin\stops.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML", "XML", "{452C16DF-369A-4670-905E-CBECEA74BD11}"
+	ProjectSection(SolutionItems) = preProject
+		bin\XML\runingNumbersXml.xml = bin\XML\runingNumbersXml.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +89,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{452C16DF-369A-4670-905E-CBECEA74BD11} = {A3B5077C-5C8B-4D13-9B24-53FBB48DE52B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {01AEC922-711B-4754-88CA-BB77A0A6C837}
