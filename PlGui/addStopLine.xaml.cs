@@ -39,7 +39,7 @@ namespace PlGui
             if (tBCode.Text.Length == 0 || tBNewIndex.Text.Length == 0)
                 return;
             tBNewIndex.Background = default;
-
+            tBCode.Background = default;
             var idLine = (this.DataContext as PO.Line).IdLine;
             IsSuccessed = false;
             BO.Line upline = null;
@@ -54,9 +54,12 @@ namespace PlGui
                 }
                 IsSuccessed = true;
             }
-            catch (BO.AddException)
+            catch (BO.AddException ex)
             {
-                tBNewIndex.Background = Brushes.Red;
+                if (ex.Id == tBNewIndex.Text)
+                    tBNewIndex.Background = Brushes.Red;
+                if (ex.Id == tBCode.Text)
+                    tBCode.Background = Brushes.Red;
                 return;
             }
             catch (BO.ConsecutiveStopsException ex)

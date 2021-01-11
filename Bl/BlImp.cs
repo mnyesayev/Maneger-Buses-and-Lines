@@ -121,6 +121,8 @@ namespace Bl
         #region StopLine
         public Line AddStopLine(int idLine, int codeStop, int index)
         {
+            if(codeStop<1||codeStop>999999)
+                throw new AddException("StopLine", $"{codeStop}", "The this codeStop exceeds from limits of code");
             var st = dal.GetStopLine(idLine, codeStop);
             List<DO.StopLine> stopsInLine = new List<DO.StopLine>(
                 dal.GetStopLinesBy((StopLine) => StopLine.IdLine == idLine));
@@ -136,7 +138,7 @@ namespace Bl
             }
             if (index <= stopsInLine.Count())
                 curStop = dal.GetStopLineByIndex(idLine, index);
-            if (index > stopsInLine.Count()+1)
+            if (index<1||index > stopsInLine.Count()+1)
                 throw new AddException("StopLine", $"{index}", "The index exceeds the station limit");
             if (curStop == null)
                 return null;

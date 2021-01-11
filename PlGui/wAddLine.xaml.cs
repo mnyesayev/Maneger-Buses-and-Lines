@@ -76,7 +76,7 @@ namespace PlGui
                 time = bl.GetTime(code1, code2);
                 IsSuccssed = true;
             }
-            catch (BO.ConsecutiveStopsException ex)
+            catch (BO.ConsecutiveStopsException)
             {
                 wEditSuccessiveStations wEditSuccessive = new wEditSuccessiveStations(bl);
                 wEditSuccessive.tbcode1.Text = FirstStopCode.Text;
