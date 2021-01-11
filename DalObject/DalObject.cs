@@ -143,7 +143,21 @@ namespace Dal
                    where Stop.Active == true
                    select Stop.Clone();
         }
-
+        public void AddStop(BusStop stop)
+        {
+            int index = DataSource.BusStops.FindIndex((Stop) => { return Stop.Code == stop.Code; });
+            if (index == -1)
+            {
+                DataSource.BusStops.Add(stop);
+                return;
+            }
+            else if (DataSource.BusStops[index].Active == true)
+            {
+                throw new BusStopExceptionDO((int)stop.Code, "the stop is already exists");
+            }
+            else
+                DataSource.BusStops[index] = stop;
+        }
         public IEnumerable<BusStop> GetStopsBy(Predicate<BusStop> predicate)
         {
             return from Stop in DataSource.BusStops

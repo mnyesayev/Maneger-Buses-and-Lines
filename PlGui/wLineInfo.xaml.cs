@@ -21,16 +21,13 @@ namespace PlGui
     /// </summary>
     public partial class wLineInfo : Window
     {
-        IBL bl;
-        ObservableCollection<PO.Line> Lines;
-        ObservableCollection<PO.BusStop> Stops;  
-        public wLineInfo(IBL bl, ObservableCollection<PO.Line> lines, ObservableCollection<PO.BusStop> stops)
+        IBL bl; 
+        PO.Lists Lists;
+        public wLineInfo(IBL bl, PO.Lists lists)
         {
             InitializeComponent();
             this.bl = bl;
-            Lines = lines;
-            Stops = stops;
-          
+            Lists = lists;
         }
 
         private void DeleteStopLine_Click(object sender, RoutedEventArgs e)
@@ -48,18 +45,18 @@ namespace PlGui
                 MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            int indexLine = Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
+            int indexLine = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
             var temp = new PO.Line();
             Cloning.DeepCopyTo(upline, temp);
-            Lines[indexLine].StopsInLine = temp.StopsInLine;
-            Lines[indexLine].NameFirstLineStop = temp.NameFirstLineStop;
-            Lines[indexLine].NameLastLineStop = temp.NameLastLineStop;
+            Lists.Lines[indexLine].StopsInLine = temp.StopsInLine;
+            Lists.Lines[indexLine].NameFirstLineStop = temp.NameFirstLineStop;
+            Lists.Lines[indexLine].NameLastLineStop = temp.NameLastLineStop;
             //for old stop
-            var indexdeleteStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
+            var indexdeleteStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
             var upstop = bl.GetStop(StopLine.CodeStop);
             var tempStop1 = new PO.BusStop();
             upstop.DeepCopyTo(tempStop1);
-            Stops[indexdeleteStop].LinesPassInStop = tempStop1.LinesPassInStop;
+            Lists.Stops[indexdeleteStop].LinesPassInStop = tempStop1.LinesPassInStop;
             //for other stops           
             new Thread(() =>
             {
@@ -67,11 +64,11 @@ namespace PlGui
                               select stopLine.CodeStop;
                 foreach (var item in tempLST)
                 {
-                    var indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
+                    var indexStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
                     var upStop = bl.GetStop(item);
                     var tempBusStop = new PO.BusStop();
                     Cloning.DeepCopyTo(upStop, tempBusStop);
-                    Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
+                    Lists.Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
                 }
             }).Start();
         }
@@ -87,7 +84,7 @@ namespace PlGui
             wEdit.ShowDialog();
             if (wEdit.IsSave)
             {
-                foreach (var item in Lines)
+                foreach (var item in Lists.Lines)
                 {
                     var index = item.StopsInLine.ToList().FindIndex((StopLine) =>
                       { return StopLine.CodeStop == sl.CodeStop && StopLine.NextStop == sl.NextStop; });
@@ -105,7 +102,7 @@ namespace PlGui
 
         private void addStopToLineInInfo_CLick(object sender, RoutedEventArgs e)
         {
-            var addStopLine = new addStopLine(bl, Lines, Stops);
+            var addStopLine = new addStopLine(bl,Lists);
             addStopLine.DataContext = this.DataContext;
             addStopLine.ShowDialog();
         }

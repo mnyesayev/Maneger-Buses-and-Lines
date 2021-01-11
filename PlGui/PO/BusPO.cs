@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using BO;
 namespace PO
 {
-    class Bus : INotifyPropertyChanged
+    public class Bus : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)

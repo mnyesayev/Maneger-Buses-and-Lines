@@ -85,6 +85,7 @@
     <Compile Include="PO\BusStopPO.cs" />
     <Compile Include="PO\LineOnStopPO.cs" />
     <Compile Include="PO\LinePO.cs" />
+    <Compile Include="PO\ListsPO.cs" />
     <Compile Include="PO\StopLinePO.cs" />
     <Compile Include="PO\UserPO.cs" />
     <Compile Include="userWindow.xaml.cs">

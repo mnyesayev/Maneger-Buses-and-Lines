@@ -499,7 +499,7 @@
                         </Grid.RowDefinitions>
                         <ListView x:Name="ListViewBuses" Grid.Row="1" Grid.Column="1"
                                   Grid.ColumnSpan="5" Grid.RowSpan="6"
-                              ItemsSource="{Binding}" MouseDoubleClick="ListViewBuses_MouseDoubleClick" >
+                              ItemsSource="{Binding Path=Buses}" MouseDoubleClick="ListViewBuses_MouseDoubleClick" >
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
@@ -573,7 +573,7 @@
                         </Grid.RowDefinitions>
                         <ListView x:Name="ListViewLines" Grid.Row="1" Grid.Column="1"
                                   Grid.ColumnSpan="5" Grid.RowSpan="6"
-                              ItemsSource="{Binding}" MouseUp="ListViewLines_MouseUp" 
+                              ItemsSource="{Binding Path=Lines}" MouseUp="ListViewLines_MouseUp" 
                                   MouseDoubleClick="ListViewLines_MouseDoubleClick">
                             <ListView.View>
                                 <GridView>
@@ -699,7 +699,7 @@
                         </Grid.RowDefinitions>
                         <ListView x:Name="ListViewStations" Grid.Row="1" Grid.Column="1"
                                   Grid.ColumnSpan="2" Grid.RowSpan="6"
-                              ItemsSource="{Binding}" MouseUp="ListViewStations_MouseUp">
+                              ItemsSource="{Binding Path=Stops}" MouseUp="ListViewStations_MouseUp">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
@@ -797,7 +797,7 @@
                         </Grid.RowDefinitions>
                         <ListView x:Name="ListViewDrivers" Grid.Row="1" Grid.Column="1"
                                   Grid.ColumnSpan="5" Grid.RowSpan="6"
-                              ItemsSource="{Binding}" >
+                              ItemsSource="{Binding Path=Drivers}" >
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>

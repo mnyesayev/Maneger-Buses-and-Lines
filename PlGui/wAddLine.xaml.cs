@@ -22,15 +22,13 @@ namespace PlGui
     public partial class wAddLine : Window
     {
         IBL bl;
-        ObservableCollection<PO.Line> Lines = new ObservableCollection<PO.Line>();
-        ObservableCollection<PO.BusStop> Stops = new ObservableCollection<PO.BusStop>();
+        PO.Lists Lists;
         public bool IsSuccssed { get; private set; }
-        public wAddLine(IBL bL, ObservableCollection<PO.Line> lines,ObservableCollection<PO.BusStop> stops)
+        public wAddLine(IBL bL,PO.Lists lists)
         {
             InitializeComponent();
             bl = bL;
-            Lines = lines;
-            Stops = stops;
+            Lists = lists; 
             List<BO.Areas> areas = new List<BO.Areas>();
             for (int i = 0; i < 7; i++)
                 areas.Add((BO.Areas)i);
@@ -103,17 +101,18 @@ namespace PlGui
                 PO.Line newLine = new PO.Line();
                 var upLine = bl.AddLine(tbAddLineNumber.Text, area, stops, "");
                 upLine.DeepCopyTo(newLine);
-                Lines.Add(newLine);
-                var index1=Stops.ToList().FindIndex((BusStop) => BusStop.Code == code1);
-                var index2=Stops.ToList().FindIndex((BusStop) => BusStop.Code == code2);
+                Lists.Lines.Add(newLine);
+                Lists.Lines =new ObservableCollection<PO.Line>(Lists.Lines.OrderBy(line => line.NumLine));
+                var index1= Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == code1);
+                var index2= Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == code2);
                 var upstop1=bl.GetStop(code1);
                 var upstop2=bl.GetStop(code2);
                 var newStop1 = new PO.BusStop();
                 var newStop2 = new PO.BusStop();
                 upstop1.DeepCopyTo(newStop1);
                 upstop2.DeepCopyTo(newStop2);
-                Stops[index1].LinesPassInStop=newStop1.LinesPassInStop;
-                Stops[index2].LinesPassInStop=newStop2.LinesPassInStop;
+                Lists.Stops[index1].LinesPassInStop=newStop1.LinesPassInStop;
+                Lists.Stops[index2].LinesPassInStop=newStop2.LinesPassInStop;
                 this.Close();
             }
             catch (Exception)

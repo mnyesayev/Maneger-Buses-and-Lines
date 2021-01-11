@@ -24,46 +24,46 @@ namespace PlGui
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window 
     {
         public IBL bl = BlFactory.GetBL();
-        ObservableCollection<PO.BusStop> Stops = new ObservableCollection<PO.BusStop>();
-        ObservableCollection<PO.Bus> buses = new ObservableCollection<PO.Bus>();
-        ObservableCollection<PO.Line> Lines = new ObservableCollection<PO.Line>();
-        ObservableCollection<BO.Driver> drivers = new ObservableCollection<BO.Driver>();
-
+        //ObservableCollection<PO.BusStop> Stops= new ObservableCollection<PO.BusStop>();
+        //ObservableCollection<PO.Bus> Buses = new ObservableCollection<PO.Bus>();
+        //ObservableCollection<PO.Line> Lines  = new ObservableCollection<PO.Line>();
+        //ObservableCollection<BO.Driver> Drivers  = new ObservableCollection<BO.Driver>();
+        PO.Lists Lists = new PO.Lists();
         public MainWindow()
         {
             InitializeComponent();
-
-            ListViewStations.DataContext = Stops;
+            this.DataContext = Lists;
+            //ListViewStations.DataContext = Lists.Stops;
             new Thread(() =>
             {
                 foreach (var item in bl.GetBusStops())
                 {
-                    this.Dispatcher.Invoke(() => Stops.Add(new PO.BusStop()));
-                    Cloning.DeepCopyTo(item, Stops[Stops.Count - 1]);
+                    this.Dispatcher.Invoke(() => Lists.Stops.Add(new PO.BusStop()));
+                    Cloning.DeepCopyTo(item, Lists.Stops[Lists.Stops.Count - 1]);
                 }
             }).Start();
             foreach (var item in bl.GetBuses())
             {
-                buses.Add(new PO.Bus());
-                Cloning.DeepCopyTo(item, buses[buses.Count - 1]);
+                Lists.Buses.Add(new PO.Bus());
+                Cloning.DeepCopyTo(item, Lists.Buses[Lists.Buses.Count - 1]);
             }
-            ListViewBuses.DataContext = buses;
+            //ListViewBuses.DataContext = Lists.Buses;
 
             foreach (var item in bl.GetLines())
             {
-                Lines.Add(new PO.Line());
-                Cloning.DeepCopyTo(item, Lines[Lines.Count - 1]);
+                Lists.Lines.Add(new PO.Line());
+                Cloning.DeepCopyTo(item, Lists.Lines[Lists.Lines.Count - 1]);
             }
-            ListViewLines.DataContext = Lines;
+            //ListViewLines.DataContext = Lines;
             foreach (var item in bl.GetDrivers())
             {
-                drivers.Add(new BO.Driver());
-                Cloning.DeepCopyTo(item, drivers[drivers.Count - 1]);
+                Lists.Drivers.Add(new BO.Driver());
+                Cloning.DeepCopyTo(item, Lists.Drivers[Lists.Drivers.Count - 1]);
             }
-            ListViewDrivers.DataContext = drivers;
+            //ListViewDrivers.DataContext = Drivers;
         }
 
         private void bLogIn_Click(object sender, RoutedEventArgs e)
@@ -216,8 +216,6 @@ namespace PlGui
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-
-
             signUpGridPart2.Visibility = Visibility.Hidden;
 
             new Thread(() =>
@@ -301,7 +299,7 @@ namespace PlGui
 
         private void AddLine_Click(object sender, RoutedEventArgs e)
         {
-            wAddLine addLine = new wAddLine(bl, Lines, Stops);
+            wAddLine addLine = new wAddLine(bl, Lists);
             addLine.ShowDialog();
         }
 
@@ -314,7 +312,7 @@ namespace PlGui
                 return;
             if (bl.DeleteLine(l.IdLine))
             {
-                Lines.Remove(l);
+                Lists.Lines.Remove(l);
                 ListViewStopsOfLine.Visibility = Visibility.Hidden;
                 AddStopLine.Visibility = Visibility.Hidden;
                 new Thread(() =>
@@ -323,11 +321,11 @@ namespace PlGui
                                   select stopLine.CodeStop;
                     foreach (var item in tempLST)
                     {
-                        var index = Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
+                        var index = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
                         var upStop = bl.GetStop(item);
                         var temp = new PO.BusStop();
                         Cloning.DeepCopyTo(upStop, temp);
-                        Stops[index].LinesPassInStop = temp.LinesPassInStop;
+                        Lists.Stops[index].LinesPassInStop = temp.LinesPassInStop;
                     }
                 }).Start();
             }
@@ -354,7 +352,7 @@ namespace PlGui
             }
             var temp = new PO.Bus();
             Cloning.DeepCopyTo(newBus, temp);
-            buses.Add(temp);
+            Lists.Buses.Add(temp);
         }
 
         private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -369,7 +367,7 @@ namespace PlGui
             try
             {
                 bl.DeleteBus((int)delbus.IdDelbus);
-                buses.Remove(buses.ToList().Find((Bus) => Bus.Id == delbus.IdDelbus));
+                Lists.Buses.Remove(Lists.Buses.ToList().Find((Bus) => Bus.Id == delbus.IdDelbus));
             }
             catch (DeleteException ex)
             {
@@ -391,7 +389,7 @@ namespace PlGui
                     this.Dispatcher.Invoke(() =>
                     {
                         SearchBus.IsEnabled = false;
-                        ListViewBuses.SelectedItem = buses.ToList().Find((Bus) => Bus.Id == searchBus.busID);
+                        ListViewBuses.SelectedItem = Lists.Buses.ToList().Find((Bus) => Bus.Id == searchBus.busID);
                         ListViewBuses.ScrollIntoView(ListViewBuses.SelectedItem);
                         if (!searchBus.IsVisible)
                             flag = false;
@@ -405,7 +403,7 @@ namespace PlGui
 
         private void AddStopLine_Click(object sender, RoutedEventArgs e)
         {
-            var addStopLine = new addStopLine(bl, Lines, Stops)
+            var addStopLine = new addStopLine(bl, Lists)
             {
                 DataContext = ListViewLines.SelectedItem
             };
@@ -417,7 +415,7 @@ namespace PlGui
         {
 
             uint id = 123456789;
-            ListViewDrivers.SelectedItem = drivers.ToList().Find((Driver) => Driver.Id == id);
+            ListViewDrivers.SelectedItem = Lists.Drivers.ToList().Find((Driver) => Driver.Id == id);
             ListViewDrivers.ScrollIntoView(ListViewDrivers.SelectedItem);
 
         }
@@ -436,7 +434,7 @@ namespace PlGui
                     if (searchStop.itsNumber == true)
                         this.Dispatcher.Invoke(() =>
                         {
-                            ListViewStations.SelectedItem = Stops.ToList().Find((BusStop) => BusStop.Code == searchStop.CodeStop);
+                            ListViewStations.SelectedItem = Lists.Stops.ToList().Find((BusStop) => BusStop.Code == searchStop.CodeStop);
                             ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
 
                             if (!searchStop.IsVisible)
@@ -445,7 +443,7 @@ namespace PlGui
                     else
                         this.Dispatcher.Invoke(() =>
                         {
-                            ListViewStations.SelectedItem = Stops.ToList().Find((BusStop) => BusStop.Name == searchStop.NameStop);
+                            ListViewStations.SelectedItem = Lists.Stops.ToList().Find((BusStop) => BusStop.Name == searchStop.NameStop);
                             ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
 
                             if (!searchStop.IsVisible)
@@ -471,7 +469,7 @@ namespace PlGui
                     this.Dispatcher.Invoke(() =>
                     {
                         SearchLine.IsEnabled = false;
-                        ListViewLines.SelectedItem = Lines.ToList().Find((Line) => Line.NumLine == searchLine.numLine);
+                        ListViewLines.SelectedItem = Lists.Lines.ToList().Find((Line) => Line.NumLine == searchLine.numLine);
                         ListViewLines.ScrollIntoView(ListViewLines.SelectedItem);
 
                         if (!searchLine.IsVisible)
@@ -510,18 +508,18 @@ namespace PlGui
                 MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            int indexLine = Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
+            int indexLine = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
             var temp = new PO.Line();
             Cloning.DeepCopyTo(upline, temp);
-            Lines[indexLine].StopsInLine = temp.StopsInLine;
-            Lines[indexLine].NameFirstLineStop = temp.NameFirstLineStop;
-            Lines[indexLine].NameLastLineStop = temp.NameLastLineStop;
+            Lists.Lines[indexLine].StopsInLine = temp.StopsInLine;
+            Lists.Lines[indexLine].NameFirstLineStop = temp.NameFirstLineStop;
+            Lists.Lines[indexLine].NameLastLineStop = temp.NameLastLineStop;
             //for old stop
-            var indexdeleteStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
+            var indexdeleteStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
             var upstop = bl.GetStop(StopLine.CodeStop);
             var tempStop1 = new PO.BusStop();
             upstop.DeepCopyTo(tempStop1);
-            Stops[indexdeleteStop].LinesPassInStop = tempStop1.LinesPassInStop;
+            Lists.Stops[indexdeleteStop].LinesPassInStop = tempStop1.LinesPassInStop;
             //for other stops
             new Thread(() => 
             {
@@ -529,11 +527,11 @@ namespace PlGui
                               select stopLine.CodeStop;
                 foreach (var item in tempLST)
                 {
-                    var indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
+                    var indexStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
                     var upStop = bl.GetStop(item);
                     var tempBusStop = new PO.BusStop();
                     Cloning.DeepCopyTo(upStop, tempBusStop);
-                    Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
+                    Lists.Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
                 }
             }).Start();
           
@@ -562,7 +560,7 @@ namespace PlGui
             wEdit.ShowDialog();
             if (wEdit.IsSave)
             {
-                foreach (var item in Lines)
+                foreach (var item in Lists.Lines)
                 {
                     var index = item.StopsInLine.ToList().FindIndex((StopLine) =>
                       { return StopLine.CodeStop == sl.CodeStop && StopLine.NextStop == sl.NextStop; });
@@ -603,9 +601,9 @@ namespace PlGui
         {
             if (ListViewLines.SelectedItem is PO.Line)
             {
-                wLineInfo lineInfo = new wLineInfo(bl, Lines, Stops);
+                wLineInfo lineInfo = new wLineInfo(bl, Lists);
                 lineInfo.DataContext = ListViewLines.SelectedItem;
-                lineInfo.ComboBoxLineInfo.DataContext = Lines;
+                lineInfo.ComboBoxLineInfo.DataContext = Lists.Lines;
                 lineInfo.ComboBoxLineInfo.SelectedItem = lineInfo.DataContext;
                 lineInfo.ShowDialog();
             }
@@ -616,11 +614,11 @@ namespace PlGui
         {
             if ((sender as Button).DataContext is PO.LineOnStop)
             {
-                wLineInfo lineInfo = new wLineInfo(bl, Lines, Stops);
+                wLineInfo lineInfo = new wLineInfo(bl, Lists);
                 var l=(PO.LineOnStop) (sender as Button).DataContext;
-                var i = Lines.ToList().FindIndex((line) => line.IdLine == l.IdLine);
-                lineInfo.DataContext = Lines[i];
-                lineInfo.ComboBoxLineInfo.DataContext = Lines;
+                var i = Lists.Lines.ToList().FindIndex((line) => line.IdLine == l.IdLine);
+                lineInfo.DataContext = Lists.Lines[i];
+                lineInfo.ComboBoxLineInfo.DataContext = Lists.Lines;
                 lineInfo.ComboBoxLineInfo.SelectedItem = lineInfo.DataContext;
                 lineInfo.ShowDialog();
             }
@@ -629,7 +627,7 @@ namespace PlGui
 
         private void AddStop_Click(object sender, RoutedEventArgs e)
         {
-            wAddStop addStop = new wAddStop();
+            wAddStop addStop = new wAddStop(bl, Lists);
             addStop.ShowDialog();
         }
     }

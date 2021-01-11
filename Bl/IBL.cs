@@ -57,6 +57,7 @@ namespace BlApi
         IEnumerable<LineOnStop> GetLinesInStop(int code);
         IEnumerable<BusStop> GetBusStops();
         BusStop GetStop(int code);
+        BusStop AddStop(BusStop stop);
         string GetNameStop(int code);
         BusStop UpdateName(int code, string name);
         void DeleteBusStop(int code);

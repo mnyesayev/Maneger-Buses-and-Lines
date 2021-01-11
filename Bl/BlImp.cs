@@ -55,7 +55,34 @@ namespace Bl
                    orderby newBusStop.Code
                    select newBusStop;
         }
-
+        public BusStop AddStop(BusStop stop)
+        {
+            if(stop.Code>999999||stop.Code<1)
+            {
+                throw new AddException("BusStop", stop.Code.ToString());
+            }
+            if(stop.Name=="")
+                throw new AddException("BusStop", stop.Name.ToString());
+            if(stop.Latitude>90||stop.Latitude<-90)
+                throw new AddException("BusStop", stop.Latitude.ToString());
+            if(stop.Longitude>180||stop.Longitude<-180)
+                throw new AddException("BusStop", stop.Longitude.ToString());
+            try
+            {
+                var stopDO = new DO.BusStop();
+                stop.CopyPropertiesTo(stopDO);
+                stopDO.Active = true;
+                stopDO.PassLines = false;
+                dal.AddStop(stopDO);
+            }
+            catch (DO.BusStopExceptionDO )
+            {
+                return null;
+            }
+            var newStop = new BusStop();
+            stop.CopyPropertiesTo(newStop);
+            return newStop;
+        }
         public IEnumerable<LineOnStop> GetLinesInStop(int code)
         {
             return from Line in GetLines()
@@ -402,6 +429,7 @@ namespace Bl
                        StopsInLine = GetStopsInLine(Line.IdLine),
                        MoreInfo = Line.MoreInfo
                    }
+                   orderby newLine.NumLine
                    select newLine;
         }
         public Line AddLine(string numLine, Areas area, IEnumerable<StopLine> stops, string moreInfo)
@@ -426,6 +454,10 @@ namespace Bl
                             }
                             select sL;
             dal.AddRouteStops(stopsLine);
+            foreach (var item in stops)
+            {
+                dal.UpdateBusStop(item.CodeStop, (stop) => stop.PassLines = true);
+            }
             return new Line()
             {
                 IdLine = idLine,

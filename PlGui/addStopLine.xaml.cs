@@ -22,16 +22,15 @@ namespace PlGui
     public partial class addStopLine : Window
     {
         IBL bl;
-        ObservableCollection<PO.Line> Lines;
-        ObservableCollection<PO.BusStop> Stops;
+        //ObservableCollection<PO.Line> Lines;
+        //ObservableCollection<PO.BusStop> Stops;
+        PO.Lists Lists;
         public bool IsSuccessed { get; private set; }
-        public addStopLine(IBL bl,ObservableCollection<PO.Line> lines, ObservableCollection<PO.BusStop> stops)
+        public addStopLine(IBL bl,PO.Lists lists)
         {
             InitializeComponent();
             this.bl = bl;
-            Lines = lines;
-            Stops = stops;
-            
+            Lists = lists;
         }
 
         private void buttonAddStopLine_Click(object sender, RoutedEventArgs e)
@@ -95,23 +94,23 @@ namespace PlGui
                     }
                 }
             }
-            int index=Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
+            int index= Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
             var temp = new PO.Line();
             Cloning.DeepCopyTo(upline, temp);
-            Lines[index].StopsInLine=temp.StopsInLine;
-            Lines[index].NameFirstLineStop = temp.NameFirstLineStop;
-            Lines[index].NameLastLineStop = temp.NameLastLineStop;
+            Lists.Lines[index].StopsInLine=temp.StopsInLine;
+            Lists.Lines[index].NameFirstLineStop = temp.NameFirstLineStop;
+            Lists.Lines[index].NameLastLineStop = temp.NameLastLineStop;
             new Thread(() =>
             {
                 var tempLST = from stopLine in upline.StopsInLine
                               select stopLine.CodeStop;
                 foreach (var item in tempLST)
                 {
-                    var indexStop = Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
+                    var indexStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
                     var upStop = bl.GetStop(item);
                     var tempBusStop = new PO.BusStop();
                     Cloning.DeepCopyTo(upStop, tempBusStop);
-                    Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
+                    Lists.Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
                 }
             }).Start();
             this.Close();

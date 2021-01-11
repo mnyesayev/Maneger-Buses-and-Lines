@@ -25,6 +25,7 @@ namespace DalApi
         DO.BusStop GetBusStop(int code);
         IEnumerable<DO.BusStop> GetStops();
         IEnumerable<DO.BusStop> GetStopsBy(Predicate<DO.BusStop> predicate);
+        void AddStop(DO.BusStop stop);
         void UpdateBusStop(DO.BusStop busStop);
         void UpdateBusStop(int code, Action<DO.BusStop> action);
         void DeleteBusStop(int code);
