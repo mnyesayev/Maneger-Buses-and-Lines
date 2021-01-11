@@ -136,13 +136,13 @@ namespace Bl
             }
             if (index <= stopsInLine.Count())
                 curStop = dal.GetStopLineByIndex(idLine, index);
-            if (index > stopsInLine.Count())
+            if (index > stopsInLine.Count()+1)
                 throw new AddException("StopLine", $"{index}", "The index exceeds the station limit");
             if (curStop == null)
                 return null;
             try
             {
-                if (index != 1)
+                if (index != 1&&index!=stopsInLine.Count+1)
                 {
                     var d1 = GetDistance(curStop.PrevStop, codeStop);
                 }
@@ -153,11 +153,26 @@ namespace Bl
             }
             try
             {
-                var d2 = GetDistance(codeStop, curStop.CodeStop);
+                if (index != stopsInLine.Count + 1)
+                {
+                    var d1 = GetDistance(codeStop, curStop.CodeStop);
+                }
             }
             catch (ConsecutiveStopsException ex)
             {
                 throw new ConsecutiveStopsException(codeStop, curStop.CodeStop, "No time and distance available", ex);
+            }
+            try
+            {
+                if (index == stopsInLine.Count() + 1)
+                {
+                    var d1 = GetDistance(curStop.CodeStop, codeStop);
+                }
+            }
+            catch (ConsecutiveStopsException ex)
+            {
+
+                throw new ConsecutiveStopsException(curStop.CodeStop, codeStop, "No time and distance available", ex);
             }
 
             var l = dal.GetLine(idLine);

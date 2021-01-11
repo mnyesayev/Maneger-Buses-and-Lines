@@ -46,21 +46,18 @@ namespace PlGui
             try
             {
                 int code = int.Parse(tBCode.Text);
-                try
-                {
-                    upline = bl.AddStopLine(idLine, code, int.Parse(tBNewIndex.Text));
-                }
-                catch (BO.AddException)
-                {
-                    tBNewIndex.Background = Brushes.Red;
-                    return;
-                }
+                upline = bl.AddStopLine(idLine, code, int.Parse(tBNewIndex.Text));               
                 if (upline == null)
                 {
                     MessageBox.Show($"stop {code} not exits in system", "Add Error", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
                 IsSuccessed = true;
+            }
+            catch (BO.AddException)
+            {
+                tBNewIndex.Background = Brushes.Red;
+                return;
             }
             catch (BO.ConsecutiveStopsException ex)
             {
@@ -101,7 +98,6 @@ namespace PlGui
             Lines[index].StopsInLine=temp.StopsInLine;
             Lines[index].NameFirstLineStop = temp.NameFirstLineStop;
             Lines[index].NameLastLineStop = temp.NameLastLineStop;
-            //ListViewStops.DataContext = Lines[index];
             new Thread(() =>
             {
                 var tempLST = from stopLine in upline.StopsInLine
