@@ -3,10 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PlGui"
+       xmlns:local="clr-namespace:PlGui"  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="wSearchDriver" Height="450" Width="800">
+        Title="Search Driver" Height="100" Width="300"
+        FontWeight="Bold" FontFamily="Arial"
+        WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+
+        <TextBox x:Name="TbDriverId" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
+                 FontWeight="Bold" VerticalAlignment="Stretch" 
+                 FontSize="15"  TextChanged="TbDriverId_TextChanged"
+                 materialDesign:HintAssist.Hint="Enter Driver ID" KeyUp="TbDriverId_KeyUp"
+                 />
+
     </Grid>
 </Window>

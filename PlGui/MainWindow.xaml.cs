@@ -416,10 +416,26 @@ namespace PlGui
         private void SearchDriver_Click(object sender, RoutedEventArgs e)
         {
 
-            uint id = 123456789;
-            ListViewDrivers.SelectedItem = drivers.ToList().Find((Driver) => Driver.Id == id);
-            ListViewDrivers.ScrollIntoView(ListViewDrivers.SelectedItem);
+            wSearchDriver searchDriverWindow = new wSearchDriver();
+            searchDriverWindow.Show();
+            new Thread(() =>
+            {
 
+                bool flag = true;
+                while (flag)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        SearchDriver.IsEnabled = false;
+                        ListViewDrivers.SelectedItem = drivers.ToList().Find((Driver) => Driver.Id == searchDriverWindow.DriverID);
+                        ListViewDrivers.ScrollIntoView(ListViewDrivers.SelectedItem);
+                        if (!searchDriverWindow.IsVisible)
+                            flag = false;
+                    });
+                    Thread.Sleep(500);
+                    this.Dispatcher.Invoke(() => SearchDriver.IsEnabled = true);
+                }
+            }).Start();
         }
 
         private void SearchStop_Click(object sender, RoutedEventArgs e)
