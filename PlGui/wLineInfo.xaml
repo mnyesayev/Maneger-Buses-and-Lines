@@ -70,7 +70,7 @@
         <Border BorderBrush="Purple" Grid.Column="3" Grid.Row="2"
                 Grid.ColumnSpan="3" Grid.RowSpan="5" BorderThickness="2"
                 CornerRadius="5"/>
-        <ListView x:Name="listViewLineInfo" 
+        <ListView x:Name="listViewLineInfo" Margin="3"
                  Grid.Column="3" Grid.Row="2" ItemsSource="{Binding Path=StopsInLine}" 
                   Grid.ColumnSpan="3" Grid.RowSpan="5">
             <ListView.View>

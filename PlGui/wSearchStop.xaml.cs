@@ -38,6 +38,13 @@ namespace PlGui
                 CodeStop = int.Parse(TbStopCode.Text);
                 itsNumber = true;
             }
+            
+        }
+
+        private void TbStopCode_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                this.Close();
         }
     }
 }

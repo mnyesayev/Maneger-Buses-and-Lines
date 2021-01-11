@@ -27,7 +27,7 @@
         <TextBox x:Name="TbLineCode" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
                  FontWeight="Bold" VerticalAlignment="Stretch" 
                  FontSize="15" TextChanged="TbLineCode_TextChanged"
-                 materialDesign:HintAssist.Hint="Enter num line"/>
+                 materialDesign:HintAssist.Hint="Enter num line" KeyUp="TbLineCode_KeyUp"/>
 
     </Grid>
 </Window>

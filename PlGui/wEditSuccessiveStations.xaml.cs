@@ -25,6 +25,7 @@ namespace PlGui
         {
             InitializeComponent();
             this.bl = bl;
+           
         }
 
         private void saveSucc_Click(object sender, RoutedEventArgs e)
@@ -44,6 +45,31 @@ namespace PlGui
         {
             IsSave=false;
             this.Close();
+        }
+
+        private void tbcode1_LayoutUpdated(object sender, EventArgs e)
+        {
+            try
+            {
+                tbName1.Text = bl.GetNameStop(int.Parse(tbcode1.Text));
+            }
+            catch
+            {
+                tbName1.Text = "Something went wrong here";
+            }
+
+        }
+
+        private void tbcode2_LayoutUpdated(object sender, EventArgs e)
+        {
+            try
+            {
+                tbName2.Text = bl.GetNameStop(int.Parse(tbcode2.Text));
+            }
+            catch
+            {
+                tbName2.Text = "Something went wrong here";
+            }
         }
     }
 }
