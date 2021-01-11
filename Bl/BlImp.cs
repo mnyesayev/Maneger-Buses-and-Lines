@@ -56,11 +56,16 @@ namespace Bl
                    select newBusStop;
         }
 
-        public IEnumerable<Line> GetLinesInStop(int code)
+        public IEnumerable<LineOnStop> GetLinesInStop(int code)
         {
             return from Line in GetLines()
                    where Line.StopsInLine.Any((StopLine) => StopLine.CodeStop == code)
-                   select Line;
+                   select new LineOnStop() 
+                   {   IdLine = Line.IdLine,
+                       NumLine = Line.NumLine,
+                       NameFirstLineStop=GetNameStop(Line.StopsInLine.First().CodeStop),
+                       NameLastLineStop=GetNameStop(Line.StopsInLine.Last().CodeStop)
+                   };
         }
         public string GetNameStop(int code)
         {

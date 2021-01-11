@@ -54,7 +54,7 @@ namespace BlApi
         TimeSpan GetTime(int code1, int code2);
         #endregion
         #region BusStop
-        IEnumerable<Line> GetLinesInStop(int code);
+        IEnumerable<LineOnStop> GetLinesInStop(int code);
         IEnumerable<BusStop> GetBusStops();
         BusStop GetStop(int code);
         string GetNameStop(int code);

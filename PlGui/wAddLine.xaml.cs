@@ -106,8 +106,14 @@ namespace PlGui
                 Lines.Add(newLine);
                 var index1=Stops.ToList().FindIndex((BusStop) => BusStop.Code == code1);
                 var index2=Stops.ToList().FindIndex((BusStop) => BusStop.Code == code2);
-                Stops[index1].LinesPassInStop.Add(newLine);
-                Stops[index2].LinesPassInStop.Add(newLine);
+                var upstop1=bl.GetStop(code1);
+                var upstop2=bl.GetStop(code2);
+                var newStop1 = new PO.BusStop();
+                var newStop2 = new PO.BusStop();
+                upstop1.DeepCopyTo(newStop1);
+                upstop2.DeepCopyTo(newStop2);
+                Stops[index1].LinesPassInStop=newStop1.LinesPassInStop;
+                Stops[index2].LinesPassInStop=newStop2.LinesPassInStop;
                 this.Close();
             }
             catch (Exception)

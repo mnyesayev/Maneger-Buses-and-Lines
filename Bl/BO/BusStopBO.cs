@@ -32,6 +32,6 @@ namespace BO
         /// <summary>
         /// Represents the lines that pass in the stop/station 
         /// </summary>
-        public IEnumerable<Line> LinesPassInStop { get; set; }
+        public IEnumerable<LineOnStop> LinesPassInStop { get; set; }
     }
 }

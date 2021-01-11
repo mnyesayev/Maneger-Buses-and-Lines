@@ -614,11 +614,12 @@ namespace PlGui
 
         private void bStop_lineInfo_Click(object sender, RoutedEventArgs e)
         {
-            if ((sender as Button).DataContext is PO.Line)
+            if ((sender as Button).DataContext is PO.LineOnStop)
             {
                 wLineInfo lineInfo = new wLineInfo(bl, Lines, Stops);
-                var l=(PO.Line) (sender as Button).DataContext;
-                lineInfo.DataContext = l;
+                var l=(PO.LineOnStop) (sender as Button).DataContext;
+                var i = Lines.ToList().FindIndex((line) => line.IdLine == l.IdLine);
+                lineInfo.DataContext = Lines[i];
                 lineInfo.ComboBoxLineInfo.DataContext = Lines;
                 lineInfo.ComboBoxLineInfo.SelectedItem = lineInfo.DataContext;
                 lineInfo.ShowDialog();
