@@ -73,6 +73,34 @@
         <ListView x:Name="listViewLineInfo" Margin="3"
                  Grid.Column="3" Grid.Row="2" ItemsSource="{Binding Path=StopsInLine}" 
                   Grid.ColumnSpan="3" Grid.RowSpan="5">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    
+                    <MenuItem Header="Delete" Click="DeleteStopLine_Click"
+                              ToolTip="Delete Stop Line" >
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Edit" Click="ChangeStopLine_Click"
+                              ToolTip="Change Stop Line details">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="Pencil"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Show distance and time" Click="ShowDistanceAndTime_Click" >
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="Eye" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Hide distance and time" Click="HideDistanceAndTime_Click" >
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="EyeOff" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>
@@ -86,11 +114,11 @@
                                                  DisplayMemberBinding="{Binding CodeStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <GridViewColumn Header="Name" Width="auto"
                                                  DisplayMemberBinding="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <GridViewColumn Header="Drive Time" Width="auto"
+                    <GridViewColumn x:Name="DriveTime" Header="Drive Time" Width="0"
                                                  DisplayMemberBinding="{Binding AvregeDriveTimeToNext,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <GridViewColumn Header="Distance" Width="auto"
+                    <GridViewColumn x:Name="Distance" Header="Distance" Width="0" 
                                                  DisplayMemberBinding="{Binding DistanceToNext, StringFormat={}{0:F2}km,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <GridViewColumn Header="Options" Width="auto">
+                    <!--<GridViewColumn Header="Options" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -107,7 +135,7 @@
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    </GridViewColumn>-->
                 </GridView>
             </ListView.View>
 

@@ -32,7 +32,8 @@ namespace PlGui
 
         private void DeleteStopLine_Click(object sender, RoutedEventArgs e)
         {
-            var StopLine = (PO.StopLine)(sender as Button).DataContext;
+            PO.StopLine StopLine = (PO.StopLine)listViewLineInfo.SelectedItem;
+            // var StopLine = (PO.StopLine)(sender as Button).DataContext;
             BO.Line upline;
             try
             {
@@ -75,7 +76,8 @@ namespace PlGui
 
         private void ChangeStopLine_Click(object sender, RoutedEventArgs e)
         {
-            PO.StopLine sl = (PO.StopLine)(sender as Button).DataContext;
+            PO.StopLine sl = (PO.StopLine)listViewLineInfo.SelectedItem;
+            //PO.StopLine sl = (PO.StopLine)(sender as Button).DataContext;
             wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
             wEdit.tbcode1.Text = sl.CodeStop.ToString();
             wEdit.tbcode2.Text = sl.NextStop.ToString();
@@ -113,6 +115,18 @@ namespace PlGui
             {
                 this.DataContext = ComboBoxLineInfo.SelectedItem;
             }
+        }
+
+        private void ShowDistanceAndTime_Click(object sender, RoutedEventArgs e)
+        {
+            DriveTime.Width = 100;
+            Distance.Width = 100;
+        }
+
+        private void HideDistanceAndTime_Click(object sender, RoutedEventArgs e)
+        {
+            DriveTime.Width = 0;
+            Distance.Width = 0;
         }
     }
 }
