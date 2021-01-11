@@ -21,7 +21,7 @@ namespace Dal
         string busesPath = @"BusesXml.xml"; //XElement
 
         string runNumbersPath = @"runingNumbersXml.xml";//XMLSerializer
-        string busStopsPath = @"BusStopXml.xml"; //XMLSerializer
+        string busStopsPath = @"BusStopsXml.xml"; //XMLSerializer
         string busesOnTripPath = @"BusesOnTripXml.xml"; //XMLSerializer
         string consecutiveStopsPath = @"ConsecutiveStopsXml.xml"; //XMLSerializer
         string driversPath = @"DriversXml.xml"; //XMLSerializer

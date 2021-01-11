@@ -33,7 +33,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML", "XML", "{452C16DF-369A-4670-905E-CBECEA74BD11}"
 	ProjectSection(SolutionItems) = preProject
+		bin\XML\BusesOnTripXml.xml = bin\XML\BusesOnTripXml.xml
+		bin\XML\BusesXml.xml = bin\XML\BusesXml.xml
+		bin\XML\BusStopsXml.xml = bin\XML\BusStopsXml.xml
+		bin\XML\ConsecutiveStopsXml.xml = bin\XML\ConsecutiveStopsXml.xml
+		bin\XML\DriversXml.xml = bin\XML\DriversXml.xml
+		bin\XML\LinesXml.xml = bin\XML\LinesXml.xml
+		bin\XML\LineTripsXml.xml = bin\XML\LineTripsXml.xml
 		bin\XML\runingNumbersXml.xml = bin\XML\runingNumbersXml.xml
+		bin\XML\StopLinesXml.xml = bin\XML\StopLinesXml.xml
+		bin\XML\UsersXml.xml = bin\XML\UsersXml.xml
 	EndProjectSection
 EndProject
 Global
