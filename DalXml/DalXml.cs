@@ -171,37 +171,77 @@ namespace Dal
         #region BusStop
         public BusStop GetBusStop(int code)
         {
-            throw new NotImplementedException();
+            List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopsPath);
+            BusStop bStop = ListBusStops.Find(BusStop => BusStop.Code == code);
+
+            return bStop; // if bStop == null return null
         }
 
         public IEnumerable<BusStop> GetStops()
         {
-            throw new NotImplementedException();
+            List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopsPath);
+            return from bStop in ListBusStops
+                   where bStop.Active == true
+                   select bStop;
         }
 
         public IEnumerable<BusStop> GetStopsBy(Predicate<BusStop> predicate)
         {
-            throw new NotImplementedException();
+            List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopsPath);
+            return from Stop in ListBusStops
+                   where Stop.Active == true && predicate(Stop)
+                   select Stop;
         }
 
         public void AddStop(BusStop stop)
         {
-            throw new NotImplementedException();
+            List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopsPath);
+
+            if (ListBusStops.FirstOrDefault(BusStop => BusStop.Code == stop.Code) != null)
+                throw new DO.BusStopExceptionDO(stop.Code, "Duplicate BusStop Code");
+
+            //if (GetBusStop(stop.Code) == null)
+            //    throw new DO.BusStopExceptionDO(stop.Code, "Missing BusStop Code");
+
+            ListBusStops.Add(stop); //no need to Clone()
+
+            XMLTools.SaveListToXMLSerializer(ListBusStops, busStopsPath);
         }
 
         public void UpdateBusStop(BusStop busStop)
         {
-            throw new NotImplementedException();
+            List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopsPath);
+
+            int index = ListBusStops.FindIndex((BusStop) => { return BusStop.Active && BusStop.Code == busStop.Code; });
+            if (index == -1)
+                throw new DO.BusStopExceptionDO(busStop.Code, "System not found the busStop");
+            ListBusStops[index] = busStop;
+
+            XMLTools.SaveListToXMLSerializer(ListBusStops, busStopsPath);
         }
 
         public void UpdateBusStop(int code, Action<BusStop> action)
         {
-            throw new NotImplementedException();
+            List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopsPath);
+            
+            int index = ListBusStops.FindIndex((BusStop) => { return BusStop.Active && BusStop.Code == code; });
+            if (index == -1)
+                throw new BusStopExceptionDO(code, "system not found the busStop");
+            action(ListBusStops[index]);
+
+            XMLTools.SaveListToXMLSerializer(ListBusStops, busStopsPath);
         }
 
         public void DeleteBusStop(int code)
         {
-            throw new NotImplementedException();
+            List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopsPath);
+
+            int index = ListBusStops.FindIndex((BusStop) => { return BusStop.Active && BusStop.Code == code; });
+            if (index == -1)
+                throw new BusStopExceptionDO(code, "The busStop is not exists");
+            ListBusStops[index].Active = false;
+            
+            XMLTools.SaveListToXMLSerializer(ListBusStops, busStopsPath);
         }
         #endregion
 
@@ -299,7 +339,7 @@ namespace Dal
         public Line GetLine(int idLine)
         {
             var lines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
-            var line=lines.Find((Line) => { return Line.Active && Line.IdLine == idLine; });
+            var line = lines.Find((Line) => { return Line.Active && Line.IdLine == idLine; });
             return line;
         }
 
@@ -315,14 +355,14 @@ namespace Dal
         {
             var lines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
             return from l in lines
-                   where l.Active = true&&predicate(l)
+                   where l.Active = true && predicate(l)
                    select l;
         }
 
         public void UpdateLine(Line line)
         {
             var lines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
-            var i = lines.FindIndex(l => l.Active&&l.IdLine == line.IdLine);
+            var i = lines.FindIndex(l => l.Active && l.IdLine == line.IdLine);
             if (i == -1)
                 throw new LineExceptionDO(line.IdLine, "system not found the line");
             lines[i] = line;
