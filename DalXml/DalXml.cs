@@ -197,13 +197,10 @@ namespace Dal
         {
             List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopsPath);
 
-            if (ListBusStops.FirstOrDefault(BusStop => BusStop.Code == stop.Code) != null)
+            if (ListBusStops.FirstOrDefault(BusStop => BusStop.Code == stop.Code && BusStop.Active == true) != null)
                 throw new DO.BusStopExceptionDO(stop.Code, "Duplicate BusStop Code");
 
-            //if (GetBusStop(stop.Code) == null)
-            //    throw new DO.BusStopExceptionDO(stop.Code, "Missing BusStop Code");
-
-            ListBusStops.Add(stop); //no need to Clone()
+            ListBusStops.Add(stop); 
 
             XMLTools.SaveListToXMLSerializer(ListBusStops, busStopsPath);
         }
