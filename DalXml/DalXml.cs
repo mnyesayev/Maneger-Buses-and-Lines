@@ -249,37 +249,79 @@ namespace Dal
 
         public void AddDriver(Driver driver)
         {
-            throw new NotImplementedException();
+            List<Driver> ListDrivers = XMLTools.LoadListFromXMLSerializer<Driver>(driversPath);
+
+            int index = ListDrivers.FindIndex((Driver) => { return Driver.Id == driver.Id; });
+            if (index == -1)
+                ListDrivers.Add(driver);
+            if (ListDrivers[index].Active == true)
+                throw new DriverExceptionDO(driver.Id, "The driver is already exists");
+            ListDrivers[index] = driver;
+
+            XMLTools.SaveListToXMLSerializer(ListDrivers, driversPath);
         }
 
         public IEnumerable<Driver> GetDrivers()
         {
-            throw new NotImplementedException();
+            List<Driver> ListDrivers = XMLTools.LoadListFromXMLSerializer<Driver>(driversPath);
+            return from Driver in ListDrivers
+                   where Driver.Active == true
+                   select Driver;
         }
 
         public IEnumerable<Driver> GetDriversBy(Predicate<Driver> predicate)
         {
-            throw new NotImplementedException();
+            List<Driver> ListDrivers = XMLTools.LoadListFromXMLSerializer<Driver>(driversPath);
+
+            return from Driver in ListDrivers
+                   where predicate(Driver) && Driver.Active == true
+                   select Driver;
         }
 
         public Driver GetDriver(int id)
         {
-            throw new NotImplementedException();
+            List<Driver> ListDrivers = XMLTools.LoadListFromXMLSerializer<Driver>(driversPath);
+
+            var driver = ListDrivers.Find((Driver) => { return Driver.Active && Driver.Id == id; });
+            if (driver == null)
+                return null;
+            return driver;
         }
 
         public void UpdateDriver(Driver newDriver)
         {
-            throw new NotImplementedException();
+            List<Driver> ListDrivers = XMLTools.LoadListFromXMLSerializer<Driver>(driversPath);
+
+            int index = ListDrivers.FindIndex((Driver) => { return Driver.Active && Driver.Id == newDriver.Id; });
+            if (index == -1)
+                throw new DriverExceptionDO(newDriver.Id, "System not found the driver");
+            ListDrivers[index] = newDriver;
+
+            XMLTools.SaveListToXMLSerializer(ListDrivers, driversPath);
         }
 
         public void UpdateDriver(int id, Action<Driver> action)
         {
-            throw new NotImplementedException();
+            List<Driver> ListDrivers = XMLTools.LoadListFromXMLSerializer<Driver>(driversPath);
+            
+            int index = ListDrivers.FindIndex((Driver) => { return Driver.Active && Driver.Id == id; });
+            if (index == -1)
+                throw new DriverExceptionDO(id, "System not found the driver");
+            action(ListDrivers[index]);
+           
+            XMLTools.SaveListToXMLSerializer(ListDrivers, driversPath);
         }
 
         public void DeleteDriver(int id)
         {
-            throw new NotImplementedException();
+            List<Driver> ListDrivers = XMLTools.LoadListFromXMLSerializer<Driver>(driversPath);
+
+            int index = ListDrivers.FindIndex((Driver) => { return Driver.Active && Driver.Id == id; });
+            if (index == -1)
+                throw new DriverExceptionDO(id, "The driver is not exists");
+            ListDrivers[index].Active = false;
+
+            XMLTools.SaveListToXMLSerializer(ListDrivers, driversPath);
         }
         #endregion
 
