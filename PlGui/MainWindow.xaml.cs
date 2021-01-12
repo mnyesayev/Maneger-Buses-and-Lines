@@ -510,12 +510,12 @@ namespace PlGui
 
         private void DeleteStopLine_Click(object sender, RoutedEventArgs e)
         {
-            //var StopLine = (PO.StopLine)(sender as Button).DataContext;
             var StopLine = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
+            var idLine = (ListViewStopsOfLine.DataContext as PO.Line).IdLine;
             BO.Line upline;
             try
             {
-                upline = bl.DeleteStopLine(StopLine.IdLine, StopLine.CodeStop, StopLine.NumStopInLine);
+                upline = bl.DeleteStopLine(idLine, StopLine.CodeStop, StopLine.NumStopInLine);
                 if (upline == null)
                     return;
             }

@@ -382,7 +382,6 @@ namespace Bl
                    let newStopLine = new BO.StopLine()
                    {
                        CodeStop = StopLine.CodeStop,
-                       IdLine = StopLine.IdLine,
                        Name = GetNameStop(StopLine.CodeStop),
                        NumStopInLine = StopLine.NumStopInLine,
                        NextStop = StopLine.NextStop,
