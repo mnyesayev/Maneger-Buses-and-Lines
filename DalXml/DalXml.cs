@@ -328,37 +328,79 @@ namespace Dal
         #region User
         public User GetUser(string userName)
         {
-            throw new NotImplementedException();
+            List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+            var user = ListUsers.Find((User) => { return User.Active && User.UserName == userName; });
+            if (user == null)
+                return null;
+            return user;
         }
 
         public User GetUser(string phone, DateTime dateTime)
         {
-            throw new NotImplementedException();
+            List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+
+            var user = ListUsers.Find((User) =>
+            { return User.Active && User.Phone == phone && User.Birthday == dateTime; });
+            if (user == null)
+                return null;
+            return user;
         }
 
         public void DeleteUser(string phone, DateTime dateTime)
         {
-            throw new NotImplementedException();
+            List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+
+            int index = ListUsers.FindIndex((User) => { return (User.Active && User.Phone == phone && User.Birthday == dateTime); });
+            if (index == -1)
+            {
+                throw new UserExceptionDO(phone, "The user is not exists");
+            }
+            ListUsers[index].Active = false;
+            XMLTools.SaveListToXMLSerializer(ListUsers, usersPath);
         }
 
         public void AddUser(User user)
         {
-            throw new NotImplementedException();
+            List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+            int index = ListUsers.FindIndex((User) => { return User.UserName == user.UserName; });
+            if (index == -1)
+            {
+                ListUsers.Add(user);
+                return;
+            }
+            if (ListUsers[index].Active == true)
+                throw new UserExceptionDO(user.UserName, "The User is already exists");
+            XMLTools.SaveListToXMLSerializer(ListUsers, usersPath);
         }
 
         public void UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+
+            int index = ListUsers.FindIndex((User) => { return User.Active && User.UserName == user.UserName; });
+            if (index == -1)
+                throw new UserExceptionDO(user.UserName, "System not found the userName");
+            ListUsers[index] = user;
+
+            XMLTools.SaveListToXMLSerializer(ListUsers, usersPath);
         }
 
         public IEnumerable<User> GetUsers()
         {
-            throw new NotImplementedException();
+            List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+
+            return from user in ListUsers
+                   where user.Active == true
+                   select user;
         }
 
         public IEnumerable<User> GetUsersBy(Predicate<User> predicate)
         {
-            throw new NotImplementedException();
+            List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+
+            return from user in ListUsers
+                   where predicate(user) && user.Active == true
+                   select user;
         }
         #endregion
 
@@ -435,52 +477,112 @@ namespace Dal
         #region StopLine
         public void AddStopLine(StopLine stopLine)
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+
+            var index = ListStopsLines.FindIndex((StopLine) =>
+            {
+                return StopLine.IdLine == stopLine.IdLine && StopLine.CodeStop == stopLine.CodeStop;
+            });
+            if (index == -1)
+            {
+                ListStopsLines.Add(stopLine);
+                XMLTools.SaveListToXMLSerializer(ListStopsLines, stopLinesPath);
+                return;
+            }
+            throw new StopLineExceptionDO(stopLine.IdLine, stopLine.CodeStop, "The stop Line is already exists");
+
+            
         }
 
         public void AddRouteStops(IEnumerable<StopLine> stops)
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+            ListStopsLines.AddRange(stops);
+            XMLTools.SaveListToXMLSerializer(ListStopsLines, stopLinesPath);
         }
 
         public StopLine GetStopLine(int idLine, int codeStop)
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+            var stopLine = ListStopsLines.Find((StopLine) =>
+            { return StopLine.IdLine == idLine && StopLine.CodeStop == codeStop; });
+            if (stopLine == null)
+                return null;
+            return stopLine;
         }
 
         public StopLine GetStopLineByIndex(int idLine, int index)
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+            var stopLine = ListStopsLines.Find((StopLine) =>
+            { return StopLine.IdLine == idLine && StopLine.NumStopInLine == index; });
+            if (stopLine == null)
+                return null;
+            return stopLine;
         }
 
         public IEnumerable<StopLine> GetStopLines()
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+            return from StopLine in ListStopsLines
+                   select StopLine;
         }
 
         public IEnumerable<StopLine> GetStopLinesBy(Predicate<StopLine> predicate)
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+            return from StopLine in ListStopsLines
+                   where predicate(StopLine)
+                   orderby StopLine.NumStopInLine
+                   select StopLine;
         }
 
         public void UpdateStopLine(StopLine stopLine)
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+            
+            int index = ListStopsLines.FindIndex((StopLine) =>
+            { return StopLine.IdLine == stopLine.IdLine && StopLine.CodeStop == stopLine.CodeStop; });
+            if (index == -1)
+                throw new StopLineExceptionDO(stopLine.IdLine, stopLine.CodeStop, "System not found the stop line");
+            ListStopsLines[index] = stopLine;
+
+            XMLTools.SaveListToXMLSerializer(ListStopsLines, stopLinesPath);
         }
 
         public void UpdateStopLine(int idLine, int codeStop, Action<StopLine> action)
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+            
+            int index = ListStopsLines.FindIndex((StopLine) =>
+            { return StopLine.IdLine == idLine && StopLine.CodeStop == codeStop; });
+            if (index == -1)
+                throw new StopLineExceptionDO(idLine, codeStop, "System not found the stop line");
+            action(ListStopsLines[index]);
+
+            XMLTools.SaveListToXMLSerializer(ListStopsLines, stopLinesPath);
         }
 
         public void DeleteStopLine(int idLine, int codeStop)
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+            
+            int index = ListStopsLines.FindIndex((StopLine) =>
+            { return StopLine.IdLine == idLine && StopLine.CodeStop == codeStop; });
+            if (index == -1)
+                throw new StopLineExceptionDO(idLine, codeStop, "The stop line is not exists");
+            ListStopsLines.RemoveAt(index);
+
+            XMLTools.SaveListToXMLSerializer(ListStopsLines, stopLinesPath);
         }
 
         public void DeleteAllStopsInLine(int idLine)
         {
-            throw new NotImplementedException();
+            List<StopLine> ListStopsLines = XMLTools.LoadListFromXMLSerializer<StopLine>(stopLinesPath);
+            
+            ListStopsLines.RemoveAll((StopLine) => StopLine.IdLine == idLine);
+
+            XMLTools.SaveListToXMLSerializer(ListStopsLines, stopLinesPath);
         }
         #endregion
 
