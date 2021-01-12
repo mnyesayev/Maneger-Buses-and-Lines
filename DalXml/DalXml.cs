@@ -100,19 +100,71 @@ namespace Dal
             var busElem = (from b in busesRootElem.Elements()
                            where int.Parse(b.Element("Id").Value) == bus.Id
                            select b).FirstOrDefault();
-            if (busElem != null)
+            if (busElem != null && bool.Parse(busElem.Element("Active").Value) == true)
                 throw new BusExceptionDO((int)bus.Id, "the bus is already exists");
-            busElem = new XElement("Bus", new XElement("Id", bus.Id));
+            if (busElem == null)
+            {
+                busElem = new XElement("Bus",
+                          new XElement("Active", bus.Active),
+                          new XElement("Id", bus.Id),
+                          new XElement("DateRoadAscent", bus.DateRoadAscent),
+                          new XElement("Fuel", bus.Fuel),
+                          new XElement("Mileage", bus.Mileage),
+                          new XElement("LastCareMileage", bus.LastCareMileage),
+                          new XElement("LastCare", bus.LastCare),
+                          new XElement("State", bus.State));
+            }
+            else
+            {
+                busElem.Element("Active").Value = bus.Active.ToString();
+                busElem.Element("Id").Value = bus.Id.ToString();
+                busElem.Element("DateRoadAscent").Value = bus.DateRoadAscent.ToString();
+                busElem.Element("Fuel").Value = bus.Fuel.ToString();
+                busElem.Element("Mileage").Value = bus.Mileage.ToString();
+                busElem.Element("LastCareMileage").Value = bus.LastCareMileage.ToString();
+                busElem.Element("LastCare").Value = bus.LastCare.ToString();
+                busElem.Element("State").Value = bus.State.ToString();
+            }
+            busesRootElem.Add(busElem);
+            XMLTools.SaveListToXMLElement(busesRootElem, busesPath);
         }
 
         public void DeleteBus(int id)
         {
-            throw new NotImplementedException();
+            XElement busesRootElem = XMLTools.LoadListFromXMLElement(busesPath);
+
+            var busElem = (from b in busesRootElem.Elements()
+                           where int.Parse(b.Element("Id").Value) == id &&
+                           bool.Parse(b.Element("Active").Value) == true
+                           select b).FirstOrDefault();
+            if (busElem == null)
+                throw new BusExceptionDO((int)id, "the bus is not exists");
+            busElem.Element("Active").Value = false.ToString();
+
+            XMLTools.SaveListToXMLElement(busesRootElem, busesPath);
         }
 
         public void UpdateBus(Bus newBus)
         {
-            throw new NotImplementedException();
+            XElement busesRootElem = XMLTools.LoadListFromXMLElement(busesPath);
+
+            var busElem = (from b in busesRootElem.Elements()
+                           where int.Parse(b.Element("Id").Value) == newBus.Id &&
+                           bool.Parse(b.Element("Active").Value) == true
+                           select b).FirstOrDefault();
+            if (busElem == null)
+                throw new BusExceptionDO((int)newBus.Id, "system not found the bus");
+
+            busElem.Element("Active").Value = newBus.Active.ToString();
+            busElem.Element("Id").Value = newBus.Id.ToString();
+            busElem.Element("DateRoadAscent").Value = newBus.DateRoadAscent.ToString();
+            busElem.Element("Fuel").Value = newBus.Fuel.ToString();
+            busElem.Element("Mileage").Value = newBus.Mileage.ToString();
+            busElem.Element("LastCareMileage").Value = newBus.LastCareMileage.ToString();
+            busElem.Element("LastCare").Value = newBus.LastCare.ToString();
+            busElem.Element("State").Value = newBus.State.ToString();
+
+            XMLTools.SaveListToXMLElement(busesRootElem, busesPath);
         }
         #endregion
 
@@ -235,10 +287,10 @@ namespace Dal
             //load runing numbers from "runNumbersPath"
             XElement runNumbersElem = XMLTools.LoadListFromXMLElement(runNumbersPath);
             int runNumber = int.Parse(runNumbersElem.Element("Counter").Element("LineCounter").Value);
-            line.IdLine = runNumber++;//
+            line.IdLine = runNumber++;
             runNumbersElem.Element("Counter").Element("LineCounter").Value = runNumber.ToString();
             XMLTools.SaveListToXMLElement(runNumbersElem, runNumbersPath);
-            
+
             ListLines.Add(line);
             XMLTools.SaveListToXMLSerializer(ListLines, linesPath);
             return line.IdLine;
@@ -246,32 +298,55 @@ namespace Dal
 
         public Line GetLine(int idLine)
         {
-            throw new NotImplementedException();
+            var lines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
+            var line=lines.Find((Line) => { return Line.Active && Line.IdLine == idLine; });
+            return line;
         }
 
         public IEnumerable<Line> GetLines()
         {
-            throw new NotImplementedException();
+            var lines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
+            return from l in lines
+                   where l.Active = true
+                   select l;
         }
 
         public IEnumerable<Line> GetLinesBy(Predicate<Line> predicate)
         {
-            throw new NotImplementedException();
+            var lines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
+            return from l in lines
+                   where l.Active = true&&predicate(l)
+                   select l;
         }
 
         public void UpdateLine(Line line)
         {
-            throw new NotImplementedException();
+            var lines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
+            var i = lines.FindIndex(l => l.Active&&l.IdLine == line.IdLine);
+            if (i == -1)
+                throw new LineExceptionDO(line.IdLine, "system not found the line");
+            lines[i] = line;
+            XMLTools.SaveListToXMLSerializer(lines, linesPath);
         }
 
         public void UpdateLine(int idLine, Action<Line> action)
         {
-            throw new NotImplementedException();
+            var lines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
+            var i = lines.FindIndex(l => l.Active && l.IdLine == idLine);
+            if (i == -1)
+                throw new LineExceptionDO(idLine, "system not found the line");
+            action(lines[i]);
+            XMLTools.SaveListToXMLSerializer(lines, linesPath);
         }
 
         public void DeleteLine(int idLine)
         {
-            throw new NotImplementedException();
+            var lines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
+            int i = lines.FindIndex(l => l.Active && l.IdLine == idLine);
+            if (i == -1)
+                throw new LineExceptionDO(idLine, "the line is not exists");
+            lines[i].Active = false;
+            XMLTools.SaveListToXMLSerializer(lines, linesPath);
         }
         #endregion
 
