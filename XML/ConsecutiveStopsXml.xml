@@ -1,0 +1,543 @@
+<?xml version="1.0"?>
+<ArrayOfConsecutiveStops xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ConsecutiveStops>
+    <CodeBusStop1>35335</CodeBusStop1>
+    <CodeBusStop2>31898</CodeBusStop2>
+    <Distance>1.02</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31898</CodeBusStop1>
+    <CodeBusStop2>31207</CodeBusStop2>
+    <Distance>0.66</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31207</CodeBusStop1>
+    <CodeBusStop2>38159</CodeBusStop2>
+    <Distance>0.99</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38159</CodeBusStop1>
+    <CodeBusStop2>31653</CodeBusStop2>
+    <Distance>0.96</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31653</CodeBusStop1>
+    <CodeBusStop2>31164</CodeBusStop2>
+    <Distance>1.11</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31164</CodeBusStop1>
+    <CodeBusStop2>31604</CodeBusStop2>
+    <Distance>0.74</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31604</CodeBusStop1>
+    <CodeBusStop2>31065</CodeBusStop2>
+    <Distance>0.86</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31065</CodeBusStop1>
+    <CodeBusStop2>31738</CodeBusStop2>
+    <Distance>0.93</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31738</CodeBusStop1>
+    <CodeBusStop2>32742</CodeBusStop2>
+    <Distance>0.62</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31377</CodeBusStop1>
+    <CodeBusStop2>38156</CodeBusStop2>
+    <Distance>0.59</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38156</CodeBusStop1>
+    <CodeBusStop2>38160</CodeBusStop2>
+    <Distance>0.98</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38160</CodeBusStop1>
+    <CodeBusStop2>31816</CodeBusStop2>
+    <Distance>0.71</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31816</CodeBusStop1>
+    <CodeBusStop2>31442</CodeBusStop2>
+    <Distance>0.7</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31442</CodeBusStop1>
+    <CodeBusStop2>38121</CodeBusStop2>
+    <Distance>0.96</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38121</CodeBusStop1>
+    <CodeBusStop2>31641</CodeBusStop2>
+    <Distance>0.92</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31641</CodeBusStop1>
+    <CodeBusStop2>31663</CodeBusStop2>
+    <Distance>0.57</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31663</CodeBusStop1>
+    <CodeBusStop2>31596</CodeBusStop2>
+    <Distance>1.14</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31596</CodeBusStop1>
+    <CodeBusStop2>35315</CodeBusStop2>
+    <Distance>0.82</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>33599</CodeBusStop1>
+    <CodeBusStop2>31372</CodeBusStop2>
+    <Distance>0.99</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31372</CodeBusStop1>
+    <CodeBusStop2>31419</CodeBusStop2>
+    <Distance>0.89</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31419</CodeBusStop1>
+    <CodeBusStop2>31481</CodeBusStop2>
+    <Distance>1.16</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31481</CodeBusStop1>
+    <CodeBusStop2>38153</CodeBusStop2>
+    <Distance>0.82</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38153</CodeBusStop1>
+    <CodeBusStop2>38121</CodeBusStop2>
+    <Distance>0.79</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38121</CodeBusStop1>
+    <CodeBusStop2>38123</CodeBusStop2>
+    <Distance>1.06</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38123</CodeBusStop1>
+    <CodeBusStop2>31338</CodeBusStop2>
+    <Distance>1.02</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31338</CodeBusStop1>
+    <CodeBusStop2>31335</CodeBusStop2>
+    <Distance>0.91</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31335</CodeBusStop1>
+    <CodeBusStop2>35335</CodeBusStop2>
+    <Distance>0.85</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>35315</CodeBusStop1>
+    <CodeBusStop2>31409</CodeBusStop2>
+    <Distance>1.07</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31409</CodeBusStop1>
+    <CodeBusStop2>31676</CodeBusStop2>
+    <Distance>0.59</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31676</CodeBusStop1>
+    <CodeBusStop2>38120</CodeBusStop2>
+    <Distance>0.62</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38120</CodeBusStop1>
+    <CodeBusStop2>31065</CodeBusStop2>
+    <Distance>0.74</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31065</CodeBusStop1>
+    <CodeBusStop2>31053</CodeBusStop2>
+    <Distance>1.12</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31053</CodeBusStop1>
+    <CodeBusStop2>38112</CodeBusStop2>
+    <Distance>0.69</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38112</CodeBusStop1>
+    <CodeBusStop2>31674</CodeBusStop2>
+    <Distance>0.57</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31674</CodeBusStop1>
+    <CodeBusStop2>36764</CodeBusStop2>
+    <Distance>0.79</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>36764</CodeBusStop1>
+    <CodeBusStop2>33598</CodeBusStop2>
+    <Distance>0.72</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>20277</CodeBusStop1>
+    <CodeBusStop2>21516</CodeBusStop2>
+    <Distance>1.09</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>21516</CodeBusStop1>
+    <CodeBusStop2>21028</CodeBusStop2>
+    <Distance>0.79</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>21028</CodeBusStop1>
+    <CodeBusStop2>21486</CodeBusStop2>
+    <Distance>1.11</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>21486</CodeBusStop1>
+    <CodeBusStop2>31640</CodeBusStop2>
+    <Distance>1.09</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31640</CodeBusStop1>
+    <CodeBusStop2>31663</CodeBusStop2>
+    <Distance>1.02</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31663</CodeBusStop1>
+    <CodeBusStop2>31664</CodeBusStop2>
+    <Distance>0.79</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31664</CodeBusStop1>
+    <CodeBusStop2>31596</CodeBusStop2>
+    <Distance>0.79</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31596</CodeBusStop1>
+    <CodeBusStop2>31725</CodeBusStop2>
+    <Distance>1.14</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31725</CodeBusStop1>
+    <CodeBusStop2>35315</CodeBusStop2>
+    <Distance>0.88</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31313</CodeBusStop1>
+    <CodeBusStop2>31898</CodeBusStop2>
+    <Distance>0.52</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31898</CodeBusStop1>
+    <CodeBusStop2>31335</CodeBusStop2>
+    <Distance>0.57</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31335</CodeBusStop1>
+    <CodeBusStop2>38159</CodeBusStop2>
+    <Distance>0.86</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>38159</CodeBusStop1>
+    <CodeBusStop2>31662</CodeBusStop2>
+    <Distance>0.6</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31662</CodeBusStop1>
+    <CodeBusStop2>21639</CodeBusStop2>
+    <Distance>1.01</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>21639</CodeBusStop1>
+    <CodeBusStop2>21595</CodeBusStop2>
+    <Distance>0.56</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>21595</CodeBusStop1>
+    <CodeBusStop2>21022</CodeBusStop2>
+    <Distance>1.13</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>21022</CodeBusStop1>
+    <CodeBusStop2>21123</CodeBusStop2>
+    <Distance>1.12</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>21123</CodeBusStop1>
+    <CodeBusStop2>25867</CodeBusStop2>
+    <Distance>0.87</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60320</CodeBusStop1>
+    <CodeBusStop2>60290</CodeBusStop2>
+    <Distance>2.23</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60290</CodeBusStop1>
+    <CodeBusStop2>34017</CodeBusStop2>
+    <Distance>5.3</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>34017</CodeBusStop1>
+    <CodeBusStop2>33740</CodeBusStop2>
+    <Distance>2.65</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>33740</CodeBusStop1>
+    <CodeBusStop2>33432</CodeBusStop2>
+    <Distance>4.47</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>33432</CodeBusStop1>
+    <CodeBusStop2>23060</CodeBusStop2>
+    <Distance>2.36</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>23060</CodeBusStop1>
+    <CodeBusStop2>20057</CodeBusStop2>
+    <Distance>4.57</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>20057</CodeBusStop1>
+    <CodeBusStop2>20059</CodeBusStop2>
+    <Distance>7.97</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>20059</CodeBusStop1>
+    <CodeBusStop2>20207</CodeBusStop2>
+    <Distance>5.6</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>20207</CodeBusStop1>
+    <CodeBusStop2>20165</CodeBusStop2>
+    <Distance>4.52</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>21730</CodeBusStop1>
+    <CodeBusStop2>22273</CodeBusStop2>
+    <Distance>1.05</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>22273</CodeBusStop1>
+    <CodeBusStop2>22277</CodeBusStop2>
+    <Distance>1.03</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>22277</CodeBusStop1>
+    <CodeBusStop2>23053</CodeBusStop2>
+    <Distance>0.87</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>23053</CodeBusStop1>
+    <CodeBusStop2>21560</CodeBusStop2>
+    <Distance>0.91</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>21560</CodeBusStop1>
+    <CodeBusStop2>20068</CodeBusStop2>
+    <Distance>0.51</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>20068</CodeBusStop1>
+    <CodeBusStop2>34075</CodeBusStop2>
+    <Distance>0.82</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>34075</CodeBusStop1>
+    <CodeBusStop2>60352</CodeBusStop2>
+    <Distance>0.86</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60352</CodeBusStop1>
+    <CodeBusStop2>60294</CodeBusStop2>
+    <Distance>0.63</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60294</CodeBusStop1>
+    <CodeBusStop2>60314</CodeBusStop2>
+    <Distance>0.76</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60320</CodeBusStop1>
+    <CodeBusStop2>60290</CodeBusStop2>
+    <Distance>4.6340158770950586</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60290</CodeBusStop1>
+    <CodeBusStop2>60292</CodeBusStop2>
+    <Distance>5.412102819612298</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60292</CodeBusStop1>
+    <CodeBusStop2>60001</CodeBusStop2>
+    <Distance>7.7406084876230956</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60001</CodeBusStop1>
+    <CodeBusStop2>64005</CodeBusStop2>
+    <Distance>3.9449324384075277</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>64005</CodeBusStop1>
+    <CodeBusStop2>4009</CodeBusStop2>
+    <Distance>2.7086332311428309</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>4009</CodeBusStop1>
+    <CodeBusStop2>4133</CodeBusStop2>
+    <Distance>4.9281778865159387</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>4133</CodeBusStop1>
+    <CodeBusStop2>5060</CodeBusStop2>
+    <Distance>1.9858868504808689</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>5060</CodeBusStop1>
+    <CodeBusStop2>1352</CodeBusStop2>
+    <Distance>7.0278774365912549</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>1352</CodeBusStop1>
+    <CodeBusStop2>9807</CodeBusStop2>
+    <Distance>7.37133578321493</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>9810</CodeBusStop1>
+    <CodeBusStop2>1375</CodeBusStop2>
+    <Distance>0.84042165169512</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>1375</CodeBusStop1>
+    <CodeBusStop2>4012</CodeBusStop2>
+    <Distance>0.94084561562204994</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>4012</CodeBusStop1>
+    <CodeBusStop2>4116</CodeBusStop2>
+    <Distance>0.673436256625427</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>4116</CodeBusStop1>
+    <CodeBusStop2>5130</CodeBusStop2>
+    <Distance>0.54322692213730273</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>5130</CodeBusStop1>
+    <CodeBusStop2>65134</CodeBusStop2>
+    <Distance>0.8723680695855841</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>65134</CodeBusStop1>
+    <CodeBusStop2>34075</CodeBusStop2>
+    <Distance>1.1799827095027933</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>34075</CodeBusStop1>
+    <CodeBusStop2>60352</CodeBusStop2>
+    <Distance>0.7587573123438085</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60352</CodeBusStop1>
+    <CodeBusStop2>60294</CodeBusStop2>
+    <Distance>0.70698228888538772</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>60294</CodeBusStop1>
+    <CodeBusStop2>60314</CodeBusStop2>
+    <Distance>1.1534109631802005</Distance>
+    <AvregeDriveTime />
+  </ConsecutiveStops>
+</ArrayOfConsecutiveStops>

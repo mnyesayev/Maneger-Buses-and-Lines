@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <FirstName>Admin</FirstName>
+    <UserName>1</UserName>
+    <Password>1</Password>
+    <Authorization>Admin</Authorization>
+    <Phone>052-1234567</Phone>
+    <Birthday>2021-01-11T00:00:00+02:00</Birthday>
+    <Active>true</Active>
+  </User>
+</ArrayOfUser>
