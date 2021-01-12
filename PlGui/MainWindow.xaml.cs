@@ -434,6 +434,9 @@ namespace PlGui
         {
             wSearchStop searchStop = new wSearchStop();
             searchStop.TbStopCode.Focus();
+            var suggestionName = from Stop in Lists.Stops
+                                 select Stop.Name;
+            searchStop.AutoSuggestionList = suggestionName.ToList(); 
             searchStop.Show();
 
             new Thread(() =>

@@ -36,6 +36,18 @@
                  FontSize="12" TextChanged="TbStopCode_TextChanged" 
                  materialDesign:HintAssist.Hint="Enter code stop or name stop" KeyUp="TbStopCode_KeyUp"
                  />
+        
+        <Popup x:Name="autoListPopup"    
+                   Visibility="Collapsed"                    
+                   Height="200"    
+                   StaysOpen="False"    
+                   Placement="Bottom">
 
+            <ListBox x:Name="autoList"    
+                         Visibility="Collapsed"    
+                         Width="300" Background="Azure"
+                         Height="200" FontSize="12"
+                     SelectionChanged="AutoList_SelectionChanged" />
+        </Popup>
     </Grid>
 </Window>
