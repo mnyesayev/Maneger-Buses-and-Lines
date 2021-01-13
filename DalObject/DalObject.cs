@@ -21,7 +21,7 @@ namespace Dal
         #endregion
 
         #region Bus
-        public void CreateBus(Bus bus)
+        public void AddBus(Bus bus)
         {
             int index = DataSource.Buses.FindIndex((Bus) => { return Bus.Id == bus.Id; });
             if (index == -1)
@@ -392,7 +392,7 @@ namespace Dal
                 DataSource.LstConsecutiveStops.Add(consecutiveStops);
                 return;
             }
-            throw new ConsecutiveStopsExceptionDO(consecutiveStops.CodeBusStop1, consecutiveStops.CodeBusStop2, "the driver is already exists");
+            throw new ConsecutiveStopsExceptionDO(consecutiveStops.CodeBusStop1, consecutiveStops.CodeBusStop2, "the stops is already exists");
         }
         public ConsecutiveStops GetConsecutiveStops(int codeStop1, int codeStop2)
         {
@@ -484,14 +484,14 @@ namespace Dal
                 throw new LineTripExceptionDO(id, "system not found the line trip");
             action(DataSource.LineTrips[index]);
         }
-        public void DeleteLineTrip(int idLine, TimeSpan startTime)
+        public void DeleteLineTrip(int id)
         {
             var index = DataSource.LineTrips.FindIndex((LineTrip) =>
             {
-                return LineTrip.Active && LineTrip.IdLine == idLine && LineTrip.StartTime == startTime;
+                return LineTrip.Active && LineTrip.Id == id;
             });
             if (index == -1)
-                throw new LineTripExceptionDO(idLine, "the line trip is not exists");
+                throw new LineTripExceptionDO(id, "the line trip is not exists");
             DataSource.LineTrips[index].Active = false;
         }
         #endregion

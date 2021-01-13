@@ -17,7 +17,7 @@ namespace BO
         /// </summary>
         public int IdLine { get; set; }
 
-        public string numLine { get; set; }
+        public string NumLine { get; set; }
         /// <summary>
         /// Represents the time of start line
         /// </summary>

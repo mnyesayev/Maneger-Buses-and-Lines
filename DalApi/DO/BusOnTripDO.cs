@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace DO
 {
@@ -51,10 +53,5 @@ namespace DO
         /// Represents the unique number of the "Driver"
         /// </summary>
         public int IdDriver { get; set; }
-        /// <summary>
-        /// Represents the name of the driver
-        /// </summary>
-        public string NameDriver { get; set; }
-
     }
 }

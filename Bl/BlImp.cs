@@ -42,7 +42,7 @@ namespace Bl
         }
         public IEnumerable<BusStop> GetBusStops()
         {
-            return from BusStop in dal.GetStops().AsParallel()
+            return from BusStop in dal.GetStops()
                    let newBusStop = new BusStop
                    {
                        Latitude = BusStop.Latitude,
@@ -534,7 +534,7 @@ namespace Bl
             {
                 DO.Bus busDo = new DO.Bus();
                 Bl.Cloning.CopyPropertiesTo(bus, busDo);
-                dal.CreateBus(busDo);
+                dal.AddBus(busDo);
             }
             catch (DO.BusExceptionDO ex)
             {
@@ -676,11 +676,11 @@ namespace Bl
                    {
                        Id = LineTrip.Id,
                        IdLine = LineTrip.IdLine,
-                       numLine = GetNumLine(LineTrip.IdLine),
+                       NumLine = GetNumLine(LineTrip.IdLine),
                        Frequency = LineTrip.Frequency,
                        DepartureSchedule = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency)
                    }
-                   orderby newLineTrip.numLine
+                   orderby newLineTrip.NumLine
                    select newLineTrip;
         }
         IEnumerable<TimeSpan> getSchedule(TimeSpan startTime, TimeSpan endTime, int f)
@@ -739,7 +739,7 @@ namespace Bl
             {
                 Id = lt.Id,
                 IdLine = lt.IdLine,
-                numLine = GetNumLine(lt.IdLine),
+                NumLine = GetNumLine(lt.IdLine),
                 Frequency = lt.Frequency,
                 DepartureSchedule = getSchedule(lt.StartTime, lt.EndTime, lt.Frequency)
             };
@@ -762,12 +762,20 @@ namespace Bl
                 Frequency = f,
                 Id = id,
                 IdLine = idLine,
-                numLine = GetNumLine(idLine),
+                NumLine = GetNumLine(idLine),
                 DepartureSchedule = getSchedule(start, end, f)
             };
         }
-
-       
         #endregion
+        public void StartSimulator(TimeSpan startTime, int speed, Action<TimeSpan> updateTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopSimulator()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

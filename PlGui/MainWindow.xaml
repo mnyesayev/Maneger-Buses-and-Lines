@@ -451,7 +451,6 @@
                 Style="{StaticResource MaterialDesignIconForegroundButton}"
                 ToolTip="{Binding}">
                 <materialDesign:PackIcon Kind="AccountStar"  />
-
             </Button>
 
             <Image Source="images\bus.png" Grid.Column="3" Grid.Row="1"
@@ -461,6 +460,19 @@
                       Foreground="White" VerticalAlignment="Center">
                 Travel and go
             </TextBlock>
+            <StackPanel  Grid.Column="1" Margin="40 0 0 0" Grid.Row="1" Orientation="Vertical" 
+                         VerticalAlignment="Center">
+                <materialDesign:TimePicker x:Name="programClock" Margin="0 0 0 5" 
+                                       materialDesign:HintAssist.Hint="Select start time"
+                                       Is24Hours="True" WithSeconds="True"
+                                       />
+                <TextBox x:Name="clockSpeed" materialDesign:HintAssist.Hint="Enter clock speed" />
+            </StackPanel>
+            <Button x:Name="bClock" Content="Start" 
+                    Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left"
+                    Background="#512DA8" Margin="5 0 0 0"
+                    materialDesign:ButtonAssist.CornerRadius="30" Click="bClock_Click"/>
+            
             <!--#endregion-->
 
             <!--#region tab control-->

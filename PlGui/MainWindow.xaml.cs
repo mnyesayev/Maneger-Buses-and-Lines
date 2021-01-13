@@ -16,6 +16,7 @@ using System.Threading;
 using BO;
 using BlApi;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 /// <summary>
 /// need to do PO!!!!!
 /// </summary>
@@ -24,40 +25,43 @@ namespace PlGui
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window 
+    public partial class MainWindow : Window
     {
         public IBL bl = BlFactory.GetBL();
         PO.Lists Lists = new PO.Lists();
+
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = Lists;
             new Thread(() =>
             {
+
                 foreach (var item in bl.GetBusStops())
                 {
-                    this.Dispatcher.Invoke(() => Lists.Stops.Add(new PO.BusStop()));
+                    //Lists.Stops.Add(new PO.BusStop());
+                    this.Dispatcher.Invoke(() =>Lists.Stops.Add(new PO.BusStop()));
                     Cloning.DeepCopyTo(item, Lists.Stops[Lists.Stops.Count - 1]);
                 }
+
             }).Start();
             foreach (var item in bl.GetBuses())
             {
                 Lists.Buses.Add(new PO.Bus());
                 Cloning.DeepCopyTo(item, Lists.Buses[Lists.Buses.Count - 1]);
             }
-           
             foreach (var item in bl.GetLines())
             {
                 Lists.Lines.Add(new PO.Line());
                 Cloning.DeepCopyTo(item, Lists.Lines[Lists.Lines.Count - 1]);
             }
+
             foreach (var item in bl.GetDrivers())
             {
                 Lists.Drivers.Add(new BO.Driver());
                 Cloning.DeepCopyTo(item, Lists.Drivers[Lists.Drivers.Count - 1]);
             }
         }
-
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
 
@@ -436,7 +440,7 @@ namespace PlGui
             searchStop.TbStopCode.Focus();
             var suggestionName = from Stop in Lists.Stops
                                  select Stop.Name;
-            searchStop.AutoSuggestionList = suggestionName.ToList(); 
+            searchStop.AutoSuggestionList = suggestionName.ToList();
             searchStop.Show();
 
             new Thread(() =>
@@ -537,7 +541,7 @@ namespace PlGui
             upstop.DeepCopyTo(tempStop1);
             Lists.Stops[indexdeleteStop].LinesPassInStop = tempStop1.LinesPassInStop;
             //for other stops
-            new Thread(() => 
+            new Thread(() =>
             {
                 var tempLST = from stopLine in upline.StopsInLine
                               select stopLine.CodeStop;
@@ -550,7 +554,7 @@ namespace PlGui
                     Lists.Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
                 }
             }).Start();
-          
+
         }
 
         private void tbUserName_KeyUp(object sender, KeyEventArgs e)
@@ -631,7 +635,7 @@ namespace PlGui
             if ((sender as Button).DataContext is PO.LineOnStop)
             {
                 wLineInfo lineInfo = new wLineInfo(bl, Lists);
-                var l=(PO.LineOnStop) (sender as Button).DataContext;
+                var l = (PO.LineOnStop)(sender as Button).DataContext;
                 var i = Lists.Lines.ToList().FindIndex((line) => line.IdLine == l.IdLine);
                 lineInfo.DataContext = Lists.Lines[i];
                 lineInfo.ComboBoxLineInfo.DataContext = Lists.Lines;
@@ -672,6 +676,22 @@ namespace PlGui
         {
             DriveTime.Width = 100;
             Distance.Width = 100;
+        }
+
+        private void bClock_Click(object sender, RoutedEventArgs e)
+        {
+            if (bClock.Content.ToString() == "Start")
+            {
+                bClock.Content = "Stop";
+                programClock.IsEnabled = false;
+                clockSpeed.IsEnabled = false;
+            }
+            else
+            {
+                bClock.Content = "Start";
+                programClock.IsEnabled = true;
+                clockSpeed.IsEnabled = true;
+            }
         }
     }
 }

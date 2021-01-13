@@ -16,7 +16,7 @@ namespace DalApi
         /// <returns>a all buses in Data Source</returns>
         IEnumerable<DO.Bus> GetBuses();
         IEnumerable<DO.Bus> GetBusesBy(Predicate<DO.Bus> predicate);
-        void CreateBus(DO.Bus bus);
+        void AddBus(DO.Bus bus);
         void DeleteBus(int id);
         void UpdateBus(DO.Bus newBus);
         #endregion
@@ -90,7 +90,7 @@ namespace DalApi
         IEnumerable<DO.LineTrip> GetLineTripsBy(Predicate<DO.LineTrip> predicate);
         void UpdateLineTrip(DO.LineTrip lineTrip);
         void UpdateLineTrip(int id,Action<DO.LineTrip> action);
-        void DeleteLineTrip(int idLine, TimeSpan startTime);
+        void DeleteLineTrip(int id);
         #endregion
     }
 }

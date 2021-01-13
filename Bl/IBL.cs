@@ -8,6 +8,10 @@ namespace BlApi
 {
     public interface IBL
     {
+        #region Simulator
+        void StartSimulator(TimeSpan startTime, int speed ,Action<TimeSpan> updateTime);
+        void StopSimulator();
+        #endregion
         #region Bus
         IEnumerable<Bus> GetBuses();
         void DeleteBus(int id);

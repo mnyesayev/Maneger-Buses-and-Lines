@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace DO
 {
@@ -24,10 +27,20 @@ namespace DO
         /// Represents the distance beetwen of the "ConsecutiveStops"
         /// </summary>
         public double Distance { get; set; }
+        private TimeSpan time;
         /// <summary>
         /// Represents the avrege drive time beetwen of the "ConsecutiveStops"
         /// </summary>
-        public TimeSpan AvregeDriveTime { get; set; }
+        [XmlIgnore]
+        public TimeSpan AvregeDriveTime { get => time; set => time = value; }
+
+        [XmlElement("AvregeDriveTime", DataType = "duration")]
+        [DefaultValue("PT10M")]
+        public string XmlTime
+        {
+            get { return XmlConvert.ToString(time); }
+            set { time = XmlConvert.ToTimeSpan(value); }
+        }
 
     }
 }
