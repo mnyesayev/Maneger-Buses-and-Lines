@@ -33,11 +33,11 @@ namespace PlGui
         private void DeleteStopLine_Click(object sender, RoutedEventArgs e)
         {
             PO.StopLine StopLine = (PO.StopLine)listViewLineInfo.SelectedItem;
-            // var StopLine = (PO.StopLine)(sender as Button).DataContext;
+            var idLine = (listViewLineInfo.DataContext as PO.Line).IdLine;
             BO.Line upline;
             try
             {
-                upline = bl.DeleteStopLine(StopLine.IdLine, StopLine.CodeStop, StopLine.NumStopInLine);
+                upline = bl.DeleteStopLine(idLine, StopLine.CodeStop, StopLine.NumStopInLine);
                 if (upline == null)
                     return;
             }

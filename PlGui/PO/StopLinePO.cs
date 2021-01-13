@@ -20,10 +20,6 @@ namespace PO
         double distance;
         TimeSpan time;
         /// <summary>
-        /// Represents the inner unique number of the "Line"
-        /// </summary>
-        public int IdLine { get; set; }
-        /// <summary>
         /// Represents the unique code of the "BusStop"
         /// </summary>
         public int CodeStop { get { return code; } set { if (code != value) { code = value; OnPropertyChanged(); } } }
