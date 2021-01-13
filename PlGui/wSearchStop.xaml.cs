@@ -88,11 +88,16 @@ namespace PlGui
                     return;
                 }
 
+                // Only if have suggestion 
+                if (this.AutoSuggestionList.Where(p => p.ToLower().Contains(this.TbStopCode.Text.ToLower())).ToList().Count() == 0)
+                    this.CloseAutoSuggestionBox();  // Disable.
+
                 // Enable.  
                 this.OpenAutoSuggestionBox();
 
                 // Settings.  
                 this.autoList.ItemsSource = this.AutoSuggestionList.Where(p => p.ToLower().Contains(this.TbStopCode.Text.ToLower())).ToList();
+                
             }
             catch (Exception ex)
             {
