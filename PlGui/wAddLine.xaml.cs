@@ -100,14 +100,12 @@ namespace PlGui
                 Lists.Lines =new ObservableCollection<PO.Line>(Lists.Lines.OrderBy(line => line.NumLine));
                 var index1= Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == code1);
                 var index2= Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == code2);
-                var upstop1=bl.GetStop(code1);
-                var upstop2=bl.GetStop(code2);
-                var newStop1 = new PO.BusStop();
-                var newStop2 = new PO.BusStop();
-                upstop1.DeepCopyTo(newStop1);
-                upstop2.DeepCopyTo(newStop2);
-                Lists.Stops[index1].LinesPassInStop=newStop1.LinesPassInStop;
-                Lists.Stops[index2].LinesPassInStop=newStop2.LinesPassInStop;
+                var lineInStop1 = new PO.LineOnStop();
+                var lineInStop2 = new PO.LineOnStop();
+                newLine.DeepCopyTo(lineInStop1);
+                newLine.DeepCopyTo(lineInStop2);
+                Lists.Stops[index1].LinesPassInStop.Add(lineInStop1);
+                Lists.Stops[index2].LinesPassInStop.Add(lineInStop2);
                 this.Close();
             }
             catch (Exception)

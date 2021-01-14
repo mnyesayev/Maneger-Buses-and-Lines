@@ -30,37 +30,100 @@ namespace PlGui
         public IBL bl = BlFactory.GetBL();
         PO.Lists Lists = new PO.Lists();
         BackgroundWorker Simulator;
+        BackgroundWorker blGetStopsAndLines;
+        BackgroundWorker blGetBuses;
+        BackgroundWorker blGetDrivers;
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = Lists;
-            new Thread(() =>
-            {
+            setBlGetStopsAndLines();
+            setBlGetBuses();
+            setBlGetDrivers();
+            blGetStopsAndLines.RunWorkerAsync();
+            blGetBuses.RunWorkerAsync();
+            blGetDrivers.RunWorkerAsync();
+        }
 
-                foreach (var item in bl.GetBusStops())
+
+        private void setBlGetDrivers()
+        {
+            blGetDrivers = new BackgroundWorker();
+            blGetDrivers.WorkerReportsProgress = true;
+            blGetDrivers.DoWork += (object sender, DoWorkEventArgs e) =>
+            {
+                BackgroundWorker worker = (BackgroundWorker)sender;
+                foreach (var item in bl.GetDrivers())
                 {
-                    //Lists.Stops.Add(new PO.BusStop());
-                    this.Dispatcher.Invoke(() =>Lists.Stops.Add(new PO.BusStop()));
-                    Cloning.DeepCopyTo(item, Lists.Stops[Lists.Stops.Count - 1]);
+                    worker.ReportProgress(1, item);
                 }
+            };
+            blGetDrivers.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
+            {
+                var temp = e.UserState as Driver;
+                Lists.Drivers.Add(temp);
+            };
+        }
 
-            }).Start();
-            foreach (var item in bl.GetBuses())
+        private void setBlGetBuses()
+        {
+            blGetBuses = new BackgroundWorker();
+            blGetBuses.WorkerReportsProgress = true;
+            blGetBuses.DoWork += (object sender, DoWorkEventArgs e) =>
             {
-                Lists.Buses.Add(new PO.Bus());
-                Cloning.DeepCopyTo(item, Lists.Buses[Lists.Buses.Count - 1]);
-            }
-            foreach (var item in bl.GetLines())
+                BackgroundWorker worker = (BackgroundWorker)sender;
+                foreach (var item in bl.GetBuses())
+                {
+                    var temp = new PO.Bus();
+                    Cloning.DeepCopyTo(item, temp);
+                    worker.ReportProgress(1, temp);
+                }
+            };
+            blGetBuses.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
             {
-                Lists.Lines.Add(new PO.Line());
-                Cloning.DeepCopyTo(item, Lists.Lines[Lists.Lines.Count - 1]);
-            }
+                var temp = e.UserState as PO.Bus;
+                Lists.Buses.Add(temp);
+            };
+        }
 
-            foreach (var item in bl.GetDrivers())
-            {
-                Lists.Drivers.Add(new BO.Driver());
-                Cloning.DeepCopyTo(item, Lists.Drivers[Lists.Drivers.Count - 1]);
-            }
+        private void setBlGetStopsAndLines()
+        {
+            blGetStopsAndLines = new BackgroundWorker();
+            blGetStopsAndLines.WorkerReportsProgress = true;
+            blGetStopsAndLines.DoWork += (object sender, DoWorkEventArgs e) =>
+              {
+                  BackgroundWorker worker = (BackgroundWorker)sender;
+                  foreach (var item in bl.GetLines())
+                  {
+                      var temp = new PO.Line();
+                      Cloning.DeepCopyTo(item, temp);
+                      worker.ReportProgress(1, temp);
+                  }
+                  foreach (var item in bl.GetBusStops())
+                  {
+                      var temp = new PO.BusStop();
+                      Cloning.DeepCopyTo(item,temp);
+                      foreach (var lineOnStop in temp.LinesPassInStop)
+                      {
+                          var tempLine = Lists.Lines.First(l => l.IdLine == lineOnStop.IdLine);
+                          tempLine.DeepCopyTo(lineOnStop);
+                      } 
+                      worker.ReportProgress(30, temp);
+                  }
+              };
+            blGetStopsAndLines.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
+              {
+                  if (e.ProgressPercentage == 1)
+                  {
+                      var temp = e.UserState as PO.Line;
+                      Lists.Lines.Add(temp);
+                  }
+                 else
+                  {
+                      var temp = e.UserState as PO.BusStop;
+                      Lists.Stops.Add(temp);
+                  }
+              };
         }
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
@@ -317,11 +380,9 @@ namespace PlGui
                                   select stopLine.CodeStop;
                     foreach (var item in tempLST)
                     {
-                        var index = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
-                        var upStop = bl.GetStop(item);
-                        var temp = new PO.BusStop();
-                        Cloning.DeepCopyTo(upStop, temp);
-                        Lists.Stops[index].LinesPassInStop = temp.LinesPassInStop;
+                        var indexS = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
+                        var i=Lists.Stops[indexS].LinesPassInStop.ToList().FindIndex(line=>line.IdLine==l.IdLine);
+                        Lists.Stops[indexS].LinesPassInStop.RemoveAt(i);
                     }
                 }).Start();
             }
@@ -529,32 +590,12 @@ namespace PlGui
                 return;
             }
             int indexLine = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
-            var temp = new PO.Line();
-            Cloning.DeepCopyTo(upline, temp);
-            Lists.Lines[indexLine].StopsInLine = temp.StopsInLine;
-            Lists.Lines[indexLine].NameFirstLineStop = temp.NameFirstLineStop;
-            Lists.Lines[indexLine].NameLastLineStop = temp.NameLastLineStop;
+            Cloning.DeepCopyTo(upline, Lists.Lines[indexLine]);
+
             //for old stop
             var indexdeleteStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
-            var upstop = bl.GetStop(StopLine.CodeStop);
-            var tempStop1 = new PO.BusStop();
-            upstop.DeepCopyTo(tempStop1);
-            Lists.Stops[indexdeleteStop].LinesPassInStop = tempStop1.LinesPassInStop;
-            //for other stops
-            new Thread(() =>
-            {
-                var tempLST = from stopLine in upline.StopsInLine
-                              select stopLine.CodeStop;
-                foreach (var item in tempLST)
-                {
-                    var indexStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
-                    var upStop = bl.GetStop(item);
-                    var tempBusStop = new PO.BusStop();
-                    Cloning.DeepCopyTo(upStop, tempBusStop);
-                    Lists.Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
-                }
-            }).Start();
-
+            var i = Lists.Stops[indexdeleteStop].LinesPassInStop.ToList().FindIndex(l => l.IdLine == idLine);
+            Lists.Stops[indexdeleteStop].LinesPassInStop.RemoveAt(i);
         }
 
         private void tbUserName_KeyUp(object sender, KeyEventArgs e)

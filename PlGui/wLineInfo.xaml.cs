@@ -48,36 +48,17 @@ namespace PlGui
             }
             int indexLine = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
             var temp = new PO.Line();
-            Cloning.DeepCopyTo(upline, temp);
-            Lists.Lines[indexLine].StopsInLine = temp.StopsInLine;
-            Lists.Lines[indexLine].NameFirstLineStop = temp.NameFirstLineStop;
-            Lists.Lines[indexLine].NameLastLineStop = temp.NameLastLineStop;
+            Cloning.DeepCopyTo(upline, Lists.Lines[indexLine]);
+            
             //for old stop
             var indexdeleteStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
-            var upstop = bl.GetStop(StopLine.CodeStop);
-            var tempStop1 = new PO.BusStop();
-            upstop.DeepCopyTo(tempStop1);
-            Lists.Stops[indexdeleteStop].LinesPassInStop = tempStop1.LinesPassInStop;
-            //for other stops           
-            new Thread(() =>
-            {
-                var tempLST = from stopLine in upline.StopsInLine
-                              select stopLine.CodeStop;
-                foreach (var item in tempLST)
-                {
-                    var indexStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
-                    var upStop = bl.GetStop(item);
-                    var tempBusStop = new PO.BusStop();
-                    Cloning.DeepCopyTo(upStop, tempBusStop);
-                    Lists.Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
-                }
-            }).Start();
+            var i = Lists.Stops[indexdeleteStop].LinesPassInStop.ToList().FindIndex(l => l.IdLine == idLine);
+            Lists.Stops[indexdeleteStop].LinesPassInStop.RemoveAt(i);
         }
 
         private void ChangeStopLine_Click(object sender, RoutedEventArgs e)
         {
             PO.StopLine sl = (PO.StopLine)listViewLineInfo.SelectedItem;
-            //PO.StopLine sl = (PO.StopLine)(sender as Button).DataContext;
             wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
             wEdit.tbcode1.Text = sl.CodeStop.ToString();
             wEdit.tbcode2.Text = sl.NextStop.ToString();

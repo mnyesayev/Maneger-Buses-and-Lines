@@ -26,7 +26,7 @@ namespace PlGui
         //ObservableCollection<PO.BusStop> Stops;
         PO.Lists Lists;
         public bool IsSuccessed { get; private set; }
-        public addStopLine(IBL bl,PO.Lists lists)
+        public addStopLine(IBL bl, PO.Lists lists)
         {
             InitializeComponent();
             this.bl = bl;
@@ -39,13 +39,17 @@ namespace PlGui
                 return;
             tBNewIndex.BorderBrush = default;
             tBCode.BorderBrush = default;
+            if (!int.TryParse(tBCode.Text, out int code))
+            {
+                tBCode.BorderBrush = Brushes.Red;
+                return;
+            }
             var idLine = (this.DataContext as PO.Line).IdLine;
             IsSuccessed = false;
             BO.Line upline = null;
             try
             {
-                int code = int.Parse(tBCode.Text);
-                upline = bl.AddStopLine(idLine, code, int.Parse(tBNewIndex.Text));               
+                upline = bl.AddStopLine(idLine, code, int.Parse(tBNewIndex.Text));
                 if (upline == null)
                 {
                     MessageBox.Show($"stop {code} not exits in system", "Add Error", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -77,8 +81,7 @@ namespace PlGui
             {
                 try
                 {
-                    int code =int.Parse(tBCode.Text);
-                    upline=bl.AddStopLine(idLine, code, int.Parse(tBNewIndex.Text));
+                    upline = bl.AddStopLine(idLine, code, int.Parse(tBNewIndex.Text));
                     IsSuccessed = true;
                 }
                 catch (BO.ConsecutiveStopsException ex)
@@ -94,25 +97,12 @@ namespace PlGui
                     }
                 }
             }
-            int index= Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
-            var temp = new PO.Line();
-            Cloning.DeepCopyTo(upline, temp);
-            Lists.Lines[index].StopsInLine=temp.StopsInLine;
-            Lists.Lines[index].NameFirstLineStop = temp.NameFirstLineStop;
-            Lists.Lines[index].NameLastLineStop = temp.NameLastLineStop;
-            new Thread(() =>
-            {
-                var tempLST = from stopLine in upline.StopsInLine
-                              select stopLine.CodeStop;
-                foreach (var item in tempLST)
-                {
-                    var indexStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
-                    var upStop = bl.GetStop(item);
-                    var tempBusStop = new PO.BusStop();
-                    Cloning.DeepCopyTo(upStop, tempBusStop);
-                    Lists.Stops[indexStop].LinesPassInStop = tempBusStop.LinesPassInStop;
-                }
-            }).Start();
+            int index = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
+            Cloning.DeepCopyTo(upline, Lists.Lines[index]);
+            var indexStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == code);
+            var lineInStop = new PO.LineOnStop();
+            Lists.Lines[index].DeepCopyTo(lineInStop);
+            Lists.Stops[indexStop].LinesPassInStop.Add(lineInStop);
             this.Close();
         }
     }
