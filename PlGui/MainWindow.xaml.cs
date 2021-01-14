@@ -29,7 +29,7 @@ namespace PlGui
     {
         public IBL bl = BlFactory.GetBL();
         PO.Lists Lists = new PO.Lists();
-
+        BackgroundWorker Simulator;
         public MainWindow()
         {
             InitializeComponent();
@@ -654,14 +654,14 @@ namespace PlGui
         private void addAfterStopToLine_Click(object sender, RoutedEventArgs e)
         {
             var addStopLine = new addStopLine(bl, Lists);
-            addStopLine.DataContext = this.DataContext;
+            addStopLine.DataContext = ListViewLines.SelectedItem;
             addStopLine.tBNewIndex.Text = (ListViewStopsOfLine.SelectedIndex + 2).ToString();
             addStopLine.ShowDialog();
         }
         private void addBeforeStopToLine_Click(object sender, RoutedEventArgs e)
         {
             var addStopLine = new addStopLine(bl, Lists);
-            addStopLine.DataContext = this.DataContext;
+            addStopLine.DataContext = ListViewLines.SelectedItem;
             addStopLine.tBNewIndex.Text = (ListViewStopsOfLine.SelectedIndex + 1).ToString();
             addStopLine.ShowDialog();
         }
@@ -683,15 +683,40 @@ namespace PlGui
             if (bClock.Content.ToString() == "Start")
             {
                 bClock.Content = "Stop";
+                setSimulator(TimeSpan.Parse(programClock.Text), int.Parse(clockSpeed.Text));
+                Simulator.RunWorkerAsync();
                 programClock.IsEnabled = false;
                 clockSpeed.IsEnabled = false;
             }
             else
             {
                 bClock.Content = "Start";
+                if (Simulator != null)
+                {
+                    bl.StopSimulator();
+                    Simulator.CancelAsync();//stop BackgroundWorker
+                }
                 programClock.IsEnabled = true;
                 clockSpeed.IsEnabled = true;
+                programClock.Text = "";
+                clockSpeed.Text = "";
             }
+        }
+        private void setSimulator(TimeSpan time,int speed)
+        {
+            Simulator = new BackgroundWorker();
+            Simulator.WorkerReportsProgress = true;
+            Simulator.WorkerSupportsCancellation = true;
+            Simulator.DoWork += (object sender, DoWorkEventArgs e) =>
+             {
+                 bl.StartSimulator(time, speed, t => t.Add(TimeSpan.FromSeconds(speed)));
+                 Simulator.ReportProgress(1);
+             };
+            Simulator.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
+              {
+                  TimeSpan t = (TimeSpan)sender;
+                  programClock.Text = t.ToString(@"hh\:mm\:ss");
+              };
         }
     }
 }

@@ -14,7 +14,14 @@ namespace BO
         Watch() { } // default => private
         public static Watch Instance { get => instance; }// The public Instance property to use
         #endregion
-        event EventHandler<Watch> ev;
+        internal volatile bool Cancel;
+        event EventHandler<Watch> timeChanged;
+        TimeSpan curTime;
+        public event EventHandler<Watch> TimeChanged
+        {
+            add { timeChanged = value; }
+            remove { timeChanged -= value; }
+        }
 
     }
 }
