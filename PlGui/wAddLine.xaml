@@ -51,10 +51,10 @@
                    HorizontalAlignment="Center"/>
         <TextBox x:Name="FirstStopCode" Grid.Column="6" Grid.Row="3" HorizontalAlignment="Center"
                  VerticalAlignment="Center" materialDesign:HintAssist.Hint="enter code first stop"
-                 Grid.ColumnSpan="2"/>
+                 Grid.ColumnSpan="2" PreviewKeyDown="FirstStopCode_preKeyD"/>
         <TextBox x:Name="LastStopCode" Grid.Column="6" Grid.Row="4" HorizontalAlignment="Center"
                  VerticalAlignment="Center" materialDesign:HintAssist.Hint="enter code last stop"
-                 Grid.ColumnSpan="2"/>
+                 Grid.ColumnSpan="2" PreviewKeyDown="LastStopCode_preKeyD"/>
 
 
         <Button x:Name="SaveAddLine" Background="Green"

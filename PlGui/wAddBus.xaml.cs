@@ -29,8 +29,8 @@ namespace PlGui
         {
             InitializeComponent();
         }
-        private BO.Bus newBus = null;
-        public BO.Bus NewBus { get => newBus; private set => newBus = value; }
+        private PO.Bus newBus = null;
+        public PO.Bus NewBus { get => newBus; private set => newBus = value; }
 
         private void bDoneAddBus_Click(object sender, RoutedEventArgs e)
         {
@@ -49,7 +49,6 @@ namespace PlGui
             }
             else
             {
-                newBus = new BO.Bus();
                 newBus.DateRoadAscent = Dra;
                 newBus.Id = id;
                 if (rbOld.IsChecked == true)
@@ -68,22 +67,16 @@ namespace PlGui
             if (e == null) return;
             if (!DateTime.TryParse(dPDRA.Text, out Dra))
                 return;
-            if (Dra > DateTime.Now)
+            tBIdBus.IsEnabled = true;
+            ImDRA.Visibility = Visibility.Visible;
+            tBidBus_TextChanged(sender, e);
+            if (rbOld.IsChecked == true)
             {
-                MessageBox.Show("You can not enter futher date!", "ERROR DATE", MessageBoxButton.OK, MessageBoxImage.Error);
+                dPDateLastCare_CalendarClosed(sender, e);
+                tBMileage_TextChanged(sender, e);
+                tBMileageLastCare_TextChanged(sender, e);
             }
-            else
-            {
-                tBIdBus.IsEnabled = true;
-                ImDRA.Visibility = Visibility.Visible;
-                tBidBus_TextChanged(sender, e);
-                if (rbOld.IsChecked == true)
-                {
-                    dPDateLastCare_CalendarClosed(sender, e);
-                    tBMileage_TextChanged(sender, e);
-                    tBMileageLastCare_TextChanged(sender, e);
-                }
-            }
+
         }
 
 
@@ -111,7 +104,7 @@ namespace PlGui
                 ImIdBusError.Visibility = Visibility.Visible;
                 ImIdBusError.ToolTip = "Date of ascent to the road does not match the license plate";
                 if (!uint.TryParse(tBIdBus.Text, out id))
-                     ImIdBusError.ToolTip = "Try entering numbers only";
+                    ImIdBusError.ToolTip = "Try entering numbers only";
                 ImIdBusOk.Visibility = Visibility.Hidden;
                 tBMileage.IsEnabled = false;
             }
@@ -186,6 +179,11 @@ namespace PlGui
 
         private void rbNew_Click(object sender, RoutedEventArgs e)
         {
+            tBIdBus.Text = "";
+            tBMileage.Text = "";
+            tBMileageLastCare.Text = "";
+            dPDateLastCare.Text = "";
+            dPDRA.Text = "";
             tbMileage.Visibility = Visibility.Hidden;
             tBMileage.Visibility = Visibility.Hidden;
             tbMileageLastCare.Visibility = Visibility.Hidden;
@@ -202,15 +200,53 @@ namespace PlGui
 
         private void rbOld_Click(object sender, RoutedEventArgs e)
         {
+            tBIdBus.Text = "";
+            tBMileage.Text = "";
+            tBMileageLastCare.Text = "";
+            dPDateLastCare.Text = "";
+            dPDRA.Text = "";
             tbMileage.Visibility = Visibility.Visible;
             tBMileage.Visibility = Visibility.Visible;
             tbMileageLastCare.Visibility = Visibility.Visible;
             tBMileageLastCare.Visibility = Visibility.Visible;
             tbDateLastCare.Visibility = Visibility.Visible;
             dPDateLastCare.Visibility = Visibility.Visible;
-            dPDateLastCare_CalendarClosed(sender, e);
-            tBMileage_TextChanged(sender, e);
-            tBMileageLastCare_TextChanged(sender, e);
+            ImDRA.Visibility = Visibility.Hidden;
+            ImIdBusError.Visibility = Visibility.Hidden;
+            ImIdBusOk.Visibility = Visibility.Hidden;
+            ImDateLastCareError.Visibility = Visibility.Hidden;
+            ImDateLastCareOk.Visibility = Visibility.Hidden;
+            ImMileageLastCareError.Visibility = Visibility.Hidden;
+            ImMileageLastCareOk.Visibility = Visibility.Hidden;
+            ImMileageOk.Visibility = Visibility.Hidden;
+            ImMileageError.Visibility = Visibility.Hidden;
+        }
+
+        private void tBIdBus_preKeyD(object sender, KeyEventArgs e)
+        {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
+        }
+
+        private void tBMileage_preKeyD(object sender, KeyEventArgs e)
+        {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
+        }
+
+        private void tBMileageLastCare_preKeyD(object sender, KeyEventArgs e)
+        {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
         }
     }
 }

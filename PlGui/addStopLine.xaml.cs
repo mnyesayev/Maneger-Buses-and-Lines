@@ -98,12 +98,34 @@ namespace PlGui
                 }
             }
             int index = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
-            Cloning.DeepCopyTo(upline, Lists.Lines[index]);
+            var linePO = new PO.Line();
+            Cloning.DeepCopyTo(upline,linePO);
+            Lists.Lines[index].StopsInLine = linePO.StopsInLine;
+            Lists.Lines[index].NameFirstLineStop = linePO.NameFirstLineStop;
+            Lists.Lines[index].NameLastLineStop = linePO.NameLastLineStop;
             var indexStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == code);
             var lineInStop = new PO.LineOnStop();
             Lists.Lines[index].DeepCopyTo(lineInStop);
             Lists.Stops[indexStop].LinesPassInStop.Add(lineInStop);
             this.Close();
+        }
+
+        private void tBNewIndex_preKeyD(object sender, KeyEventArgs e)
+        {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
+        }
+
+        private void tBCode_preKeyD(object sender, KeyEventArgs e)
+        {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
         }
     }
 }

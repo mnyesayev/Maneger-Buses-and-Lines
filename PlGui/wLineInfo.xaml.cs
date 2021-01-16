@@ -47,9 +47,11 @@ namespace PlGui
                 return;
             }
             int indexLine = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
-            var temp = new PO.Line();
-            Cloning.DeepCopyTo(upline, Lists.Lines[indexLine]);
-            
+            var linePO = new PO.Line();
+            Cloning.DeepCopyTo(upline, linePO);
+            Lists.Lines[indexLine].StopsInLine = linePO.StopsInLine;
+            Lists.Lines[indexLine].NameFirstLineStop = linePO.NameFirstLineStop;
+            Lists.Lines[indexLine].NameLastLineStop = linePO.NameLastLineStop;
             //for old stop
             var indexdeleteStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
             var i = Lists.Stops[indexdeleteStop].LinesPassInStop.ToList().FindIndex(l => l.IdLine == idLine);
@@ -83,7 +85,7 @@ namespace PlGui
             }
         }
 
-        private void addStopToLineInInfo_Click(object sender, RoutedEventArgs e)
+        private void addStopToLineInfo_Click(object sender, RoutedEventArgs e)
         {
             var addStopLine = new addStopLine(bl,Lists);
             addStopLine.DataContext = this.DataContext;

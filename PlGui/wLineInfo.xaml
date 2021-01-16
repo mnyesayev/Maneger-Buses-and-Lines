@@ -137,7 +137,7 @@
         <Button x:Name="addStopToLineInInfo"
                 Grid.Row="7" Grid.Column="4" 
                 Style="{StaticResource MaterialDesignIconButton}"
-                ToolTip="Add stop to the Line" Width="60" Height="50" Click="addStopToLineInInfo_Click">
+                ToolTip="Add stop to the Line" Width="60" Height="50" Click="addStopToLineInfo_Click">
             <materialDesign:PackIcon Kind="Plus" />
         </Button>
 

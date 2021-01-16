@@ -45,11 +45,11 @@
         <TextBox x:Name="tBNewIndex" Grid.Column="3" 
                  Grid.ColumnSpan="2" Grid.Row="2" Margin="10 0 0 0"
                   Foreground="Blue" VerticalAlignment="Center"
-                 materialDesign:HintAssist.Hint=""/>
+                 materialDesign:HintAssist.Hint="" PreviewKeyDown="tBNewIndex_preKeyD"/>
         <TextBox x:Name="tBCode" Grid.Column="3" Grid.Row="4"
                   Grid.ColumnSpan="2" Margin="10 0 0 0" Foreground="Blue"
                  VerticalAlignment="Top"
-                 materialDesign:HintAssist.Hint="Enter stop code"/>
+                 materialDesign:HintAssist.Hint="Enter stop code" PreviewKeyDown="tBCode_preKeyD"/>
         <Button x:Name="buttonAddStopLine" Grid.ColumnSpan="2" Content="Save &amp; Add" Grid.Column="4" HorizontalAlignment="Center" 
                 Grid.Row="5" VerticalAlignment="Center" Width="110" 
                 Click="buttonAddStopLine_Click" Margin="0 5 0 0"

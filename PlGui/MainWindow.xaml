@@ -466,7 +466,7 @@
                                        materialDesign:HintAssist.Hint="Select start time"
                                        Is24Hours="True" WithSeconds="True"
                                        />
-                <TextBox x:Name="clockSpeed" materialDesign:HintAssist.Hint="Enter clock speed" />
+                <TextBox x:Name="clockSpeed" materialDesign:HintAssist.Hint="Enter clock speed" PreviewKeyDown="clockSpeed_PreviewKeyDown" />
             </StackPanel>
             <Button x:Name="bClock" Content="Start" 
                     Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left"

@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Add new bus" Icon="images\plus.png" 
         Height="350" Width="500" Background="AliceBlue"
@@ -53,12 +55,14 @@
             <RadioButton x:Name="rbOld" Content="Old" Margin="10,0,0,0" IsChecked="True" Click="rbOld_Click"/>
         </StackPanel>
         <DatePicker x:Name="dPDRA" Grid.Row="3" Grid.Column="2" CalendarClosed="dPDRA_calendrer_closed" 
-                   Margin="0,0,0,5"  FirstDayOfWeek="Sunday" />
+                   Margin="0,0,0,5"  FirstDayOfWeek="Sunday" DisplayDateStart="1/1/2000"
+                    DisplayDateEnd="{x:Static sys:DateTime.Now}"/>
         <Image x:Name="ImDRA" Source="images\ok.png" 
                Grid.Column="3" Grid.Row="3" 
                Visibility="Hidden" ToolTip="GOOD"/>
         <TextBox x:Name="tBIdBus" Grid.Row="4" Grid.Column="2" IsEnabled="False" 
-                    Margin="0,0,0,5" TextChanged="tBidBus_TextChanged"     />
+                    Margin="0,0,0,5" TextChanged="tBidBus_TextChanged" PreviewKeyDown="tBIdBus_preKeyD"     
+                 />
         <Image x:Name="ImIdBusOk" Source="images\ok.png" 
                Grid.Column="3" Grid.Row="4" 
                Visibility="Hidden" ToolTip="GOOD"/>
@@ -66,7 +70,7 @@
                Grid.Column="3" Grid.Row="4" 
                Visibility="Hidden" ToolTip="{Binding}"/>
         <TextBox x:Name="tBMileage" Grid.Row="5" Grid.Column="2" IsEnabled="False" 
-                   Margin="0,0,0,5" TextChanged="tBMileage_TextChanged" />
+                   Margin="0,0,0,5" TextChanged="tBMileage_TextChanged" PreviewKeyDown="tBMileage_preKeyD" />
         <Image x:Name="ImMileageOk" Source="images\ok.png" 
                Grid.Column="3" Grid.Row="5" 
                Visibility="Hidden"/>
@@ -75,7 +79,9 @@
                Visibility="Hidden" ToolTip="{Binding}"/>
         <DatePicker x:Name="dPDateLastCare" Grid.Row="6" Grid.Column="2" IsEnabled="False" 
                     Margin="0,0,0,5" CalendarClosed="dPDateLastCare_CalendarClosed"
-                    FirstDayOfWeek="Sunday"/>
+                    FirstDayOfWeek="Sunday" 
+                    DisplayDateStart="{Binding ElementName=dPDRA, Path=SelectedDate}" 
+                    DisplayDateEnd="{x:Static sys:DateTime.Now}"/>
         <Image x:Name="ImDateLastCareOk" Source="images\ok.png" 
                Grid.Column="3" Grid.Row="6" 
                Visibility="Hidden"/>
@@ -83,7 +89,8 @@
                Grid.Column="3" Grid.Row="6" 
                Visibility="Hidden" ToolTip="{Binding}"/>
         <TextBox x:Name="tBMileageLastCare" Grid.Row="7" Grid.Column="2" IsEnabled="False" 
-                   Margin="0,0,0,0" TextChanged="tBMileageLastCare_TextChanged" />
+                   Margin="0,0,0,0" TextChanged="tBMileageLastCare_TextChanged" PreviewKeyDown="tBMileageLastCare_preKeyD" 
+                  />
         <Image x:Name="ImMileageLastCareOk" Source="images\ok.png" 
                Grid.Column="3" Grid.Row="7" 
                Visibility="Hidden"/>

@@ -398,18 +398,18 @@ namespace PlGui
             wAddBus addBus = new wAddBus();
             Bus newBus = null;
             addBus.ShowDialog();
-            try
-            {
-                newBus = bl.AddBus(addBus.NewBus);
-            }
-            catch (AddException ex)
-            {
-                MessageBox.Show(ex.Message, "Add Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            var temp = new PO.Bus();
-            Cloning.DeepCopyTo(newBus, temp);
-            Lists.Buses.Add(temp);
+            //try
+            //{
+            //    newBus = bl.AddBus(addBus.NewBus);
+            //}
+            //catch (AddException ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Add Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+            //var temp = new PO.Bus();
+            //Cloning.DeepCopyTo(newBus, temp);
+            //Lists.Buses.Add(temp);
         }
 
         private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -590,8 +590,11 @@ namespace PlGui
                 return;
             }
             int indexLine = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
-            Cloning.DeepCopyTo(upline, Lists.Lines[indexLine]);
-
+            var linePO = new PO.Line();
+            Cloning.DeepCopyTo(upline, linePO);
+            Lists.Lines[indexLine].StopsInLine = linePO.StopsInLine;
+            Lists.Lines[indexLine].NameFirstLineStop = linePO.NameFirstLineStop;
+            Lists.Lines[indexLine].NameLastLineStop = linePO.NameLastLineStop;
             //for old stop
             var indexdeleteStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
             var i = Lists.Stops[indexdeleteStop].LinesPassInStop.ToList().FindIndex(l => l.IdLine == idLine);
@@ -721,6 +724,7 @@ namespace PlGui
 
         private void bClock_Click(object sender, RoutedEventArgs e)
         {
+            if (programClock.Text.Length == 0 ||clockSpeed.Text.Length==0) return;
             if (bClock.Content.ToString() == "Start")
             {
                 bClock.Content = "Stop";
@@ -763,6 +767,15 @@ namespace PlGui
                   TimeSpan t = (TimeSpan)e.UserState;
                   programClock.Text = t.ToString(@"hh\:mm\:ss");
               };
+        }
+
+        private void clockSpeed_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c)||e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
         }
     }
 }

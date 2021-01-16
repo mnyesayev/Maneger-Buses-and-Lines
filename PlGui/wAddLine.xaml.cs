@@ -120,5 +120,23 @@ namespace PlGui
             IsSuccssed = false;
             this.Close();
         }
+
+        private void FirstStopCode_preKeyD(object sender, KeyEventArgs e)
+        {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
+        }
+
+        private void LastStopCode_preKeyD(object sender, KeyEventArgs e)
+        {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
+        }
     }
 }
