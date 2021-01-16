@@ -55,6 +55,7 @@
     <Compile Include="IBL.cs" />
     <Compile Include="BO\LineBO.cs" />
     <Compile Include="BO\LineTripBO.cs" />
+    <Compile Include="Obsevers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BO\StopLineBO.cs" />
     <Compile Include="BO\UserBO.cs" />

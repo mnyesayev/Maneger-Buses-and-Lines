@@ -540,4 +540,22 @@
     <Distance>1.0028829669127628</Distance>
     <AvregeDriveTime>PT2M9.892S</AvregeDriveTime>
   </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31313</CodeBusStop1>
+    <CodeBusStop2>31899</CodeBusStop2>
+    <Distance>4</Distance>
+    <AvregeDriveTime>PT5M6S</AvregeDriveTime>
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>31899</CodeBusStop1>
+    <CodeBusStop2>31898</CodeBusStop2>
+    <Distance>4</Distance>
+    <AvregeDriveTime>PT8M26S</AvregeDriveTime>
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>35335</CodeBusStop1>
+    <CodeBusStop2>31899</CodeBusStop2>
+    <Distance>2</Distance>
+    <AvregeDriveTime>PT3M2S</AvregeDriveTime>
+  </ConsecutiveStops>
 </ArrayOfConsecutiveStops>

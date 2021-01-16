@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 using BO;
 using DalApi;
 using BlApi;
+using System.Threading;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace Bl
 {
     sealed class BlImp : IBL
     {
         readonly IDal dal = DalFactory.GetDal();
+        readonly Watch watch = Watch.Instance;
+        BackgroundWorker workerSimulator;
         #region Singelton
         static readonly BlImp instance = new BlImp();
         static BlImp() { }// static ctor to ensure instance init is done just before first usage
@@ -764,14 +769,27 @@ namespace Bl
             };
         }
         #endregion
+
         public void StartSimulator(TimeSpan startTime, int speed, Action<TimeSpan> updateTime)
         {
-            throw new NotImplementedException();
+            Stopwatch stopwatch = new Stopwatch();
+            watch.Cancel = false;
+            workerSimulator = new BackgroundWorker();
+            workerSimulator.DoWork += (object sender, DoWorkEventArgs e)=>
+            {
+                while(watch.Cancel==false)
+                {
+                    watch.CurTime =startTime + new TimeSpan(stopwatch.ElapsedTicks * speed);
+                    ObseverWatch obsever = new ObseverWatch(updateTime);
+                    Thread.Sleep(1000);
+                }
+            };
+            stopwatch.Restart();
+            workerSimulator.RunWorkerAsync();
         }
-
         public void StopSimulator()
         {
-            throw new NotImplementedException();
+            watch.Cancel = true;           
         }
 
     }

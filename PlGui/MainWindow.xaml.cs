@@ -102,12 +102,12 @@ namespace PlGui
                   foreach (var item in bl.GetBusStops())
                   {
                       var temp = new PO.BusStop();
-                      Cloning.DeepCopyTo(item,temp);
+                      Cloning.DeepCopyTo(item, temp);
                       foreach (var lineOnStop in temp.LinesPassInStop)
                       {
                           var tempLine = Lists.Lines.First(l => l.IdLine == lineOnStop.IdLine);
                           tempLine.DeepCopyTo(lineOnStop);
-                      } 
+                      }
                       worker.ReportProgress(30, temp);
                   }
               };
@@ -118,7 +118,7 @@ namespace PlGui
                       var temp = e.UserState as PO.Line;
                       Lists.Lines.Add(temp);
                   }
-                 else
+                  else
                   {
                       var temp = e.UserState as PO.BusStop;
                       Lists.Stops.Add(temp);
@@ -381,7 +381,7 @@ namespace PlGui
                     foreach (var item in tempLST)
                     {
                         var indexS = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == item);
-                        var i=Lists.Stops[indexS].LinesPassInStop.ToList().FindIndex(line=>line.IdLine==l.IdLine);
+                        var i = Lists.Stops[indexS].LinesPassInStop.ToList().FindIndex(line => line.IdLine == l.IdLine);
                         Lists.Stops[indexS].LinesPassInStop.RemoveAt(i);
                     }
                 }).Start();
@@ -743,19 +743,24 @@ namespace PlGui
                 clockSpeed.Text = "";
             }
         }
-        private void setSimulator(TimeSpan time,int speed)
+        private void setSimulator(TimeSpan time, int speed)
         {
             Simulator = new BackgroundWorker();
             Simulator.WorkerReportsProgress = true;
             Simulator.WorkerSupportsCancellation = true;
             Simulator.DoWork += (object sender, DoWorkEventArgs e) =>
              {
-                 bl.StartSimulator(time, speed, t => t.Add(TimeSpan.FromSeconds(speed)));
-                 Simulator.ReportProgress(1);
+                 BackgroundWorker worker =(BackgroundWorker)sender; 
+                 bl.StartSimulator(time, speed, t =>
+                 {
+                     Simulator.ReportProgress(1,t);
+                 });
+                 while (!Simulator.CancellationPending)
+                     Thread.Sleep(1000);
              };
             Simulator.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
               {
-                  TimeSpan t = (TimeSpan)sender;
+                  TimeSpan t = (TimeSpan)e.UserState;
                   programClock.Text = t.ToString(@"hh\:mm\:ss");
               };
         }
