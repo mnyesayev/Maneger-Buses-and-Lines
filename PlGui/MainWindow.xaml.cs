@@ -761,10 +761,7 @@ namespace PlGui
             };
             Simulator.DoWork += (object sender, DoWorkEventArgs e) =>
              {
-                 bl.StartSimulator(time, speed, t =>
-                 {
-                     Simulator.ReportProgress(1, t);
-                 });
+                 bl.StartSimulator(time, speed, t => Simulator.ReportProgress(1, t));
                  while (!Simulator.CancellationPending)
                      Thread.Sleep(1000);
              };

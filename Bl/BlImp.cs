@@ -773,6 +773,7 @@ namespace Bl
         public void StartSimulator(TimeSpan startTime, int speed, Action<TimeSpan> updateTime)
         {
             Stopwatch stopwatch = new Stopwatch();
+            ObseverWatch obsever = new ObseverWatch(updateTime);
             watch.Cancel = false;
             workerSimulator = new BackgroundWorker();
             workerSimulator.DoWork += (object sender, DoWorkEventArgs e) =>
@@ -780,7 +781,6 @@ namespace Bl
                 while (watch.Cancel == false)
                 {
                     watch.CurTime = startTime + new TimeSpan(stopwatch.ElapsedTicks * speed);
-                    ObseverWatch obsever = new ObseverWatch(updateTime);
                     Thread.Sleep(1000);
                 }
             };
