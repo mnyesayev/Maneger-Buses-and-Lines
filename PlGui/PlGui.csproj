@@ -110,6 +110,9 @@
     <Compile Include="wEditSuccessiveStations.xaml.cs">
       <DependentUpon>wEditSuccessiveStations.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wEditTrip.xaml.cs">
+      <DependentUpon>wEditTrip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wLineInfo.xaml.cs">
       <DependentUpon>wLineInfo.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="wEditSuccessiveStations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wEditTrip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

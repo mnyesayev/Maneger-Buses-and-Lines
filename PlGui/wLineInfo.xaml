@@ -154,6 +154,11 @@
                   ItemsSource="{Binding Path=Trips}">
             
         </ListView>
+        <Button Grid.Column="6" Grid.Row="7" Style="{StaticResource MaterialDesignIconButton}"
+                ToolTip=" Expand frequency" VerticalAlignment="Top"
+                x:Name="ExpandFrequency" Click="ExpandFrequency_Click">
+            <materialDesign:PackIcon Kind="ArrowExpand" />
+        </Button>
         <TextBlock Text="Area:" Grid.Column="1"
                    Grid.Row="6" VerticalAlignment="Center"
                    HorizontalAlignment="Right" FontSize="16" FontWeight="Bold"/>

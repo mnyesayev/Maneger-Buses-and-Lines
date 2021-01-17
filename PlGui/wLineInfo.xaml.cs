@@ -127,5 +127,12 @@ namespace PlGui
             addStopLine.tBNewIndex.Text = (listViewLineInfo.SelectedIndex + 1).ToString();
             addStopLine.ShowDialog();
         }
+
+        private void ExpandFrequency_Click(object sender, RoutedEventArgs e)
+        {
+            wEditTrip editTrip = new wEditTrip(bl);
+            editTrip.DataContext = this.DataContext;
+            editTrip.ShowDialog();
+        }
     }
 }
