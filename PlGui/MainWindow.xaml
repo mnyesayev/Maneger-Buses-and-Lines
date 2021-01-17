@@ -460,18 +460,22 @@
                       Foreground="White" VerticalAlignment="Center">
                 Travel and go
             </TextBlock>
-            <StackPanel  Grid.Column="1" Margin="40 0 0 0" Grid.Row="1" Orientation="Vertical" 
+            <!--<Border BorderBrush="Purple" BorderThickness="1"
+                    Grid.Column="1" Margin="40 0 0 10" Grid.Row="1" CornerRadius="5"/>-->
+            <StackPanel  Grid.Column="1" Margin="42 2 2 12" Grid.Row="1" Orientation="Vertical" 
                          VerticalAlignment="Center">
                 <materialDesign:TimePicker x:Name="programClock" Margin="0 0 0 5" 
                                        materialDesign:HintAssist.Hint="Select start time"
                                        Is24Hours="True" WithSeconds="True"
-                                       />
-                <TextBox x:Name="clockSpeed" materialDesign:HintAssist.Hint="Enter clock speed" PreviewKeyDown="clockSpeed_PreviewKeyDown" />
+                                       Foreground="White"/>
+                <TextBox x:Name="clockSpeed" materialDesign:HintAssist.Hint="Enter clock speed" 
+                         PreviewKeyDown="clockSpeed_PreviewKeyDown" Foreground="White" />
+                <Button x:Name="bClock" Content="Start" 
+                   Width="140" Height="25"
+                    Background="#512DA8" Margin="0 5 0 0"
+                    materialDesign:ButtonAssist.CornerRadius="5" Click="bClock_Click"/>
             </StackPanel>
-            <Button x:Name="bClock" Content="Start" 
-                    Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left"
-                    Background="#512DA8" Margin="5 0 0 0"
-                    materialDesign:ButtonAssist.CornerRadius="30" Click="bClock_Click"/>
+            
             
             <!--#endregion-->
 
