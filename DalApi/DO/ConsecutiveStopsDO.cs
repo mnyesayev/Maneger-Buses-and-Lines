@@ -30,16 +30,7 @@ namespace DO
         /// <summary>
         /// Represents the avrege drive time beetwen of the "ConsecutiveStops"
         /// </summary>
-        [XmlIgnore]
         public TimeSpan AvregeDriveTime { get; set; }
-
-        [XmlElement("AvregeDriveTime", DataType = "duration")]
-        [DefaultValue("PT10M")]
-        public string XmlTime
-        {
-            get { return XmlConvert.ToString(AvregeDriveTime); }
-            set { AvregeDriveTime = XmlConvert.ToTimeSpan(value); }
-        }
 
     }
 }

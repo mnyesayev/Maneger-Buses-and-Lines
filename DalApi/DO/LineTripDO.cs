@@ -32,27 +32,13 @@ namespace DO
         /// <summary>
         /// Represents the time of start line
         /// </summary>
-        [XmlIgnore]
         public TimeSpan StartTime { get; set; }
         /// <summary>
         /// Represents the time of end line
         /// </summary>
-        [XmlIgnore]
         public TimeSpan EndTime { get; set; }
-        [XmlElement("StartTime", DataType = "duration")]
-        [DefaultValue("PT10M")]
-        public string XmlStartTime
-        {
-            get { return XmlConvert.ToString(StartTime); }
-            set { StartTime = XmlConvert.ToTimeSpan(value); }
-        }
+       
 
-        [XmlElement("EndTime", DataType = "duration")]
-        [DefaultValue("PT10M")]
-        public string XmlEndTime
-        {
-            get { return XmlConvert.ToString(EndTime); }
-            set { EndTime = XmlConvert.ToTimeSpan(value); }
-        }
+       
     }
 }

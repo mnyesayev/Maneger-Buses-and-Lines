@@ -625,13 +625,19 @@ namespace Dal
         #region ConsecutiveStops
         public ConsecutiveStops GetConsecutiveStops(int codeStop1, int codeStop2)
         {
-            var LstConsecutiveStops = XMLTools.LoadListFromXMLSerializer<ConsecutiveStops>(consecutiveStopsPath);
-            var conStops = LstConsecutiveStops.Find((ConsecutiveStops) =>
-            {
-                return ConsecutiveStops.CodeBusStop1 == codeStop1
-                && ConsecutiveStops.CodeBusStop2 == codeStop2;
-            });
-            return conStops;
+            var consecutiveStopsElem = XMLTools.LoadListFromXMLElement(consecutiveStopsPath);
+            ConsecutiveStops cStops = (from conStops in consecutiveStopsElem.Elements()
+                     where int.Parse(conStops.Element("CodeBusStop1").Value) == codeStop1 &&
+                     int.Parse(conStops.Element("CodeBusStop2").Value) == codeStop2
+                     select new ConsecutiveStops()
+                     {
+                         CodeBusStop1 = int.Parse(conStops.Element("CodeBusStop1").Value),
+                         CodeBusStop2 = int.Parse(conStops.Element("CodeBusStop2").Value),
+                         Distance = double.Parse(conStops.Element("Distance").Value),
+                         AvregeDriveTime = XmlConvert.ToTimeSpan(conStops.Element("AvregeDriveTime").Value)
+                     }
+                   ).FirstOrDefault();
+            return cStops;
         }
 
         public void AddConsecutiveStops(ConsecutiveStops consecutiveStops)
