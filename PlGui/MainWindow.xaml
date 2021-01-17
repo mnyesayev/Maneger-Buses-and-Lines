@@ -579,16 +579,15 @@
                         <ListView x:Name="ListViewLines" Grid.Row="1" Grid.Column="1"
                                   Grid.ColumnSpan="3" Grid.RowSpan="6"
                               ItemsSource="{Binding Path=Lines}" MouseUp="ListViewLines_MouseUp" 
-                                  MouseDoubleClick="ListViewLines_MouseDoubleClick">
+                                  MouseDoubleClick="ListViewLines_MouseDoubleClick" >
                             <ListView.View>
                                 <GridView>
-                                    <GridView.ColumnHeaderContainerStyle>
+                                    <!--<GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="Background" Value="GhostWhite"></Setter>
-                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                                         </Style>
-                                    </GridView.ColumnHeaderContainerStyle>
-                                    <GridViewColumn x:Name="gvcNumId" Header="Lines" Width="auto">
+                                    </GridView.ColumnHeaderContainerStyle>-->
+                                    <GridViewColumn x:Name="gvcNumId" Header="Lines">
                                       
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -605,7 +604,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                    
-                                    <GridViewColumn Header="Delete" Width="auto">
+                                    <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button x:Name="DeleteLine" 
