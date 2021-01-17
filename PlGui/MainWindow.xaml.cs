@@ -480,7 +480,7 @@ namespace PlGui
             }
             return;
         }
-        
+
         private void addAfterStopToLine_Click(object sender, RoutedEventArgs e)
         {
             var addStopLine = new addStopLine(bl, Lists);
@@ -488,7 +488,7 @@ namespace PlGui
             addStopLine.tBNewIndex.Text = (ListViewStopsOfLine.SelectedIndex + 2).ToString();
             addStopLine.ShowDialog();
         }
-        
+
         private void addBeforeStopToLine_Click(object sender, RoutedEventArgs e)
         {
             var addStopLine = new addStopLine(bl, Lists);
@@ -560,7 +560,7 @@ namespace PlGui
             //Lists.Buses.Add(temp);
         }
         #endregion
-        
+
         #region search
         private void SearchBus_Click(object sender, RoutedEventArgs e)
         {
@@ -727,12 +727,13 @@ namespace PlGui
 
         private void bClock_Click(object sender, RoutedEventArgs e)
         {
-            if (programClock == null ||clockSpeed.Text.Length==0) return;
-            if (programClock.Text.Length==0) return;
+            if (programClock == null || clockSpeed.Text.Length == 0) return;
+            if (!TimeSpan.TryParse(programClock.Text, out TimeSpan time))
+                return;
             if (bClock.Content.ToString() == "Start")
             {
                 bClock.Content = "Stop";
-                setSimulator(TimeSpan.Parse(programClock.Text), int.Parse(clockSpeed.Text));
+                setSimulator(time, int.Parse(clockSpeed.Text));
                 Simulator.RunWorkerAsync();
                 programClock.IsEnabled = false;
                 clockSpeed.IsEnabled = false;
@@ -753,15 +754,16 @@ namespace PlGui
         }
         private void setSimulator(TimeSpan time, int speed)
         {
-            Simulator = new BackgroundWorker();
-            Simulator.WorkerReportsProgress = true;
-            Simulator.WorkerSupportsCancellation = true;
+            Simulator = new BackgroundWorker
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
             Simulator.DoWork += (object sender, DoWorkEventArgs e) =>
              {
-                 BackgroundWorker worker =(BackgroundWorker)sender; 
                  bl.StartSimulator(time, speed, t =>
                  {
-                     Simulator.ReportProgress(1,t);
+                     Simulator.ReportProgress(1, t);
                  });
                  while (!Simulator.CancellationPending)
                      Thread.Sleep(1000);
@@ -776,7 +778,7 @@ namespace PlGui
         private void clockSpeed_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
-            if (char.IsControl(c) || char.IsDigit(c)||e.Key == Key.Right || e.Key == Key.Left)
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
                 return;
             if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
                 e.Handled = true;

@@ -27,12 +27,12 @@ namespace Bl
         #region BusStop
         public BusStop GetStop(int code)
         {
-            var DObusStop=dal.GetBusStop(code);
+            var DObusStop = dal.GetBusStop(code);
             if (DObusStop == null) return null;
             var BObusStop = new BusStop();
             DObusStop.CopyPropertiesTo(BObusStop);
             BObusStop.LinesPassInStop = (DObusStop.PassLines == true) ? GetLinesInStop(BObusStop.Code) : default;
-            return BObusStop;     
+            return BObusStop;
         }
         public void DeleteBusStop(int code)
         {
@@ -51,7 +51,7 @@ namespace Bl
                    let newBusStop = new BusStop
                    {
                        Latitude = BusStop.Latitude,
-                       Longitude=BusStop.Longitude,
+                       Longitude = BusStop.Longitude,
                        Code = BusStop.Code,
                        Name = BusStop.Name,
                        MoreInfo = BusStop.MoreInfo,
@@ -62,15 +62,15 @@ namespace Bl
         }
         public BusStop AddStop(BusStop stop)
         {
-            if(stop.Code>999999||stop.Code<1)
+            if (stop.Code > 999999 || stop.Code < 1)
             {
                 throw new AddException("BusStop", stop.Code.ToString());
             }
-            if(stop.Name=="")
+            if (stop.Name == "")
                 throw new AddException("BusStop", stop.Name.ToString());
-            if(stop.Latitude>90||stop.Latitude<-90)
+            if (stop.Latitude > 90 || stop.Latitude < -90)
                 throw new AddException("BusStop", stop.Latitude.ToString());
-            if(stop.Longitude>180||stop.Longitude<-180)
+            if (stop.Longitude > 180 || stop.Longitude < -180)
                 throw new AddException("BusStop", stop.Longitude.ToString());
             try
             {
@@ -80,7 +80,7 @@ namespace Bl
                 stopDO.PassLines = false;
                 dal.AddStop(stopDO);
             }
-            catch (DO.BusStopExceptionDO )
+            catch (DO.BusStopExceptionDO)
             {
                 return null;
             }
@@ -90,9 +90,9 @@ namespace Bl
         }
         public IEnumerable<LineOnStop> GetLinesInStop(int code)
         {
-            return from StopLine in dal.GetStopLinesBy(sl=>sl.CodeStop==code)
-                   select new LineOnStop() 
-                   {   
+            return from StopLine in dal.GetStopLinesBy(sl => sl.CodeStop == code)
+                   select new LineOnStop()
+                   {
                        IdLine = StopLine.IdLine
                    };
         }
@@ -150,7 +150,7 @@ namespace Bl
         #region StopLine
         public Line AddStopLine(int idLine, int codeStop, int index)
         {
-            if(codeStop<1||codeStop>999999)
+            if (codeStop < 1 || codeStop > 999999)
                 throw new AddException("StopLine", $"{codeStop}", "The this codeStop exceeds from limits of code");
             var st = dal.GetStopLine(idLine, codeStop);
             List<DO.StopLine> stopsInLine = new List<DO.StopLine>(
@@ -167,13 +167,13 @@ namespace Bl
             }
             if (index <= stopsInLine.Count())
                 curStop = dal.GetStopLineByIndex(idLine, index);
-            if (index<1||index > stopsInLine.Count()+1)
+            if (index < 1 || index > stopsInLine.Count() + 1)
                 throw new AddException("StopLine", $"{index}", "The index exceeds the station limit");
             if (curStop == null)
                 return null;
             try
             {
-                if (index != 1&&index!=stopsInLine.Count+1)
+                if (index != 1 && index != stopsInLine.Count + 1)
                 {
                     var d1 = GetDistance(curStop.PrevStop, codeStop);
                 }
@@ -285,7 +285,7 @@ namespace Bl
             if (st == null || stopsInLine.Count == 0)
                 return null;
             if (stopsInLine.Count() == 2)
-                throw new DeleteException("StopLine",codeStop.ToString(), "You can not delete the line station \nConsider deleting the line instead!");
+                throw new DeleteException("StopLine", codeStop.ToString(), "You can not delete the line station \nConsider deleting the line instead!");
             if (index > 1)
             {
                 var distance = GetDistance(st.PrevStop, st.CodeStop) + GetDistance(st.CodeStop, st.NextStop);
@@ -322,7 +322,7 @@ namespace Bl
                 if (index == stopsInLine.Count())
                 {
                     dal.UpdateLine(idLine, (Line) =>
-                    { Line.CodeFirstStop = stopsInLine.ElementAt(index- 2).CodeStop; });
+                    { Line.CodeFirstStop = stopsInLine.ElementAt(index - 2).CodeStop; });
                     dal.UpdateStopLine(idLine, stopsInLine.ElementAt(index - 2).CodeStop,
                         (StopLine) => StopLine.NextStop = 0);
                     dal.DeleteStopLine(idLine, codeStop);
@@ -775,11 +775,11 @@ namespace Bl
             Stopwatch stopwatch = new Stopwatch();
             watch.Cancel = false;
             workerSimulator = new BackgroundWorker();
-            workerSimulator.DoWork += (object sender, DoWorkEventArgs e)=>
+            workerSimulator.DoWork += (object sender, DoWorkEventArgs e) =>
             {
-                while(watch.Cancel==false)
+                while (watch.Cancel == false)
                 {
-                    watch.CurTime =startTime + new TimeSpan(stopwatch.ElapsedTicks * speed);
+                    watch.CurTime = startTime + new TimeSpan(stopwatch.ElapsedTicks * speed);
                     ObseverWatch obsever = new ObseverWatch(updateTime);
                     Thread.Sleep(1000);
                 }
@@ -789,7 +789,7 @@ namespace Bl
         }
         public void StopSimulator()
         {
-            watch.Cancel = true;           
+            watch.Cancel = true;
         }
 
     }
