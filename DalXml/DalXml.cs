@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using DalApi;
 using DO;
 namespace Dal
@@ -32,6 +36,34 @@ namespace Dal
         string usersPath = @"UsersXml.xml"; //XMLSerializer
         #endregion
 
+        //class ConStops
+        //{
+        //    /// <summary>
+        //    /// Represents the unique number of the "CodeBusStop1"
+        //    /// </summary>
+        //    public int CodeBusStop1 { get; set; }
+        //    /// <summary>
+        //    /// Represents the unique number of the "CodeBusStop2"
+        //    /// </summary>
+        //    public int CodeBusStop2 { get; set; }
+        //    /// <summary>
+        //    /// Represents the distance beetwen of the "ConsecutiveStops"
+        //    /// </summary>
+        //    public double Distance { get; set; }
+        //    /// <summary>
+        //    /// Represents the avrege drive time beetwen of the "ConsecutiveStops"
+        //    /// </summary>
+        //    [XmlIgnore]
+        //    public TimeSpan AvregeDriveTime { get; set; }
+
+        //    [XmlElement("AvregeDriveTime", DataType = "duration")]
+        //    [DefaultValue("PT10M")]
+        //    public string XmlTime
+        //    {
+        //        get { return XmlConvert.ToString(AvregeDriveTime); }
+        //        set { AvregeDriveTime = XmlConvert.ToTimeSpan(value); }
+        //    }
+        //};
         #region Bus
         public Bus GetBus(int id)
         {
@@ -69,7 +101,7 @@ namespace Dal
                        Fuel = int.Parse(bus.Element("Fuel").Value),
                        LastCare = DateTime.Parse(bus.Element("LastCare").Value),
                        LastCareMileage = uint.Parse(bus.Element("LastCareMileage").Value),
-                       State = (States)Enum.Parse(typeof(States),bus.Element("State").Value)
+                       State = (States)Enum.Parse(typeof(States), bus.Element("State").Value)
                    };
         }
 
@@ -681,7 +713,7 @@ namespace Dal
         public LineTrip GetLineTrip(int id)
         {
             var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
-            var lineTrip = lineTrips.Find(LineTrip=> LineTrip.Active && LineTrip.Id == id);
+            var lineTrip = lineTrips.Find(LineTrip => LineTrip.Active && LineTrip.Id == id);
             if (lineTrip == null)
                 return null;
             return lineTrip;
@@ -699,7 +731,7 @@ namespace Dal
         {
             var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
             return from LineTrip in lineTrips
-                   where predicate(LineTrip)&&LineTrip.Active == true
+                   where predicate(LineTrip) && LineTrip.Active == true
                    select LineTrip;
         }
 
@@ -719,7 +751,7 @@ namespace Dal
             int index = lineTrips.FindIndex(LineTrip => LineTrip.Active && LineTrip.Id == id);
             if (index == -1)
                 throw new LineTripExceptionDO(id, "System not found the line trip");
-            action( lineTrips[index]);
+            action(lineTrips[index]);
             XMLTools.SaveListToXMLSerializer(lineTrips, lineTripsPath);
         }
 
@@ -729,7 +761,7 @@ namespace Dal
             int index = lineTrips.FindIndex(LineTrip => LineTrip.Active && LineTrip.Id == id);
             if (index == -1)
                 throw new LineTripExceptionDO(id, "the line trip is not exists");
-            lineTrips[index].Active=false;
+            lineTrips[index].Active = false;
             XMLTools.SaveListToXMLSerializer(lineTrips, lineTripsPath);
         }
         #endregion
