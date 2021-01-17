@@ -343,7 +343,7 @@ namespace PlGui
                 }).Start();
             }
         }
-
+        #region Lines
         private void ListViewLines_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (ListViewLines.SelectedItem is PO.Line)
@@ -388,9 +388,157 @@ namespace PlGui
             }
         }
 
-        private void ChangeLine_Click(object sender, RoutedEventArgs e)
+        private void AddStopLine_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Still under construction", "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
+            var addStopLine = new addStopLine(bl, Lists)
+            {
+                DataContext = ListViewLines.SelectedItem
+            };
+            addStopLine.ShowDialog();
+
+        }
+
+        private void DeleteStopLine_Click(object sender, RoutedEventArgs e)
+        {
+            var StopLine = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
+            var idLine = (ListViewStopsOfLine.DataContext as PO.Line).IdLine;
+            BO.Line upline;
+            try
+            {
+                upline = bl.DeleteStopLine(idLine, StopLine.CodeStop, StopLine.NumStopInLine);
+                if (upline == null)
+                    return;
+            }
+            catch (DeleteException ex)
+            {
+                MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            int indexLine = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
+            var linePO = new PO.Line();
+            Cloning.DeepCopyTo(upline, linePO);
+            Lists.Lines[indexLine].StopsInLine = linePO.StopsInLine;
+            Lists.Lines[indexLine].NameFirstLineStop = linePO.NameFirstLineStop;
+            Lists.Lines[indexLine].NameLastLineStop = linePO.NameLastLineStop;
+            //for old stop
+            var indexdeleteStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
+            var i = Lists.Stops[indexdeleteStop].LinesPassInStop.ToList().FindIndex(l => l.IdLine == idLine);
+            Lists.Stops[indexdeleteStop].LinesPassInStop.RemoveAt(i);
+        }
+
+        private void EditDAT_Click(object sender, RoutedEventArgs e)
+        {
+            PO.StopLine sl = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
+            wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
+            wEdit.tbcode1.Text = sl.CodeStop.ToString();
+            wEdit.tbcode2.Text = sl.NextStop.ToString();
+            wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
+            wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
+            wEdit.ShowDialog();
+            if (wEdit.IsSave)
+            {
+                foreach (var item in Lists.Lines)
+                {
+                    var index = item.StopsInLine.ToList().FindIndex((StopLine) =>
+                    { return StopLine.CodeStop == sl.CodeStop && StopLine.NextStop == sl.NextStop; });
+                    if (index != -1)
+                    {
+                        var upstopLine = bl.GetStopInLine(sl.CodeStop, item.IdLine);
+                        var temp = new PO.StopLine();
+                        upstopLine.DeepCopyTo(temp);
+                        item.StopsInLine[index].DistanceToNext = temp.DistanceToNext;
+                        item.StopsInLine[index].AvregeDriveTimeToNext = temp.AvregeDriveTimeToNext;
+                    }
+                }
+            }
+        }
+
+        private void ListViewLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ListViewLines.SelectedItem is PO.Line)
+            {
+                wLineInfo lineInfo = new wLineInfo(bl, Lists);
+                lineInfo.DataContext = ListViewLines.SelectedItem;
+                lineInfo.ComboBoxLineInfo.DataContext = Lists.Lines;
+                lineInfo.ComboBoxLineInfo.SelectedItem = lineInfo.DataContext;
+                lineInfo.ShowDialog();
+            }
+            return;
+        }
+
+        private void bStop_lineInfo_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as Button).DataContext is PO.LineOnStop)
+            {
+                wLineInfo lineInfo = new wLineInfo(bl, Lists);
+                var l = (PO.LineOnStop)(sender as Button).DataContext;
+                var i = Lists.Lines.ToList().FindIndex((line) => line.IdLine == l.IdLine);
+                lineInfo.DataContext = Lists.Lines[i];
+                lineInfo.ComboBoxLineInfo.DataContext = Lists.Lines;
+                lineInfo.ComboBoxLineInfo.SelectedItem = lineInfo.DataContext;
+                lineInfo.ShowDialog();
+            }
+            return;
+        }
+        
+        private void addAfterStopToLine_Click(object sender, RoutedEventArgs e)
+        {
+            var addStopLine = new addStopLine(bl, Lists);
+            addStopLine.DataContext = ListViewLines.SelectedItem;
+            addStopLine.tBNewIndex.Text = (ListViewStopsOfLine.SelectedIndex + 2).ToString();
+            addStopLine.ShowDialog();
+        }
+        
+        private void addBeforeStopToLine_Click(object sender, RoutedEventArgs e)
+        {
+            var addStopLine = new addStopLine(bl, Lists);
+            addStopLine.DataContext = ListViewLines.SelectedItem;
+            addStopLine.tBNewIndex.Text = (ListViewStopsOfLine.SelectedIndex + 1).ToString();
+            addStopLine.ShowDialog();
+        }
+
+        private void HideDistanceAndTime_Click(object sender, RoutedEventArgs e)
+        {
+            DriveTime.Width = 0;
+            Distance.Width = 0;
+        }
+
+        private void ShowDistanceAndTime_Click(object sender, RoutedEventArgs e)
+        {
+            DriveTime.Width = 100;
+            Distance.Width = 100;
+        }
+        #endregion
+        private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(Environment.ExitCode);
+        }
+        #region Buses
+        private void ListViewBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ListViewBuses.SelectedItem is PO.Bus)
+            {
+                wBusInfo busInfo = new wBusInfo(bl);
+                busInfo.DataContext = ListViewBuses.SelectedItem as PO.Bus;
+                if ((ListViewBuses.SelectedItem as PO.Bus).Fuel < 1200)
+                    busInfo.bRefuel.IsEnabled = true;
+                busInfo.Show();
+            }
+        }
+
+        private void DeleteBus_Click(object sender, RoutedEventArgs e)
+        {
+            wDelbus delbus = new wDelbus();
+            delbus.ShowDialog();
+            try
+            {
+                bl.DeleteBus((int)delbus.IdDelbus);
+                Lists.Buses.Remove(Lists.Buses.ToList().Find((Bus) => Bus.Id == delbus.IdDelbus));
+            }
+            catch (DeleteException ex)
+            {
+                MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void AddBus_Click(object sender, RoutedEventArgs e)
@@ -411,27 +559,9 @@ namespace PlGui
             //Cloning.DeepCopyTo(newBus, temp);
             //Lists.Buses.Add(temp);
         }
-
-        private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Environment.Exit(Environment.ExitCode);
-        }
-
-        private void DeleteBus_Click(object sender, RoutedEventArgs e)
-        {
-            wDelbus delbus = new wDelbus();
-            delbus.ShowDialog();
-            try
-            {
-                bl.DeleteBus((int)delbus.IdDelbus);
-                Lists.Buses.Remove(Lists.Buses.ToList().Find((Bus) => Bus.Id == delbus.IdDelbus));
-            }
-            catch (DeleteException ex)
-            {
-                MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
+        #endregion
+        
+        #region search
         private void SearchBus_Click(object sender, RoutedEventArgs e)
         {
 
@@ -456,16 +586,6 @@ namespace PlGui
                     this.Dispatcher.Invoke(() => SearchBus.IsEnabled = true);
                 }
             }).Start();
-
-        }
-
-        private void AddStopLine_Click(object sender, RoutedEventArgs e)
-        {
-            var addStopLine = new addStopLine(bl, Lists)
-            {
-                DataContext = ListViewLines.SelectedItem
-            };
-            addStopLine.ShowDialog();
 
         }
 
@@ -560,46 +680,8 @@ namespace PlGui
                 this.Dispatcher.Invoke(() => SearchLine.IsEnabled = true);
             }).Start();
         }
+        #endregion
 
-        private void ListViewBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (ListViewBuses.SelectedItem is PO.Bus)
-            {
-                wBusInfo busInfo = new wBusInfo(bl);
-                busInfo.DataContext = ListViewBuses.SelectedItem as PO.Bus;
-                if ((ListViewBuses.SelectedItem as PO.Bus).Fuel < 1200)
-                    busInfo.bRefuel.IsEnabled = true;
-                busInfo.Show();
-            }
-        }
-
-        private void DeleteStopLine_Click(object sender, RoutedEventArgs e)
-        {
-            var StopLine = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
-            var idLine = (ListViewStopsOfLine.DataContext as PO.Line).IdLine;
-            BO.Line upline;
-            try
-            {
-                upline = bl.DeleteStopLine(idLine, StopLine.CodeStop, StopLine.NumStopInLine);
-                if (upline == null)
-                    return;
-            }
-            catch (DeleteException ex)
-            {
-                MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            int indexLine = Lists.Lines.ToList().FindIndex((Line) => Line.IdLine == upline.IdLine);
-            var linePO = new PO.Line();
-            Cloning.DeepCopyTo(upline, linePO);
-            Lists.Lines[indexLine].StopsInLine = linePO.StopsInLine;
-            Lists.Lines[indexLine].NameFirstLineStop = linePO.NameFirstLineStop;
-            Lists.Lines[indexLine].NameLastLineStop = linePO.NameLastLineStop;
-            //for old stop
-            var indexdeleteStop = Lists.Stops.ToList().FindIndex((BusStop) => BusStop.Code == StopLine.CodeStop);
-            var i = Lists.Stops[indexdeleteStop].LinesPassInStop.ToList().FindIndex(l => l.IdLine == idLine);
-            Lists.Stops[indexdeleteStop].LinesPassInStop.RemoveAt(i);
-        }
 
         private void tbUserName_KeyUp(object sender, KeyEventArgs e)
         {
@@ -613,33 +695,7 @@ namespace PlGui
                 blogInEnter_Click(sender, null);
         }
 
-        private void EditDAT_Click(object sender, RoutedEventArgs e)
-        {
-            PO.StopLine sl = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
-            wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
-            wEdit.tbcode1.Text = sl.CodeStop.ToString();
-            wEdit.tbcode2.Text = sl.NextStop.ToString();
-            wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
-            wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
-            wEdit.ShowDialog();
-            if (wEdit.IsSave)
-            {
-                foreach (var item in Lists.Lines)
-                {
-                    var index = item.StopsInLine.ToList().FindIndex((StopLine) =>
-                      { return StopLine.CodeStop == sl.CodeStop && StopLine.NextStop == sl.NextStop; });
-                    if (index != -1)
-                    {
-                        var upstopLine = bl.GetStopInLine(sl.CodeStop, item.IdLine);
-                        var temp = new PO.StopLine();
-                        upstopLine.DeepCopyTo(temp);
-                        item.StopsInLine[index].DistanceToNext = temp.DistanceToNext;
-                        item.StopsInLine[index].AvregeDriveTimeToNext = temp.AvregeDriveTimeToNext;
-                    }
-                }
-            }
-        }
-
+        #region busStops
         private void ListViewStations_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (ListViewStations.SelectedItem is PO.BusStop)
@@ -661,70 +717,18 @@ namespace PlGui
             return;
         }
 
-        private void ListViewLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (ListViewLines.SelectedItem is PO.Line)
-            {
-                wLineInfo lineInfo = new wLineInfo(bl, Lists);
-                lineInfo.DataContext = ListViewLines.SelectedItem;
-                lineInfo.ComboBoxLineInfo.DataContext = Lists.Lines;
-                lineInfo.ComboBoxLineInfo.SelectedItem = lineInfo.DataContext;
-                lineInfo.ShowDialog();
-            }
-            return;
-        }
-
-        private void bStop_lineInfo_Click(object sender, RoutedEventArgs e)
-        {
-            if ((sender as Button).DataContext is PO.LineOnStop)
-            {
-                wLineInfo lineInfo = new wLineInfo(bl, Lists);
-                var l = (PO.LineOnStop)(sender as Button).DataContext;
-                var i = Lists.Lines.ToList().FindIndex((line) => line.IdLine == l.IdLine);
-                lineInfo.DataContext = Lists.Lines[i];
-                lineInfo.ComboBoxLineInfo.DataContext = Lists.Lines;
-                lineInfo.ComboBoxLineInfo.SelectedItem = lineInfo.DataContext;
-                lineInfo.ShowDialog();
-            }
-            return;
-        }
-
         private void AddStop_Click(object sender, RoutedEventArgs e)
         {
             wAddStop addStop = new wAddStop(bl, Lists);
             addStop.ShowDialog();
         }
 
-        private void addAfterStopToLine_Click(object sender, RoutedEventArgs e)
-        {
-            var addStopLine = new addStopLine(bl, Lists);
-            addStopLine.DataContext = ListViewLines.SelectedItem;
-            addStopLine.tBNewIndex.Text = (ListViewStopsOfLine.SelectedIndex + 2).ToString();
-            addStopLine.ShowDialog();
-        }
-        private void addBeforeStopToLine_Click(object sender, RoutedEventArgs e)
-        {
-            var addStopLine = new addStopLine(bl, Lists);
-            addStopLine.DataContext = ListViewLines.SelectedItem;
-            addStopLine.tBNewIndex.Text = (ListViewStopsOfLine.SelectedIndex + 1).ToString();
-            addStopLine.ShowDialog();
-        }
-
-        private void HideDistanceAndTime_Click(object sender, RoutedEventArgs e)
-        {
-            DriveTime.Width = 0;
-            Distance.Width = 0;
-        }
-
-        private void ShowDistanceAndTime_Click(object sender, RoutedEventArgs e)
-        {
-            DriveTime.Width = 100;
-            Distance.Width = 100;
-        }
+        #endregion
 
         private void bClock_Click(object sender, RoutedEventArgs e)
         {
-            if (programClock.Text.Length == 0 ||clockSpeed.Text.Length==0) return;
+            if (programClock == null ||clockSpeed.Text.Length==0) return;
+            if (programClock.Text.Length==0) return;
             if (bClock.Content.ToString() == "Start")
             {
                 bClock.Content = "Stop";

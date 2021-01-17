@@ -419,7 +419,7 @@ namespace Dal
             //load runing numbers from "runNumbersPath"
             XElement runNumbersElem = XMLTools.LoadListFromXMLElement(runNumbersPath);
             int runNumber = int.Parse(runNumbersElem.Element("Counter").Element("LineCounter").Value);
-            line.IdLine = runNumber++;
+            line.IdLine = ++runNumber;
             runNumbersElem.Element("Counter").Element("LineCounter").Value = runNumber.ToString();
             XMLTools.SaveListToXMLElement(runNumbersElem, runNumbersPath);
 
@@ -670,7 +670,7 @@ namespace Dal
             var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
             XElement runNumbersElem = XMLTools.LoadListFromXMLElement(runNumbersPath);
             int runNumber = int.Parse(runNumbersElem.Element("Counter").Element("LineTripCounter").Value);
-            lineTrip.Id = runNumber++;
+            lineTrip.Id = ++runNumber;
             runNumbersElem.Element("Counter").Element("LineTripCounter").Value = runNumber.ToString();
             XMLTools.SaveListToXMLElement(runNumbersElem, runNumbersPath);
             lineTrips.Add(lineTrip);

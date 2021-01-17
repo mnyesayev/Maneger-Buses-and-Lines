@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,16 +26,33 @@ namespace DO
         /// </summary>
         public int IdLine { get; set ; }
         /// <summary>
-        /// Represents the time of start line
-        /// </summary>
-        public TimeSpan StartTime { get ; set ; }
-        /// <summary>
         /// Represents the frequency of line per hour
         /// </summary>
-        public int Frequency { get ; set ; }
+        public int Frequency { get; set; }
+        /// <summary>
+        /// Represents the time of start line
+        /// </summary>
+        [XmlIgnore]
+        public TimeSpan StartTime { get; set; }
         /// <summary>
         /// Represents the time of end line
         /// </summary>
-        public TimeSpan EndTime { get ; set ; }
+        [XmlIgnore]
+        public TimeSpan EndTime { get; set; }
+        [XmlElement("StartTime", DataType = "duration")]
+        [DefaultValue("PT10M")]
+        public string XmlStartTime
+        {
+            get { return XmlConvert.ToString(StartTime); }
+            set { StartTime = XmlConvert.ToTimeSpan(value); }
+        }
+
+        [XmlElement("EndTime", DataType = "duration")]
+        [DefaultValue("PT10M")]
+        public string XmlEndTime
+        {
+            get { return XmlConvert.ToString(EndTime); }
+            set { EndTime = XmlConvert.ToTimeSpan(value); }
+        }
     }
 }

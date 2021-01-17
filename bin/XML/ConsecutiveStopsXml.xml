@@ -558,4 +558,10 @@
     <Distance>2</Distance>
     <AvregeDriveTime>PT3M2S</AvregeDriveTime>
   </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>32742</CodeBusStop1>
+    <CodeBusStop2>0</CodeBusStop2>
+    <Distance>15</Distance>
+    <AvregeDriveTime>PT0S</AvregeDriveTime>
+  </ConsecutiveStops>
 </ArrayOfConsecutiveStops>

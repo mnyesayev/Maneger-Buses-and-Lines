@@ -27,19 +27,18 @@ namespace DO
         /// Represents the distance beetwen of the "ConsecutiveStops"
         /// </summary>
         public double Distance { get; set; }
-        private TimeSpan time;
         /// <summary>
         /// Represents the avrege drive time beetwen of the "ConsecutiveStops"
         /// </summary>
         [XmlIgnore]
-        public TimeSpan AvregeDriveTime { get => time; set => time = value; }
+        public TimeSpan AvregeDriveTime { get; set; }
 
         [XmlElement("AvregeDriveTime", DataType = "duration")]
         [DefaultValue("PT10M")]
         public string XmlTime
         {
-            get { return XmlConvert.ToString(time); }
-            set { time = XmlConvert.ToTimeSpan(value); }
+            get { return XmlConvert.ToString(AvregeDriveTime); }
+            set { AvregeDriveTime = XmlConvert.ToTimeSpan(value); }
         }
 
     }
