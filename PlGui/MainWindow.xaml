@@ -460,18 +460,22 @@
                       Foreground="White" VerticalAlignment="Center">
                 Travel and go
             </TextBlock>
-            <StackPanel  Grid.Column="1" Margin="40 0 0 0" Grid.Row="1" Orientation="Vertical" 
+            <!--<Border BorderBrush="Purple" BorderThickness="1"
+                    Grid.Column="1" Margin="40 0 0 10" Grid.Row="1" CornerRadius="5"/>-->
+            <StackPanel  Grid.Column="1" Margin="42 2 2 12" Grid.Row="1" Orientation="Vertical" 
                          VerticalAlignment="Center">
                 <materialDesign:TimePicker x:Name="programClock" Margin="0 0 0 5" 
                                        materialDesign:HintAssist.Hint="Select start time"
                                        Is24Hours="True" WithSeconds="True"
-                                       />
-                <TextBox x:Name="clockSpeed" materialDesign:HintAssist.Hint="Enter clock speed" PreviewKeyDown="clockSpeed_PreviewKeyDown" />
+                                       Foreground="White"/>
+                <TextBox x:Name="clockSpeed" materialDesign:HintAssist.Hint="Enter clock speed" 
+                         PreviewKeyDown="clockSpeed_PreviewKeyDown" Foreground="White" />
+                <Button x:Name="bClock" Content="Start" 
+                   Width="140" Height="25"
+                    Background="#512DA8" Margin="0 5 0 0"
+                    materialDesign:ButtonAssist.CornerRadius="5" Click="bClock_Click"/>
             </StackPanel>
-            <Button x:Name="bClock" Content="Start" 
-                    Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left"
-                    Background="#512DA8" Margin="5 0 0 0"
-                    materialDesign:ButtonAssist.CornerRadius="30" Click="bClock_Click"/>
+            
             
             <!--#endregion-->
 
@@ -557,9 +561,9 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -577,24 +581,34 @@
                             <RowDefinition Height="10"/>
                         </Grid.RowDefinitions>
                         <ListView x:Name="ListViewLines" Grid.Row="1" Grid.Column="1"
-                                  Grid.ColumnSpan="5" Grid.RowSpan="6"
+                                  Grid.ColumnSpan="3" Grid.RowSpan="6"
                               ItemsSource="{Binding Path=Lines}" MouseUp="ListViewLines_MouseUp" 
-                                  MouseDoubleClick="ListViewLines_MouseDoubleClick">
+                                  MouseDoubleClick="ListViewLines_MouseDoubleClick" >
                             <ListView.View>
                                 <GridView>
-                                    <GridView.ColumnHeaderContainerStyle>
+                                    <!--<GridView.ColumnHeaderContainerStyle>
                                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                                            <Setter Property="Background" Value="GhostWhite"></Setter>
-                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                                         </Style>
-                                    </GridView.ColumnHeaderContainerStyle>
-                                    <GridViewColumn x:Name="gvcNumId" Header="Line" Width="auto"  
-                                    DisplayMemberBinding="{Binding Path=NumLine,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    <GridViewColumn x:Name="gvcStartStop" Header="Starting station" Width="auto"
-                                    DisplayMemberBinding="{Binding Path=NameFirstLineStop,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn x:Name="gvcEndStop" Header="Last Stop" Width="auto"
-                                    DisplayMemberBinding="{Binding Path=NameLastLineStop,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn Header="Delete" Width="auto">
+                                    </GridView.ColumnHeaderContainerStyle>-->
+                                    <GridViewColumn x:Name="gvcNumId" Header="Lines">
+                                      
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button x:Name="bStop_lineInfo"  Content="{Binding NumLine, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             BorderThickness="2" BorderBrush="Purple" Width="80" Height="40"  Margin="5,0,0,0" Click="bStop_lineInfo_Click" />
+                                                    <TextBlock  Text="{Binding NameFirstLineStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                                    <materialDesign:PackIcon Kind="ArrowRight" Margin="1" VerticalAlignment="Center" />
+                                                    <TextBlock  Text="{Binding NameLastLineStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="5,0,0,0" VerticalAlignment="Center"  FontSize="14"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                   
+                                    <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button x:Name="DeleteLine" 
@@ -608,10 +622,12 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <ProgressBar Orientation="Vertical" Height="10" x:Name="dividerAdmin" 
-                                     Grid.Column="6" Grid.Row="1" Grid.RowSpan="6"/>
-                        <ListView x:Name="ListViewStopsOfLine" Grid.Row="1" Grid.Column="7"
-                                  Grid.ColumnSpan="3" Grid.RowSpan="6"
+                        <Border BorderThickness="2" CornerRadius="5" Grid.Column="5"
+                                Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="6"
+                               BorderBrush="Purple" />
+                       
+                        <ListView x:Name="ListViewStopsOfLine" Grid.Row="1" Grid.Column="5"
+                                  Grid.ColumnSpan="3" Grid.RowSpan="6" Margin="2"
                                   ItemsSource="{Binding Path=StopsInLine}"
                                   Visibility="Hidden">
                             <ListView.ContextMenu>
@@ -673,6 +689,21 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+
+                        <TextBlock Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="3"
+                                   Text="Line frequency" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" Margin="15 0 0 0"/>
+                        <Border Grid.Column="8" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="3"
+                                 BorderBrush="Purple" BorderThickness="2" CornerRadius="5"
+                                Margin="15 0 0 0"/>
+
+                        <TextBlock Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="3"
+                                   Text="More info on Line" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" Margin="15 0 0 0"/>
+                        <Border Grid.Column="8" Grid.ColumnSpan="2" Grid.Row="6" 
+                                 BorderBrush="Purple" BorderThickness="2" CornerRadius="5"
+                                Margin="15 0 0 0"/>
+
                         <Button x:Name="AddLine" Grid.Column="1" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Add line" Click="AddLine_Click">
@@ -685,7 +716,7 @@
                                  ToolTip="Search Line" Click="SearchLine_Click" >
                             <materialDesign:PackIcon Kind="Magnify"/>
                         </Button>
-                        <Button x:Name="AddStopLine" Grid.Column="7" Grid.Row="7"
+                        <Button x:Name="AddStopLine" Grid.Column="5" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Add stop line" Visibility="Hidden" Click="AddStopLine_Click" >
                             <materialDesign:PackIcon Kind="Plus" />
