@@ -28,6 +28,7 @@ namespace BO
         /// Represents all stops in the Line
         /// </summary>
         public IEnumerable<StopLine> StopsInLine { get; set; }
+        public IEnumerable<LineTrip> Trips { get; set; }
         /// <summary>
         /// Represents the more info of about the Line
         /// </summary>

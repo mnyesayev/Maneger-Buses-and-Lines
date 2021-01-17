@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace PO
 {
     public class LineTrip
     {
@@ -25,10 +26,6 @@ namespace BO
         /// Represents the frequency of line per hour
         /// </summary>
         public int Frequency { get; set; }
-        public IEnumerable<TimeSpan> DepartureSchedule;
-        /// <summary>
-        /// Represents the time of end line
-        /// </summary>
-        //public TimeSpan EndTime { get; set; }
+        public ObservableCollection<TimeSpan> DepartureSchedule;
     }
 }

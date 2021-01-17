@@ -151,7 +151,7 @@
 
         <ListView x:Name="listViewLineFrequency" Grid.Row="3" Grid.Column="6"
                   Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="20 0 0 0"
-                  ItemsSource="{Binding}">
+                  ItemsSource="{Binding Path=Trips}">
             
         </ListView>
         <TextBlock Text="Area:" Grid.Column="1"

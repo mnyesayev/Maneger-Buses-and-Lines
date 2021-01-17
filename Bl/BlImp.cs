@@ -428,6 +428,7 @@ namespace Bl
                        Area = (BO.Areas)Line.Area,
                        CodeAgency = (BO.Agency)Line.CodeAgency,
                        StopsInLine = GetStopsInLine(Line.IdLine),
+                       Trips= GetLineTrips(Line.IdLine),
                        MoreInfo = Line.MoreInfo
                    }
                    orderby newLine.NumLine
@@ -671,18 +672,17 @@ namespace Bl
         #endregion
 
         #region LineTrip
-        public IEnumerable<LineTrip> GetLineTrips()
+        public IEnumerable<LineTrip> GetLineTrips(int idLine)
         {
-            return from LineTrip in dal.GetLineTrips()
+            return from LineTrip in dal.GetLineTripsBy(lt=>lt.IdLine==idLine)
                    let newLineTrip = new LineTrip()
                    {
                        Id = LineTrip.Id,
                        IdLine = LineTrip.IdLine,
-                       NumLine = GetNumLine(LineTrip.IdLine),
                        Frequency = LineTrip.Frequency,
                        DepartureSchedule = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency)
                    }
-                   orderby newLineTrip.NumLine
+                   orderby newLineTrip.DepartureSchedule.FirstOrDefault()
                    select newLineTrip;
         }
         IEnumerable<TimeSpan> getSchedule(TimeSpan startTime, TimeSpan endTime, int f)
@@ -703,17 +703,12 @@ namespace Bl
                     continue;
                 }
                 timeSpans.Add(startTime.Add(new TimeSpan(t1.Hours, t1.Minutes + m, t1.Seconds)));
+                t1 = timeSpans[timeSpans.Count - 1];
             }
             timeSpans.Add(endTime);
             return timeSpans;
         }
-        public string GetNumLine(int idLine)
-        {
-            var l = dal.GetLine(idLine);
-            if (l == null)
-                return null;
-            return l.NumLine;
-        }
+        
         public LineTrip UpdateLineSchedule(int id, TimeSpan startTime, TimeSpan endTime, int f)
         {
             if (startTime > endTime || f < 0)
@@ -740,8 +735,6 @@ namespace Bl
             return new LineTrip()
             {
                 Id = lt.Id,
-                IdLine = lt.IdLine,
-                NumLine = GetNumLine(lt.IdLine),
                 Frequency = lt.Frequency,
                 DepartureSchedule = getSchedule(lt.StartTime, lt.EndTime, lt.Frequency)
             };
@@ -763,8 +756,6 @@ namespace Bl
             {
                 Frequency = f,
                 Id = id,
-                IdLine = idLine,
-                NumLine = GetNumLine(idLine),
                 DepartureSchedule = getSchedule(start, end, f)
             };
         }
