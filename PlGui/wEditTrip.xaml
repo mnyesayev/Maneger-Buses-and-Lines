@@ -37,13 +37,27 @@
         <Border Grid.Column="3" Grid.ColumnSpan="3" BorderThickness="2"
                 Grid.Row="2" Grid.RowSpan="4" CornerRadius="5"
                 BorderBrush="Purple"/>
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" HorizontalAlignment="Center" 
+                    Orientation="Vertical" Margin="5">
 
-        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
+            <materialDesign:TimePicker x:Name="TPstartTime" 
+                                       materialDesign:HintAssist.Hint="Enter start time"
+                                       Is24Hours="True" WithSeconds="False" Margin="0 10 0 10"/>
+
+            <TextBox x:Name="TBfrequency" materialDesign:HintAssist.Hint="Enter frequency in hour"
+                     Margin="0 10 0 10"/>
+
+            <materialDesign:TimePicker x:Name="TPendTime" 
+                                       materialDesign:HintAssist.Hint="Enter end time"
+                                       Is24Hours="True" WithSeconds="False" Margin="0 10 0 10"/>
+            
+        </StackPanel>
+        
         <ListView x:Name="LisrViewFrequency" Grid.Column="3" Grid.ColumnSpan="3" 
                    Grid.Row="2" Grid.RowSpan="4" Margin="5"
-                  ItemsSource="{Binding}"/>
-        <Button Grid.Column="2" Grid.Row="6" Style="{StaticResource MaterialDesignIconButton}"
-                ToolTip="Add new frequency">
+                  ItemsSource="{Binding Path=Trips}"/>
+        <Button x:Name="bAddNewfrequency" Grid.Column="2" Grid.Row="6" Style="{StaticResource MaterialDesignIconButton}"
+                ToolTip="Add new frequency" Click="bAddNewfrequency_Click" >
             <materialDesign:PackIcon Kind="Plus"  />
         </Button>
         <Button Grid.Column="3" Grid.Row="6" Style="{StaticResource MaterialDesignIconButton}"

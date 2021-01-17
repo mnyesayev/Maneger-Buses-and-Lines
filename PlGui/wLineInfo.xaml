@@ -152,6 +152,14 @@
         <ListView x:Name="listViewLineFrequency" Grid.Row="3" Grid.Column="6"
                   Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="20 0 0 0"
                   ItemsSource="{Binding Path=Trips}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn 
+                        DisplayMemberBinding="{Binding Path= Trips, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                </GridView>
+            </ListView.View>
             
         </ListView>
         <Button Grid.Column="6" Grid.Row="7" Style="{StaticResource MaterialDesignIconButton}"

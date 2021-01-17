@@ -26,6 +26,8 @@ namespace PO
         /// Represents the frequency of line per hour
         /// </summary>
         public int Frequency { get; set; }
-        public ObservableCollection<TimeSpan> DepartureSchedule;
+      //  public ObservableCollection<TimeSpan> DepartureSchedule;
+
+
     }
 }
