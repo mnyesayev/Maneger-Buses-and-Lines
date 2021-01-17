@@ -680,10 +680,10 @@ namespace Bl
                        Id = LineTrip.Id,
                        IdLine = LineTrip.IdLine,
                        Frequency = LineTrip.Frequency,
-                       Time = LineTrip.StartTime
-                      // DepartureSchedule = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency)
+                       //Time = LineTrip.StartTime
+                       DepartureSchedule = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency)
                    }
-                  // orderby newLineTrip.DepartureSchedule.FirstOrDefault()
+                   orderby newLineTrip.DepartureSchedule.FirstOrDefault()
                    select newLineTrip;
         }
         IEnumerable<TimeSpan> getSchedule(TimeSpan startTime, TimeSpan endTime, int f)
@@ -737,8 +737,7 @@ namespace Bl
             {
                 Id = lt.Id,
                 Frequency = lt.Frequency,
-                Time = startTime
-                //DepartureSchedule = getSchedule(lt.StartTime, lt.EndTime, lt.Frequency)
+                DepartureSchedule = getSchedule(lt.StartTime, lt.EndTime, lt.Frequency)
             };
         }
 
@@ -758,8 +757,7 @@ namespace Bl
             {
                 Frequency = f,
                 Id = id,
-                Time = start
-                //DepartureSchedule = getSchedule(start, end, f)
+                DepartureSchedule = getSchedule(start, end, f)
             };
         }
         #endregion

@@ -154,13 +154,27 @@
                   ItemsSource="{Binding Path=Trips}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn 
-                        DisplayMemberBinding="{Binding Path= Trips, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-
+                    <GridViewColumn Header="Start time">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
-            
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path=StartTime,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path=EndTime,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
         <Button Grid.Column="6" Grid.Row="7" Style="{StaticResource MaterialDesignIconButton}"
                 ToolTip=" Expand frequency" VerticalAlignment="Top"
