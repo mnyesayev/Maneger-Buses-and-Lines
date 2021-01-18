@@ -405,17 +405,6 @@ namespace Dal
                 return null;
             return conStops.Clone();
         }
-        public IEnumerable<DO.ConsecutiveStops> GetLstConsecutiveStops()
-        {
-            return from ConsecutiveStops in DataSource.LstConsecutiveStops
-                   select ConsecutiveStops.Clone();
-        }
-        public IEnumerable<DO.ConsecutiveStops> GetLstConsecutiveStopsBy(Predicate<DO.ConsecutiveStops> predicate)
-        {
-            return from ConsecutiveStops in DataSource.LstConsecutiveStops
-                   where predicate(ConsecutiveStops)
-                   select ConsecutiveStops.Clone();
-        }
         public void UpdateConsecutiveStops(ConsecutiveStops consecutiveStops)
         {
             int index = DataSource.LstConsecutiveStops.FindIndex((ConsecutiveStops) =>
