@@ -45,50 +45,54 @@
                                        Is24Hours="True" WithSeconds="False" Margin="0 10 0 10"/>
 
             <TextBox x:Name="TBfrequency" materialDesign:HintAssist.Hint="Enter frequency in hour"
-                     Margin="0 10 0 10"/>
+                     Margin="0 10 0 10" PreviewKeyUp="TBfrequency_preKeyD"/>
 
             <materialDesign:TimePicker x:Name="TPendTime" 
                                        materialDesign:HintAssist.Hint="Enter end time"
                                        Is24Hours="True" WithSeconds="False" Margin="0 10 0 10"/>
-            
-        </StackPanel>
 
-        <ListView x:Name="LisrViewFrequency" Grid.Column="3" Grid.ColumnSpan="3" 
+        </StackPanel>
+        <ListView x:Name="ListViewFrequency" Grid.Column="3" Grid.ColumnSpan="3" 
                    Grid.Row="2" Grid.RowSpan="4" Margin="5"
-                  ItemsSource="{Binding Path=Trips}">
+                   ItemsSource="{Binding Path=Trips}" MouseDoubleClick="ListViewFrequency_MouseDoubleClick">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete range" Click="bDeleteRange_click"
+                              ToolTip="Delete range of exit time" >
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Edit" ToolTip="Edit frequency" 
+                              Click="bEditFrequency_Click">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="Pencil"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <!--<MenuItem Header="Hide distance and time"  >
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="EyeOff" />
+                        </MenuItem.Icon>
+                    </MenuItem>-->
+                </ContextMenu>
+            </ListView.ContextMenu>
+
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Start time" DisplayMemberBinding="{Binding Path=DepartureSchedule}"/>
+                    <GridViewColumn Header="Exit time" 
+                                    DisplayMemberBinding="{Binding Path=Time, StringFormat={}{0:hh\\:mm}}"/>
                 </GridView>
             </ListView.View>
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path=StartTime,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path=EndTime,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
+            
         </ListView>
         <Button x:Name="bAddNewfrequency" Grid.Column="2" Grid.Row="6" Style="{StaticResource MaterialDesignIconButton}"
                 ToolTip="Add new frequency" Click="bAddNewfrequency_Click" >
             <materialDesign:PackIcon Kind="Plus"  />
         </Button>
         <Button Grid.Column="3" Grid.Row="6" Style="{StaticResource MaterialDesignIconButton}"
-                ToolTip="Add new frequency">
+                ToolTip="Search exit time">
             <materialDesign:PackIcon Kind="Search" />
-        </Button>
-        <Button Grid.Column="4" Grid.Row="6" Style="{StaticResource MaterialDesignIconButton}"
-                ToolTip="Add new frequency">
-            <materialDesign:PackIcon Kind="Edit" />
-        </Button>
-        <Button Grid.Column="5" Grid.Row="6" Style="{StaticResource MaterialDesignIconButton}"
-                ToolTip="Add new frequency">
-            <materialDesign:PackIcon Kind="Delete" />
         </Button>
     </Grid>
 </Window>

@@ -20,7 +20,7 @@ namespace BO
         /// Represents the frequency of line per hour
         /// </summary>
         public int Frequency { get; set; }
-        public IEnumerable<TimeSpan> DepartureSchedule;
+        public IEnumerable<TripOnLine> DepartureSchedule { get; set; }
         /// <summary>
         /// Represents the time of start line
         /// </summary>

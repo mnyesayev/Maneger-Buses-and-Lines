@@ -18,7 +18,7 @@ namespace PO
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         ObservableCollection<StopLine> stopsInLine = new ObservableCollection<StopLine>();
-        ObservableCollection<LineTrip> trips = new ObservableCollection<LineTrip>();
+        ObservableCollection<TripOnLine> trips = new ObservableCollection<TripOnLine>();
         string numLine;
         Agency codeAgency;
         Areas area;
@@ -46,7 +46,8 @@ namespace PO
         /// </summary>
         public ObservableCollection<StopLine> StopsInLine { get { return stopsInLine; } set { if (stopsInLine != value) 
                 { stopsInLine = new ObservableCollection<StopLine>(value); OnPropertyChanged(); } } }
-        public ObservableCollection<LineTrip> Trips { get { return trips; } set { if (trips != value) { trips = new ObservableCollection<LineTrip>(value);OnPropertyChanged(); } } }
+        public ObservableCollection<TripOnLine> Trips { get { return trips; } 
+            set { if (trips != value) { trips = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the more info of about the Line
         /// </summary>

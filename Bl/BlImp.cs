@@ -428,7 +428,7 @@ namespace Bl
                        Area = (BO.Areas)Line.Area,
                        CodeAgency = (BO.Agency)Line.CodeAgency,
                        StopsInLine = GetStopsInLine(Line.IdLine),
-                       Trips= GetLineTrips(Line.IdLine),
+                       Trips = GetTripsOnLine(Line.IdLine),
                        MoreInfo = Line.MoreInfo
                    }
                    orderby newLine.NumLine
@@ -672,58 +672,57 @@ namespace Bl
         #endregion
 
         #region LineTrip
-        public IEnumerable<LineTrip> GetLineTrips(int idLine)
+        public IEnumerable<TripOnLine> GetTripsOnLine(int idLine)
         {
-            return from LineTrip in dal.GetLineTripsBy(lt=>lt.IdLine==idLine)
-                   let newLineTrip = new LineTrip()
-                   {
-                       Id = LineTrip.Id,
-                       IdLine = LineTrip.IdLine,
-                       Frequency = LineTrip.Frequency,
-                       //Time = LineTrip.StartTime
-                       DepartureSchedule = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency)
-                   }
-                   orderby newLineTrip.DepartureSchedule.FirstOrDefault()
-                   select newLineTrip;
+            var lineTrips = from LineTrip in dal.GetLineTripsBy(lt => lt.IdLine == idLine)
+                            let trips = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency, LineTrip.Id)
+                            from lineOnTrip in trips
+                            select lineOnTrip;
+            return lineTrips;
         }
-        IEnumerable<TimeSpan> getSchedule(TimeSpan startTime, TimeSpan endTime, int f)
+        IEnumerable<TripOnLine> getSchedule(TimeSpan startTime, TimeSpan endTime, int f, int id)
         {
-            List<TimeSpan> timeSpans = new List<TimeSpan>();
+            List<TripOnLine> timeSpans = new List<TripOnLine>();
+            timeSpans.Add(new TripOnLine
+            {
+                Time = startTime,
+                Id = id,
+                StartAneEnd = (f == 0) ? $"{startTime:hh\\:mm}-N.A" : $"{startTime:hh\\:mm}-{endTime:hh\\:mm}",
+                Frequency = f
+            });
+            if (f == 0) return timeSpans;
             var t1 = startTime;
             var m = 60 / f;
-            int tm, th;
-            timeSpans.Add(startTime);
-            while (t1 < endTime)
+            while (t1 + TimeSpan.FromMinutes(m) < endTime)
             {
-                if (t1.Minutes + m > 59)
+
+                timeSpans.Add(new TripOnLine
                 {
-                    tm = 60 - t1.Minutes + m;
-                    th = t1.Hours + 1;
-                    timeSpans.Add(startTime.Add(new TimeSpan(th, tm, t1.Seconds)));
-                    t1 = timeSpans[timeSpans.Count - 1];
-                    continue;
-                }
-                timeSpans.Add(startTime.Add(new TimeSpan(t1.Hours, t1.Minutes + m, t1.Seconds)));
-                t1 = timeSpans[timeSpans.Count - 1];
+                    Time = t1 + TimeSpan.FromMinutes(m),
+                    Id = id,
+                    StartAneEnd = $"{startTime:hh\\:mm}-{endTime:hh\\:mm}",
+                    Frequency = f
+                });
+                t1 = timeSpans[timeSpans.Count - 1].Time;
             }
-            timeSpans.Add(endTime);
             return timeSpans;
         }
-        
+
         public LineTrip UpdateLineSchedule(int id, TimeSpan startTime, TimeSpan endTime, int f)
         {
-            if (startTime > endTime || f < 0)
-            {
-                return null;
-            }
+            if (f != 0)
+                if (startTime > endTime)
+                    throw new IdException("LineTrip", $"{startTime:hh\\:mm}-{endTime:hh\\:mm}");
+            if (f > 60)
+                throw new IdException("LineTrip", f.ToString(), "The frequency invalid!");
             try
             {
                 dal.UpdateLineTrip(id, (LineTrip) =>
                  {
                      if (LineTrip.StartTime != startTime)
                          LineTrip.StartTime = startTime;
-                     if (LineTrip.EndTime != LineTrip.EndTime)
-                         LineTrip.StartTime = startTime;
+                     if (LineTrip.EndTime != endTime)
+                         LineTrip.EndTime = endTime;
                      if (LineTrip.Frequency != f)
                          LineTrip.Frequency = f;
                  });
@@ -737,14 +736,17 @@ namespace Bl
             {
                 Id = lt.Id,
                 Frequency = lt.Frequency,
-                DepartureSchedule = getSchedule(lt.StartTime, lt.EndTime, lt.Frequency)
+                DepartureSchedule = getSchedule(lt.StartTime, lt.EndTime, lt.Frequency, id)
             };
         }
 
         public LineTrip AddLineTrip(int idLine, TimeSpan start, TimeSpan end, int f)
         {
-            if (start > end || f < 0)
-                return null;
+            if (f != 0)
+                if (start > end)
+                    throw new AddException("LineTrip", $"{start:hh\\:mm}-{end:hh\\:mm}");
+            if (f > 60)
+                throw new AddException("LineTrip", f.ToString(), "The frequency invalid!");
             var id = dal.CreateLineTrip(new DO.LineTrip()
             {
                 Active = true,
@@ -757,8 +759,19 @@ namespace Bl
             {
                 Frequency = f,
                 Id = id,
-                DepartureSchedule = getSchedule(start, end, f)
+                DepartureSchedule = getSchedule(start, end, f, id)
             };
+        }
+        public void DeleteRangeTrips(int id)
+        {
+            try
+            {
+                dal.DeleteLineTrip(id);
+            }
+            catch (Exception ex)
+            {
+                throw new DeleteException("LineTrip", id.ToString(), ex.Message, ex);
+            }
         }
         #endregion
 
@@ -783,6 +796,7 @@ namespace Bl
         {
             watch.Cancel = true;
         }
+
 
     }
 }

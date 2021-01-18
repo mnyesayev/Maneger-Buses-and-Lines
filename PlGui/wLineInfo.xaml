@@ -154,32 +154,15 @@
                   ItemsSource="{Binding Path=Trips}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Start time">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridViewColumn Header="Exit time" 
+                                    DisplayMemberBinding="{Binding Path=Time,StringFormat={}{0:hh\\:mm}}"/>
                 </GridView>
             </ListView.View>
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path=StartTime,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path=EndTime,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
         </ListView>
         <Button Grid.Column="6" Grid.Row="7" Style="{StaticResource MaterialDesignIconButton}"
                 ToolTip=" Expand frequency" VerticalAlignment="Top"
                 x:Name="ExpandFrequency" Click="ExpandFrequency_Click">
-            <materialDesign:PackIcon Kind="ArrowExpand" />
+            <materialDesign:PackIcon Kind="ArrowExpandAll" />
         </Button>
         <TextBlock Text="Area:" Grid.Column="1"
                    Grid.Row="6" VerticalAlignment="Center"

@@ -131,7 +131,7 @@ namespace PlGui
         private void ExpandFrequency_Click(object sender, RoutedEventArgs e)
         {
             wEditTrip editTrip = new wEditTrip(bl, Lists);
-            editTrip.line = ComboBoxLineInfo.SelectedItem as PO.Line;
+            editTrip.DataContext = ComboBoxLineInfo.SelectedItem;
             editTrip.ShowDialog();
         }
     }

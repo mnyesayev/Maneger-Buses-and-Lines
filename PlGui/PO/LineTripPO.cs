@@ -26,19 +26,19 @@ namespace PO
         public int IdLine { get; set; }
         TimeSpan start;
         TimeSpan end;
-        ObservableCollection<TimeSpan> departureSchedule = new ObservableCollection<TimeSpan>();
+        ObservableCollection<TripOnLine> departureSchedule = new ObservableCollection<TripOnLine>();
         /// <summary>
         /// Represents the frequency of line per hour
         /// </summary>
         public int Frequency { get; set; }
-        public ObservableCollection<TimeSpan> DepartureSchedule
+        public ObservableCollection<TripOnLine> DepartureSchedule
         {
             get { return departureSchedule; }
             set
             {
                 if (departureSchedule != value)
                 {
-                    departureSchedule = new ObservableCollection<TimeSpan>(value);
+                    departureSchedule = new ObservableCollection<TripOnLine>(value);
                     OnPropertyChanged();
                 }
             }
@@ -49,7 +49,7 @@ namespace PO
         /// </summary>
         public TimeSpan StartTime
         {
-            get { return DepartureSchedule.First(); }
+            get { return DepartureSchedule[0].Time; }
             set { if (start != value) { start = value; OnPropertyChanged(); } }
         }
         /// <summary>
@@ -57,8 +57,8 @@ namespace PO
         /// </summary>
         public TimeSpan EndTime
         {
-            get { return DepartureSchedule.Last(); }
-            set { { if (start != value) { start = value; OnPropertyChanged(); } } }
+            get { return DepartureSchedule[departureSchedule.Count-1].Time; }
+            set { { if (end != value) { end = value; OnPropertyChanged(); } } }
         }
     }
 }

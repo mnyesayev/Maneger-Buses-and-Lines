@@ -625,7 +625,7 @@
                         <Border BorderThickness="2" CornerRadius="5" Grid.Column="5"
                                 Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="6"
                                BorderBrush="Purple" />
-                       
+
                         <ListView x:Name="ListViewStopsOfLine" Grid.Row="1" Grid.Column="5"
                                   Grid.ColumnSpan="3" Grid.RowSpan="6" Margin="2"
                                   ItemsSource="{Binding Path=StopsInLine}"
@@ -689,13 +689,31 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-
+                        
                         <TextBlock Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="3"
                                    Text="Line frequency" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"
                                    VerticalAlignment="Center" Margin="15 0 0 0"/>
                         <Border Grid.Column="8" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="3"
                                  BorderBrush="Purple" BorderThickness="2" CornerRadius="5"
-                                Margin="15 0 0 0"/>
+                                Margin="15 0 0 0">
+                            <ListView x:Name="ListViewFrequency"
+                                    Margin="5" Visibility="Hidden"
+                                    ItemsSource="{Binding Path=Trips}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="Background" Value="Azure"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Exit time" 
+                                    DisplayMemberBinding="{Binding Path=Time, StringFormat={}{0:hh\\:mm}}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+                        </Border>
 
                         <TextBlock Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="3"
                                    Text="More info on Line" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"

@@ -75,8 +75,9 @@ namespace BlApi
         #endregion
 
         #region LineTrip
-        IEnumerable<LineTrip> GetLineTrips(int idLine);
+        IEnumerable<TripOnLine> GetTripsOnLine(int idLine);
         LineTrip AddLineTrip(int idLine, TimeSpan start, TimeSpan end,int f);
+        void DeleteRangeTrips(int id);
         LineTrip UpdateLineSchedule(int idLine ,TimeSpan startTime, TimeSpan endTime, int f);
         #endregion
     }

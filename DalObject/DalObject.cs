@@ -494,6 +494,14 @@ namespace Dal
                 throw new LineTripExceptionDO(id, "the line trip is not exists");
             DataSource.LineTrips[index].Active = false;
         }
+
+        public bool IsExitsLineTrip(int idLine, TimeSpan start)
+        {
+           var i= DataSource.LineTrips.FindIndex(lt => lt.IdLine == idLine && lt.StartTime == start);
+            if (i != -1)
+                return true;
+            return false;
+        }
         #endregion
     }
 }

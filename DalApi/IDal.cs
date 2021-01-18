@@ -86,6 +86,7 @@ namespace DalApi
         #region LineTrip
         int CreateLineTrip(DO.LineTrip lineTrip);
         DO.LineTrip GetLineTrip(int id);
+        bool IsExitsLineTrip(int idLine, TimeSpan start);
         IEnumerable<DO.LineTrip> GetLineTrips();
         IEnumerable<DO.LineTrip> GetLineTripsBy(Predicate<DO.LineTrip> predicate);
         void UpdateLineTrip(DO.LineTrip lineTrip);

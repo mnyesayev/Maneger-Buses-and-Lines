@@ -52,6 +52,7 @@ namespace DS
             initConsecutiveStops();
             BusOnTrips = new List<BusOnTrip>();
             LineTrips = new List<LineTrip>();
+            initLineTrips();
             Users = new List<User>
             {
                 new User()
@@ -68,6 +69,35 @@ namespace DS
             initUsers();
         }
 
+        private static void initLineTrips()
+        {
+            int i = 0;
+            foreach (var item in Lines)
+            {
+                LineTrips.Add(new LineTrip
+                {
+                    Active = true,
+                    StartTime = new TimeSpan(6, 0, 0),
+                    EndTime = new TimeSpan(20, 0, 0),
+                    Frequency = MyRandom.r.Next(2, 11),
+                    IdLine =++i,
+                    Id=Config.LineTripCounter
+            });
+            }
+            //i = 0;
+            //foreach (var item in Lines)
+            //{
+            //    LineTrips.Add(new LineTrip
+            //    {
+            //        Active = true,
+            //        StartTime = new TimeSpan(20, 0, 0),
+            //        EndTime = new TimeSpan(24, 0, 0),
+            //        Frequency = MyRandom.r.Next(1, 3),
+            //        IdLine = ++i,
+            //        Id = Config.LineTripCounter
+            //    });
+            //}
+        }
 
         private static void initUsers()
         {

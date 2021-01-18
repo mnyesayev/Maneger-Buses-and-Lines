@@ -350,6 +350,9 @@ namespace PlGui
             {
                 PO.Line line = (PO.Line)ListViewLines.SelectedItem;
                 ListViewStopsOfLine.DataContext = line;
+
+                ListViewFrequency.DataContext = line;
+                ListViewFrequency.Visibility = Visibility.Visible;
                 ListViewStopsOfLine.Visibility = Visibility.Visible;
                 AddStopLine.Visibility = Visibility.Visible;
             }
