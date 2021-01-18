@@ -11,7 +11,9 @@ namespace BlApi
         #region Simulator
         void StartSimulator(TimeSpan startTime, int speed ,Action<TimeSpan> updateTime);
         void StopSimulator();
+        void SetStationPanel(int station, Action<LineTiming> updateBus);
         #endregion
+
         #region Bus
         IEnumerable<Bus> GetBuses();
         void DeleteBus(int id);
