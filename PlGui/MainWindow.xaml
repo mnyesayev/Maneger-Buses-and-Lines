@@ -459,7 +459,7 @@
             <!--#region Admin title-->
             <Button x:Name="accountAdmin" Grid.Column="7" Grid.Row="1"
                 Style="{StaticResource MaterialDesignIconForegroundButton}"
-                ToolTip="{Binding}">
+                ToolTip="{Binding}" Click="accountAdmin_Click" >
                 <materialDesign:PackIcon Kind="AccountStar"  />
             </Button>
 

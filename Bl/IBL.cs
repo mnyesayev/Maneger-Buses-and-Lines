@@ -42,7 +42,7 @@ namespace BlApi
         User GetUser(string userName, string password);
         User AddUser(User user);
         string RecoverPassword(string phone, DateTime birthday);
-        void DeleteUser(string userName);
+        void DeleteUser(string phone, DateTime birthday);
         #endregion
         void InsertDistanceAndTime(int code1,int code2,double distance,TimeSpan time);
         #region Line

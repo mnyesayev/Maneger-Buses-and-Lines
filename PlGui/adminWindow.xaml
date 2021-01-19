@@ -1,12 +1,100 @@
 ﻿<Window x:Class="PlGui.adminWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
-        mc:Ignorable="d"
-        Title="adminWindow" Height="450" Width="800">
+        mc:Ignorable="d" WindowStyle="None" BorderThickness="0"
+        BorderBrush="Transparent" AllowsTransparency="True"
+        Background="Transparent" WindowStartupLocation="CenterScreen"
+        Height="450" Width="300">
     <Grid>
-        
+        <Border Background="LightSeaGreen"
+                CornerRadius="20">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <Button x:Name="blogOut"
+                        Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="5"
+                        Grid.RowSpan="2" Height="40"
+                        materialDesign:ButtonAssist.CornerRadius="15"
+                        Content="Log out" FontSize="20" Click="blogOut_Click" />
+                <Button x:Name="bCloseAdminWindow"
+                        Grid.Column="1" Grid.ColumnSpan="2"
+                        Grid.Row="7"
+                         materialDesign:ButtonAssist.CornerRadius="15"
+                        Content="Close" Click="bCloseAdminWindow_Click" />
+                <Button x:Name="bSaveAdminWindow"
+                        Grid.Column="4" Grid.ColumnSpan="2"
+                        Grid.Row="7"
+                         materialDesign:ButtonAssist.CornerRadius="15"
+                        Content="Save" Click="bSaveAdminWindow_Click"/>
+
+                <materialDesign:PackIcon Kind="AccountStar"
+                                         Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center"
+                                         Height="50" Width="50"/>
+                <TextBlock Text="Phone:" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"
+                           HorizontalAlignment="Center" FontSize="15"  Grid.ColumnSpan="2"/>
+                <TextBlock Text="Birthday:" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"
+                           HorizontalAlignment="Center" FontSize="15"  Grid.ColumnSpan="2"/>
+                <TextBlock Text="First name:" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"
+                           HorizontalAlignment="Center" FontSize="15" Grid.ColumnSpan="2"/>
+                <TextBlock Text="Last name:" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center"
+                           HorizontalAlignment="Center" FontSize="15" Grid.ColumnSpan="2"/>
+
+                <Button x:Name="bEditPhone" Style="{StaticResource MaterialDesignIconButton}"
+                        ToolTip="Edit Phone"
+                        Grid.Row="3" Grid.Column="5" Click="bEditPhone_Click" >
+                    <materialDesign:PackIcon Kind="Pencil" />
+                </Button>
+                <Button x:Name="bEditBirthday" Style="{StaticResource MaterialDesignIconButton}"
+                        ToolTip="Edit Birthday"
+                        Grid.Row="4" Grid.Column="5" Click="bEditBirthday_Click" >
+                    <materialDesign:PackIcon Kind="Pencil" />
+                </Button>
+                <Button x:Name="bEditFirstName" Style="{StaticResource MaterialDesignIconButton}"
+                        ToolTip="Edit first name"
+                        Grid.Row="5" Grid.Column="5" Click="bEditFirstName_Click" >
+                    <materialDesign:PackIcon Kind="Pencil" />
+                </Button>
+                <Button x:Name="bEditLastName" Style="{StaticResource MaterialDesignIconButton}"
+                        ToolTip="Edit last name"
+                        Grid.Row="6" Grid.Column="5" Click="bEditLastName_Click" >
+                    <materialDesign:PackIcon Kind="Pencil" />
+                </Button>
+
+                <TextBox x:Name="tbEditPhone" Grid.Row="3" Grid.Column="3"
+                         Grid.ColumnSpan="2" VerticalAlignment="Center" IsEnabled="False"/>
+                <DatePicker x:Name="tpEditBirthday" Grid.Row="4" Grid.Column="3"
+                         Grid.ColumnSpan="2" VerticalAlignment="Center"  IsEnabled="False"
+                                          />
+                <TextBox x:Name="tbEditFirstName" Grid.Row="5" Grid.Column="3"
+                         Grid.ColumnSpan="2" VerticalAlignment="Center"  IsEnabled="False"/>
+                <TextBox x:Name="tbEditLastName" Grid.Row="6" Grid.Column="3"
+                         Grid.ColumnSpan="2" VerticalAlignment="Center"  IsEnabled="False"/>
+
+            </Grid>
+        </Border>
     </Grid>
 </Window>

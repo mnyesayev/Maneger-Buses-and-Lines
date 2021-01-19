@@ -33,6 +33,7 @@ namespace PlGui
         BackgroundWorker blGetStopsAndLines;
         BackgroundWorker blGetBuses;
         BackgroundWorker blGetDrivers;
+        BO.User MyUser;
         public MainWindow()
         {
             InitializeComponent();
@@ -295,7 +296,7 @@ namespace PlGui
                     Thread.Sleep(2000);
                     this.Dispatcher.Invoke(() => { tbworng.Visibility = Visibility.Hidden; });
                 }).Start();
-                
+
                 return;
             }
             else
@@ -304,7 +305,7 @@ namespace PlGui
                 {
                     this.Dispatcher.Invoke(() => { tbDone.Visibility = Visibility.Visible; });
                     Thread.Sleep(2000);
-                    this.Dispatcher.Invoke(() => 
+                    this.Dispatcher.Invoke(() =>
                     {
                         tbDone.Visibility = Visibility.Hidden;
                         signUpGridPart2.Visibility = Visibility.Hidden;
@@ -330,12 +331,14 @@ namespace PlGui
         {
             if (tbUserName.Text.Length == 0 || tbpassword.Password.Length == 0)
                 return;
-            User user = bl.GetUser(tbUserName.Text, tbpassword.Password);
-            if (user != null)
+            MyUser = bl.GetUser(tbUserName.Text, tbpassword.Password);
+            tbUserName.Text = "";
+            tbpassword.Password = "";
+            if (MyUser != null)
             {
-                if (user.Authorization == Authorizations.User)
+                if (MyUser.Authorization == Authorizations.User)
                     return; // must to fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-                if (user.Authorization == Authorizations.Admin)
+                if (MyUser.Authorization == Authorizations.Admin)
                 {
                     logInGrid.Visibility = Visibility.Hidden;
                     new Thread(() =>
@@ -348,7 +351,7 @@ namespace PlGui
                             loudGrid.Visibility = Visibility.Hidden;
                             Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
                             Application.Current.MainWindow.WindowState = WindowState.Maximized;
-                            accountAdmin.ToolTip = user.FirstName;
+                            accountAdmin.ToolTip = MyUser.FirstName;
                             adminGrid.Visibility = Visibility.Visible;
                         });
 
@@ -356,7 +359,7 @@ namespace PlGui
                 }
 
             }
-            if (user == null)
+            if (MyUser == null)
             {
                 new Thread(() =>
                 {
@@ -805,6 +808,48 @@ namespace PlGui
                 return;
             if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
                 e.Handled = true;
+        }
+
+        private void accountAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            adminWindow adminW = new adminWindow(bl);
+            adminW.DataContext = MyUser;
+            adminW.tbEditPhone.Text = MyUser.Phone;
+            adminW.tpEditBirthday.SelectedDate = MyUser.Birthday;
+            adminW.tbEditFirstName.Text = MyUser.FirstName;
+            adminW.tbEditLastName.Text = MyUser.LastName;
+            adminW.Show();
+            new Thread(() =>
+            {
+                while (adminW.IsVisible == true)
+                {
+                    Thread.Sleep(1000);
+                    if (adminW.GOBack == true)
+                    {
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Application.Current.MainWindow.Height = 350;
+                            Application.Current.MainWindow.Width = 500;
+                            Application.Current.MainWindow.WindowState = WindowState.Normal;
+                            MainWindow1.ResizeMode = ResizeMode.CanMinimize;
+                            mainGrid.Visibility = Visibility.Visible;
+                            userGrid.Visibility = Visibility.Hidden;
+                            adminGrid.Visibility = Visibility.Hidden;
+                            loudGrid.Visibility = Visibility.Hidden;
+                            adminW.Close();
+                        });
+                    }
+                    if (adminW.GetUpdated == true)
+                    {
+                        MyUser = adminW.user1;
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            accountAdmin.ToolTip = MyUser.FirstName;
+                        });
+                    }
+                }
+            }).Start();
+
         }
     }
 }
