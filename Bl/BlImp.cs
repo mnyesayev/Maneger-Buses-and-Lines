@@ -136,9 +136,19 @@ namespace Bl
             return user.Password;
         }
 
-        public void DeleteUser(string userName)
+        public void DeleteUser(string phone, DateTime birthday)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = dal.GetUser(phone, birthday);
+                if (user == null)
+                    throw new DeleteException("User", phone.ToString());
+                dal.DeleteUser(phone, birthday);
+            }
+            catch (DO.UserExceptionDO ex)
+            {
+                throw new DeleteException("User", phone.ToString(), ex.Message, ex);
+            }
         }
 
         public User AddUser(User user)
