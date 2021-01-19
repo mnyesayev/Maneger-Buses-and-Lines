@@ -450,9 +450,9 @@ namespace Dal
             List<Line> ListLines = XMLTools.LoadListFromXMLSerializer<Line>(linesPath);
             //load runing numbers from "runNumbersPath"
             XElement runNumbersElem = XMLTools.LoadListFromXMLElement(runNumbersPath);
-            int runNumber = int.Parse(runNumbersElem.Element("Counter").Element("LineCounter").Value);
+            int runNumber = int.Parse(runNumbersElem.Element("LineCounter").Value);
             line.IdLine = ++runNumber;
-            runNumbersElem.Element("Counter").Element("LineCounter").Value = runNumber.ToString();
+            runNumbersElem.Element("LineCounter").Value = runNumber.ToString();
             XMLTools.SaveListToXMLElement(runNumbersElem, runNumbersPath);
 
             ListLines.Add(line);
@@ -627,15 +627,15 @@ namespace Dal
         {
             var consecutiveStopsElem = XMLTools.LoadListFromXMLElement(consecutiveStopsPath);
             ConsecutiveStops cStops = (from conStops in consecutiveStopsElem.Elements()
-                     where int.Parse(conStops.Element("CodeBusStop1").Value) == codeStop1 &&
-                     int.Parse(conStops.Element("CodeBusStop2").Value) == codeStop2
-                     select new ConsecutiveStops()
-                     {
-                         CodeBusStop1 = int.Parse(conStops.Element("CodeBusStop1").Value),
-                         CodeBusStop2 = int.Parse(conStops.Element("CodeBusStop2").Value),
-                         Distance = double.Parse(conStops.Element("Distance").Value),
-                         AvregeDriveTime = XmlConvert.ToTimeSpan(conStops.Element("AvregeDriveTime").Value)
-                     }
+                                       where int.Parse(conStops.Element("CodeBusStop1").Value) == codeStop1 &&
+                                       int.Parse(conStops.Element("CodeBusStop2").Value) == codeStop2
+                                       select new ConsecutiveStops()
+                                       {
+                                           CodeBusStop1 = int.Parse(conStops.Element("CodeBusStop1").Value),
+                                           CodeBusStop2 = int.Parse(conStops.Element("CodeBusStop2").Value),
+                                           Distance = double.Parse(conStops.Element("Distance").Value),
+                                           AvregeDriveTime = XmlConvert.ToTimeSpan(conStops.Element("AvregeDriveTime").Value)
+                                       }
                    ).FirstOrDefault();
             return cStops;
         }
@@ -645,9 +645,9 @@ namespace Dal
             XElement lstConStopsRootElem = XMLTools.LoadListFromXMLElement(consecutiveStopsPath);
 
             var conStops = (from cs in lstConStopsRootElem.Elements()
-                           where int.Parse(cs.Element("CodeBusStop1").Value) == consecutiveStops.CodeBusStop1
-                           &&int.Parse(cs.Element("CodeBusStop2").Value)==consecutiveStops.CodeBusStop2
-                           select cs).FirstOrDefault();
+                            where int.Parse(cs.Element("CodeBusStop1").Value) == consecutiveStops.CodeBusStop1
+                            && int.Parse(cs.Element("CodeBusStop2").Value) == consecutiveStops.CodeBusStop2
+                            select cs).FirstOrDefault();
             if (conStops != null)
                 throw new ConsecutiveStopsExceptionDO(consecutiveStops.CodeBusStop1, consecutiveStops.CodeBusStop2, "the stops is already exists");
             if (conStops == null)
@@ -661,47 +661,47 @@ namespace Dal
             lstConStopsRootElem.Add(conStops);
         }
 
-        public IEnumerable<ConsecutiveStops> GetLstConsecutiveStops()
-        {
-            var lstConStops = XMLTools.LoadListFromXMLSerializer<ConsecutiveStops>(consecutiveStopsPath);
-            return from conStop in lstConStops
-                   select conStop;
-        }
-
-        public IEnumerable<ConsecutiveStops> GetLstConsecutiveStopsBy(Predicate<ConsecutiveStops> predicate)
-        {
-            var lstConStops = XMLTools.LoadListFromXMLSerializer<ConsecutiveStops>(consecutiveStopsPath);
-            return from conStop in lstConStops
-                   where predicate(conStop)
-                   select conStop;
-        }
-
         public void UpdateConsecutiveStops(ConsecutiveStops consecutiveStops)
         {
-            var lstConStops = XMLTools.LoadListFromXMLSerializer<ConsecutiveStops>(consecutiveStopsPath);
-            int index = lstConStops.FindIndex((ConsecutiveStops) =>
-            {
-                return ConsecutiveStops.CodeBusStop1 == consecutiveStops.CodeBusStop1
-                && ConsecutiveStops.CodeBusStop2 == consecutiveStops.CodeBusStop2;
-            });
-            if (index == -1)
+            var consecutiveStopsElem = XMLTools.LoadListFromXMLElement(consecutiveStopsPath);
+            var cStops = (from conStops in consecutiveStopsElem.Elements()
+                          where int.Parse(conStops.Element("CodeBusStop1").Value) == consecutiveStops.CodeBusStop1 &&
+                                int.Parse(conStops.Element("CodeBusStop2").Value) == consecutiveStops.CodeBusStop2
+                          select conStops
+                                ).FirstOrDefault();
+
+            if (cStops == null)
                 throw new ConsecutiveStopsExceptionDO(consecutiveStops.CodeBusStop1, consecutiveStops.CodeBusStop2, "system not found the consecutiveStops");
-            lstConStops[index] = consecutiveStops;
-            XMLTools.SaveListToXMLSerializer(lstConStops, consecutiveStopsPath);
+            cStops.Element("CodeBusStop1").Value = consecutiveStops.CodeBusStop1.ToString();
+            cStops.Element("CodeBusStop2").Value = consecutiveStops.CodeBusStop2.ToString();
+            cStops.Element("Distance").Value = consecutiveStops.Distance.ToString();
+            cStops.Element("AvregeDriveTime").Value = XmlConvert.ToString(consecutiveStops.AvregeDriveTime);
+            XMLTools.SaveListToXMLElement(consecutiveStopsElem, consecutiveStopsPath);
         }
 
         public void UpdateConsecutiveStops(int codeStop1, int codeStop2, Action<ConsecutiveStops> action)
         {
-            var lstConStops = XMLTools.LoadListFromXMLSerializer<ConsecutiveStops>(consecutiveStopsPath);
-            int index = lstConStops.FindIndex((ConsecutiveStops) =>
+            var consecutiveStopsElem = XMLTools.LoadListFromXMLElement(consecutiveStopsPath);
+            var cStops = (from conStops in consecutiveStopsElem.Elements()
+                          where int.Parse(conStops.Element("CodeBusStop1").Value) == codeStop1 &&
+                                int.Parse(conStops.Element("CodeBusStop2").Value) == codeStop2
+                          select conStops
+                                ).FirstOrDefault();
+            if (cStops == null)
+                throw new ConsecutiveStopsExceptionDO(codeStop1, codeStop2, "system not found the consecutiveStops");
+            var temp = new ConsecutiveStops()
             {
-                return ConsecutiveStops.CodeBusStop1 == codeStop1
-                && ConsecutiveStops.CodeBusStop2 == codeStop2;
-            });
-            if (index == -1)
-                throw new ConsecutiveStopsExceptionDO(codeStop1, codeStop2, "System not found the consecutiveStops");
-            action(lstConStops[index]);
-            XMLTools.SaveListToXMLSerializer(lstConStops, consecutiveStopsPath);
+                CodeBusStop1 = codeStop1,
+                CodeBusStop2 = codeStop2,
+                AvregeDriveTime = XmlConvert.ToTimeSpan(cStops.Element("AvregeDriveTime").Value),
+                Distance = XmlConvert.ToDouble(cStops.Element("CodeBusStop2").Value)
+            };
+            action(temp);
+            cStops.Element("CodeBusStop1").Value = temp.CodeBusStop1.ToString();
+            cStops.Element("CodeBusStop2").Value = temp.CodeBusStop2.ToString();
+            cStops.Element("Distance").Value = temp.Distance.ToString();
+            cStops.Element("AvregeDriveTime").Value = XmlConvert.ToString(temp.AvregeDriveTime);
+            XMLTools.SaveListToXMLElement(consecutiveStopsElem, consecutiveStopsPath);
         }
 
         #endregion
@@ -710,70 +710,142 @@ namespace Dal
 
         public int CreateLineTrip(LineTrip lineTrip)
         {
-            var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
+            var lineTripsElem = XMLTools.LoadListFromXMLElement(lineTripsPath);
             XElement runNumbersElem = XMLTools.LoadListFromXMLElement(runNumbersPath);
-            int runNumber = int.Parse(runNumbersElem.Element("Counter").Element("LineTripCounter").Value);
+            int runNumber = int.Parse(runNumbersElem.Element("LineTripCounter").Value);
             lineTrip.Id = ++runNumber;
-            runNumbersElem.Element("Counter").Element("LineTripCounter").Value = runNumber.ToString();
+            runNumbersElem.Element("LineTripCounter").Value = runNumber.ToString();
             XMLTools.SaveListToXMLElement(runNumbersElem, runNumbersPath);
-            lineTrips.Add(lineTrip);
-            XMLTools.SaveListToXMLSerializer(lineTrips, lineTripsPath);
+            XElement lineTripElem = new XElement("LineTrip",
+                                    new XElement("Active", lineTrip.Active),
+                                    new XElement("Id", lineTrip.Id),
+                                    new XElement("IdLine", lineTrip.IdLine),
+                                    new XElement("Frequency", lineTrip.Frequency),
+                                    new XElement("StartTime", XmlConvert.ToString(lineTrip.StartTime)),
+                                    new XElement("EndTime", XmlConvert.ToString(lineTrip.EndTime)));
+            lineTripsElem.Add(lineTripElem);
+            XMLTools.SaveListToXMLElement(lineTripsElem, lineTripsPath);
             return lineTrip.Id;
         }
 
         public LineTrip GetLineTrip(int id)
         {
-            var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
-            var lineTrip = lineTrips.Find(LineTrip => LineTrip.Active && LineTrip.Id == id);
-            if (lineTrip == null)
-                return null;
+            var lineTripsElem = XMLTools.LoadListFromXMLElement(lineTripsPath);
+            var lineTrip = (from lt in lineTripsElem.Elements()
+                            where int.Parse(lt.Element("Id").Value) == id &&
+                            bool.Parse(lt.Element("Active").Value) == true
+                            select new LineTrip()
+                            {
+                                Active = true,
+                                Id = XmlConvert.ToInt32(lt.Element("Id").Value),
+                                IdLine = XmlConvert.ToInt32(lt.Element("IdLine").Value),
+                                Frequency = XmlConvert.ToInt32(lt.Element("Frequency").Value),
+                                StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
+                                EndTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value)
+                            }
+                   ).FirstOrDefault();
             return lineTrip;
         }
 
         public IEnumerable<LineTrip> GetLineTrips()
         {
-            var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
-            return from LineTrip in lineTrips
-                   where LineTrip.Active == true
-                   select LineTrip;
+            var lineTripsElem = XMLTools.LoadListFromXMLElement(lineTripsPath);
+            return from lt in lineTripsElem.Elements()
+                   where bool.Parse(lt.Element("Active").Value) == true
+                   select new LineTrip()
+                   {
+                       Active = true,
+                       Id = XmlConvert.ToInt32(lt.Element("Id").Value),
+                       IdLine = XmlConvert.ToInt32(lt.Element("IdLine").Value),
+                       Frequency = XmlConvert.ToInt32(lt.Element("Frequency").Value),
+                       StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
+                       EndTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value)
+                   };
         }
 
         public IEnumerable<LineTrip> GetLineTripsBy(Predicate<LineTrip> predicate)
         {
-            var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
-            return from LineTrip in lineTrips
-                   where predicate(LineTrip) && LineTrip.Active == true
-                   select LineTrip;
+            var lineTripsElem = XMLTools.LoadListFromXMLElement(lineTripsPath);
+            return from lt in lineTripsElem.Elements()
+                   where bool.Parse(lt.Element("Active").Value) == true
+                   let newLineTrip = new LineTrip()
+                   {
+                       Active = true,
+                       Id = XmlConvert.ToInt32(lt.Element("Id").Value),
+                       IdLine = XmlConvert.ToInt32(lt.Element("IdLine").Value),
+                       Frequency = XmlConvert.ToInt32(lt.Element("Frequency").Value),
+                       StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
+                       EndTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value)
+                   }
+                   where predicate(newLineTrip)
+                   select newLineTrip;
         }
 
         public void UpdateLineTrip(LineTrip lineTrip)
         {
-            var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
-            int index = lineTrips.FindIndex(LineTrip => LineTrip.Active && LineTrip.Id == lineTrip.Id);
-            if (index == -1)
+            var lineTripsElem = XMLTools.LoadListFromXMLElement(lineTripsPath);
+            var linetrip = (from lt in lineTripsElem.Elements()
+                            where int.Parse(lt.Element("Id").Value) == lineTrip.Id &&
+                            bool.Parse(lt.Element("Active").Value) == true
+                            select lt
+                            ).FirstOrDefault();
+            if (linetrip == null)
                 throw new LineTripExceptionDO(lineTrip.Id, "System not found the line trip");
-            lineTrips[index] = lineTrip;
-            XMLTools.SaveListToXMLSerializer(lineTrips, lineTripsPath);
+
+            linetrip.Element("Active").Value = lineTrip.Active.ToString();
+            linetrip.Element("Id").Value = lineTrip.Id.ToString();
+            linetrip.Element("IdLine").Value = lineTrip.IdLine.ToString();
+            linetrip.Element("Frequency").Value = lineTrip.Frequency.ToString();
+            linetrip.Element("StartTime").Value = XmlConvert.ToString(lineTrip.StartTime);
+            linetrip.Element("EndTime").Value = XmlConvert.ToString(lineTrip.EndTime);
+
+            XMLTools.SaveListToXMLElement(lineTripsElem, lineTripsPath);
         }
 
         public void UpdateLineTrip(int id, Action<LineTrip> action)
         {
-            var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
-            int index = lineTrips.FindIndex(LineTrip => LineTrip.Active && LineTrip.Id == id);
-            if (index == -1)
+            var lineTripsElem = XMLTools.LoadListFromXMLElement(lineTripsPath);
+            var lineTrip = (from lt in lineTripsElem.Elements()
+                            where int.Parse(lt.Element("Id").Value) == id &&
+                            bool.Parse(lt.Element("Active").Value) == true
+                            select lt
+                            ).FirstOrDefault();
+            if (lineTrip == null)
                 throw new LineTripExceptionDO(id, "System not found the line trip");
-            action(lineTrips[index]);
-            XMLTools.SaveListToXMLSerializer(lineTrips, lineTripsPath);
+
+            var temp = new LineTrip()
+            {
+                Active = true,
+                Id = XmlConvert.ToInt32(lineTrip.Element("Id").Value),
+                IdLine = XmlConvert.ToInt32(lineTrip.Element("IdLine").Value),
+                Frequency = XmlConvert.ToInt32(lineTrip.Element("Frequency").Value),
+                StartTime = XmlConvert.ToTimeSpan(lineTrip.Element("StartTime").Value),
+                EndTime = XmlConvert.ToTimeSpan(lineTrip.Element("StartTime").Value)
+            };
+            action(temp);
+            
+            lineTrip.Element("Active").Value = temp.Active.ToString();
+            lineTrip.Element("Id").Value = temp.Id.ToString();
+            lineTrip.Element("IdLine").Value = temp.IdLine.ToString();
+            lineTrip.Element("Frequency").Value = temp.Frequency.ToString();
+            lineTrip.Element("StartTime").Value = XmlConvert.ToString(temp.StartTime);
+            lineTrip.Element("EndTime").Value = XmlConvert.ToString(temp.EndTime);
+
+            XMLTools.SaveListToXMLElement(lineTripsElem, lineTripsPath);
         }
 
         public void DeleteLineTrip(int id)
         {
-            var lineTrips = XMLTools.LoadListFromXMLSerializer<LineTrip>(lineTripsPath);
-            int index = lineTrips.FindIndex(LineTrip => LineTrip.Active && LineTrip.Id == id);
-            if (index == -1)
+            var lineTripsElem = XMLTools.LoadListFromXMLElement(lineTripsPath);
+            var lineTrip = (from lt in lineTripsElem.Elements()
+                            where int.Parse(lt.Element("Id").Value) == id &&
+                            bool.Parse(lt.Element("Active").Value) == true
+                            select lt
+                            ).FirstOrDefault();
+            if (lineTrip == null)
                 throw new LineTripExceptionDO(id, "the line trip is not exists");
-            lineTrips[index].Active = false;
-            XMLTools.SaveListToXMLSerializer(lineTrips, lineTripsPath);
+            lineTrip.Element("Active").Value =XmlConvert.ToString(false);
+            XMLTools.SaveListToXMLElement(lineTripsElem, lineTripsPath);
         }
 
         public bool IsExitsLineTrip(int idLine, TimeSpan start)
@@ -781,14 +853,14 @@ namespace Dal
             XElement lineTripsRootElem = XMLTools.LoadListFromXMLElement(lineTripsPath);
 
             var lt = (from lineTrip in lineTripsRootElem.Elements()
-                           where int.Parse(lineTrip.Element("idLine").Value) == idLine &&
-                           XmlConvert.ToTimeSpan(lineTrip.Element("StartTime").Value) == start
-                           select new {Exits="true"}
+                      where int.Parse(lineTrip.Element("idLine").Value) == idLine &&
+                      XmlConvert.ToTimeSpan(lineTrip.Element("StartTime").Value) == start
+                      select new { Exits = "true" }
                    ).FirstOrDefault();
             if (lt.Exits == "true")
                 return true;
-            return false; 
-        }   
+            return false;
+        }
         #endregion
     }
 }

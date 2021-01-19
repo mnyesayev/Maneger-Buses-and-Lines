@@ -1,10 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Counter>
   <LineCounter>10</LineCounter>
-  <LineTripCounter>0</LineTripCounter>
+  <LineTripCounter>1</LineTripCounter>
   <BusOnTripCounter>0</BusOnTripCounter>
   <UserTripCounter>0</UserTripCounter>
 </Counter>
-
-
-

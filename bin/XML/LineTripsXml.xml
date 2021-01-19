@@ -1,2 +1,11 @@
-<?xml version="1.0"?>
-<ArrayOfLineTrip xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLineTrip xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LineTrip>
+    <Active>true</Active>
+    <Id>1</Id>
+    <IdLine>1</IdLine>
+    <Frequency>3</Frequency>
+    <StartTime>PT5H</StartTime>
+    <EndTime>PT9H</EndTime>
+  </LineTrip>
+</ArrayOfLineTrip>
