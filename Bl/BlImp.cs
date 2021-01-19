@@ -141,9 +141,22 @@ namespace Bl
             throw new NotImplementedException();
         }
 
-        public void AddUser(User user)
+        public User AddUser(User user)
         {
-            throw new NotImplementedException();
+            var v = dal.GetUser(user.UserName);
+            if (v != null)
+                return null;
+            try
+            {
+                var userDO = new DO.User();
+                user.CopyPropertiesTo(userDO);
+                dal.AddUser(userDO);
+                return user;
+            }
+            catch (DO.UserExceptionDO)
+            {
+                return null;
+            }
         }
         #endregion
 
