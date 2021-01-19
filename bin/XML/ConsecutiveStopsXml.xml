@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfConsecutiveStops xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ConsecutiveStops>
     <CodeBusStop1>35335</CodeBusStop1>
@@ -563,5 +563,11 @@
     <CodeBusStop2>0</CodeBusStop2>
     <Distance>15</Distance>
     <AvregeDriveTime>PT0S</AvregeDriveTime>
+  </ConsecutiveStops>
+  <ConsecutiveStops>
+    <CodeBusStop1>20165</CodeBusStop1>
+    <CodeBusStop2>22273</CodeBusStop2>
+    <Distance>15</Distance>
+    <AvregeDriveTime>PT9M8S</AvregeDriveTime>
   </ConsecutiveStops>
 </ArrayOfConsecutiveStops>

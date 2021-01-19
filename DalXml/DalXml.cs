@@ -659,6 +659,7 @@ namespace Dal
                           new XElement("AvregeDriveTime", XmlConvert.ToString(consecutiveStops.AvregeDriveTime)));
             }
             lstConStopsRootElem.Add(conStops);
+            XMLTools.SaveListToXMLElement(lstConStopsRootElem, consecutiveStopsPath);
         }
 
         public void UpdateConsecutiveStops(ConsecutiveStops consecutiveStops)
