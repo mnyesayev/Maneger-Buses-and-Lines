@@ -24,5 +24,17 @@ namespace BO
         /// Represents the authorization of the "User"
         /// </summary>
         public Authorizations Authorization { get; set; }
+        /// <summary>
+        /// Represents the phone  of the "User"
+        /// </summary>
+        public string Phone { get; set; }
+        /// <summary>
+        /// Represents the birthday  of the "User"
+        /// </summary>
+        public DateTime Birthday { get; set; }
+        /// <summary>
+        ///  Represents if this class active
+        /// </summary>
+        public bool Active { get; set; }
     }
 }

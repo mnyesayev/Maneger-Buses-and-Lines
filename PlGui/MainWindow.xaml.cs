@@ -275,26 +275,49 @@ namespace PlGui
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            signUpGridPart2.Visibility = Visibility.Hidden;
-
-            new Thread(() =>
+            User user = new User()
             {
-                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
-
-                Thread.Sleep(1000);
-                this.Dispatcher.Invoke(() =>
+                Authorization = Authorizations.Admin,
+                FirstName = SutbFirstName.Text,
+                LastName = SutbLastName.Text,
+                UserName = Su2tbUserName.Text,
+                Password = Sutbpassword.Password,
+                Active = true,
+                Birthday = FutureDatePicker.DisplayDate,
+                Phone = SutbPhoneNumber.Text
+            };
+            BO.User u = bl.AddUser(user);
+            if (u == null)
+            {
+                new Thread(() =>
                 {
-                    loudGrid.Visibility = Visibility.Hidden;
-                    Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
-                    Application.Current.MainWindow.Height = 640;
-                    Application.Current.MainWindow.Width = 850;
-                    Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    Application.Current.MainWindow.Top = 100;
-                    Application.Current.MainWindow.Left = 200;
-                    userGrid.Visibility = Visibility.Visible;
-                });
-
-            }).Start();
+                    this.Dispatcher.Invoke(() => { tbworng.Visibility = Visibility.Visible; });
+                    Thread.Sleep(2000);
+                    this.Dispatcher.Invoke(() => { tbworng.Visibility = Visibility.Hidden; });
+                }).Start();
+                
+                return;
+            }
+            else
+            {
+                new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() => { tbDone.Visibility = Visibility.Visible; });
+                    Thread.Sleep(2000);
+                    this.Dispatcher.Invoke(() => 
+                    {
+                        tbDone.Visibility = Visibility.Hidden;
+                        signUpGridPart2.Visibility = Visibility.Hidden;
+                        loudGrid.Visibility = Visibility.Visible;
+                    });
+                    Thread.Sleep(500);
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        loudGrid.Visibility = Visibility.Hidden;
+                        mainGrid.Visibility = Visibility.Visible;
+                    });
+                }).Start();
+            }
         }
 
         private void forgetPasswordButton_Click(object sender, RoutedEventArgs e)

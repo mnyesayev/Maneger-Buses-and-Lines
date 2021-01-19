@@ -328,6 +328,16 @@
                 materialDesign:ButtonAssist.CornerRadius="15"
                 BorderThickness="0" Click="SignUp_Click" />
 
+            <TextBlock x:Name="tbDone" Text="User created successfully"
+                       Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="5"
+                       Foreground="#DD12E1FF" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" Visibility="Hidden"/>
+            <TextBlock x:Name="tbworng" Text="Such a user already exists"
+                       Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="5"
+                       Foreground="#DD12E1FF" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" Visibility="Hidden"/>
+
+
         </Grid>
         <!--#endregion -->
 

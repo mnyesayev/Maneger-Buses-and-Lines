@@ -1,0 +1,24 @@
+﻿<Window x:Class="PlGui.wDone"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlGui"
+        mc:Ignorable="d" WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" 
+        Title="Done" Height="200" Width="200">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <ProgressBar VerticalAlignment="Center"
+          Style="{DynamicResource MaterialDesignCircularProgressBar}"
+          HorizontalAlignment="Center"
+          Margin="16 70 16 16"
+          IsIndeterminate="True"
+          Value="0" Width="40" Height="40"/>
+            <TextBlock x:Name="tbDone" Text="Done" HorizontalAlignment="Center" FontSize="20"
+                       Visibility="Hidden"/>
+        </StackPanel>
+       
+    </Grid>
+</Window>

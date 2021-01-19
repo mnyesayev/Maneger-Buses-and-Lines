@@ -40,7 +40,7 @@ namespace BlApi
 
         #region User
         User GetUser(string userName, string password);
-        void AddUser(User user);
+        User AddUser(User user);
         string RecoverPassword(string phone, DateTime birthday);
         void DeleteUser(string userName);
         #endregion
