@@ -10,4 +10,14 @@
     <Birthday>2021-01-06T00:00:00</Birthday>
     <Active>true</Active>
   </User>
+  <User>
+    <LastName>npiewfo</LastName>
+    <FirstName>bads</FirstName>
+    <UserName>2</UserName>
+    <Password>2</Password>
+    <Authorization>Admin</Authorization>
+    <Phone>0521234567</Phone>
+    <Birthday>2021-01-19T00:00:00+02:00</Birthday>
+    <Active>true</Active>
+  </User>
 </ArrayOfUser>

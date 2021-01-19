@@ -62,14 +62,14 @@ namespace PlGui
             };
             try
             {
-                bl.DeleteUser(user.Phone, user.Birthday);
-                user1 = bl.AddUser(updaedUser);
+                user1 = bl.UpdateUser(updaedUser);
                 GetUpdated = true;
             }
             catch(Exception)
             {
-                MessageBox.Show("Something went wrong here", "Update ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Something went wrong here\nTry updating only one statistic", "Update ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            
         }
 
         private void bEditPhone_Click(object sender, RoutedEventArgs e)

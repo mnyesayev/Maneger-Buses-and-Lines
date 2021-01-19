@@ -150,6 +150,20 @@ namespace Bl
                 throw new DeleteException("User", phone.ToString(), ex.Message, ex);
             }
         }
+        public User UpdateUser(User user)
+        {
+            DO.User nUser = new DO.User();
+            user.CopyPropertiesTo(nUser);
+            try
+            {
+                dal.UpdateUser(nUser);
+                return user;
+            }
+            catch(DO.UserExceptionDO ex)
+            {
+                throw new IdException("User", user.UserName, ex.Message, ex);
+            }
+        }
 
         public User AddUser(User user)
         {
@@ -824,5 +838,7 @@ namespace Bl
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

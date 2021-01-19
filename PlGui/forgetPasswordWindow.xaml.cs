@@ -32,7 +32,7 @@ namespace PlGui
         {
             try
             {
-                showPasswordTextBlock.Text = ibl.RecoverPassword(tbPhone.Text, tbBirthday.DisplayDate);
+                showPasswordTextBlock.Text = ibl.RecoverPassword(tbPhone.Text, DateTime.Parse(tbBirthday.Text));
                 var user = ibl.GetUser(tbUserName.Text, showPasswordTextBlock.Text);
                 if (user == null)
                     return;
