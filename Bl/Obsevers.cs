@@ -13,7 +13,7 @@ namespace Bl
         public ObseverWatch(Action<TimeSpan> action)
         {
             upTime = action;
-            Watch.Instance.TimeChanged += TimeChanged;   
+            Watch.Instance.TimeChanged += TimeChanged;
 
         }
         private void TimeChanged(object sender, EventArgs e)
@@ -24,4 +24,20 @@ namespace Bl
             upTime(temp.NewTime);
         }
     }
+    public class ObseerverPanel
+    {
+        public ObseerverPanel(int codeStop)
+        {
+            StationPanel.Instance.CodeStopChanged += CodeStopChanged;
+        }
+
+        private void CodeStopChanged(object sender, EventArgs e)
+        {
+            if (!(e is CodeStopChangedEventArgs))
+                return;
+            var temp = (CodeStopChangedEventArgs)e;
+            
+        }
+    }
+       
 }
