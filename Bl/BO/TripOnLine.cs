@@ -8,9 +8,10 @@ namespace BO
 {
     public class TripOnLine
     {
-       public int Id { get; set; }
-       public TimeSpan Time { get; set;}
-       public string StartAneEnd { get; set; }
+        public int Id { get; set; }
+        public TimeSpan Time { get; set; }
+        public int IdLine { get; set; }
+        public string StartAneEnd { get; set; }
         /// <summary>
         /// Represents the frequency of line per hour
         /// </summary>

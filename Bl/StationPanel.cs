@@ -15,44 +15,44 @@ namespace Bl
         public static StationPanel Instance { get => instance; }// The public Instance property to use
         #endregion
 
-        private TimeSpan arriveTime;
-        private event EventHandler arriveTimeChanged;
+        private int codeStop;
+        private event EventHandler codeStopChanged;
 
 
-        void onArriveTime(TimeChangedEventArgs args)
+        void onCodeStop(CodeStopChangedEventArgs args)
         {
-            if (arriveTime != null)
+            if (codeStopChanged != null)
             {
-                arriveTimeChanged(this, args);
+                codeStopChanged(this, args);
             }
         }
 
-        public TimeSpan ArriveTime
+        public int CodeStop
         {
-            get => arriveTime;
+            get => codeStop;
             set
             {
-                if (value != arriveTime)
+                if (value != codeStop)
                 {
-                    TimeChangedEventArgs args = new TimeChangedEventArgs(value);
-                    arriveTime = value;
-                    onArriveTime(args);
+                    CodeStopChangedEventArgs args = new CodeStopChangedEventArgs(value);
+                    codeStop = value;
+                    onCodeStop(args);
                 }
             }
         }
   
-        public event EventHandler ArriveTimeChanged
+        public event EventHandler CodeStopChanged
         {
-            add { arriveTimeChanged = value; }
-            remove { arriveTimeChanged -= value; }
+            add { codeStopChanged = value; }
+            remove { codeStopChanged -= value; }
         }
     }
-    public class ArriveTimeChangedEventArgs : EventArgs
+    public class CodeStopChangedEventArgs : EventArgs
     {
-        public readonly TimeSpan NewTime;
-        public ArriveTimeChangedEventArgs(TimeSpan time)
+        public readonly int NewCode;
+        public CodeStopChangedEventArgs(int code)
         {
-            NewTime = time;
+            NewCode = code;
         }
     }
 }

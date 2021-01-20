@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PO
 {
-    public class BusStop:INotifyPropertyChanged
+    public class BusStop : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -20,14 +20,16 @@ namespace PO
         string name;
         string moreInfo;
         ObservableCollection<LineOnStop> lines = new ObservableCollection<LineOnStop>();
+
+        ObservableCollection<BO.LineTiming> lineTimings = new ObservableCollection<BO.LineTiming>();
         /// <summary>
         /// Represents the unique number of the "BusStop"
         /// </summary>
-        public int Code { get { return code; } set { if (code!=value) { code = value; OnPropertyChanged(); } } }
+        public int Code { get { return code; } set { if (code != value) { code = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the name of Bus stop/station
         /// </summary>
-        public string Name { get { return name; } set { if (name != value) { name = value;OnPropertyChanged(); } } }
+        public string Name { get { return name; } set { if (name != value) { name = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the longitude location
         /// </summary>
@@ -40,12 +42,21 @@ namespace PO
         /// Represents more info about the stop/station 
         /// such as: Roof, disabled access, digital panel, etc.
         /// </summary>
-        public string MoreInfo { get { return moreInfo; } set{ if (moreInfo != value) { moreInfo = value; OnPropertyChanged(); } }}
+        public string MoreInfo { get { return moreInfo; } set { if (moreInfo != value) { moreInfo = value; OnPropertyChanged(); } } }
 
         /// <summary>
         /// Represents the lines that pass in the stop/station 
         /// </summary>
-        public ObservableCollection<LineOnStop> LinesPassInStop { get { return lines; }set { if (lines != value) { lines = new ObservableCollection<LineOnStop>(value);OnPropertyChanged(); } } }
+        public ObservableCollection<LineOnStop> LinesPassInStop { get { return lines; } set { if (lines != value) { lines = new ObservableCollection<LineOnStop>(value); OnPropertyChanged(); } } }
+
+        ObservableCollection<BO.LineTiming> LineTimings
+        {
+            get { return lineTimings; }
+            set
+            {
+                if (lineTimings != value) { lineTimings = value; OnPropertyChanged(); }
+            }
+        }
     }
 
 }

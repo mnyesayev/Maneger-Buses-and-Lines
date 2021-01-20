@@ -9,6 +9,7 @@ namespace PO
     public class TripOnLine
     {
         public int Id { get; set; }
+        public int IdLine { get; set; }
         public TimeSpan Time { get; set; }
         public string StartAneEnd { get; set; }
         /// <summary>
