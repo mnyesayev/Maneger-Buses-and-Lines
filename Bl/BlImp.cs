@@ -17,6 +17,7 @@ namespace Bl
         readonly IDal dal = DalFactory.GetDal();
         readonly Watch watch = Watch.Instance;
         BackgroundWorker workerSimulator;
+        BackgroundWorker workerPanel;
         #region Singelton
         static readonly BlImp instance = new BlImp();
         static BlImp() { }// static ctor to ensure instance init is done just before first usage
@@ -159,7 +160,7 @@ namespace Bl
                 dal.UpdateUser(nUser);
                 return user;
             }
-            catch(DO.UserExceptionDO ex)
+            catch (DO.UserExceptionDO ex)
             {
                 throw new IdException("User", user.UserName, ex.Message, ex);
             }
@@ -455,6 +456,21 @@ namespace Bl
         #endregion
 
         #region Line
+        public Line getLine(int idLine)
+        {
+            var doLine = dal.GetLine(idLine);
+            var newLine = new Line()
+            {
+                IdLine = doLine.IdLine,
+                NumLine = doLine.NumLine,
+                Area = (BO.Areas)doLine.Area,
+                CodeAgency = (BO.Agency)doLine.CodeAgency,
+                StopsInLine = GetStopsInLine(doLine.IdLine),
+                Trips = GetTripsOnLine(doLine.IdLine),
+                MoreInfo = doLine.MoreInfo
+            };
+            return newLine;
+        }
         public IEnumerable<Line> GetLines()
         {
             return from Line in dal.GetLines()
@@ -712,18 +728,19 @@ namespace Bl
         public IEnumerable<TripOnLine> GetTripsOnLine(int idLine)
         {
             var lineTrips = from LineTrip in dal.GetLineTripsBy(lt => lt.IdLine == idLine)
-                            let trips = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency, LineTrip.Id)
+                            let trips = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency, LineTrip.Id,LineTrip.IdLine)
                             from lineOnTrip in trips
                             select lineOnTrip;
             return lineTrips;
         }
-        IEnumerable<TripOnLine> getSchedule(TimeSpan startTime, TimeSpan endTime, int f, int id)
+        IEnumerable<TripOnLine> getSchedule(TimeSpan startTime, TimeSpan endTime, int f, int id,int idLine)
         {
             List<TripOnLine> timeSpans = new List<TripOnLine>();
             timeSpans.Add(new TripOnLine
             {
                 Time = startTime,
                 Id = id,
+                IdLine=idLine,
                 StartAneEnd = (f == 0) ? $"{startTime:hh\\:mm}-N.A" : $"{startTime:hh\\:mm}-{endTime:hh\\:mm}",
                 Frequency = f
             });
@@ -737,6 +754,7 @@ namespace Bl
                 {
                     Time = t1 + TimeSpan.FromMinutes(m),
                     Id = id,
+                    IdLine = idLine,
                     StartAneEnd = $"{startTime:hh\\:mm}-{endTime:hh\\:mm}",
                     Frequency = f
                 });
@@ -773,7 +791,7 @@ namespace Bl
             {
                 Id = lt.Id,
                 Frequency = lt.Frequency,
-                DepartureSchedule = getSchedule(lt.StartTime, lt.EndTime, lt.Frequency, id)
+                DepartureSchedule = getSchedule(lt.StartTime, lt.EndTime, lt.Frequency, id,lt.IdLine)
             };
         }
 
@@ -796,7 +814,7 @@ namespace Bl
             {
                 Frequency = f,
                 Id = id,
-                DepartureSchedule = getSchedule(start, end, f, id)
+                DepartureSchedule = getSchedule(start, end, f, id ,idLine)
             };
         }
         public void DeleteRangeTrips(int id)
@@ -836,9 +854,73 @@ namespace Bl
 
         public void SetStationPanel(int station, Action<LineTiming> updateBus)
         {
-            throw new NotImplementedException();
+
+            workerPanel = new BackgroundWorker();
+
+            workerPanel.DoWork += (object sender, DoWorkEventArgs e) =>
+            {
+                var curStop = GetStop(station);
+                var trips = from Line in curStop.LinesPassInStop
+                            let tripLines = GetTripsOnLine(Line.IdLine)
+                            from tl in tripLines
+                            select tl;
+                var newExitTimes = trips.OrderBy(t => t.Time).ToList();
+                List<TripOnLine> oldExitTimes = new List<TripOnLine>();
+                int count = newExitTimes.Count;
+                while (watch.Cancel == false)
+                {
+                    TripOnLine tempTime = null;
+                    if (count > 0)
+                    {
+                        tempTime = newExitTimes.FirstOrDefault();
+                        newExitTimes.RemoveAt(0);
+                        oldExitTimes.Add(tempTime);
+                        --count;
+                    }
+                    else
+                    {
+                        if(oldExitTimes.Count>0)
+                        {
+                            tempTime = oldExitTimes.FirstOrDefault();
+                            oldExitTimes.RemoveAt(0);
+                            newExitTimes.Add(tempTime);
+                        }
+                        if (oldExitTimes.Count == 0) count = newExitTimes.Count;
+                    }
+                    if(tempTime.Time==watch.CurTime)
+                    {
+                        var line = getLine(tempTime.IdLine);
+                        BackgroundWorker workerTrips=new BackgroundWorker();
+                        setWorkerTrips(workerTrips,line);
+                        workerTrips.RunWorkerAsync(updateBus);
+                        TimeSpan timeSleep;
+                        timeSleep = (count == 0) ? oldExitTimes.FirstOrDefault().Time : newExitTimes.FirstOrDefault().Time;
+                        Thread.Sleep(timeSleep - tempTime.Time);
+                    }
+                }
+            };
+            if (watch.Cancel == false)
+                workerPanel.RunWorkerAsync();
         }
 
-       
+        private void setWorkerTrips(BackgroundWorker workerTrips,Line line)
+        {
+           
+            workerTrips.DoWork += (object sender, DoWorkEventArgs e) =>
+            {
+               
+            };
+        }
+
+        private TimeSpan getArriveTime(Line line,int code)
+        {
+            var index=line.StopsInLine.ToList().FindIndex(sl => sl.CodeStop == code);
+            TimeSpan sum=line.StopsInLine.First().AvregeDriveTimeToNext;
+            for (int i = 1; i < index; i++)
+            {
+                sum += line.StopsInLine.ElementAt(i).AvregeDriveTimeToNext;
+            }
+            return sum;
+        }
     }
 }
