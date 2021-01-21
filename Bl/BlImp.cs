@@ -15,9 +15,6 @@ namespace Bl
     sealed class BlImp : IBL
     {
         readonly IDal dal = DalFactory.GetDal();
-        readonly Watch watch = Watch.Instance;
-        BackgroundWorker workerSimulator;
-        BackgroundWorker workerPanel;
         #region Singelton
         static readonly BlImp instance = new BlImp();
         static BlImp() { }// static ctor to ensure instance init is done just before first usage
@@ -832,101 +829,92 @@ namespace Bl
 
         public void StartSimulator(TimeSpan startTime, int speed, Action<TimeSpan> updateTime)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            ObseverWatch obsever = new ObseverWatch(updateTime);
-            watch.Cancel = false;
-            workerSimulator = new BackgroundWorker();
-            workerSimulator.DoWork += (object sender, DoWorkEventArgs e) =>
-            {
-                while (watch.Cancel == false)
-                {
-                    watch.CurTime = startTime + new TimeSpan(stopwatch.ElapsedTicks * speed);
-                    Thread.Sleep(1000);
-                }
-            };
-            stopwatch.Restart();
-            workerSimulator.RunWorkerAsync();
+            WatchSimulator.Instance.WatchObserver += updateTime;
+            WatchSimulator.Instance.StartWatch(startTime, speed);
         }
         public void StopSimulator()
         {
-            watch.Cancel = true;
+            WatchSimulator.Instance.Cancel = true;
         }
 
         public void SetStationPanel(int station, Action<LineTiming> updateBus)
         {
+            //StationPanel.Instance.CodeStop = station;
+            //StationPanel.Instance.TripObserver += updateBus;
 
-            workerPanel = new BackgroundWorker();
-            var stationPanel = StationPanel.Instance;
+            //workerPanel = new BackgroundWorker();
+            //var stationPanel = StationPanel.Instance;
 
-            workerPanel.DoWork += (object sender, DoWorkEventArgs e) =>
-            {
-                var curStop = GetStop(station);
-                var trips = from Line in curStop.LinesPassInStop
-                            let tripLines = GetTripsOnLine(Line.IdLine)
-                            from tl in tripLines
-                            select tl;
-                var newExitTimes = trips.OrderBy(t => t.Time).ToList();
-                List<TripOnLine> oldExitTimes = new List<TripOnLine>();
-                int count = newExitTimes.Count;
-                stationPanel.CodeStop = station;
-                while (watch.Cancel == false)
-                {
-                    TripOnLine tempTime = null;
-                    if (count > 0)
-                    {
-                        tempTime = newExitTimes.FirstOrDefault();
-                        newExitTimes.RemoveAt(0);
-                        oldExitTimes.Add(tempTime);
-                        --count;
-                    }
-                    else
-                    {
-                        if (oldExitTimes.Count > 0)
-                        {
-                            tempTime = oldExitTimes.FirstOrDefault();
-                            oldExitTimes.RemoveAt(0);
-                            newExitTimes.Add(tempTime);
-                        }
-                        if (oldExitTimes.Count == 0) count = newExitTimes.Count;
-                    }
-                    if (tempTime.Time == watch.CurTime)
-                    {
-                        var line = getLine(tempTime.IdLine);
-                        BackgroundWorker workerTrips = new BackgroundWorker();
-                        setWorkerTrips(workerTrips, line,station,tempTime.Time);
-                        workerTrips.RunWorkerAsync(updateBus);
-                        TimeSpan timeSleep;
-                        timeSleep = (count == 0) ? oldExitTimes.FirstOrDefault().Time : newExitTimes.FirstOrDefault().Time;
-                        Thread.Sleep(timeSleep - tempTime.Time);
-                    }
-                }
-            };
-            if (watch.Cancel == false)
-                workerPanel.RunWorkerAsync();
+            //workerPanel.DoWork += (object sender, DoWorkEventArgs e) =>
+            //{
+            //    var curStop = GetStop(station);
+            //    var trips = from Line in curStop.LinesPassInStop
+            //                let tripLines = GetTripsOnLine(Line.IdLine)
+            //                from tl in tripLines
+            //                select tl;
+            //    var newExitTimes = trips.OrderBy(t => t.Time).ToList();
+            //    List<TripOnLine> oldExitTimes = new List<TripOnLine>();
+            //    int count = newExitTimes.Count;
+            //    stationPanel.CodeStop = station;
+            //    while (watch.Cancel == false)
+            //    {
+            //        TripOnLine tempTime = null;
+            //        if (count > 0)
+            //        {
+            //            tempTime = newExitTimes.FirstOrDefault();
+            //            newExitTimes.RemoveAt(0);
+            //            oldExitTimes.Add(tempTime);
+            //            --count;
+            //        }
+            //        else
+            //        {
+            //            if (oldExitTimes.Count > 0)
+            //            {
+            //                tempTime = oldExitTimes.FirstOrDefault();
+            //                oldExitTimes.RemoveAt(0);
+            //                newExitTimes.Add(tempTime);
+            //            }
+            //            if (oldExitTimes.Count == 0) count = newExitTimes.Count;
+            //        }
+            //        if (tempTime.Time == watch.CurTime)
+            //        {
+            //            var line = getLine(tempTime.IdLine);
+            //            BackgroundWorker workerTrips = new BackgroundWorker();
+            //            setWorkerTrips(workerTrips, line, station, tempTime.Time);
+            //            workerTrips.RunWorkerAsync(updateBus);
+            //            TimeSpan timeSleep;
+            //            timeSleep = (count == 0) ? oldExitTimes.FirstOrDefault().Time : newExitTimes.FirstOrDefault().Time;
+            //            Thread.Sleep(timeSleep - tempTime.Time);
+            //        }
+            //    }
+            //};
+            //if (watch.Cancel == false)
+            //    workerPanel.RunWorkerAsync();
+            throw new NotImplementedException();
         }
 
-        private void setWorkerTrips(BackgroundWorker workerTrips, Line line,int code,TimeSpan startTime)
-        {
+        //private void setWorkerTrips(BackgroundWorker workerTrips, Line line, int code, TimeSpan startTime)
+        //{
 
-            workerTrips.DoWork += (object sender, DoWorkEventArgs e) =>
-            {
-                var indexOfPanelStaion = line.StopsInLine.ToList().FindIndex(sl => sl.CodeStop == code);
-                var lineTiming = new LineTiming
-                {
-                    ArriveTime = getArriveTime(line,0,indexOfPanelStaion),
-                    IdLine = line.IdLine,
-                    LastStopName = line.NameLastLineStop,
-                    NumLine = line.NumLine,
-                    StartTime = startTime
-                };
-                var tempAriveTime = lineTiming.ArriveTime;
-                var i = 0;
-                while (watch.Cancel==false&&tempAriveTime+startTime<watch.CurTime)
-                {
-                    lineTiming.ArriveTime = getArriveTime(line, ++i, indexOfPanelStaion);
-                }
-            };
-        }
+        //    workerTrips.DoWork += (object sender, DoWorkEventArgs e) =>
+        //    {
+        //        var indexOfPanelStaion = line.StopsInLine.ToList().FindIndex(sl => sl.CodeStop == code);
+        //        var lineTiming = new LineTiming
+        //        {
+        //            ArriveTime = getArriveTime(line, 0, indexOfPanelStaion),
+        //            IdLine = line.IdLine,
+        //            LastStopName = line.NameLastLineStop,
+        //            NumLine = line.NumLine,
+        //            StartTime = startTime
+        //        };
+        //        var tempAriveTime = lineTiming.ArriveTime;
+        //        var i = 0;
+        //        while (watch.Cancel == false && tempAriveTime + startTime < watch.CurTime)
+        //        {
+        //            lineTiming.ArriveTime = getArriveTime(line, ++i, indexOfPanelStaion);
+        //        }
+        //    };
+        //}
 
         private TimeSpan getArriveTime(Line line, int startIndex,int indexOfPanelStation)
         {
