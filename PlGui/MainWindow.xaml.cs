@@ -769,16 +769,11 @@ namespace PlGui
             }
             else
             {
-                bClock.Content = "Start";
                 if (Simulator != null)
                 {
-                    bl.StopSimulator();
                     Simulator.CancelAsync();//stop BackgroundWorker
                 }
-                programClock.IsEnabled = true;
-                clockSpeed.IsEnabled = true;
-                programClock.Text = "";
-                clockSpeed.Text = "";
+                
             }
         }
         private void setSimulator(TimeSpan time, int speed)
@@ -792,13 +787,22 @@ namespace PlGui
              {
                  bl.StartSimulator(time, speed, t => Simulator.ReportProgress(1, t));
                  while (!Simulator.CancellationPending)
-                     Thread.Sleep(1000);
+                     try { Thread.Sleep(1000); } catch (Exception) { }
              };
             Simulator.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
               {
                   TimeSpan t = (TimeSpan)e.UserState;
                   programClock.Text = t.ToString(@"hh\:mm\:ss");
               };
+            Simulator.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) =>
+            {
+                bClock.Content = "Start";
+                bl.StopSimulator();
+                programClock.IsEnabled = true;
+                clockSpeed.IsEnabled = true;
+                programClock.Text = "";
+                clockSpeed.Text = "";
+            };
         }
 
         private void clockSpeed_PreviewKeyDown(object sender, KeyEventArgs e)

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
 namespace Bl
 {
     sealed class StationPanel
@@ -15,44 +15,48 @@ namespace Bl
         public static StationPanel Instance { get => instance; }// The public Instance property to use
         #endregion
 
-        private int codeStop;
-        private event EventHandler codeStopChanged;
 
+        private int codeStop = -1;
+        private static Random myRandom = new Random();
 
-        void onCodeStop(CodeStopChangedEventArgs args)
+        private event Action<BO.LineTiming> tripObserver;
+        internal int CodeStop{ set => codeStop = value; }
+        internal event Action<BO.LineTiming> TripObserver
         {
-            if (codeStopChanged != null)
-            {
-                codeStopChanged(this, args);
-            }
+            add { tripObserver = value; }
+            remove { tripObserver = null; }
         }
 
-        public int CodeStop
+        internal void Start() => new Thread(()=>
         {
-            get => codeStop;
-            set
+            var curStop = BlImp.Instance.GetStop(codeStop);
+            var trips = from Line in curStop.LinesPassInStop
+                        let tripLines = BlImp.Instance.GetTripsOnLine(Line.IdLine)
+                        from tl in tripLines
+                        select tl;
+            var exitTimes = trips.OrderBy(t => t.Time).ToList();
+            while(WatchSimulator.Instance.Cancel==false)
             {
-                if (value != codeStop)
+                foreach (var exitTime  in exitTimes)
                 {
-                    CodeStopChangedEventArgs args = new CodeStopChangedEventArgs(value);
-                    codeStop = value;
-                    onCodeStop(args);
+                    if (WatchSimulator.Instance.Cancel == false)
+                        break;
+                    TimeSpan curTime = WatchSimulator.Instance.Simulator.CurTime;
+                    if (curTime > exitTime.Time)
+                        continue;
+                    Thread.Sleep((int)(exitTime.Time - curTime).TotalMilliseconds / WatchSimulator.Instance.Speed);
+                    if (WatchSimulator.Instance.Cancel)
+                        break;
+                    new Thread(busTripThread).Start(exitTime);
+
                 }
+                Thread.Sleep(1000); 
             }
-        }
-  
-        public event EventHandler CodeStopChanged
+        }).Start();
+
+        private void busTripThread()
         {
-            add { codeStopChanged = value; }
-            remove { codeStopChanged -= value; }
-        }
-    }
-    public class CodeStopChangedEventArgs : EventArgs
-    {
-        public readonly int NewCode;
-        public CodeStopChangedEventArgs(int code)
-        {
-            NewCode = code;
+            throw new NotImplementedException();
         }
     }
 }
