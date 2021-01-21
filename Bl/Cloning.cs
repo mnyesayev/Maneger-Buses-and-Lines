@@ -32,9 +32,9 @@ namespace Bl
                     propTo.SetValue(to, value);
             }
         }
-        public static object CopyPropertiesToNew<S>(this S from, Type type)
+        public static T CopyPropertiesToNew<T,S>(this S from)
         {
-            object to = Activator.CreateInstance(type); // new object of Type
+            T to =(T)Activator.CreateInstance(typeof(T)); // new object of T
             from.CopyPropertiesTo(to);
             return to;
         }

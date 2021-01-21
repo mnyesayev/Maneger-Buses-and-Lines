@@ -16,8 +16,8 @@ namespace Bl
         WatchSimulator() { } // default => private
         public static WatchSimulator Instance { get => instance; }// The public Instance property to use
         #endregion
+        
         private TimeSpan startTime;
-        private TimeSpan curTime;
         private volatile int speed;
         private volatile Watch simulator = null;
 
@@ -58,7 +58,7 @@ namespace Bl
                 }
                 watchObserver = null;
             }).Start();
-           // TripSimulator.Instance.Start();
+            StationPanel.Instance.Start();
         }
 
     }

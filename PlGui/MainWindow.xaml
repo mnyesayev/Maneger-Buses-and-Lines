@@ -805,7 +805,7 @@
                             <cefSharp:ChromiumWebBrowser x:Name="webStop" />
                         </ScrollViewer>
                         <ListView x:Name="ListViewLinesInStop" Grid.Row="1" Grid.Column="8"
-                                  Grid.ColumnSpan="3" Grid.RowSpan="6"
+                                  Grid.ColumnSpan="3" Grid.RowSpan="3"
                                   ItemsSource="{Binding Path=LinesPassInStop}"
                                   Visibility="Hidden">
                             <ListView.View>
@@ -832,6 +832,19 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                                     
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ListView x:Name="ListViewPanel" Grid.Row="4" Grid.Column="3"
+                                  Grid.RowSpan="2" Grid.ColumnSpan="3"
+                                  ItemsSource="{Binding}" 
+                                  Visibility="Hidden">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Line Number" DisplayMemberBinding="{Binding NumLine}"/>
+                                    <GridViewColumn Header="destiantion" DisplayMemberBinding="{Binding LastStopName}"/>
+                                    <GridViewColumn Header="Exit Time" DisplayMemberBinding="{Binding StartTime, StringFormat={}{0:hh\\:mm\\:ss}}"/>
+                                    <GridViewColumn Header="Arrive in" DisplayMemberBinding="{Binding ArriveTime, StringFormat={}{0:hh\\:mm\\:ss}}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

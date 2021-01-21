@@ -787,7 +787,7 @@ namespace PlGui
              {
                  bl.StartSimulator(time, speed, t => Simulator.ReportProgress(1, t));
                  while (!Simulator.CancellationPending)
-                     try { Thread.Sleep(1000); } catch (Exception) { }
+                      Thread.Sleep(1000); 
              };
             Simulator.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
               {
