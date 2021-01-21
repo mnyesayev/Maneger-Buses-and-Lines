@@ -109,8 +109,7 @@ namespace Bl
             if (st == null) return null;
             dal.UpdateBusStop(code, (BusStop) => { BusStop.Name = name; });
             st = dal.GetBusStop(code);
-            var busStop = new BusStop();
-            return (BusStop)Bl.Cloning.CopyPropertiesToNew(st, busStop.GetType());
+            return st.CopyPropertiesToNew<BusStop,DO.BusStop>();
         }
         #endregion
 
@@ -839,8 +838,8 @@ namespace Bl
 
         public void SetStationPanel(int station, Action<LineTiming> updateBus)
         {
-            //StationPanel.Instance.CodeStop = station;
-            //StationPanel.Instance.TripObserver += updateBus;
+            StationPanel.Instance.CodeStop = station;
+            StationPanel.Instance.TripObserver += updateBus;
 
             //workerPanel = new BackgroundWorker();
             //var stationPanel = StationPanel.Instance;
@@ -890,7 +889,6 @@ namespace Bl
             //};
             //if (watch.Cancel == false)
             //    workerPanel.RunWorkerAsync();
-            throw new NotImplementedException();
         }
 
         //private void setWorkerTrips(BackgroundWorker workerTrips, Line line, int code, TimeSpan startTime)
