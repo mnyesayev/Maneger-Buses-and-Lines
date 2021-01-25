@@ -49,6 +49,7 @@
     <Compile Include="BO\LineOnStopBO.cs" />
     <Compile Include="BO\LineTimingBO.cs" />
     <Compile Include="BO\TripOnLine.cs" />
+    <Compile Include="BusExtension.cs" />
     <Compile Include="StationPanel.cs" />
     <Compile Include="WatchSimulator.cs" />
     <Compile Include="Cloning.cs" />

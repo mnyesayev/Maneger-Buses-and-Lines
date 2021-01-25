@@ -30,6 +30,7 @@ namespace PlGui
         public IBL bl = BlFactory.GetBL();
         PO.Lists Lists = new PO.Lists();
         BackgroundWorker Simulator;
+        BackgroundWorker SimulatorPanelStation;
         BackgroundWorker blGetStopsAndLines;
         BackgroundWorker blGetBuses;
         BackgroundWorker blGetDrivers;
@@ -734,6 +735,7 @@ namespace PlGui
                 {
                     ListViewLinesInStop.DataContext = busStop;
                     ListViewLinesInStop.Visibility = Visibility.Visible;
+
                 }
                 if (busStop.LinesPassInStop.Count == 0)
                 {
@@ -773,7 +775,7 @@ namespace PlGui
                 {
                     Simulator.CancelAsync();//stop BackgroundWorker
                 }
-                
+
             }
         }
         private void setSimulator(TimeSpan time, int speed)
@@ -787,7 +789,7 @@ namespace PlGui
              {
                  bl.StartSimulator(time, speed, t => Simulator.ReportProgress(1, t));
                  while (!Simulator.CancellationPending)
-                      Thread.Sleep(1000); 
+                     Thread.Sleep(1000);
              };
             Simulator.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
               {
@@ -805,6 +807,33 @@ namespace PlGui
             };
         }
 
+        private void setSimulatorPanelStation()
+        {
+            SimulatorPanelStation = new BackgroundWorker
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
+            SimulatorPanelStation.DoWork += (object sender, DoWorkEventArgs args) =>
+              {
+                  bl.SetStationPanel((int)args.Argument, lineTiming => SimulatorPanelStation.ReportProgress(1, lineTiming));
+                  while(!SimulatorPanelStation.CancellationPending)
+                  {
+                      Thread.Sleep(1000);
+                  }
+              };
+            SimulatorPanelStation.ProgressChanged += (object sender,ProgressChangedEventArgs args) =>
+            {
+                var lineTiming = (LineTiming)args.UserState;
+                var i=Lists.PanelStation.IndexOf(lineTiming);
+                if(i==-1)
+                {
+                    Lists.PanelStation.Add(lineTiming);
+                    Lists.PanelStation.Sort();
+                }
+            };
+        }
+
         private void clockSpeed_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
@@ -812,6 +841,7 @@ namespace PlGui
                 return;
             if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
                 e.Handled = true;
+
         }
 
         private void accountAdmin_Click(object sender, RoutedEventArgs e)

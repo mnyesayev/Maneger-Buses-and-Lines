@@ -20,7 +20,10 @@ namespace Bl
         private IDal dal = DalFactory.GetDal();
         private int codeStop = -1;
         private static Random myRandom = new Random();
-
+        private static double GetDoubleRandom(double min, double max)
+        {
+            return (myRandom.NextDouble() * (max - min)) + min;
+        }
         private event Action<BO.LineTiming> tripObserver;
         internal int CodeStop{ set => codeStop = value; get =>codeStop; }
         internal event Action<BO.LineTiming> TripObserver
@@ -114,7 +117,7 @@ namespace Bl
                     }
                 }
                 if (i + 1 < stopsInLineBO.Count)
-                    Thread.Sleep((int)(stopsInLineBO[i + 1].AvregeDriveTimeToNext.TotalMilliseconds * (0.9 + myRandom.NextDouble() / 2) / WatchSimulator.Instance.Speed));
+                    Thread.Sleep((int)(stopsInLineBO[i + 1].AvregeDriveTimeToNext.TotalMilliseconds * (0.9 + GetDoubleRandom(0,2.1)) / WatchSimulator.Instance.Speed));
             }
 
         }

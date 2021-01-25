@@ -20,7 +20,11 @@ namespace PO
         ObservableCollection<PO.Bus> buses = new ObservableCollection<PO.Bus>();
         ObservableCollection<PO.Line> lines = new ObservableCollection<PO.Line>();
         ObservableCollection<BO.Driver> drivers = new ObservableCollection<BO.Driver>();
-
+        List<BO.LineTiming> panelStation;
+        public List<BO.LineTiming> PanelStation
+        {
+            get => panelStation; set { panelStation = value; }
+        }
         public ObservableCollection<PO.BusStop> Stops
         {
             get { return stops; }
@@ -34,7 +38,7 @@ namespace PO
         public ObservableCollection<PO.Line> Lines
         {
             get { return lines; }
-            set { if (value != lines) {  lines = value; OnPropertyChanged(); } }
+            set { if (value != lines) { lines = value; OnPropertyChanged(); } }
         }
         public ObservableCollection<BO.Driver> Drivers
         {

@@ -20,8 +20,6 @@ namespace PO
         string name;
         string moreInfo;
         ObservableCollection<LineOnStop> lines = new ObservableCollection<LineOnStop>();
-
-        ObservableCollection<BO.LineTiming> lineTimings = new ObservableCollection<BO.LineTiming>();
         /// <summary>
         /// Represents the unique number of the "BusStop"
         /// </summary>
@@ -47,16 +45,7 @@ namespace PO
         /// <summary>
         /// Represents the lines that pass in the stop/station 
         /// </summary>
-        public ObservableCollection<LineOnStop> LinesPassInStop { get { return lines; } set { if (lines != value) { lines = new ObservableCollection<LineOnStop>(value); OnPropertyChanged(); } } }
-
-        ObservableCollection<BO.LineTiming> LineTimings
-        {
-            get { return lineTimings; }
-            set
-            {
-                if (lineTimings != value) { lineTimings = value; OnPropertyChanged(); }
-            }
-        }
+        public ObservableCollection<LineOnStop> LinesPassInStop { get { return lines; } set { if (lines != value) { lines = new ObservableCollection<LineOnStop>(value); OnPropertyChanged(); } } }      
     }
 
 }
