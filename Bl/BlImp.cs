@@ -729,7 +729,15 @@ namespace Bl
                             select lineOnTrip;
             return lineTrips;
         }
-        IEnumerable<TripOnLine> getSchedule(TimeSpan startTime, TimeSpan endTime, int f, int id, int idLine)
+        internal IEnumerable<TripOnLine> getAllTripsOnLines()
+        {
+            var lineTrips = from LineTrip in dal.GetLineTrips()
+                            let trips = getSchedule(LineTrip.StartTime, LineTrip.EndTime, LineTrip.Frequency, LineTrip.Id, LineTrip.IdLine)
+                            from lineOnTrip in trips
+                            select lineOnTrip;
+            return lineTrips;
+        }
+        internal IEnumerable<TripOnLine> getSchedule(TimeSpan startTime, TimeSpan endTime, int f, int id, int idLine)
         {
             List<TripOnLine> timeSpans = new List<TripOnLine>();
             timeSpans.Add(new TripOnLine
@@ -840,89 +848,6 @@ namespace Bl
         {
             StationPanel.Instance.CodeStop = station;
             StationPanel.Instance.TripObserver += updateBus;
-
-            //workerPanel = new BackgroundWorker();
-            //var stationPanel = StationPanel.Instance;
-
-            //workerPanel.DoWork += (object sender, DoWorkEventArgs e) =>
-            //{
-            //    var curStop = GetStop(station);
-            //    var trips = from Line in curStop.LinesPassInStop
-            //                let tripLines = GetTripsOnLine(Line.IdLine)
-            //                from tl in tripLines
-            //                select tl;
-            //    var newExitTimes = trips.OrderBy(t => t.Time).ToList();
-            //    List<TripOnLine> oldExitTimes = new List<TripOnLine>();
-            //    int count = newExitTimes.Count;
-            //    stationPanel.CodeStop = station;
-            //    while (watch.Cancel == false)
-            //    {
-            //        TripOnLine tempTime = null;
-            //        if (count > 0)
-            //        {
-            //            tempTime = newExitTimes.FirstOrDefault();
-            //            newExitTimes.RemoveAt(0);
-            //            oldExitTimes.Add(tempTime);
-            //            --count;
-            //        }
-            //        else
-            //        {
-            //            if (oldExitTimes.Count > 0)
-            //            {
-            //                tempTime = oldExitTimes.FirstOrDefault();
-            //                oldExitTimes.RemoveAt(0);
-            //                newExitTimes.Add(tempTime);
-            //            }
-            //            if (oldExitTimes.Count == 0) count = newExitTimes.Count;
-            //        }
-            //        if (tempTime.Time == watch.CurTime)
-            //        {
-            //            var line = getLine(tempTime.IdLine);
-            //            BackgroundWorker workerTrips = new BackgroundWorker();
-            //            setWorkerTrips(workerTrips, line, station, tempTime.Time);
-            //            workerTrips.RunWorkerAsync(updateBus);
-            //            TimeSpan timeSleep;
-            //            timeSleep = (count == 0) ? oldExitTimes.FirstOrDefault().Time : newExitTimes.FirstOrDefault().Time;
-            //            Thread.Sleep(timeSleep - tempTime.Time);
-            //        }
-            //    }
-            //};
-            //if (watch.Cancel == false)
-            //    workerPanel.RunWorkerAsync();
-        }
-
-        //private void setWorkerTrips(BackgroundWorker workerTrips, Line line, int code, TimeSpan startTime)
-        //{
-
-        //    workerTrips.DoWork += (object sender, DoWorkEventArgs e) =>
-        //    {
-        //        var indexOfPanelStaion = line.StopsInLine.ToList().FindIndex(sl => sl.CodeStop == code);
-        //        var lineTiming = new LineTiming
-        //        {
-        //            ArriveTime = getArriveTime(line, 0, indexOfPanelStaion),
-        //            IdLine = line.IdLine,
-        //            LastStopName = line.NameLastLineStop,
-        //            NumLine = line.NumLine,
-        //            StartTime = startTime
-        //        };
-        //        var tempAriveTime = lineTiming.ArriveTime;
-        //        var i = 0;
-        //        while (watch.Cancel == false && tempAriveTime + startTime < watch.CurTime)
-        //        {
-        //            lineTiming.ArriveTime = getArriveTime(line, ++i, indexOfPanelStaion);
-        //        }
-        //    };
-        //}
-
-        private TimeSpan getArriveTime(Line line, int startIndex,int indexOfPanelStation)
-        {
-            if (startIndex > indexOfPanelStation) return TimeSpan.Zero;
-            TimeSpan sum = line.StopsInLine.ElementAt(startIndex).AvregeDriveTimeToNext;
-            for (int i =startIndex+1 ; i < indexOfPanelStation; i++)
-            {
-                sum += line.StopsInLine.ElementAt(i).AvregeDriveTimeToNext;
-            }
-            return sum;
-        }
+        }      
     }
 }
