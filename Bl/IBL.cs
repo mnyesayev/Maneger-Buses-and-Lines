@@ -11,7 +11,7 @@ namespace BlApi
         #region Simulator
         void StartSimulator(TimeSpan startTime, int speed ,Action<TimeSpan> updateTime);
         void StopSimulator();
-        void SetStationPanel(int station, Action<LineTiming> updateBus);
+        void SetStationPanel(int station, Action<LineTiming> updateBus=null);
         #endregion
 
         #region Bus
@@ -52,6 +52,7 @@ namespace BlApi
         bool UpdateLine(int idLine ,string numLine,Areas area,Agency agency);
         Line AddLine(string numLine, Areas area,IEnumerable<StopLine> stops,string moreInfo);
         #endregion
+        
         #region StopLine
         IEnumerable<StopLine> GetStopsInLine(int id);
         StopLine GetStopInLine(int code, int idLine);
@@ -60,6 +61,7 @@ namespace BlApi
         double GetDistance(int code1, int code2);
         TimeSpan GetTime(int code1, int code2);
         #endregion
+       
         #region BusStop
         IEnumerable<LineOnStop> GetLinesInStop(int code);
         IEnumerable<BusStop> GetBusStops();

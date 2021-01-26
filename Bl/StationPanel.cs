@@ -34,17 +34,15 @@ namespace Bl
 
         internal void Start() => new Thread(()=>
         {
-            var curStop = BlImp.Instance.GetStop(codeStop);
-            var trips = from Line in curStop.LinesPassInStop
-                        let tripLines = BlImp.Instance.GetTripsOnLine(Line.IdLine)
-                        from tl in tripLines
-                        select tl;
+            var trips = from tripOnLine in BlImp.Instance.getAllTripsOnLines()
+                        orderby tripOnLine.Time
+                        select tripOnLine;
             var exitTimes = trips.OrderBy(t => t.Time).ToList();
             while(WatchSimulator.Instance.Cancel==false)
             {
                 foreach (var exitTime  in exitTimes)
                 {
-                    if (WatchSimulator.Instance.Cancel == false)
+                    if (WatchSimulator.Instance.Cancel)
                         break;
                     TimeSpan curTime = WatchSimulator.Instance.Simulator.CurTime;
                     if (curTime > exitTime.Time)
@@ -81,14 +79,15 @@ namespace Bl
             //setter LastStopName of lineTiming
             lineTiming.LastStopName = stopsInLineBO.Last().Name;
 
-            for (int i = 1; i < stopsInLineBO.Count; ++i)//no need to distance
-                stopsInLineBO[i].AvregeDriveTimeToNext = dal.GetConsecutiveStops(stopsInLineBO[i - 1].CodeStop, stopsInLineBO[i].CodeStop).AvregeDriveTime;
+            for (int i = 0; i < stopsInLineBO.Count-1; ++i)//no need to distance
+                stopsInLineBO[i].AvregeDriveTimeToNext = dal.GetConsecutiveStops(stopsInLineBO[i].CodeStop, stopsInLineBO[i+1].CodeStop).AvregeDriveTime;
             
             for (int i = 0; i < stopsInLineBO.Count; ++i)
             {
                 if (codeStop != CodeStop)
                 {
                     lineTiming.ArriveTime = TimeSpan.Zero;
+                    if (tripObserver == null) return;
                     tripObserver(lineTiming);//arrive to station 
                     lineTiming = new LineTiming
                     {
@@ -103,6 +102,7 @@ namespace Bl
                 if (CodeStop == stopsInLineBO[i].CodeStop)
                 { 
                     lineTiming.ArriveTime = TimeSpan.Zero;
+                    if (tripObserver == null) return;
                     tripObserver(lineTiming); //arrive to station
                 }
                 TimeSpan sum = TimeSpan.Zero;
@@ -112,6 +112,7 @@ namespace Bl
                     if (CodeStop == stopsInLineBO[j].CodeStop)
                     {
                         lineTiming.ArriveTime = sum;
+                        if (tripObserver == null) return;
                         tripObserver(lineTiming);
                         break;
                     }

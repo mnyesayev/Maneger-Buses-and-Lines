@@ -61,6 +61,7 @@ namespace PlGui
         private void ChangeStopLine_Click(object sender, RoutedEventArgs e)
         {
             PO.StopLine sl = (PO.StopLine)listViewLineInfo.SelectedItem;
+            if (sl.NextStop == 0) return;
             wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
             wEdit.tbcode1.Text = sl.CodeStop.ToString();
             wEdit.tbcode2.Text = sl.NextStop.ToString();

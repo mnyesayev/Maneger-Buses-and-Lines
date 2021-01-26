@@ -784,7 +784,7 @@
                         </Grid.RowDefinitions>
                         <ListView x:Name="ListViewStations" Grid.Row="1" Grid.Column="1"
                                   Grid.ColumnSpan="2" Grid.RowSpan="6"
-                              ItemsSource="{Binding Path=Stops}" MouseUp="ListViewStations_MouseUp">
+                              ItemsSource="{Binding Path=Stops}" SelectionChanged="ListViewStations_SelctionChanged">
                             <ListView.View>
                                 <GridView>
                                     <GridView.ColumnHeaderContainerStyle>
@@ -835,9 +835,8 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <ListView x:Name="ListViewPanel" Grid.Row="4" Grid.Column="3"
+                        <ListView x:Name="ListViewPanel" Grid.Row="4" Grid.Column="8"
                                   Grid.RowSpan="2" Grid.ColumnSpan="3"
-                                  ItemsSource="{Binding}" 
                                   Visibility="Hidden">
                             <ListView.View>
                                 <GridView>

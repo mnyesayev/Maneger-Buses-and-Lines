@@ -17,6 +17,7 @@ using BO;
 using BlApi;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
 /// <summary>
 /// need to do PO!!!!!
 /// </summary>
@@ -39,6 +40,8 @@ namespace PlGui
         {
             InitializeComponent();
             this.DataContext = Lists;
+            setSimulatorPanelStation();
+            setSimulator();
             setBlGetStopsAndLines();
             setBlGetBuses();
             setBlGetDrivers();
@@ -459,6 +462,7 @@ namespace PlGui
         private void EditDAT_Click(object sender, RoutedEventArgs e)
         {
             PO.StopLine sl = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
+            if (sl.NextStop == 0) return;
             wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
             wEdit.tbcode1.Text = sl.CodeStop.ToString();
             wEdit.tbcode2.Text = sl.NextStop.ToString();
@@ -538,6 +542,46 @@ namespace PlGui
             DriveTime.Width = 100;
             Distance.Width = 100;
         }
+        #endregion
+        #region busStops
+        private void ListViewStations_SelctionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListViewStations.SelectedItem is PO.BusStop)
+            {
+                PO.BusStop busStop = (PO.BusStop)ListViewStations.SelectedItem;
+                if (SimulatorPanelStation.IsBusy)
+                {
+                    SimulatorPanelStation.CancelAsync();
+                }
+                if (busStop.LinesPassInStop.Count != 0)
+                {
+                    ListViewLinesInStop.DataContext = busStop;
+                    ListViewLinesInStop.Visibility = Visibility.Visible;
+                    Lists.PanelStation = new List<LineTiming>();
+                    ListViewPanel.ItemsSource = null;
+                    if (Simulator.IsBusy)
+                    {
+                        SimulatorPanelStation.RunWorkerAsync(busStop);
+                        ListViewPanel.Visibility = Visibility.Visible;
+                    }
+                }
+                if (busStop.LinesPassInStop.Count == 0)
+                {
+                    ListViewLinesInStop.Visibility = Visibility.Hidden;
+                }
+                StringBuilder stringB = new StringBuilder("https://www.google.co.il/maps/place/");
+                stringB.Append($"{busStop.Latitude},{busStop.Longitude}");
+                webStop.Address = stringB.ToString();
+            }
+            return;
+        }
+
+        private void AddStop_Click(object sender, RoutedEventArgs e)
+        {
+            wAddStop addStop = new wAddStop(bl, Lists);
+            addStop.ShowDialog();
+        }
+
         #endregion
         private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -725,36 +769,7 @@ namespace PlGui
                 blogInEnter_Click(sender, null);
         }
 
-        #region busStops
-        private void ListViewStations_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (ListViewStations.SelectedItem is PO.BusStop)
-            {
-                PO.BusStop busStop = (PO.BusStop)ListViewStations.SelectedItem;
-                if (busStop.LinesPassInStop.Count != 0)
-                {
-                    ListViewLinesInStop.DataContext = busStop;
-                    ListViewLinesInStop.Visibility = Visibility.Visible;
 
-                }
-                if (busStop.LinesPassInStop.Count == 0)
-                {
-                    ListViewLinesInStop.Visibility = Visibility.Hidden;
-                }
-                StringBuilder stringB = new StringBuilder("https://www.google.co.il/maps/place/");
-                stringB.Append($"{busStop.Latitude},{busStop.Longitude}");
-                webStop.Address = stringB.ToString();
-            }
-            return;
-        }
-
-        private void AddStop_Click(object sender, RoutedEventArgs e)
-        {
-            wAddStop addStop = new wAddStop(bl, Lists);
-            addStop.ShowDialog();
-        }
-
-        #endregion
 
         private void bClock_Click(object sender, RoutedEventArgs e)
         {
@@ -764,8 +779,7 @@ namespace PlGui
             if (bClock.Content.ToString() == "Start")
             {
                 bClock.Content = "Stop";
-                setSimulator(time, int.Parse(clockSpeed.Text));
-                Simulator.RunWorkerAsync();
+                Simulator.RunWorkerAsync(new {Time=time,Speed= int.Parse(clockSpeed.Text)});
                 programClock.IsEnabled = false;
                 clockSpeed.IsEnabled = false;
             }
@@ -778,7 +792,7 @@ namespace PlGui
 
             }
         }
-        private void setSimulator(TimeSpan time, int speed)
+        private void setSimulator()
         {
             Simulator = new BackgroundWorker
             {
@@ -787,7 +801,9 @@ namespace PlGui
             };
             Simulator.DoWork += (object sender, DoWorkEventArgs e) =>
              {
-                 bl.StartSimulator(time, speed, t => Simulator.ReportProgress(1, t));
+                 dynamic anonimicType = e.Argument;
+               
+                 bl.StartSimulator((TimeSpan)anonimicType.Time ,(int) anonimicType.Speed, t => Simulator.ReportProgress(1, t));
                  while (!Simulator.CancellationPending)
                      Thread.Sleep(1000);
              };
@@ -799,6 +815,7 @@ namespace PlGui
             Simulator.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) =>
             {
                 bClock.Content = "Start";
+                ListViewPanel.Visibility = Visibility.Hidden;
                 bl.StopSimulator();
                 programClock.IsEnabled = true;
                 clockSpeed.IsEnabled = true;
@@ -816,22 +833,45 @@ namespace PlGui
             };
             SimulatorPanelStation.DoWork += (object sender, DoWorkEventArgs args) =>
               {
-                  bl.SetStationPanel((int)args.Argument, lineTiming => SimulatorPanelStation.ReportProgress(1, lineTiming));
-                  while(!SimulatorPanelStation.CancellationPending)
+                  bl.SetStationPanel((args.Argument as PO.BusStop).Code, lineTiming => SimulatorPanelStation.ReportProgress(1, lineTiming));
+                  while (!SimulatorPanelStation.CancellationPending)
                   {
                       Thread.Sleep(1000);
                   }
+                  args.Result = args.Argument;
               };
-            SimulatorPanelStation.ProgressChanged += (object sender,ProgressChangedEventArgs args) =>
+            SimulatorPanelStation.ProgressChanged += (object sender, ProgressChangedEventArgs args) =>
             {
                 var lineTiming = (LineTiming)args.UserState;
-                var i=Lists.PanelStation.IndexOf(lineTiming);
-                if(i==-1)
+                var i = Lists.PanelStation.IndexOf(lineTiming);
+                if (i == -1)
                 {
+                    if (lineTiming.ArriveTime == TimeSpan.Zero)
+                        return;
                     Lists.PanelStation.Add(lineTiming);
-                    Lists.PanelStation.Sort();
+                    Lists.PanelStation.Sort((lt1, lt2) => (int)(lt1.ArriveTime - lt2.ArriveTime).TotalMilliseconds);
                 }
+                else
+                {
+                    if (lineTiming.ArriveTime == TimeSpan.Zero)
+                        Lists.PanelStation.Remove(lineTiming);
+                    else
+                        Lists.PanelStation.Sort((lt1, lt2) => (int)(lt1.ArriveTime - lt2.ArriveTime).TotalMilliseconds);
+                }
+                ListViewPanel.ItemsSource = null;
+                int size = (Lists.PanelStation.Count < 5) ? Lists.PanelStation.Count : 5;
+                ListViewPanel.ItemsSource = Lists.PanelStation.GetRange(0, size);
             };
+            SimulatorPanelStation.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs args) =>
+              {
+                  if (args.Result is PO.BusStop)
+                  {
+                      Lists.PanelStation = new List<LineTiming>();
+                      ListViewPanel.ItemsSource = null;
+                      ListViewPanel.Visibility = Visibility.Hidden;
+                      bl.SetStationPanel(-1);//Stop tracking
+                  }
+              };
         }
 
         private void clockSpeed_PreviewKeyDown(object sender, KeyEventArgs e)

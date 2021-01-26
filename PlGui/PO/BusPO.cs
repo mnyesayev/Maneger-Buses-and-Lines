@@ -15,13 +15,13 @@ namespace PO
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        uint id;
+        
         uint mileage;
         int fuel;
         uint lastCareMileage;
-        DateTime dateRoadAscent;
         DateTime lastCare;
         States state;
+
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law
@@ -57,23 +57,22 @@ namespace PO
         /// <summary>
         ///  Represents the amount of mileage that the bus passed from entering the Road
         /// </summary>
-        public uint Mileage { get; set; }
+        public uint Mileage { get => mileage; set { if (mileage != value) { mileage = value; OnPropertyChanged(); } } }
         /// <summary>
         ///  Represents how many miles the bus can travel further
         /// </summary>
-        public int Fuel { get; set; }
+        public int Fuel { get => fuel; set{ if (fuel!=value) { fuel = value; OnPropertyChanged(); } } }
         /// <summary>
         ///  Represents the date of the last treatment in the garage
         /// </summary>
-        public DateTime LastCare { get; set; }
+        public DateTime LastCare { get => lastCare; set { if (lastCare != value) { lastCare = value; OnPropertyChanged(); } } }
         /// <summary>
         ///  Represents the amount of bus mileage in the last care
         /// </summary>
-        public uint LastCareMileage { get; set; }
+        public uint LastCareMileage { get => lastCareMileage; set { if (lastCareMileage != value) { lastCareMileage = value; OnPropertyChanged(); } } }
         /// <summary>
         /// Represents the state of the bus
         /// </summary>
-        //public States State { get; set; }
         public States State { get { return state; } set { if (state != value) { state = value; OnPropertyChanged(); } } }
         public string Image { get; set; }
     }
