@@ -550,7 +550,7 @@
     <CodeBusStop1>31899</CodeBusStop1>
     <CodeBusStop2>31898</CodeBusStop2>
     <Distance>4</Distance>
-    <AvregeDriveTime>PT8M26S</AvregeDriveTime>
+    <AvregeDriveTime>PT5M25S</AvregeDriveTime>
   </ConsecutiveStops>
   <ConsecutiveStops>
     <CodeBusStop1>35335</CodeBusStop1>

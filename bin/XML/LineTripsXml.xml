@@ -1,51 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfLineTrip xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LineTrip>
-    <Active>True</Active>
+    <Active>true</Active>
     <Id>1</Id>
     <IdLine>1</IdLine>
-    <Frequency>2</Frequency>
-    <StartTime>PT15H15M</StartTime>
-    <EndTime>PT15H15M</EndTime>
+    <Frequency>15</Frequency>
+    <StartTime>PT6H</StartTime>
+    <EndTime>PT20H</EndTime>
   </LineTrip>
   <LineTrip>
-    <Active>false</Active>
+    <Active>true</Active>
     <Id>2</Id>
-    <IdLine>1</IdLine>
-    <Frequency>4</Frequency>
-    <StartTime>PT15H15M</StartTime>
-    <EndTime>PT19H39M</EndTime>
+    <IdLine>4</IdLine>
+    <Frequency>12</Frequency>
+    <StartTime>PT6H</StartTime>
+    <EndTime>PT22H</EndTime>
   </LineTrip>
   <LineTrip>
     <Active>true</Active>
     <Id>3</Id>
-    <IdLine>1</IdLine>
-    <Frequency>4</Frequency>
-    <StartTime>PT15H15M</StartTime>
-    <EndTime>PT19H39M</EndTime>
+    <IdLine>3</IdLine>
+    <Frequency>7</Frequency>
+    <StartTime>PT6H</StartTime>
+    <EndTime>PT21H</EndTime>
   </LineTrip>
   <LineTrip>
     <Active>true</Active>
     <Id>4</Id>
-    <IdLine>1</IdLine>
-    <Frequency>1</Frequency>
-    <StartTime>PT17H5M</StartTime>
-    <EndTime>PT19H39M</EndTime>
-  </LineTrip>
-  <LineTrip>
-    <Active>true</Active>
-    <Id>5</Id>
-    <IdLine>1</IdLine>
-    <Frequency>1</Frequency>
-    <StartTime>PT17H5M</StartTime>
-    <EndTime>PT19H39M</EndTime>
-  </LineTrip>
-  <LineTrip>
-    <Active>true</Active>
-    <Id>6</Id>
-    <IdLine>1</IdLine>
-    <Frequency>1</Frequency>
-    <StartTime>PT17H5M</StartTime>
-    <EndTime>PT19H39M</EndTime>
+    <IdLine>2</IdLine>
+    <Frequency>10</Frequency>
+    <StartTime>PT6H</StartTime>
+    <EndTime>PT20H</EndTime>
   </LineTrip>
 </ArrayOfLineTrip>

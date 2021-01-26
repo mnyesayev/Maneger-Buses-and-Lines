@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,12 +21,12 @@ namespace PlGui
     public partial class wEditSuccessiveStations : Window
     {
         IBL bl;
-        public bool IsSave { get;private set; }
+        public bool IsSave { get; private set; }
         public wEditSuccessiveStations(IBL bl)
         {
             InitializeComponent();
             this.bl = bl;
-           
+
         }
 
         private void saveSucc_Click(object sender, RoutedEventArgs e)
@@ -43,7 +44,7 @@ namespace PlGui
 
         private void cencelSucc_Click(object sender, RoutedEventArgs e)
         {
-            IsSave=false;
+            IsSave = false;
             this.Close();
         }
 
@@ -51,7 +52,8 @@ namespace PlGui
         {
             try
             {
-                tbName1.Text = bl.GetNameStop(int.Parse(tbcode1.Text));
+                new Thread(() => Dispatcher.Invoke(() =>
+                 tbName1.Text = bl.GetNameStop(int.Parse(tbcode1.Text)))).Start();
             }
             catch
             {
@@ -64,7 +66,8 @@ namespace PlGui
         {
             try
             {
-                tbName2.Text = bl.GetNameStop(int.Parse(tbcode2.Text));
+                new Thread(() => Dispatcher.Invoke(() =>
+                 tbName2.Text = bl.GetNameStop(int.Parse(tbcode2.Text)))).Start();
             }
             catch
             {

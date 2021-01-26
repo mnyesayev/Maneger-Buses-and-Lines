@@ -742,7 +742,7 @@ namespace Dal
                                 IdLine = XmlConvert.ToInt32(lt.Element("IdLine").Value),
                                 Frequency = XmlConvert.ToInt32(lt.Element("Frequency").Value),
                                 StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
-                                EndTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value)
+                                EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
                             }
                    ).FirstOrDefault();
             return lineTrip;
@@ -760,7 +760,7 @@ namespace Dal
                        IdLine = XmlConvert.ToInt32(lt.Element("IdLine").Value),
                        Frequency = XmlConvert.ToInt32(lt.Element("Frequency").Value),
                        StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
-                       EndTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value)
+                       EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
                    };
         }
 
@@ -776,7 +776,7 @@ namespace Dal
                        IdLine = XmlConvert.ToInt32(lt.Element("IdLine").Value),
                        Frequency = XmlConvert.ToInt32(lt.Element("Frequency").Value),
                        StartTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value),
-                       EndTime = XmlConvert.ToTimeSpan(lt.Element("StartTime").Value)
+                       EndTime = XmlConvert.ToTimeSpan(lt.Element("EndTime").Value)
                    }
                    where predicate(newLineTrip)
                    select newLineTrip;
@@ -821,7 +821,7 @@ namespace Dal
                 IdLine = XmlConvert.ToInt32(lineTrip.Element("IdLine").Value),
                 Frequency = XmlConvert.ToInt32(lineTrip.Element("Frequency").Value),
                 StartTime = XmlConvert.ToTimeSpan(lineTrip.Element("StartTime").Value),
-                EndTime = XmlConvert.ToTimeSpan(lineTrip.Element("StartTime").Value)
+                EndTime = XmlConvert.ToTimeSpan(lineTrip.Element("EndTime").Value)
             };
             action(temp);
             

@@ -770,7 +770,7 @@ namespace Bl
         public LineTrip UpdateLineSchedule(int id, TimeSpan startTime, TimeSpan endTime, int f)
         {
             if (f != 0)
-                if (startTime > endTime)
+                if (startTime >= endTime)
                     throw new IdException("LineTrip", $"{startTime:hh\\:mm}-{endTime:hh\\:mm}");
             if (f > 60)
                 throw new IdException("LineTrip", f.ToString(), "The frequency invalid!");
@@ -802,7 +802,7 @@ namespace Bl
         public LineTrip AddLineTrip(int idLine, TimeSpan start, TimeSpan end, int f)
         {
             if (f != 0)
-                if (start > end)
+                if (start >= end)
                     throw new AddException("LineTrip", $"{start:hh\\:mm}-{end:hh\\:mm}");
             if (f > 60)
                 throw new AddException("LineTrip", f.ToString(), "The frequency invalid!");

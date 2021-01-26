@@ -463,12 +463,14 @@ namespace PlGui
         {
             PO.StopLine sl = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
             if (sl.NextStop == 0) return;
-            wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
-            wEdit.tbcode1.Text = sl.CodeStop.ToString();
-            wEdit.tbcode2.Text = sl.NextStop.ToString();
-            wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
-            wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
-            wEdit.ShowDialog();
+            
+                //this.Dispatcher.Invoke
+                wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
+                wEdit.tbcode1.Text = sl.CodeStop.ToString();
+                wEdit.tbcode2.Text = sl.NextStop.ToString();
+                wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
+                wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
+                wEdit.ShowDialog();
             if (wEdit.IsSave)
             {
                 foreach (var item in Lists.Lines)
@@ -484,7 +486,8 @@ namespace PlGui
                         item.StopsInLine[index].AvregeDriveTimeToNext = temp.AvregeDriveTimeToNext;
                     }
                 }
-            }
+            } 
+           
         }
 
         private void ListViewLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)

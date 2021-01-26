@@ -37,10 +37,9 @@ namespace Bl
             var trips = from tripOnLine in BlImp.Instance.getAllTripsOnLines()
                         orderby tripOnLine.Time
                         select tripOnLine;
-            var exitTimes = trips.OrderBy(t => t.Time).ToList();
             while(WatchSimulator.Instance.Cancel==false)
             {
-                foreach (var exitTime  in exitTimes)
+                foreach (var exitTime  in trips)
                 {
                     if (WatchSimulator.Instance.Cancel)
                         break;
@@ -69,7 +68,7 @@ namespace Bl
             };
             //setter name fot local thread
             Thread.CurrentThread.Name = $"idline:{lineTiming.IdLine}, numLine:{lineTiming.NumLine}, startTime:{lineTiming.StartTime.ToString(@"hh\:mm\:ss")}";
-
+            
 
             var stopsInLineDO = dal.GetStopLinesBy(sl => sl.IdLine == lineTiming.IdLine).ToList();
 
