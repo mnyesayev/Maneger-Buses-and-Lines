@@ -18,6 +18,7 @@ using BlApi;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.InteropServices;
 /// <summary>
 /// need to do PO!!!!!
 /// </summary>
@@ -164,28 +165,29 @@ namespace PlGui
 
             }).Start();
         }
-
+       
         private void bGuestMode_Click(object sender, RoutedEventArgs e)
         {
-            mainGrid.Visibility = Visibility.Hidden;
-            new Thread(() =>
-            {
-                this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+            MessageBox.Show("Still under construction", "Guest Mode", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.OK);
+            //mainGrid.Visibility = Visibility.Hidden;
+            //new Thread(() =>
+            //{
+            //    this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
 
-                Thread.Sleep(500);
-                this.Dispatcher.Invoke(() =>
-                {
-                    loudGrid.Visibility = Visibility.Hidden;
-                    Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
-                    Application.Current.MainWindow.Height = 640;
-                    Application.Current.MainWindow.Width = 850;
-                    Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    Application.Current.MainWindow.Top = 100;
-                    Application.Current.MainWindow.Left = 200;
-                    guestModeGrid.Visibility = Visibility.Visible;
-                });
+            //    Thread.Sleep(500);
+            //    this.Dispatcher.Invoke(() =>
+            //    {
+            //        loudGrid.Visibility = Visibility.Hidden;
+            //        Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
+            //        Application.Current.MainWindow.Height = 640;
+            //        Application.Current.MainWindow.Width = 850;
+            //        Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            //        Application.Current.MainWindow.Top = 100;
+            //        Application.Current.MainWindow.Left = 200;
+            //        guestModeGrid.Visibility = Visibility.Visible;
+            //    });
 
-            }).Start();
+            //}).Start();
         }
         private void blogInBack_Click(object sender, RoutedEventArgs e)
         {
@@ -282,7 +284,7 @@ namespace PlGui
         {
             User user = new User()
             {
-                Authorization = Authorizations.Admin,
+                Authorization = Authorizations.User,
                 FirstName = SutbFirstName.Text,
                 LastName = SutbLastName.Text,
                 UserName = Su2tbUserName.Text,
@@ -341,7 +343,24 @@ namespace PlGui
             if (MyUser != null)
             {
                 if (MyUser.Authorization == Authorizations.User)
-                    return; // must to fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+                {
+                    logInGrid.Visibility = Visibility.Hidden;
+                    new Thread(() =>
+                    {
+                        this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
+
+                        Thread.Sleep(500);
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            loudGrid.Visibility = Visibility.Hidden;
+                            Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
+                            Application.Current.MainWindow.WindowState = WindowState.Maximized;
+                            accountAdmin.ToolTip = MyUser.FirstName;
+                            userGrid.Visibility = Visibility.Visible;
+                        });
+
+                    }).Start();
+                }
                 if (MyUser.Authorization == Authorizations.Admin)
                 {
                     logInGrid.Visibility = Visibility.Hidden;

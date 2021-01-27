@@ -394,7 +394,7 @@
                 <ImageBrush ImageSource="images\stops.jpg"/>
             </Grid.Background>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -402,10 +402,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="10"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -413,18 +413,333 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1" Grid.Column="7" Grid.RowSpan="2">
-                <materialDesign:PackIcon Kind="AccountCircle"  
-                    VerticalAlignment="Top" HorizontalAlignment="Center" Height="40" Width="40"/>
+            <!--#region User title-->
+            <Button x:Name="accountUser" Grid.Column="7" Grid.Row="1"
+                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                ToolTip="{Binding}" Click="accountAdmin_Click" Foreground="White">
+                <materialDesign:PackIcon Kind="AccountCircleOutline"  />
+            </Button>
 
-                <Button x:Name="account" Content="David" 
-                    VerticalAlignment="Top" 
-                    Height="30" FontSize="12" Background="Transparent" BorderThickness="0"
-                    VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />
+            <Image Source="images\bus.png" Grid.Column="3" Grid.Row="1"
+                  Height="30" Width="30" HorizontalAlignment="Right" Margin="0,0,5,0"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="5"
+                      Foreground="White" VerticalAlignment="Center">
+                Travel and go
+            </TextBlock>
+            <StackPanel  Grid.Column="1" Margin="42 2 2 12" Grid.Row="1" Orientation="Vertical" 
+                         VerticalAlignment="Center">
+                <materialDesign:TimePicker x:Name="programClockUser" Margin="0 0 0 5" 
+                                       materialDesign:HintAssist.Hint="Select start time"
+                                       Is24Hours="True" WithSeconds="True"
+                                       Foreground="White"/>
+                <TextBox x:Name="clockSpeedUser" materialDesign:HintAssist.Hint="Enter clock speed" 
+                         PreviewKeyDown="clockSpeed_PreviewKeyDown" Foreground="White" />
+                <Button x:Name="bClockUser" Content="Start" 
+                   Width="140" Height="25"
+                    Background="#512DA8" Margin="0 5 0 0"
+                    materialDesign:ButtonAssist.CornerRadius="5" Click="bClock_Click"/>
             </StackPanel>
+
+            <!--#endregion -->
+
+            <!--#region tab control-->
+            <TabControl Name="UserTabControl" TabStripPlacement="Left" Grid.Row="2"
+                        Grid.Column="1" Grid.ColumnSpan="8" BorderThickness="0"
+                        Grid.RowSpan="6" 
+                        Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
+                        materialDesign:ColorZoneAssist.Mode="PrimaryDark">
+                <!--#region tab control buses-->
+                <TabItem Header="Buses" 
+                    Width="80" HorizontalAlignment="Left"
+                         Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="ListViewBusesUser" Grid.Row="1" Grid.Column="1"
+                                  Grid.ColumnSpan="5" Grid.RowSpan="6"
+                              ItemsSource="{Binding Path=Buses}" MouseDoubleClick="ListViewBuses_MouseDoubleClick" >
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="GhostWhite"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn x:Name="gvcIdBusUser" Header="Bus ID" Width="100"  
+                                    DisplayMemberBinding="{Binding Path=PrintId,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    <GridViewColumn x:Name="gvcDateRoadAscentUser" Header="Date road ascent" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=DateRoadAscent,StringFormat=dd/MM/yyyy,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn x:Name="gvcMileageBusUser" Header="Mileage" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=Mileage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <Button x:Name="UserSearchBus" Grid.Column="2" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Search Bus" Click="SearchBus_Click" >
+                            <materialDesign:PackIcon Kind="Magnify"/>
+                        </Button>
+                    </Grid>
+                </TabItem>
+                <!--#endregion-->
+
+                <!--#region tab control lines-->
+                <TabItem Header="Lines"
+                         Width="80" HorizontalAlignment="Left"
+                         Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="ListViewLinesUser" Grid.Row="1" Grid.Column="1"
+                                  Grid.ColumnSpan="3" Grid.RowSpan="6"
+                              ItemsSource="{Binding Path=Lines}" MouseUp="ListViewLines_MouseUp" 
+                                  MouseDoubleClick="ListViewLines_MouseDoubleClick" >
+                            <ListView.View>
+                                <GridView>
+
+                                    <GridViewColumn x:Name="gvcNumIdUser" Header="Lines">
+
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button x:Name="bStop_lineInfoUser"  Content="{Binding NumLine, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             BorderThickness="2" BorderBrush="Purple" Width="80" Height="40"  Margin="5,0,0,0" Click="bStop_lineInfo_Click" />
+                                                    <TextBlock  Text="{Binding NameFirstLineStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                                    <materialDesign:PackIcon Kind="ArrowRight" Margin="1" VerticalAlignment="Center" />
+                                                    <TextBlock  Text="{Binding NameLastLineStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="5,0,0,0" VerticalAlignment="Center"  FontSize="14"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Border BorderThickness="2" CornerRadius="5" Grid.Column="5"
+                                Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="6"
+                               BorderBrush="Purple" />
+
+                        <ListView x:Name="ListViewStopsOfLineUser" Grid.Row="1" Grid.Column="5"
+                                  Grid.ColumnSpan="3" Grid.RowSpan="6" Margin="2"
+                                  ItemsSource="{Binding Path=StopsInLine}"
+                                  Visibility="Hidden">
+
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="Azure"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+
+                                    <GridViewColumn Header="CodeUser" Width="auto"
+                                                 DisplayMemberBinding="{Binding CodeStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="NameUser" Width="auto"
+                                                 DisplayMemberBinding="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn x:Name="DriveTimeUser" Header="Drive Time" Width="0"
+                                                 DisplayMemberBinding="{Binding AvregeDriveTimeToNext,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn x:Name="DistanceUser" Header="Distance" Width="100"
+                                                 DisplayMemberBinding="{Binding DistanceToNext, StringFormat={}{0:F2}km,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <TextBlock Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="3"
+                                   Text="Line frequency" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" Margin="15 0 0 0"/>
+                        <Border Grid.Column="8" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="3"
+                                 BorderBrush="Purple" BorderThickness="2" CornerRadius="5"
+                                Margin="15 0 0 0">
+                            <ListView x:Name="ListViewFrequencyUser"
+                                    Margin="5" Visibility="Hidden"
+                                    ItemsSource="{Binding Path=Trips}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="Background" Value="Azure"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Header="Exit time" 
+                                    DisplayMemberBinding="{Binding Path=Time, StringFormat={}{0:hh\\:mm}}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+                        </Border>
+
+                        <TextBlock Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="3"
+                                   Text="More info on Line" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" Margin="15 0 0 0"/>
+                        <Border Grid.Column="8" Grid.ColumnSpan="2" Grid.Row="6" 
+                                 BorderBrush="Purple" BorderThickness="2" CornerRadius="5"
+                                Margin="15 0 0 0"/>
+                        <Button x:Name="SearchLineUser" Grid.Column="2" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Search Line" Click="SearchLine_Click" >
+                            <materialDesign:PackIcon Kind="Magnify"/>
+                        </Button>
+                    </Grid>
+                </TabItem>
+                <!--#endregion-->
+
+                <!--#region tab control stations -->
+                <TabItem Header="Stations"
+                         Width="80" HorizontalAlignment="Left"
+                         Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="ListViewStationsUser" Grid.Row="1" Grid.Column="1"
+                                  Grid.ColumnSpan="2" Grid.RowSpan="6"
+                              ItemsSource="{Binding Path=Stops}" SelectionChanged="ListViewStations_SelctionChanged">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="GhostWhite"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn x:Name="gvcCodeStopUser" Header="Code" Width="80"  
+                                    DisplayMemberBinding="{Binding Path=Code,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    <GridViewColumn x:Name="gvcNameStopUser" Header="Name" Width="auto"
+                                    DisplayMemberBinding="{Binding Path=Name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ScrollViewer Grid.Row="1" Grid.Column="3" 
+                                      Margin="10,0,0,10" Grid.RowSpan="6" Grid.ColumnSpan="5">
+                            <cefSharp:ChromiumWebBrowser x:Name="webStopUser" />
+                        </ScrollViewer>
+                        <ListView x:Name="ListViewLinesInStopUser" Grid.Row="1" Grid.Column="8"
+                                  Grid.ColumnSpan="3" Grid.RowSpan="3"
+                                  ItemsSource="{Binding Path=LinesPassInStop}"
+                                  Visibility="Hidden">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.ColumnHeaderContainerStyle>
+                                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Background" Value="Azure"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Style>
+                                    </GridView.ColumnHeaderContainerStyle>
+                                    <GridViewColumn Header="Lines in stop" Width="auto">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button x:Name="bStop_lineInfouser"  Content="{Binding NumLine, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             BorderThickness="2" BorderBrush="Purple" Width="80" Height="40" Margin="5,0,0,0" Click="bStop_lineInfo_Click" />
+                                                    <TextBlock  Text="{Binding NameFirstLineStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="5,0,0,0" VerticalAlignment="Center" />
+                                                    <materialDesign:PackIcon Kind="ArrowLeftRight" Margin="1" VerticalAlignment="Center" />
+                                                    <TextBlock  Text="{Binding NameLastLineStop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ListView x:Name="ListViewPanelUser" Grid.Row="4" Grid.Column="8"
+                                  Grid.RowSpan="2" Grid.ColumnSpan="3"
+                                  Visibility="Hidden">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Line Number" DisplayMemberBinding="{Binding NumLine}"/>
+                                    <GridViewColumn Header="destiantion" DisplayMemberBinding="{Binding LastStopName}"/>
+                                    <GridViewColumn Header="Exit Time" DisplayMemberBinding="{Binding StartTime, StringFormat={}{0:hh\\:mm\\:ss}}"/>
+                                    <GridViewColumn Header="Arrive in" DisplayMemberBinding="{Binding ArriveTime, StringFormat={}{0:hh\\:mm\\:ss}}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Button x:Name="SearchStopUser" Grid.Column="2" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Search Stop" Click="SearchStop_Click" >
+                            <materialDesign:PackIcon Kind="Magnify"/>
+                        </Button>
+                    </Grid>
+                </TabItem>
+                <!--#endregion-->
+            </TabControl>
+            <!--#endregion-->
         </Grid>
         <!--#endregion -->
 
@@ -485,8 +800,8 @@
                     Background="#512DA8" Margin="0 5 0 0"
                     materialDesign:ButtonAssist.CornerRadius="5" Click="bClock_Click"/>
             </StackPanel>
-            
-            
+
+
             <!--#endregion-->
 
             <!--#region tab control-->
@@ -550,8 +865,8 @@
                                  ToolTip="Add Bus" Click="AddBus_Click" IsEnabled="False">
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
-                        
-                        
+
+
                         <Button x:Name="SearchBus" Grid.Column="2" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search Bus" Click="SearchBus_Click" >
@@ -602,7 +917,7 @@
                                         </Style>
                                     </GridView.ColumnHeaderContainerStyle>-->
                                     <GridViewColumn x:Name="gvcNumId" Header="Lines">
-                                      
+
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
@@ -617,7 +932,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                   
+
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -699,7 +1014,7 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        
+
                         <TextBlock Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="3"
                                    Text="Line frequency" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"
                                    VerticalAlignment="Center" Margin="15 0 0 0"/>
@@ -737,8 +1052,8 @@
                                  ToolTip="Add line" Click="AddLine_Click">
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
-                       
-                       
+
+
                         <Button x:Name="SearchLine" Grid.Column="2" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search Line" Click="SearchLine_Click" >
@@ -831,7 +1146,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                                    
+
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -852,7 +1167,7 @@
                                  ToolTip="Add Stop" Click="AddStop_Click">
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
-                   
+
                         <Button x:Name="SearchStop" Grid.Column="2" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search Stop" Click="SearchStop_Click" >

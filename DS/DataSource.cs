@@ -64,6 +64,17 @@ namespace DS
                     UserName = "1",
                     Password = "1",
                     Phone = "052-1234567"
+                },
+
+               new User()
+                {
+                    Active = true,
+                    Authorization = Authorizations.User,
+                    Birthday = DateTime.Today,
+                    FirstName = "Admin",
+                    UserName = "2",
+                    Password = "2",
+                    Phone = "052-3456789"
                 }
             };
             initUsers();
