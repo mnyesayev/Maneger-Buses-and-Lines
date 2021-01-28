@@ -866,7 +866,11 @@
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
 
-
+                        <Button x:Name="DelBus" Grid.Column="3" Grid.Row="7"
+                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                 ToolTip="Delete Bus" Click="DeleteBus_Click" >
+                            <materialDesign:PackIcon Kind="Trash"/>
+                        </Button>
                         <Button x:Name="SearchBus" Grid.Column="2" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
                                  ToolTip="Search Bus" Click="SearchBus_Click" >

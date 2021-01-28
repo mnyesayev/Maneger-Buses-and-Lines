@@ -624,17 +624,9 @@ namespace PlGui
 
         private void DeleteBus_Click(object sender, RoutedEventArgs e)
         {
-            wDelbus delbus = new wDelbus();
+            wDelbus delbus = new wDelbus(bl,Lists);
             delbus.ShowDialog();
-            try
-            {
-                bl.DeleteBus((int)delbus.IdDelbus);
-                Lists.Buses.Remove(Lists.Buses.ToList().Find((Bus) => Bus.Id == delbus.IdDelbus));
-            }
-            catch (DeleteException ex)
-            {
-                MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            
         }
 
         private void AddBus_Click(object sender, RoutedEventArgs e)
@@ -841,14 +833,14 @@ namespace PlGui
                 WorkerSupportsCancellation = true
             };
             SimulatorPanelStation.DoWork += (object sender, DoWorkEventArgs args) =>
-              {
+            {
                   bl.SetStationPanel((args.Argument as PO.BusStop).Code, lineTiming => SimulatorPanelStation.ReportProgress(1, lineTiming));
                   while (!SimulatorPanelStation.CancellationPending)
                   {
                       Thread.Sleep(1000);
                   }
                   args.Result = args.Argument;
-              };
+            };
             SimulatorPanelStation.ProgressChanged += (object sender, ProgressChangedEventArgs args) =>
             {
                 var lineTiming = (LineTiming)args.UserState;

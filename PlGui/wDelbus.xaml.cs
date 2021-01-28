@@ -19,15 +19,14 @@ namespace PlGui
     /// </summary>
     public partial class wDelbus : Window
     {
-        uint idDelbus;
-        public wDelbus()
+        PO.Lists Lists;
+        IBL bl;
+        public wDelbus(IBL bl,PO.Lists lists)
         {
             InitializeComponent();
-
+            Lists = lists;
+            this.bl = bl;
         }
-
-        public uint IdDelbus { get => idDelbus; private set => idDelbus = value; }
-
         private void tbBusId_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
@@ -38,22 +37,27 @@ namespace PlGui
             {
                 if (text.Text.Length > 0)
                 {
-                    IdDelbus = uint.Parse(text.Text);
+                    var id= int.Parse(text.Text);
+                    try
+                    {
+                        bl.DeleteBus((int)id);
+                        Lists.Buses.Remove(Lists.Buses.ToList().Find((Bus) => Bus.Id == id));
+                    }
+                    catch (BO.DeleteException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                     e.Handled = true;
                     this.Close();
                 }
 
             }
-            if (e.Key == Key.NumPad0 || e.Key == Key.NumPad1 || e.Key == Key.NumPad2 ||
-                    e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || e.Key == Key.NumPad5 || e.Key == Key.NumPad6 ||
-                    e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9)
-                return;
+
             char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
-            if (char.IsControl(c)) return;
-            if (char.IsDigit(c))
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
                 return;
-            e.Handled = true;
-            MessageBox.Show("Only numbers are allowed", "Delete Bus", MessageBoxButton.OK, MessageBoxImage.Error);
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
         }
     }
 }
