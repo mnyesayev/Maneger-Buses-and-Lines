@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Bus>
     <Active>true</Active>
@@ -200,4 +200,5 @@
     <LastCareMileage>22000</LastCareMileage>
     <State>ready</State>
   </Bus>
+ 
 </ArrayOfBus>

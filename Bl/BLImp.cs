@@ -604,6 +604,7 @@ namespace Bl
                     bus.setOldBus();
                 DO.Bus busDo = new DO.Bus();
                 Bl.Cloning.CopyPropertiesTo(bus, busDo);
+                busDo.Active = true;
                 dal.AddBus(busDo);
             }
             catch (DO.BusExceptionDO ex)

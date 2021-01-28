@@ -15,7 +15,7 @@
     <FirstName>Tester</FirstName>
     <UserName>2</UserName>
     <Password>2</Password>
-    <Authorization>Admin</Authorization>
+    <Authorization>User</Authorization>
     <Phone>0521234567</Phone>
     <Birthday>2021-01-19T00:00:00</Birthday>
     <Active>true</Active>
