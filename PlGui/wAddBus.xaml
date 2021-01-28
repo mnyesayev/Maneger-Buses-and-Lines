@@ -51,12 +51,14 @@
                    Text="Mileage in last care:" />
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2">
-            <RadioButton x:Name="rbNew" Content="New"  Click="rbNew_Click" />
-            <RadioButton x:Name="rbOld" Content="Old" Margin="10,0,0,0" IsChecked="True" Click="rbOld_Click"/>
+            <RadioButton x:Name="rbNew" Content="New"  PreviewMouseDown="rbNew_PreMouseDown" />
+            <RadioButton x:Name="rbOld" Content="Old" Margin="10,0,0,0" IsChecked="True" PreviewMouseDown="rbOld_PreMouseDown"/>
         </StackPanel>
         <DatePicker x:Name="dPDRA" Grid.Row="3" Grid.Column="2" CalendarClosed="dPDRA_calendrer_closed" 
-                   Margin="0,0,0,5"  FirstDayOfWeek="Sunday" DisplayDateStart="1/1/2000"
-                    DisplayDateEnd="{x:Static sys:DateTime.Now}"/>
+                   Margin="0,0,0,5" FirstDayOfWeek="Sunday" DisplayDateStart="1/1/2000"
+                   DisplayDateEnd="{x:Static sys:DateTime.Now}" PreviewKeyDown="DraPreKeyD"/>
+
+
         <Image x:Name="ImDRA" Source="images\ok.png" 
                Grid.Column="3" Grid.Row="3" 
                Visibility="Hidden" ToolTip="GOOD"/>
@@ -77,11 +79,11 @@
         <Image x:Name="ImMileageError" Source="images\error.png" 
                Grid.Column="3" Grid.Row="5" 
                Visibility="Hidden" ToolTip="{Binding}"/>
-        <DatePicker x:Name="dPDateLastCare" Grid.Row="6" Grid.Column="2" IsEnabled="False" 
+        <DatePicker x:Name="dPDateLastCare"   Grid.Row="6" Grid.Column="2" IsEnabled="False" 
                     Margin="0,0,0,5" CalendarClosed="dPDateLastCare_CalendarClosed"
                     FirstDayOfWeek="Sunday" 
                     DisplayDateStart="{Binding ElementName=dPDRA, Path=SelectedDate}" 
-                    DisplayDateEnd="{x:Static sys:DateTime.Now}"/>
+                    DisplayDateEnd="{x:Static sys:DateTime.Now}" PreviewKeyDown="dPDateLastCare_PreKeyD"/>
         <Image x:Name="ImDateLastCareOk" Source="images\ok.png" 
                Grid.Column="3" Grid.Row="6" 
                Visibility="Hidden"/>

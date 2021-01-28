@@ -22,10 +22,12 @@ namespace PlGui
     public partial class wBusInfo : Window
     {
         IBL bl;
+        
         public wBusInfo(IBL bl)
         {
             InitializeComponent();
             this.bl = bl;
+            
         }
         Thread thCare;
         Thread thFuel;
@@ -38,6 +40,11 @@ namespace PlGui
         /// </summary>
         private void bRefuel_Click(object sender, RoutedEventArgs e)
         {
+            var bus= (Bus)DataContext;
+            var temp = new BO.Bus();
+            bus.DeepCopyTo(temp); 
+            var updateBus=bl.Fuel(temp);
+            bus.Fuel = updateBus.Fuel;
            
         }
 
@@ -46,7 +53,11 @@ namespace PlGui
         /// </summary>
         private void bCare_Click(object sender, RoutedEventArgs e)
         {
-          
+            var bus = (Bus)DataContext;
+            var temp = new BO.Bus();
+            bus.DeepCopyTo(temp);
+            var updateBus = bl.Care(temp);
+            updateBus.DeepCopyTo(bus);
         }
     }
 }

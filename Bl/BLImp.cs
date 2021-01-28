@@ -22,6 +22,7 @@ namespace Bl
         public static BlImp Instance { get => instance; }// The public Instance property to use
 
         #endregion
+
         #region BusStop
         public BusStop GetStop(int code)
         {
@@ -109,7 +110,7 @@ namespace Bl
             if (st == null) return null;
             dal.UpdateBusStop(code, (BusStop) => { BusStop.Name = name; });
             st = dal.GetBusStop(code);
-            return st.CopyPropertiesToNew<BusStop,DO.BusStop>();
+            return st.CopyPropertiesToNew<BusStop, DO.BusStop>();
         }
         #endregion
 
@@ -575,15 +576,32 @@ namespace Bl
         }
 
         #region Bus
-        public Bus AddBus(int id, DateTime dra, Action<Bus> action)
+        public bool CheckIdBus(Bus bus)
         {
-            var temp = new Bus() { Id = (uint)id, DateRoadAscent = dra };
-            throw new NotImplementedException();
+            if (bus == null)
+                throw new NullReferenceException("The bus was null");
+            if (bus.DateRoadAscent.Year > 2017)
+            {
+                if (bus.Id.ToString().Length == 8)
+                    return true;
+                return false;
+            }
+            if (bus.DateRoadAscent.Year < 2018)
+            {
+                if (bus.Id.ToString().Length == 7)
+                    return true;
+                return false;
+            }
+            return false;
         }
-        public Bus AddBus(Bus bus)
+        public Bus AddBus(Bus bus, bool isNew)
         {
             try
             {
+                if (isNew)
+                    bus.setNewBus();
+                else
+                    bus.setOldBus();
                 DO.Bus busDo = new DO.Bus();
                 Bl.Cloning.CopyPropertiesTo(bus, busDo);
                 dal.AddBus(busDo);
@@ -645,15 +663,24 @@ namespace Bl
             return false;
         }
 
-        public Bus Care()
+        public Bus Care(Bus bus)
         {
-            throw new NotImplementedException();
+            bus.Care();
+            var busDO = new DO.Bus();
+            bus.CopyPropertiesTo(busDO);
+            dal.UpdateBus(busDO);
+            return bus;
         }
 
-        public Bus Fuel()
+        public Bus Fuel(Bus bus)
         {
-            throw new NotImplementedException();
+            bus.Fuel();
+            var busDO = new DO.Bus();
+            bus.CopyPropertiesTo(busDO);
+            dal.UpdateBus(busDO);
+            return bus;
         }
+
         #endregion
 
         #region Driver
@@ -848,6 +875,8 @@ namespace Bl
         {
             StationPanel.Instance.CodeStop = station;
             StationPanel.Instance.TripObserver += updateBus;
-        }      
+        }
+
+
     }
 }

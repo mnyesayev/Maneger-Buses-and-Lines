@@ -862,7 +862,7 @@
 
                         <Button x:Name="AddBus" Grid.Column="1" Grid.Row="7"
                                  Style="{StaticResource MaterialDesignIconForegroundButton}"
-                                 ToolTip="Add Bus" Click="AddBus_Click" IsEnabled="False">
+                                 ToolTip="Add Bus" Click="AddBus_Click" >
                             <materialDesign:PackIcon Kind="Plus"/>
                         </Button>
 

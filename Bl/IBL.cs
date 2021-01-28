@@ -17,10 +17,10 @@ namespace BlApi
         #region Bus
         IEnumerable<Bus> GetBuses();
         void DeleteBus(int id);
-        Bus AddBus(Bus bus);
-        Bus AddBus(int id, DateTime dra,Action<Bus> action);
-        Bus Care();
-        Bus Fuel();
+        Bus AddBus(Bus bus,bool isNew=false);
+        bool CheckIdBus(Bus bus);
+        Bus Care(Bus bus);
+        Bus Fuel(Bus bus);
         /// <summary>
         /// Shows whether a bus can travel with the fuel it has
         /// </summary>

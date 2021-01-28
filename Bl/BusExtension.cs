@@ -6,40 +6,41 @@ using System.Threading.Tasks;
 using BO;
 namespace Bl
 {
-    static class BusExtension
+    public static class BusExtension
     {
+        private static readonly Random r=new Random();
         internal static void setNewBus(this Bus bus)
         {
             if (bus == null)
                 throw new NullReferenceException("The bus was null");
             bus.LastCare = bus.DateRoadAscent;
             bus.Fuel = 1200;
-            bus.LastCareMileage = bus.Mileage;
+            bus.LastCareMileage = bus.Mileage;            
             bus.State = States.ready;
         }
-        internal static bool checkId(this Bus bus)
+        internal static void setOldBus(this Bus bus)
         {
             if (bus == null)
                 throw new NullReferenceException("The bus was null");
-            if (bus.DateRoadAscent.Year > 2017)
-            {
-                if (bus.Id.ToString().Length == 8)
-                    return true;
-                return false;
-            }
-            if (bus.DateRoadAscent.Year < 2018)
-            {
-                if (bus.Id.ToString().Length == 7)
-                    return true;
-                return false;
-            }
-            return false;
+            bus.Fuel = r.Next(1, 1201);
+            if (DateTime.Compare(bus.LastCare, DateTime.Now.AddYears(-1)) <= 0
+                || bus.Mileage - bus.LastCareMileage >= 20000)
+                bus.State = States.mustCare;           
         }
-        internal static void setState(this Bus bus)
+        internal static void Care(this Bus bus)
         {
             if (bus == null)
                 throw new NullReferenceException("The bus was null");
-
+            bus.LastCareMileage = bus.Mileage;
+            bus.LastCare = DateTime.Today;
+            bus.State = States.ready;
+            bus.Fuel = 1200;
+        }
+        internal static void Fuel(this Bus bus)
+        {
+            if (bus == null)
+                throw new NullReferenceException("The bus was null");
+            bus.Fuel=1200;
         }
     }
 }

@@ -639,21 +639,8 @@ namespace PlGui
 
         private void AddBus_Click(object sender, RoutedEventArgs e)
         {
-            wAddBus addBus = new wAddBus();
-            Bus newBus = null;
-            addBus.ShowDialog();
-            //try
-            //{
-            //    newBus = bl.AddBus(addBus.NewBus);
-            //}
-            //catch (AddException ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Add Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    return;
-            //}
-            //var temp = new PO.Bus();
-            //Cloning.DeepCopyTo(newBus, temp);
-            //Lists.Buses.Add(temp);
+            wAddBus addBus = new wAddBus(bl,Lists);
+            addBus.ShowDialog();           
         }
         #endregion
 

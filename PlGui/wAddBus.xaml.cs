@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BlApi;
 namespace PlGui
 {
     /// <summary>
@@ -19,19 +19,15 @@ namespace PlGui
     /// </summary>
     public partial class wAddBus : Window
     {
-        // DateTime tmpDra;
-        uint id;
-        DateTime Dra;//date road ascent
-        uint mileage;
-        uint mileageLastCare;
-        DateTime dateLastCare;
-        public wAddBus()
+        IBL bl;
+        PO.Lists Lists;
+        public wAddBus(IBL bl,PO.Lists lists)
         {
             InitializeComponent();
+            this.bl = bl;
+            Lists = lists;
         }
-        private PO.Bus newBus = null;
-        public PO.Bus NewBus { get => newBus; private set => newBus = value; }
-
+        private BO.Bus newBus = new BO.Bus();
         private void bDoneAddBus_Click(object sender, RoutedEventArgs e)
         {
             if (rbOld.IsChecked == true && (ImDRA.Visibility != Visibility.Visible
@@ -49,14 +45,27 @@ namespace PlGui
             }
             else
             {
-                newBus.DateRoadAscent = Dra;
-                newBus.Id = id;
-                if (rbOld.IsChecked == true)
+                try
                 {
-                    newBus.Mileage = mileage;
-                    newBus.LastCareMileage = mileageLastCare;
-                    newBus.LastCare = dateLastCare;
+                    BO.Bus bus;
+                    if (rbOld.IsChecked == true)
+                    {
+                        bus = bl.AddBus(newBus);
+                    }
+                    else
+                    {
+                        bus = bl.AddBus(newBus,true);
+                    }
+                    var temp = new PO.Bus();
+                    bus.DeepCopyTo(temp);
+                    Lists.Buses.Add(temp);
                 }
+                catch (BO.AddException ex)
+                {
+                    MessageBox.Show(ex.Message, "Add Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                
                 this.Close();
             }
         }
@@ -65,8 +74,9 @@ namespace PlGui
         {
             if (sender == null) return;
             if (e == null) return;
-            if (!DateTime.TryParse(dPDRA.Text, out Dra))
+            if (!DateTime.TryParse(dPDRA.Text, out DateTime DRA))
                 return;
+            newBus.DateRoadAscent = DRA;
             tBIdBus.IsEnabled = true;
             ImDRA.Visibility = Visibility.Visible;
             tBidBus_TextChanged(sender, e);
@@ -85,38 +95,35 @@ namespace PlGui
             if (tBIdBus.Text.Length == 0 || tBIdBus.IsEnabled == false) return;
             if (sender == null) return;
             if (e == null) return;
-            if (Dra.Year >= 2018 && tBIdBus.Text.Length == 8 && uint.TryParse(tBIdBus.Text, out id)
-                && id >= 10000000 && id <= 99999999)
-            {
-                ImIdBusError.Visibility = Visibility.Hidden;
-                ImIdBusOk.Visibility = Visibility.Visible;
-                tBMileage.IsEnabled = true;
+            if (uint.TryParse(tBIdBus.Text, out uint id))
+            {   
+                newBus.Id = id;
+                if (bl.CheckIdBus(newBus))
+                {
+                    ImIdBusError.Visibility = Visibility.Hidden;
+                    ImIdBusOk.Visibility = Visibility.Visible;
+                    tBMileage.IsEnabled = true;
+                }
+                else
+                {
+                    ImIdBusError.Visibility = Visibility.Visible;
+                    ImIdBusError.ToolTip = "Date of ascent to the road does not match the license plate";
+                    ImIdBusOk.Visibility = Visibility.Hidden;
+                    tBMileage.IsEnabled = false;
+                }
             }
-            else if (Dra.Year < 2018 && tBIdBus.Text.Length == 7 && uint.TryParse(tBIdBus.Text, out id)
-                && id >= 1000000 && id <= 9999999)
-            {
-                ImIdBusError.Visibility = Visibility.Hidden;
-                ImIdBusOk.Visibility = Visibility.Visible;
-                tBMileage.IsEnabled = true;
-            }
-            else
-            {
-                ImIdBusError.Visibility = Visibility.Visible;
-                ImIdBusError.ToolTip = "Date of ascent to the road does not match the license plate";
-                if (!uint.TryParse(tBIdBus.Text, out id))
-                    ImIdBusError.ToolTip = "Try entering numbers only";
-                ImIdBusOk.Visibility = Visibility.Hidden;
-                tBMileage.IsEnabled = false;
-            }
+           
         }
 
         private void tBMileage_TextChanged(object sender, RoutedEventArgs e)
         {
-            if (tBMileage.Text.Length == 0 || tBMileage.IsEnabled == false) return;
+            if (tBMileage.IsEnabled == false) return;
+            if (ImMileageOk.Visibility != Visibility.Visible && tBMileage.Text.Length == 0) return;
             if (sender == null) return;
             if (e == null) return;
-            if (uint.TryParse(tBMileage.Text, out mileage))
+            if (uint.TryParse(tBMileage.Text, out uint mileage))
             {
+                newBus.Mileage = mileage;
                 ImMileageError.Visibility = Visibility.Hidden;
                 ImMileageOk.Visibility = Visibility.Visible;
                 dPDateLastCare.IsEnabled = true;
@@ -126,7 +133,6 @@ namespace PlGui
             {
                 ImMileageOk.Visibility = Visibility.Hidden;
                 ImMileageError.Visibility = Visibility.Visible;
-                ImMileageError.ToolTip = "Try entering numbers only";
                 dPDateLastCare.IsEnabled = false;
             }
         }
@@ -138,10 +144,10 @@ namespace PlGui
             if (e == null) return;
             if (dPDateLastCare.SelectedDate >= dPDRA.SelectedDate && dPDateLastCare.SelectedDate <= DateTime.Now)
             {
+                newBus.LastCare = DateTime.Parse(dPDateLastCare.Text);
                 ImDateLastCareError.Visibility = Visibility.Hidden;
                 ImDateLastCareOk.Visibility = Visibility.Visible;
                 tBMileageLastCare.IsEnabled = true;
-                dateLastCare = DateTime.Parse(dPDateLastCare.Text);
             }
             else
             {
@@ -157,69 +163,25 @@ namespace PlGui
 
         private void tBMileageLastCare_TextChanged(object sender, EventArgs e)
         {
-            if (tBMileageLastCare.Text.Length == 0 || tBMileageLastCare.IsEnabled == false) return;
+            if ( tBMileageLastCare.IsEnabled == false) return;
+            if (ImMileageLastCareOk.Visibility != Visibility.Visible && tBMileageLastCare.Text.Length == 0)
+                return;
             if (sender == null) return;
             if (e == null) return;
-            if (uint.TryParse(tBMileageLastCare.Text, out mileageLastCare) && mileage >= mileageLastCare)
+            if (uint.TryParse(tBMileageLastCare.Text, out uint mileageLastCare) && newBus.Mileage >= mileageLastCare)
             {
+                newBus.LastCareMileage = mileageLastCare;
                 ImMileageLastCareError.Visibility = Visibility.Hidden;
                 ImMileageLastCareOk.Visibility = Visibility.Visible;
             }
             else
             {
                 ImMileageLastCareError.Visibility = Visibility.Visible;
-                if (!uint.TryParse(tBMileageLastCare.Text, out mileageLastCare))
-                    ImMileageLastCareError.ToolTip = "Try entering numbers only";
-                if (mileage <= mileageLastCare)
+                if (newBus.Mileage <= mileageLastCare)
                     ImMileageLastCareError.ToolTip = "Really? Mileage in the last treatment is greater than the mileage now?";
 
                 ImMileageLastCareOk.Visibility = Visibility.Hidden;
             }
-        }
-
-        private void rbNew_Click(object sender, RoutedEventArgs e)
-        {
-            tBIdBus.Text = "";
-            tBMileage.Text = "";
-            tBMileageLastCare.Text = "";
-            dPDateLastCare.Text = "";
-            dPDRA.Text = "";
-            tbMileage.Visibility = Visibility.Hidden;
-            tBMileage.Visibility = Visibility.Hidden;
-            tbMileageLastCare.Visibility = Visibility.Hidden;
-            tBMileageLastCare.Visibility = Visibility.Hidden;
-            tbDateLastCare.Visibility = Visibility.Hidden;
-            dPDateLastCare.Visibility = Visibility.Hidden;
-            ImDateLastCareError.Visibility = Visibility.Hidden;
-            ImDateLastCareOk.Visibility = Visibility.Hidden;
-            ImMileageLastCareError.Visibility = Visibility.Hidden;
-            ImMileageLastCareOk.Visibility = Visibility.Hidden;
-            ImMileageOk.Visibility = Visibility.Hidden;
-            ImMileageError.Visibility = Visibility.Hidden;
-        }
-
-        private void rbOld_Click(object sender, RoutedEventArgs e)
-        {
-            tBIdBus.Text = "";
-            tBMileage.Text = "";
-            tBMileageLastCare.Text = "";
-            dPDateLastCare.Text = "";
-            dPDRA.Text = "";
-            tbMileage.Visibility = Visibility.Visible;
-            tBMileage.Visibility = Visibility.Visible;
-            tbMileageLastCare.Visibility = Visibility.Visible;
-            tBMileageLastCare.Visibility = Visibility.Visible;
-            tbDateLastCare.Visibility = Visibility.Visible;
-            dPDateLastCare.Visibility = Visibility.Visible;
-            ImDRA.Visibility = Visibility.Hidden;
-            ImIdBusError.Visibility = Visibility.Hidden;
-            ImIdBusOk.Visibility = Visibility.Hidden;
-            ImDateLastCareError.Visibility = Visibility.Hidden;
-            ImDateLastCareOk.Visibility = Visibility.Hidden;
-            ImMileageLastCareError.Visibility = Visibility.Hidden;
-            ImMileageLastCareOk.Visibility = Visibility.Hidden;
-            ImMileageOk.Visibility = Visibility.Hidden;
-            ImMileageError.Visibility = Visibility.Hidden;
         }
 
         private void tBIdBus_preKeyD(object sender, KeyEventArgs e)
@@ -247,6 +209,76 @@ namespace PlGui
                 return;
             if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
                 e.Handled = true;
+        }
+
+        private void DraPreKeyD(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void dPDateLastCare_PreKeyD(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void rbNew_PreMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (rbNew.IsChecked == true) return;
+            if (newBus != default) newBus = new BO.Bus();
+            tBIdBus.Text = "";
+            tBIdBus.IsEnabled = false;
+            tBMileage.Text = "";
+            tBMileage.IsEnabled = false;
+            tBMileageLastCare.Text = "";
+            tBMileageLastCare.IsEnabled = false;
+            dPDateLastCare.Text = "";
+            dPDateLastCare.IsEnabled = false;
+            dPDRA.Text = "";
+            tbMileage.Visibility = Visibility.Hidden;
+            tBMileage.Visibility = Visibility.Hidden;
+            tbMileageLastCare.Visibility = Visibility.Hidden;
+            tBMileageLastCare.Visibility = Visibility.Hidden;
+            tbDateLastCare.Visibility = Visibility.Hidden;
+            dPDateLastCare.Visibility = Visibility.Hidden;
+            ImDRA.Visibility = Visibility.Hidden;
+            ImIdBusError.Visibility = Visibility.Hidden;
+            ImIdBusOk.Visibility = Visibility.Hidden;
+            ImDateLastCareError.Visibility = Visibility.Hidden;
+            ImDateLastCareOk.Visibility = Visibility.Hidden;
+            ImMileageLastCareError.Visibility = Visibility.Hidden;
+            ImMileageLastCareOk.Visibility = Visibility.Hidden;
+            ImMileageOk.Visibility = Visibility.Hidden;
+            ImMileageError.Visibility = Visibility.Hidden;
+        }
+
+        private void rbOld_PreMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (rbOld.IsChecked == true) return;
+            if (newBus != default) newBus = new BO.Bus();
+            tBIdBus.Text = "";
+            tBIdBus.IsEnabled = false;
+            tBMileage.Text = "";
+            tBMileage.IsEnabled = false;
+            tBMileageLastCare.Text = "";
+            tBMileageLastCare.IsEnabled = false;
+            dPDateLastCare.Text = "";
+            dPDateLastCare.IsEnabled = false;
+            dPDRA.Text = "";
+            tbMileage.Visibility = Visibility.Visible;
+            tBMileage.Visibility = Visibility.Visible;
+            tbMileageLastCare.Visibility = Visibility.Visible;
+            tBMileageLastCare.Visibility = Visibility.Visible;
+            tbDateLastCare.Visibility = Visibility.Visible;
+            dPDateLastCare.Visibility = Visibility.Visible;
+            ImDRA.Visibility = Visibility.Hidden;
+            ImIdBusError.Visibility = Visibility.Hidden;
+            ImIdBusOk.Visibility = Visibility.Hidden;
+            ImDateLastCareError.Visibility = Visibility.Hidden;
+            ImDateLastCareOk.Visibility = Visibility.Hidden;
+            ImMileageLastCareError.Visibility = Visibility.Hidden;
+            ImMileageLastCareOk.Visibility = Visibility.Hidden;
+            ImMileageOk.Visibility = Visibility.Hidden;
+            ImMileageError.Visibility = Visibility.Hidden;
         }
     }
 }
