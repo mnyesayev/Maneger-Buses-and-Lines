@@ -618,6 +618,7 @@ namespace Bl
             return from Bus in dal.GetBuses()
                    let newBus = new Bus
                    {
+                       Active = true,
                        DateRoadAscent = Bus.DateRoadAscent,
                        Fuel = Bus.Fuel,
                        Id = Bus.Id,
