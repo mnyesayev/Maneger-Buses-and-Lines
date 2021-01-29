@@ -200,5 +200,14 @@
     <LastCareMileage>22000</LastCareMileage>
     <State>ready</State>
   </Bus>
- 
+  <Bus>
+    <Active>False</Active>
+    <Id>12355656</Id>
+    <DateRoadAscent>2021-01-10T00:00:00</DateRoadAscent>
+    <Mileage>24</Mileage>
+    <Fuel>1200</Fuel>
+    <LastCare>2021-01-10T00:00:00</LastCare>
+    <LastCareMileage>24</LastCareMileage>
+    <State>ready</State>
+  </Bus>
 </ArrayOfBus>

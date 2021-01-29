@@ -60,7 +60,7 @@
     <NumLine>200</NumLine>
     <CodeAgency>קווים</CodeAgency>
     <Area>General</Area>
-    <CodeFirstStop>60320</CodeFirstStop>
+    <CodeFirstStop>60817</CodeFirstStop>
     <CodeLastStop>22273</CodeLastStop>
   </Line>
   <Line>
@@ -70,7 +70,7 @@
     <CodeAgency>קווים</CodeAgency>
     <Area>Center</Area>
     <CodeFirstStop>21730</CodeFirstStop>
-    <CodeLastStop>60314</CodeLastStop>
+    <CodeLastStop>60817</CodeLastStop>
   </Line>
   <Line>
     <Active>true</Active>
@@ -78,7 +78,7 @@
     <NumLine>300</NumLine>
     <CodeAgency>קווים</CodeAgency>
     <Area>General</Area>
-    <CodeFirstStop>60320</CodeFirstStop>
+    <CodeFirstStop>60817</CodeFirstStop>
     <CodeLastStop>9807</CodeLastStop>
   </Line>
   <Line>
@@ -89,5 +89,15 @@
     <Area>General</Area>
     <CodeFirstStop>9810</CodeFirstStop>
     <CodeLastStop>60314</CodeLastStop>
+  </Line>
+  <Line>
+    <Active>true</Active>
+    <IdLine>11</IdLine>
+    <NumLine>320</NumLine>
+    <CodeAgency>כללי</CodeAgency>
+    <Area>General</Area>
+    <CodeFirstStop>65384</CodeFirstStop>
+    <CodeLastStop>9807</CodeLastStop>
+    <MoreInfo />
   </Line>
 </ArrayOfLine>

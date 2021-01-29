@@ -48,7 +48,7 @@
                            FontWeight="Bold" Margin="0,15,0,5"/>
                 <TextBlock x:Name="tbcode1" FontSize="16"
                        Foreground="Blue" HorizontalAlignment="Center"
-                       VerticalAlignment="Center" Margin="0,10,0,0" LayoutUpdated="tbcode1_LayoutUpdated" />
+                       VerticalAlignment="Center" Margin="0,10,0,0" />
                 <TextBlock x:Name="tbName1" FontSize="16"
                        Foreground="Blue" HorizontalAlignment="Center"
                        Text="{Binding}"/>
@@ -66,8 +66,8 @@
                            FontWeight="Bold" Margin="0,15,0,5"/>
                 <TextBlock x:Name="tbcode2" FontSize="16"
                        Foreground="Blue" HorizontalAlignment="Center"
-                       VerticalAlignment="Center" Margin="0,10,0,0"
-                           LayoutUpdated="tbcode2_LayoutUpdated"/>
+                       VerticalAlignment="Center" Margin="0,10,0,0"/>
+                    
                 <TextBlock x:Name="tbName2" FontSize="16"
                        Foreground="Blue" HorizontalAlignment="Center"
                      Text="{Binding}" />

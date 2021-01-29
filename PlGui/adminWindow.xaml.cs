@@ -91,5 +91,10 @@ namespace PlGui
         {
             tbEditLastName.IsEnabled = true;
         }
+
+        private void tpEditBirthday_PreKeyD(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

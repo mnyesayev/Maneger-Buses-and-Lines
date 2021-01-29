@@ -63,7 +63,7 @@ namespace DS
                     FirstName = "Admin",
                     UserName = "1",
                     Password = "1",
-                    Phone = "052-1234567"
+                    Phone = "0521234567"
                 },
 
                new User()
@@ -74,7 +74,7 @@ namespace DS
                     FirstName = "Admin",
                     UserName = "2",
                     Password = "2",
-                    Phone = "052-3456789"
+                    Phone = "0523456789"
                 }
             };
             initUsers();

@@ -282,13 +282,14 @@ namespace PlGui
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
+            if (Su2tbpassword2.Password != Su2tbpassword.Password) return;
             User user = new User()
             {
                 Authorization = Authorizations.User,
                 FirstName = SutbFirstName.Text,
                 LastName = SutbLastName.Text,
                 UserName = Su2tbUserName.Text,
-                Password = Sutbpassword.Password,
+                Password = Su2tbpassword.Password,
                 Active = true,
                 Birthday = FutureDatePicker.DisplayDate,
                 Phone = SutbPhoneNumber.Text
@@ -357,9 +358,12 @@ namespace PlGui
                             Application.Current.MainWindow.WindowState = WindowState.Maximized;
                             accountAdmin.ToolTip = MyUser.FirstName;
                             userGrid.Visibility = Visibility.Visible;
+                            MessageBox.Show("We will resolve any challenge before us \n" +
+                                            "and plan to welcome all of you back soon.", "User Technical Difficulties"
+                                            ,MessageBoxButton.OK,MessageBoxImage.Exclamation);
                         });
-
                     }).Start();
+
                 }
                 if (MyUser.Authorization == Authorizations.Admin)
                 {
@@ -483,10 +487,11 @@ namespace PlGui
             PO.StopLine sl = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
             if (sl.NextStop == 0) return;
             
-                //this.Dispatcher.Invoke
                 wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
                 wEdit.tbcode1.Text = sl.CodeStop.ToString();
                 wEdit.tbcode2.Text = sl.NextStop.ToString();
+                wEdit.tbName1.Text = sl.Name;
+                wEdit.tbName2.Text = bl.GetNameStop(sl.NextStop);
                 wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
                 wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
                 wEdit.ShowDialog();
@@ -925,6 +930,11 @@ namespace PlGui
                 }
             }).Start();
 
+        }
+
+        private void FutureDatePicker_PreKeyD(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

@@ -65,6 +65,8 @@ namespace PlGui
             wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
             wEdit.tbcode1.Text = sl.CodeStop.ToString();
             wEdit.tbcode2.Text = sl.NextStop.ToString();
+            wEdit.tbName1.Text = sl.Name;
+            wEdit.tbName2.Text = bl.GetNameStop(sl.NextStop);
             wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
             wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
             wEdit.ShowDialog();

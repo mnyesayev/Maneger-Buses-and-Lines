@@ -48,31 +48,31 @@ namespace PlGui
             this.Close();
         }
 
-        private void tbcode1_LayoutUpdated(object sender, EventArgs e)
-        {
-            try
-            {
-                new Thread(() => Dispatcher.Invoke(() =>
-                 tbName1.Text = bl.GetNameStop(int.Parse(tbcode1.Text)))).Start();
-            }
-            catch
-            {
-                tbName1.Text = "Something went wrong here";
-            }
+        //private void tbcode1_LayoutUpdated(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        new Thread(() => Dispatcher.Invoke(() =>
+        //         tbName1.Text = bl.GetNameStop(int.Parse(tbcode1.Text)))).Start();
+        //    }
+        //    catch
+        //    {
+        //        tbName1.Text = "Something went wrong here";
+        //    }
 
-        }
+        //}
 
-        private void tbcode2_LayoutUpdated(object sender, EventArgs e)
-        {
-            try
-            {
-                new Thread(() => Dispatcher.Invoke(() =>
-                 tbName2.Text = bl.GetNameStop(int.Parse(tbcode2.Text)))).Start();
-            }
-            catch
-            {
-                tbName2.Text = "Something went wrong here";
-            }
-        }
+        //private void tbcode2_LayoutUpdated(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        new Thread(() => Dispatcher.Invoke(() =>
+        //         tbName2.Text = bl.GetNameStop(int.Parse(tbcode2.Text)))).Start();
+        //    }
+        //    catch
+        //    {
+        //        tbName2.Text = "Something went wrong here";
+        //    }
+        //}
     }
 }

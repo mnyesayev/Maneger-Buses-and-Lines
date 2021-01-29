@@ -15,8 +15,13 @@ namespace Bl
                 throw new NullReferenceException("The bus was null");
             bus.LastCare = bus.DateRoadAscent;
             bus.Fuel = 1200;
-            bus.LastCareMileage = bus.Mileage;            
-            bus.State = States.ready;
+            bus.Mileage = (uint)r.Next(5, 35);
+            bus.LastCareMileage = bus.Mileage;
+            if (DateTime.Compare(bus.LastCare, DateTime.Now.AddYears(-1)) <= 0
+                 || bus.Mileage - bus.LastCareMileage >= 20000)
+                bus.State = States.mustCare;
+            else
+                bus.State = States.ready;
         }
         internal static void setOldBus(this Bus bus)
         {
@@ -25,7 +30,9 @@ namespace Bl
             bus.Fuel = r.Next(1, 1201);
             if (DateTime.Compare(bus.LastCare, DateTime.Now.AddYears(-1)) <= 0
                 || bus.Mileage - bus.LastCareMileage >= 20000)
-                bus.State = States.mustCare;           
+                bus.State = States.mustCare;
+            else
+                bus.State = States.ready;
         }
         internal static void Care(this Bus bus)
         {

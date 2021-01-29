@@ -454,7 +454,6 @@ namespace Dal
             line.IdLine = ++runNumber;
             runNumbersElem.Element("LineCounter").Value = runNumber.ToString();
             XMLTools.SaveListToXMLElement(runNumbersElem, runNumbersPath);
-
             ListLines.Add(line);
             XMLTools.SaveListToXMLSerializer(ListLines, linesPath);
             return line.IdLine;

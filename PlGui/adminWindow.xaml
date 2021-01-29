@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Icon="images\info.png" Title="User"
         mc:Ignorable="d" WindowStyle="None" BorderThickness="0"
         BorderBrush="Transparent" AllowsTransparency="True"
@@ -88,8 +89,8 @@
                 <TextBox x:Name="tbEditPhone" Grid.Row="3" Grid.Column="3"
                          Grid.ColumnSpan="2" VerticalAlignment="Center" IsEnabled="False"/>
                 <DatePicker x:Name="tpEditBirthday" Grid.Row="4" Grid.Column="3"
-                         Grid.ColumnSpan="2" VerticalAlignment="Center"  IsEnabled="False"
-                                          />
+                         Grid.ColumnSpan="2" VerticalAlignment="Center"   IsEnabled="False"
+                         DisplayDateStart="1/1/1910" DisplayDateEnd="{x:Static sys:DateTime.Now}" PreviewKeyDown="tpEditBirthday_PreKeyD"/>
                 <TextBox x:Name="tbEditFirstName" Grid.Row="5" Grid.Column="3"
                          Grid.ColumnSpan="2" VerticalAlignment="Center"  IsEnabled="False"/>
                 <TextBox x:Name="tbEditLastName" Grid.Row="6" Grid.Column="3"

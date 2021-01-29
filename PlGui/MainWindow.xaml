@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"        
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -229,7 +230,8 @@
             <DatePicker x:Name="FutureDatePicker" 
                     materialDesign:HintAssist.Hint="Brithday Date"
                         Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="5"
-                        Background="#FFF6F6F6">
+                        Background="#FFF6F6F6"
+                        DisplayDateStart="1/1/1910" DisplayDateEnd="{x:Static sys:DateTime.Now}" PreviewKeyDown="FutureDatePicker_PreKeyD">
             </DatePicker>
 
             <Button x:Name="SignUpBack" Content="Go back" HorizontalAlignment="Center"
@@ -294,7 +296,7 @@
                    Grid.Row="4" Grid.RowSpan="2" FontSize="20" Grid.ColumnSpan="2" 
                        HorizontalAlignment="Center"
                    VerticalAlignment="Center"   Foreground="White"/>
-            <PasswordBox x:Name="Sutbpassword" Grid.Row="4" Grid.Column="3"
+            <PasswordBox x:Name="Su2tbpassword" Grid.Row="4" Grid.Column="3"
                  Grid.ColumnSpan="4" BorderThickness="2" Grid.RowSpan="2"
                  BorderBrush="{x:Null}" Margin="0,20,0,24"
                  Background="#FFF6F6F6"  materialDesign:HintAssist.Hint="Choose a password"

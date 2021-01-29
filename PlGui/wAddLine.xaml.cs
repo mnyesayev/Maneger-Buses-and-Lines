@@ -74,6 +74,8 @@ namespace PlGui
                 wEditSuccessiveStations wEditSuccessive = new wEditSuccessiveStations(bl);
                 wEditSuccessive.tbcode1.Text = FirstStopCode.Text;
                 wEditSuccessive.tbcode2.Text = LastStopCode.Text;
+                wEditSuccessive.tbName1.Text = bl.GetNameStop(int.Parse(FirstStopCode.Text));
+                wEditSuccessive.tbName2.Text = bl.GetNameStop(int.Parse(LastStopCode.Text));
                 wEditSuccessive.ShowDialog();
                 if (wEditSuccessive.IsSave)
                 {

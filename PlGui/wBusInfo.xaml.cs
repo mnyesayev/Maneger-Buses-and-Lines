@@ -45,7 +45,6 @@ namespace PlGui
             bus.DeepCopyTo(temp); 
             var updateBus=bl.Fuel(temp);
             bus.Fuel = updateBus.Fuel;
-           
         }
 
         /// <summary>

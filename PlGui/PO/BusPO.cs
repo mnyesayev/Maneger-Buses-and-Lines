@@ -21,7 +21,7 @@ namespace PO
         uint lastCareMileage;
         DateTime lastCare;
         States state;
-
+        public bool Active { get; set; }
         /// <summary>
         /// Represents the bus license number
         ///  by years as provided by law
