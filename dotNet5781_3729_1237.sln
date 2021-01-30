@@ -28,6 +28,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{A3B5077C-5C8B-4D13-9B24-53FBB48DE52B}"
 	ProjectSection(SolutionItems) = preProject
 		bin\config.xml = bin\config.xml
+		bin\Specification document.docx = bin\Specification document.docx
 		bin\stops.txt = bin\stops.txt
 	EndProjectSection
 EndProject

@@ -181,13 +181,13 @@
     <State>ready</State>
   </Bus>
   <Bus>
-    <Active>true</Active>
+    <Active>True</Active>
     <Id>28853673</Id>
-    <DateRoadAscent>2020-02-23T00:00:00</DateRoadAscent>
+    <DateRoadAscent>23/02/2020 00:00:00</DateRoadAscent>
     <Mileage>26040</Mileage>
-    <Fuel>396</Fuel>
-    <LastCare>2020-04-11T00:00:00</LastCare>
-    <LastCareMileage>22000</LastCareMileage>
+    <Fuel>1200</Fuel>
+    <LastCare>30/01/2021 00:00:00</LastCare>
+    <LastCareMileage>26040</LastCareMileage>
     <State>ready</State>
   </Bus>
   <Bus>
@@ -208,6 +208,16 @@
     <Fuel>1200</Fuel>
     <LastCare>2021-01-10T00:00:00</LastCare>
     <LastCareMileage>24</LastCareMileage>
+    <State>ready</State>
+  </Bus>
+  <Bus>
+    <Active>True</Active>
+    <Id>12334555</Id>
+    <DateRoadAscent>20/01/2021 00:00:00</DateRoadAscent>
+    <Mileage>33</Mileage>
+    <Fuel>1200</Fuel>
+    <LastCare>30/01/2021 00:00:00</LastCare>
+    <LastCareMileage>33</LastCareMileage>
     <State>ready</State>
   </Bus>
 </ArrayOfBus>

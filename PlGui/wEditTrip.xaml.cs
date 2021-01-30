@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,6 @@ namespace PlGui
             bl = bL;
             Lists = lists;
         }
-
         private void bAddNewfrequency_Click(object sender, RoutedEventArgs e)
         {
             var line = this.DataContext as PO.Line;
@@ -146,5 +146,6 @@ namespace PlGui
                 TBfrequency.Text = tripOnLine.Frequency.ToString();
             }
         }
+  
     }
 }

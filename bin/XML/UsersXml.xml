@@ -6,7 +6,7 @@
     <UserName>1</UserName>
     <Password>1</Password>
     <Authorization>Admin</Authorization>
-    <Phone>052-1234567</Phone>
+    <Phone>0521234567</Phone>
     <Birthday>2021-01-06T00:00:00</Birthday>
     <Active>true</Active>
   </User>
@@ -16,7 +16,7 @@
     <UserName>2</UserName>
     <Password>2</Password>
     <Authorization>User</Authorization>
-    <Phone>0521234567</Phone>
+    <Phone>0531234567</Phone>
     <Birthday>2021-01-19T00:00:00</Birthday>
     <Active>true</Active>
   </User>

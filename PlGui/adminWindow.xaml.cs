@@ -65,7 +65,12 @@ namespace PlGui
                 user1 = bl.UpdateUser(updaedUser);
                 GetUpdated = true;
             }
-            catch(Exception)
+            catch(BO.IdException ex)
+            {
+                MessageBox.Show(ex.Message, "Update ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+            catch (Exception)
             {
                 MessageBox.Show("Something went wrong here\nTry updating only one statistic", "Update ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }

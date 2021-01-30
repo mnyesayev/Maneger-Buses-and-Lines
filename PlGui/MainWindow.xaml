@@ -337,9 +337,12 @@
             <TextBlock x:Name="tbworng" Text="Such a user already exists"
                        Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="5"
                        Foreground="#DD12E1FF" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" Visibility="Hidden"
+                       />
+            <TextBlock x:Name="tbworngPassword" Text="The passwords do not match!"
+                       Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="5"
+                       Foreground="#DD12E1FF" VerticalAlignment="Center"
                        HorizontalAlignment="Center" Visibility="Hidden"/>
-
-
         </Grid>
         <!--#endregion -->
 

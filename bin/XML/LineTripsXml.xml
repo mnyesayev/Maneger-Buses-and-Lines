@@ -32,4 +32,12 @@
     <StartTime>PT6H</StartTime>
     <EndTime>PT20H</EndTime>
   </LineTrip>
+  <LineTrip>
+    <Active>true</Active>
+    <Id>5</Id>
+    <IdLine>6</IdLine>
+    <Frequency>12</Frequency>
+    <StartTime>PT6H</StartTime>
+    <EndTime>PT20H</EndTime>
+  </LineTrip>
 </ArrayOfLineTrip>

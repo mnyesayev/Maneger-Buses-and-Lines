@@ -152,6 +152,12 @@ namespace Bl
         {
             DO.User nUser = new DO.User();
             user.CopyPropertiesTo(nUser);
+            nUser.Active = true;
+            foreach (var item in dal.GetUsers())
+            {
+                if (item.Phone == user.Phone)
+                    throw new IdException("User", user.UserName, $"The phone {user.Phone} already exists in the system");
+            }       
             try
             {
                 dal.UpdateUser(nUser);
@@ -618,7 +624,6 @@ namespace Bl
             return from Bus in dal.GetBuses()
                    let newBus = new Bus
                    {
-                       Active = true,
                        DateRoadAscent = Bus.DateRoadAscent,
                        Fuel = Bus.Fuel,
                        Id = Bus.Id,
@@ -670,6 +675,7 @@ namespace Bl
             bus.Care();
             var busDO = new DO.Bus();
             bus.CopyPropertiesTo(busDO);
+            busDO.Active = true;
             dal.UpdateBus(busDO);
             return bus;
         }
@@ -679,6 +685,7 @@ namespace Bl
             bus.Fuel();
             var busDO = new DO.Bus();
             bus.CopyPropertiesTo(busDO);
+            busDO.Active = true;
             dal.UpdateBus(busDO);
             return bus;
         }

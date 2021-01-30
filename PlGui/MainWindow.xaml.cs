@@ -218,6 +218,9 @@ namespace PlGui
                 {
                     loudGrid.Visibility = Visibility.Hidden;
                     SignUpGrid.Visibility = Visibility.Visible;
+                    Su2tbUserName.Text = "";
+                    Su2tbpassword.Password = "";
+                    Su2tbpassword2.Password = "";                    
                 });
 
             }).Start();
@@ -236,6 +239,10 @@ namespace PlGui
                 {
                     loudGrid.Visibility = Visibility.Hidden;
                     mainGrid.Visibility = Visibility.Visible;
+                    SutbFirstName.Text = "";
+                    SutbLastName.Text = "";
+                    FutureDatePicker.Text = "";
+                    SutbPhoneNumber.Text = "";
                 });
 
             }).Start();
@@ -282,7 +289,18 @@ namespace PlGui
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            if (Su2tbpassword2.Password != Su2tbpassword.Password) return;
+            if (Su2tbpassword2.Password != Su2tbpassword.Password)
+            {
+                tbworngPassword.Visibility = Visibility.Visible;
+                Su2tbpassword.Password = "";
+                Su2tbpassword2.Password = "";
+                new Thread(() =>
+                {
+                    Thread.Sleep(10000);
+                    this.Dispatcher.Invoke(() => tbworngPassword.Visibility = Visibility.Hidden);
+                }).Start();
+                return;
+            }
             User user = new User()
             {
                 Authorization = Authorizations.User,
@@ -291,19 +309,21 @@ namespace PlGui
                 UserName = Su2tbUserName.Text,
                 Password = Su2tbpassword.Password,
                 Active = true,
-                Birthday = FutureDatePicker.DisplayDate,
+                Birthday =DateTime.Parse(FutureDatePicker.Text),
                 Phone = SutbPhoneNumber.Text
             };
             BO.User u = bl.AddUser(user);
             if (u == null)
             {
+                Su2tbUserName.Text = "";
+                Su2tbpassword.Password = "";
+                Su2tbpassword2.Password = "";
                 new Thread(() =>
                 {
                     this.Dispatcher.Invoke(() => { tbworng.Visibility = Visibility.Visible; });
-                    Thread.Sleep(2000);
+                    Thread.Sleep(10000);
                     this.Dispatcher.Invoke(() => { tbworng.Visibility = Visibility.Hidden; });
                 }).Start();
-
                 return;
             }
             else
@@ -317,6 +337,13 @@ namespace PlGui
                         tbDone.Visibility = Visibility.Hidden;
                         signUpGridPart2.Visibility = Visibility.Hidden;
                         loudGrid.Visibility = Visibility.Visible;
+                        SutbFirstName.Text = "";
+                        SutbLastName.Text = "";
+                        Su2tbUserName.Text = "";
+                        Su2tbpassword.Password = "";
+                        Su2tbpassword2.Password = "";
+                        FutureDatePicker.Text = "";
+                        SutbPhoneNumber.Text = "";
                     });
                     Thread.Sleep(500);
                     this.Dispatcher.Invoke(() =>
