@@ -9,15 +9,59 @@ namespace BlApi
     public interface IBL
     {
         #region Simulator
+        /// <summary>
+        /// Starts the watch simulator running
+        /// </summary>
+        /// <param name="startTime">a Current time of the watch</param>
+        /// <param name="speed">a speed of watch in ms</param>
+        /// <param name="updateTime">the action of observer</param>
         void StartSimulator(TimeSpan startTime, int speed ,Action<TimeSpan> updateTime);
+        /// <summary>
+        /// Stops the watch simulator operation
+        /// </summary>
         void StopSimulator();
+        /// <summary>
+        /// Updates the station on tracking
+        /// </summary>
+        /// <param name="station">code stop</param>
+        /// <param name="updateBus">the action of observer</param>
         void SetStationPanel(int station, Action<LineTiming> updateBus=null);
         #endregion
 
         #region Bus
+        /// <summary>
+        /// return list of all buses 
+        /// </summary>
+        /// <returns>a IEnumerable&lt;Bus&gt;</returns>
         IEnumerable<Bus> GetBuses();
+        /// <summary>
+        /// <list type="table">
+        /// <item>Deletes a bus according to its Id </item>
+        /// <item><strong>Exceptions:</strong></item>
+        /// <item><strong>DeleteException</strong> -thrown when bus does not exist.</item>
+        /// </list>
+        /// </summary>
+        /// <param name="id">a Bus license number</param>
         void DeleteBus(int id);
+        /// <summary>
+        /// <list type="table">
+        /// <item>adds bus to data source </item>
+        /// <item><strong>Exceptions:</strong></item>
+        /// <item><strong>AddException</strong> -thrown when bus is already exist.</item>
+        /// </list>
+        /// </summary>
+        /// <param name="bus">bus to add to data source</param>
+        /// <param name="isNew">A Boolean variable indicating whether the bus is new</param>
+        /// <returns></returns>
         Bus AddBus(Bus bus,bool isNew=false);
+        /// <summary>
+        /// <list type="table">
+        /// <item><strong>Exceptions:</strong></item>
+        /// <item><strong>NullReferenceException</strong> thrown when bus was null</item>
+        /// </list>
+        /// </summary>
+        /// <param name="bus">bus to check</param>
+        /// <returns>a <strong>true:</strong> when id is valid <strong>false:</strong> when is is invalid </returns>
         bool CheckIdBus(Bus bus);
         Bus Care(Bus bus);
         Bus Fuel(Bus bus);

@@ -131,6 +131,7 @@ namespace PlGui
                   }
               };
         }
+
         private void bLogIn_Click(object sender, RoutedEventArgs e)
         {
 
@@ -165,7 +166,7 @@ namespace PlGui
 
             }).Start();
         }
-       
+
         private void bGuestMode_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Still under construction", "Guest Mode", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.OK);
@@ -201,6 +202,8 @@ namespace PlGui
                 {
                     loudGrid.Visibility = Visibility.Hidden;
                     mainGrid.Visibility = Visibility.Visible;
+                    tbUserName.Text = "";
+                    tbpassword.Password = "";
                 });
 
             }).Start();
@@ -220,7 +223,7 @@ namespace PlGui
                     SignUpGrid.Visibility = Visibility.Visible;
                     Su2tbUserName.Text = "";
                     Su2tbpassword.Password = "";
-                    Su2tbpassword2.Password = "";                    
+                    Su2tbpassword2.Password = "";
                 });
 
             }).Start();
@@ -240,9 +243,14 @@ namespace PlGui
                     loudGrid.Visibility = Visibility.Hidden;
                     mainGrid.Visibility = Visibility.Visible;
                     SutbFirstName.Text = "";
+                    SutbFirstName.BorderBrush = Brushes.Transparent;
                     SutbLastName.Text = "";
+                    SutbLastName.BorderBrush = Brushes.Transparent;
                     FutureDatePicker.Text = "";
+                    FutureDatePicker.BorderBrush = Brushes.Transparent;
                     SutbPhoneNumber.Text = "";
+                    SutbPhoneNumber.BorderBrush = Brushes.Transparent;
+                    cbAdmin.IsChecked = false;
                 });
 
             }).Start();
@@ -269,6 +277,12 @@ namespace PlGui
                 returnback = true;
             }
             else SutbPhoneNumber.BorderBrush = Brushes.Transparent;
+            if (!DateTime.TryParse(FutureDatePicker.Text, out DateTime tmp))
+            {
+                FutureDatePicker.BorderBrush = Brushes.OrangeRed;
+                returnback = true;
+            }
+            else FutureDatePicker.BorderBrush = Brushes.Transparent;
             if (returnback)
                 return;
 
@@ -303,13 +317,13 @@ namespace PlGui
             }
             User user = new User()
             {
-                Authorization = Authorizations.User,
+                Authorization = (cbAdmin.IsChecked == true) ? Authorizations.Admin : Authorizations.User,
                 FirstName = SutbFirstName.Text,
                 LastName = SutbLastName.Text,
                 UserName = Su2tbUserName.Text,
                 Password = Su2tbpassword.Password,
                 Active = true,
-                Birthday =DateTime.Parse(FutureDatePicker.Text),
+                Birthday = DateTime.Parse(FutureDatePicker.Text),
                 Phone = SutbPhoneNumber.Text
             };
             BO.User u = bl.AddUser(user);
@@ -344,6 +358,7 @@ namespace PlGui
                         Su2tbpassword2.Password = "";
                         FutureDatePicker.Text = "";
                         SutbPhoneNumber.Text = "";
+                        cbAdmin.IsChecked = false;
                     });
                     Thread.Sleep(500);
                     this.Dispatcher.Invoke(() =>
@@ -387,7 +402,7 @@ namespace PlGui
                             userGrid.Visibility = Visibility.Visible;
                             MessageBox.Show("We will resolve any challenge before us \n" +
                                             "and plan to welcome all of you back soon.", "User Technical Difficulties"
-                                            ,MessageBoxButton.OK,MessageBoxImage.Exclamation);
+                                            , MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         });
                     }).Start();
 
@@ -423,6 +438,10 @@ namespace PlGui
                 }).Start();
             }
         }
+        private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(Environment.ExitCode);
+        }
         #region Lines
         private void ListViewLines_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -430,11 +449,18 @@ namespace PlGui
             {
                 PO.Line line = (PO.Line)ListViewLines.SelectedItem;
                 ListViewStopsOfLine.DataContext = line;
-
                 ListViewFrequency.DataContext = line;
                 ListViewFrequency.Visibility = Visibility.Visible;
                 ListViewStopsOfLine.Visibility = Visibility.Visible;
                 AddStopLine.Visibility = Visibility.Visible;
+            }
+            if (ListViewLinesUser.SelectedItem is PO.Line)
+            {
+                PO.Line line = (PO.Line)ListViewLinesUser.SelectedItem;
+                ListViewStopsOfLineUser.DataContext = line;
+                ListViewFrequencyUser.DataContext = line;
+                ListViewFrequencyUser.Visibility = Visibility.Visible;
+                ListViewStopsOfLineUser.Visibility = Visibility.Visible;
             }
             return;
         }
@@ -513,15 +539,15 @@ namespace PlGui
         {
             PO.StopLine sl = (PO.StopLine)ListViewStopsOfLine.SelectedItem;
             if (sl.NextStop == 0) return;
-            
-                wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
-                wEdit.tbcode1.Text = sl.CodeStop.ToString();
-                wEdit.tbcode2.Text = sl.NextStop.ToString();
-                wEdit.tbName1.Text = sl.Name;
-                wEdit.tbName2.Text = bl.GetNameStop(sl.NextStop);
-                wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
-                wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
-                wEdit.ShowDialog();
+
+            wEditSuccessiveStations wEdit = new wEditSuccessiveStations(bl);
+            wEdit.tbcode1.Text = sl.CodeStop.ToString();
+            wEdit.tbcode2.Text = sl.NextStop.ToString();
+            wEdit.tbName1.Text = sl.Name;
+            wEdit.tbName2.Text = bl.GetNameStop(sl.NextStop);
+            wEdit.TimePicker.Text = sl.AvregeDriveTimeToNext.ToString(@"hh\:mm\:ss");
+            wEdit.TBKmDis.Text = sl.DistanceToNext.ToString();
+            wEdit.ShowDialog();
             if (wEdit.IsSave)
             {
                 foreach (var item in Lists.Lines)
@@ -537,8 +563,8 @@ namespace PlGui
                         item.StopsInLine[index].AvregeDriveTimeToNext = temp.AvregeDriveTimeToNext;
                     }
                 }
-            } 
-           
+            }
+
         }
 
         private void ListViewLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -597,6 +623,7 @@ namespace PlGui
             Distance.Width = 100;
         }
         #endregion
+
         #region busStops
         private void ListViewStations_SelctionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -627,6 +654,33 @@ namespace PlGui
                 stringB.Append($"{busStop.Latitude},{busStop.Longitude}");
                 webStop.Address = stringB.ToString();
             }
+            if (ListViewStationsUser.SelectedItem is PO.BusStop)
+            {
+                PO.BusStop busStop = (PO.BusStop)ListViewStationsUser.SelectedItem;
+                if (SimulatorPanelStation.IsBusy)
+                {
+                    SimulatorPanelStation.CancelAsync();
+                }
+                if (busStop.LinesPassInStop.Count != 0)
+                {
+                    ListViewLinesInStopUser.DataContext = busStop;
+                    ListViewLinesInStopUser.Visibility = Visibility.Visible;
+                    Lists.PanelStation = new List<LineTiming>();
+                    ListViewPanel.ItemsSource = null;
+                    if (Simulator.IsBusy)
+                    {
+                        SimulatorPanelStation.RunWorkerAsync(busStop);
+                        ListViewPanelUser.Visibility = Visibility.Visible;
+                    }
+                }
+                if (busStop.LinesPassInStop.Count == 0)
+                {
+                    ListViewLinesInStopUser.Visibility = Visibility.Hidden;
+                }
+                StringBuilder stringB = new StringBuilder("https://www.google.co.il/maps/place/");
+                stringB.Append($"{busStop.Latitude},{busStop.Longitude}");
+                webStopUser.Address = stringB.ToString();
+            }
             return;
         }
 
@@ -637,10 +691,7 @@ namespace PlGui
         }
 
         #endregion
-        private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Environment.Exit(Environment.ExitCode);
-        }
+
         #region Buses
         private void ListViewBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -656,15 +707,15 @@ namespace PlGui
 
         private void DeleteBus_Click(object sender, RoutedEventArgs e)
         {
-            wDelbus delbus = new wDelbus(bl,Lists);
+            wDelbus delbus = new wDelbus(bl, Lists);
             delbus.ShowDialog();
-            
+
         }
 
         private void AddBus_Click(object sender, RoutedEventArgs e)
         {
-            wAddBus addBus = new wAddBus(bl,Lists);
-            addBus.ShowDialog();           
+            wAddBus addBus = new wAddBus(bl, Lists);
+            addBus.ShowDialog();
         }
         #endregion
 
@@ -740,17 +791,34 @@ namespace PlGui
                     if (searchStop.itsNumber == true)
                         this.Dispatcher.Invoke(() =>
                         {
-                            ListViewStations.SelectedItem = Lists.Stops.ToList().Find((BusStop) => BusStop.Code == searchStop.CodeStop);
-                            ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
-
+                            var item = Lists.Stops.ToList().Find((BusStop) => BusStop.Code == searchStop.CodeStop);
+                            if (adminGrid.Visibility == Visibility.Visible)
+                            {
+                                ListViewStations.SelectedItem = item;
+                                ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
+                            }
+                            if (userGrid.Visibility == Visibility.Visible)
+                            {
+                                ListViewStationsUser.SelectedItem = item;
+                                ListViewStationsUser.ScrollIntoView(ListViewStationsUser.SelectedItem);
+                            }
                             if (!searchStop.IsVisible)
                                 flag = false;
                         });
                     else
                         this.Dispatcher.Invoke(() =>
                         {
-                            ListViewStations.SelectedItem = Lists.Stops.ToList().Find((BusStop) => BusStop.Name == searchStop.NameStop);
-                            ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
+                            var item = Lists.Stops.ToList().Find((BusStop) => BusStop.Name == searchStop.NameStop);
+                            if (adminGrid.Visibility == Visibility.Visible)
+                            {
+                                ListViewStations.SelectedItem = item;
+                                ListViewStations.ScrollIntoView(ListViewStations.SelectedItem);
+                            }
+                            if (userGrid.Visibility == Visibility.Visible)
+                            {
+                                ListViewStationsUser.SelectedItem = item;
+                                ListViewStationsUser.ScrollIntoView(ListViewStationsUser.SelectedItem);
+                            }
 
                             if (!searchStop.IsVisible)
                                 flag = false;
@@ -776,9 +844,17 @@ namespace PlGui
                     this.Dispatcher.Invoke(() =>
                     {
                         SearchLine.IsEnabled = false;
-                        ListViewLines.SelectedItem = Lists.Lines.ToList().Find((Line) => Line.NumLine == searchLine.numLine);
-                        ListViewLines.ScrollIntoView(ListViewLines.SelectedItem);
-
+                        var item = Lists.Lines.ToList().Find((Line) => Line.NumLine == searchLine.numLine);
+                        if (adminGrid.Visibility == Visibility.Visible)
+                        {
+                            ListViewLines.SelectedItem = item;
+                            ListViewLines.ScrollIntoView(ListViewLines.SelectedItem);
+                        }
+                        if (userGrid.Visibility == Visibility.Visible)
+                        {
+                            ListViewLinesUser.SelectedItem = item;
+                            ListViewLinesUser.ScrollIntoView(ListViewLinesUser.SelectedItem);
+                        }
                         if (!searchLine.IsVisible)
                             flag = false;
                     });
@@ -806,23 +882,47 @@ namespace PlGui
 
         private void bClock_Click(object sender, RoutedEventArgs e)
         {
-            if (programClock == null || clockSpeed.Text.Length == 0) return;
-            if (!TimeSpan.TryParse(programClock.Text, out TimeSpan time))
-                return;
-            if (bClock.Content.ToString() == "Start")
+            if (adminGrid.Visibility == Visibility.Visible)
             {
-                bClock.Content = "Stop";
-                Simulator.RunWorkerAsync(new {Time=time,Speed= int.Parse(clockSpeed.Text)});
-                programClock.IsEnabled = false;
-                clockSpeed.IsEnabled = false;
-            }
-            else
-            {
-                if (Simulator != null)
+                if (programClock == null || clockSpeed.Text.Length == 0) return;
+                if (!TimeSpan.TryParse(programClock.Text, out TimeSpan time))
+                    return;
+                if (bClock.Content.ToString() == "Start")
                 {
-                    Simulator.CancelAsync();//stop BackgroundWorker
+                    bClock.Content = "Stop";
+                    Simulator.RunWorkerAsync(new { Time = time, Speed = int.Parse(clockSpeed.Text) });
+                    programClock.IsEnabled = false;
+                    clockSpeed.IsEnabled = false;
                 }
+                else
+                {
+                    if (Simulator != null)
+                    {
+                        Simulator.CancelAsync();//stop BackgroundWorker
+                    }
 
+                }
+            }
+            if (userGrid.Visibility == Visibility.Visible)
+            {
+                if (programClockUser == null || clockSpeedUser.Text.Length == 0) return;
+                if (!TimeSpan.TryParse(programClockUser.Text, out TimeSpan time))
+                    return;
+                if (bClockUser.Content.ToString() == "Start")
+                {
+                    bClockUser.Content = "Stop";
+                    Simulator.RunWorkerAsync(new { Time = time, Speed = int.Parse(clockSpeedUser.Text) });
+                    programClockUser.IsEnabled = false;
+                    clockSpeedUser.IsEnabled = false;
+                }
+                else
+                {
+                    if (Simulator != null)
+                    {
+                        Simulator.CancelAsync();//stop BackgroundWorker
+                    }
+
+                }
             }
         }
         private void setSimulator()
@@ -835,15 +935,18 @@ namespace PlGui
             Simulator.DoWork += (object sender, DoWorkEventArgs e) =>
              {
                  dynamic anonimicType = e.Argument;
-               
-                 bl.StartSimulator((TimeSpan)anonimicType.Time ,(int) anonimicType.Speed, t => Simulator.ReportProgress(1, t));
+
+                 bl.StartSimulator((TimeSpan)anonimicType.Time, (int)anonimicType.Speed, t => Simulator.ReportProgress(1, t));
                  while (!Simulator.CancellationPending)
                      Thread.Sleep(1000);
              };
             Simulator.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
               {
                   TimeSpan t = (TimeSpan)e.UserState;
-                  programClock.Text = t.ToString(@"hh\:mm\:ss");
+                  if (adminGrid.Visibility == Visibility.Visible)
+                      programClock.Text = t.ToString(@"hh\:mm\:ss");
+                  if (userGrid.Visibility == Visibility.Visible)
+                      programClockUser.Text = t.ToString(@"hh\:mm\:ss");
               };
             Simulator.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) =>
             {
@@ -851,9 +954,13 @@ namespace PlGui
                 ListViewPanel.Visibility = Visibility.Hidden;
                 bl.StopSimulator();
                 programClock.IsEnabled = true;
+                programClockUser.IsEnabled = true;
                 clockSpeed.IsEnabled = true;
+                clockSpeedUser.IsEnabled = true;
                 programClock.Text = "";
+                programClockUser.Text = "";
                 clockSpeed.Text = "";
+                clockSpeedUser.Text = "";
             };
         }
 
@@ -866,12 +973,12 @@ namespace PlGui
             };
             SimulatorPanelStation.DoWork += (object sender, DoWorkEventArgs args) =>
             {
-                  bl.SetStationPanel((args.Argument as PO.BusStop).Code, lineTiming => SimulatorPanelStation.ReportProgress(1, lineTiming));
-                  while (!SimulatorPanelStation.CancellationPending)
-                  {
-                      Thread.Sleep(1000);
-                  }
-                  args.Result = args.Argument;
+                bl.SetStationPanel((args.Argument as PO.BusStop).Code, lineTiming => SimulatorPanelStation.ReportProgress(1, lineTiming));
+                while (!SimulatorPanelStation.CancellationPending)
+                {
+                    Thread.Sleep(1000);
+                }
+                args.Result = args.Argument;
             };
             SimulatorPanelStation.ProgressChanged += (object sender, ProgressChangedEventArgs args) =>
             {
@@ -891,9 +998,17 @@ namespace PlGui
                     else
                         Lists.PanelStation.Sort((lt1, lt2) => (int)(lt1.ArriveTime - lt2.ArriveTime).TotalMilliseconds);
                 }
-                ListViewPanel.ItemsSource = null;
                 int size = (Lists.PanelStation.Count < 5) ? Lists.PanelStation.Count : 5;
-                ListViewPanel.ItemsSource = Lists.PanelStation.GetRange(0, size);
+                if (adminGrid.Visibility == Visibility.Visible)
+                {
+                    ListViewPanel.ItemsSource = null;
+                    ListViewPanel.ItemsSource = Lists.PanelStation.GetRange(0, size);
+                }
+                if(userGrid.Visibility==Visibility.Visible)
+                {
+                    ListViewPanelUser.ItemsSource = null;
+                    ListViewPanelUser.ItemsSource = Lists.PanelStation.GetRange(0, size);
+                }
             };
             SimulatorPanelStation.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs args) =>
               {
@@ -901,7 +1016,9 @@ namespace PlGui
                   {
                       Lists.PanelStation = new List<LineTiming>();
                       ListViewPanel.ItemsSource = null;
+                      ListViewPanelUser.ItemsSource = null;
                       ListViewPanel.Visibility = Visibility.Hidden;
+                      ListViewPanelUser.Visibility = Visibility.Hidden;
                       bl.SetStationPanel(-1);//Stop tracking
                   }
               };
@@ -933,6 +1050,10 @@ namespace PlGui
                     Thread.Sleep(1000);
                     if (adminW.GOBack == true)
                     {
+                        if (Simulator.IsBusy)
+                        {
+                            Simulator.CancelAsync();
+                        }
                         this.Dispatcher.Invoke(() =>
                         {
                             Application.Current.MainWindow.Height = 350;
@@ -962,6 +1083,15 @@ namespace PlGui
         private void FutureDatePicker_PreKeyD(object sender, KeyEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void SutbPhoneNumber_PreKeyD(object sender, KeyEventArgs e)
+        {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
         }
     }
 }
