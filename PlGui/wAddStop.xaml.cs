@@ -20,7 +20,7 @@ namespace PlGui
     /// </summary>
     public partial class wAddStop : Window
     {
-        IBL bl;
+        readonly IBL bl;
         PO.Lists Lists;
         public wAddStop(IBL bl, PO.Lists lists)
         {

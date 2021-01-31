@@ -33,7 +33,7 @@ namespace Bl
         internal Watch Simulator { get => simulator; private set => simulator = value; }
         internal int Speed { get => speed; private set => speed = value; }
 
-        private Stopwatch stopwatch = new Stopwatch();
+        private readonly Stopwatch stopwatch = new Stopwatch();
         private event Action<TimeSpan> watchObserver = null;
 
         internal event Action<TimeSpan> WatchObserver

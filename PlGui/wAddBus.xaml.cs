@@ -19,7 +19,7 @@ namespace PlGui
     /// </summary>
     public partial class wAddBus : Window
     {
-        IBL bl;
+        readonly IBL bl;
         PO.Lists Lists;
         public wAddBus(IBL bl,PO.Lists lists)
         {

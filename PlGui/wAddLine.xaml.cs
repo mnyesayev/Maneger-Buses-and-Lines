@@ -21,7 +21,7 @@ namespace PlGui
     /// </summary>
     public partial class wAddLine : Window
     {
-        IBL bl;
+        readonly IBL bl;
         PO.Lists Lists;
         public bool IsSuccssed { get; private set; }
         public wAddLine(IBL bL,PO.Lists lists)

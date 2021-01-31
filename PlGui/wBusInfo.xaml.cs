@@ -21,7 +21,7 @@ namespace PlGui
     /// </summary>
     public partial class wBusInfo : Window
     {
-        IBL bl;
+        readonly IBL bl;
         
         public wBusInfo(IBL bl)
         {

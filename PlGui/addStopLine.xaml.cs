@@ -21,7 +21,7 @@ namespace PlGui
     /// </summary>
     public partial class addStopLine : Window
     {
-        IBL bl;
+        readonly IBL bl;
         //ObservableCollection<PO.Line> Lines;
         //ObservableCollection<PO.BusStop> Stops;
         PO.Lists Lists;

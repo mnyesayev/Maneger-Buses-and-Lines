@@ -20,7 +20,7 @@ namespace PlGui
     /// </summary>
     public partial class wEditSuccessiveStations : Window
     {
-        IBL bl;
+        readonly IBL bl;
         public bool IsSave { get; private set; }
         public wEditSuccessiveStations(IBL bl)
         {

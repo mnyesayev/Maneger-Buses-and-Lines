@@ -21,7 +21,7 @@ namespace PlGui
     /// </summary>
     public partial class wLineInfo : Window
     {
-        IBL bl; 
+        readonly IBL bl; 
         PO.Lists Lists;
         public wLineInfo(IBL bl, PO.Lists lists)
         {

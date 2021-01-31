@@ -155,7 +155,7 @@ namespace Bl
             nUser.Active = true;
             foreach (var item in dal.GetUsers())
             {
-                if (item.Phone == user.Phone)
+                if (item.Phone == user.Phone&&user.UserName!=item.UserName)
                     throw new IdException("User", user.UserName, $"The phone {user.Phone} already exists in the system");
             }       
             try
@@ -171,19 +171,22 @@ namespace Bl
 
         public User AddUser(User user)
         {
-            var v = dal.GetUser(user.UserName);
-            if (v != null)
-                return null;
             try
             {
                 var userDO = new DO.User();
                 user.CopyPropertiesTo(userDO);
+                userDO.Active = true;
+                foreach (var item in dal.GetUsers())
+                {
+                    if (item.Phone == user.Phone)
+                        throw new AddException("User", user.Phone, $"Phone {user.Phone} already exists!");
+                }
                 dal.AddUser(userDO);
                 return user;
             }
-            catch (DO.UserExceptionDO)
+            catch (DO.UserExceptionDO ex)
             {
-                return null;
+                throw new AddException("User", user.UserName, ex.Message, ex);
             }
         }
         #endregion

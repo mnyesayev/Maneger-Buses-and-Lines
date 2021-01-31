@@ -17,9 +17,9 @@ namespace Bl
         public static StationPanel Instance { get => instance; }// The public Instance property to use
         #endregion
 
-        private IDal dal = DalFactory.GetDal();
+        private readonly IDal dal = DalFactory.GetDal();
         private int codeStop = -1;
-        private static Random myRandom = new Random();
+        private static readonly Random myRandom = new Random();
         private static double GetDoubleRandom(double min, double max)
         {
             return (myRandom.NextDouble() * (max - min)) + min;

@@ -22,18 +22,19 @@ namespace Dal
         #endregion
 
         #region DS XML Files
-        string busesPath = @"BusesXml.xml"; //XElement
+        readonly string busesPath = @"BusesXml.xml"; //XElement
 
-        string runNumbersPath = @"runingNumbersXml.xml";//XMLSerializer
-        string busStopsPath = @"BusStopsXml.xml"; //XMLSerializer
+        readonly string runNumbersPath = @"runingNumbersXml.xml";//XElement
+        readonly string busStopsPath = @"BusStopsXml.xml"; //XMLSerializer
         //string busesOnTripPath = @"BusesOnTripXml.xml"; //XMLSerializer
-        string consecutiveStopsPath = @"ConsecutiveStopsXml.xml"; //XMLSerializer
-        string driversPath = @"DriversXml.xml"; //XMLSerializer
-        string linesPath = @"LinesXml.xml"; //XMLSerializer
-        string lineTripsPath = @"LineTripsXml.xml"; //XMLSerializer
-        string stopLinesPath = @"StopLinesXml.xml"; //XMLSerializer
-        //string userTripsPath = @"UserTripsXml.xml"; //XMLSerializer
-        string usersPath = @"UsersXml.xml"; //XMLSerializer
+        readonly string consecutiveStopsPath = @"ConsecutiveStopsXml.xml"; //XElement
+        readonly string driversPath = @"DriversXml.xml"; //XMLSerializer
+        readonly string linesPath = @"LinesXml.xml"; //XMLSerializer
+        readonly string lineTripsPath = @"LineTripsXml.xml"; //XElement
+        readonly string stopLinesPath = @"StopLinesXml.xml"; //XMLSerializer
+                                                             //string userTripsPath = @"UserTripsXml.xml"; //XMLSerializer
+
+        readonly string usersPath = @"UsersXml.xml"; //XMLSerializer
         #endregion
 
         //class ConStops

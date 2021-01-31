@@ -24,7 +24,7 @@ namespace PlGui
         public bool GOBack = false;
         public bool GetUpdated = false;
         public BO.User user1;
-        IBL bl;
+        readonly IBL bl;
         
         public AccountWindow(IBL bL)
         {

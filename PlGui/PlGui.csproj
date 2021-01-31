@@ -90,9 +90,6 @@
     <Compile Include="PO\StopLinePO.cs" />
     <Compile Include="PO\TripOnLinePO.cs" />
     <Compile Include="PO\UserPO.cs" />
-    <Compile Include="userWindow.xaml.cs">
-      <DependentUpon>userWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="wAddBus.xaml.cs">
       <DependentUpon>wAddBus.xaml</DependentUpon>
     </Compile>
@@ -163,10 +160,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="userWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="wAddBus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -20,7 +20,7 @@ namespace PlGui
     public partial class wDelbus : Window
     {
         PO.Lists Lists;
-        IBL bl;
+        readonly IBL bl;
         public wDelbus(IBL bl,PO.Lists lists)
         {
             InitializeComponent();

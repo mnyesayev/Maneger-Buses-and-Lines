@@ -22,7 +22,7 @@ namespace PlGui
     /// </summary>
     public partial class wEditTrip : Window
     {
-        IBL bl;
+        readonly IBL bl;
         PO.Lists Lists;
         public wEditTrip(IBL bL, PO.Lists lists)
         {

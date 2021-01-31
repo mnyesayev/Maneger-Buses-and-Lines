@@ -11,7 +11,7 @@ namespace Dal
 {
     class XMLTools
     {
-        static string dir = @"xml\";
+        static readonly string dir = @"xml\";
         static XMLTools()
         {
             if (!Directory.Exists(dir))
