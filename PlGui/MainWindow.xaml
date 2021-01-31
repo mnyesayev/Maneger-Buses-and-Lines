@@ -247,7 +247,7 @@
                      />
             <CheckBox x:Name="cbAdmin" IsChecked="False" Grid.Column="6"
                       Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2"
-                      VerticalAlignment="Center" Content="Chack"
+                      VerticalAlignment="Center" Content="Check"
                         FlowDirection="RightToLeft" IsEnabled="False"
                       FontSize="12" Margin="10"/>
             <Button x:Name="SignUpBack" Content="Go back" HorizontalAlignment="Center"
