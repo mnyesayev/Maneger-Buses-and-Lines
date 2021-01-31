@@ -32,9 +32,6 @@ namespace BO
         /// Represents the birthday  of the "User"
         /// </summary>
         public DateTime Birthday { get; set; }
-        /// <summary>
-        ///  Represents if this class active
-        /// </summary>
-        public bool Active { get; set; }
+        
     }
 }

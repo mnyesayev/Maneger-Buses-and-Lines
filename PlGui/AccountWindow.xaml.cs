@@ -17,16 +17,16 @@ using System.Windows.Shapes;
 namespace PlGui
 {
     /// <summary>
-    /// Interaction logic for adminWindow.xaml
+    /// Interaction logic for AccountWindow.xaml
     /// </summary>
-    public partial class adminWindow : Window
+    public partial class AccountWindow : Window
     {
         public bool GOBack = false;
         public bool GetUpdated = false;
         public BO.User user1;
         IBL bl;
         
-        public adminWindow(IBL bL)
+        public AccountWindow(IBL bL)
         {
             InitializeComponent();
             bl = bL;
@@ -51,7 +51,6 @@ namespace PlGui
             BO.User user = this.DataContext as BO.User;
             BO.User updaedUser = new BO.User()
             {
-                Active = user.Active,
                 UserName = user.UserName,
                 Authorization = user.Authorization,
                 Birthday = DateTime.Parse(tpEditBirthday.Text),

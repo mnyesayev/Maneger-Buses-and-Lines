@@ -322,26 +322,12 @@ namespace PlGui
                 LastName = SutbLastName.Text,
                 UserName = Su2tbUserName.Text,
                 Password = Su2tbpassword.Password,
-                Active = true,
                 Birthday = DateTime.Parse(FutureDatePicker.Text),
                 Phone = SutbPhoneNumber.Text
             };
-            BO.User u = bl.AddUser(user);
-            if (u == null)
+            try
             {
-                Su2tbUserName.Text = "";
-                Su2tbpassword.Password = "";
-                Su2tbpassword2.Password = "";
-                new Thread(() =>
-                {
-                    this.Dispatcher.Invoke(() => { tbworng.Visibility = Visibility.Visible; });
-                    Thread.Sleep(10000);
-                    this.Dispatcher.Invoke(() => { tbworng.Visibility = Visibility.Hidden; });
-                }).Start();
-                return;
-            }
-            else
-            {
+                BO.User u = bl.AddUser(user);
                 new Thread(() =>
                 {
                     this.Dispatcher.Invoke(() => { tbDone.Visibility = Visibility.Visible; });
@@ -367,7 +353,28 @@ namespace PlGui
                         mainGrid.Visibility = Visibility.Visible;
                     });
                 }).Start();
+
             }
+            catch (AddException ex)
+            {
+
+                Su2tbUserName.Text = "";
+                Su2tbpassword.Password = "";
+                Su2tbpassword2.Password = "";
+                new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        tbworng.Text = ex.Message;
+                        tbworng.Visibility = Visibility.Visible;
+                    });
+                    Thread.Sleep(10000);
+                    this.Dispatcher.Invoke(() => {
+                        tbworng.Text = "";
+                        tbworng.Visibility = Visibility.Hidden; });
+                }).Start();
+                return;
+            }      
         }
 
         private void forgetPasswordButton_Click(object sender, RoutedEventArgs e)
@@ -398,7 +405,7 @@ namespace PlGui
                             loudGrid.Visibility = Visibility.Hidden;
                             Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
                             Application.Current.MainWindow.WindowState = WindowState.Maximized;
-                            accountAdmin.ToolTip = MyUser.FirstName;
+                            accountUser.ToolTip = MyUser.FirstName;
                             userGrid.Visibility = Visibility.Visible;
                             MessageBox.Show("We will resolve any challenge before us \n" +
                                             "and plan to welcome all of you back soon.", "User Technical Difficulties"
@@ -1036,19 +1043,19 @@ namespace PlGui
 
         private void accountAdmin_Click(object sender, RoutedEventArgs e)
         {
-            adminWindow adminW = new adminWindow(bl);
-            adminW.DataContext = MyUser;
-            adminW.tbEditPhone.Text = MyUser.Phone;
-            adminW.tpEditBirthday.SelectedDate = MyUser.Birthday;
-            adminW.tbEditFirstName.Text = MyUser.FirstName;
-            adminW.tbEditLastName.Text = MyUser.LastName;
-            adminW.Show();
+            AccountWindow accuntW = new AccountWindow(bl);
+            accuntW.DataContext = MyUser;
+            accuntW.tbEditPhone.Text = MyUser.Phone;
+            accuntW.tpEditBirthday.SelectedDate = MyUser.Birthday;
+            accuntW.tbEditFirstName.Text = MyUser.FirstName;
+            accuntW.tbEditLastName.Text = MyUser.LastName;
+            accuntW.Show();
             new Thread(() =>
             {
-                while (adminW.IsVisible == true)
+                while (accuntW.IsVisible == true)
                 {
                     Thread.Sleep(1000);
-                    if (adminW.GOBack == true)
+                    if (accuntW.GOBack == true)
                     {
                         if (Simulator.IsBusy)
                         {
@@ -1064,14 +1071,17 @@ namespace PlGui
                             userGrid.Visibility = Visibility.Hidden;
                             adminGrid.Visibility = Visibility.Hidden;
                             loudGrid.Visibility = Visibility.Hidden;
-                            adminW.Close();
+                            accuntW.Close();
                         });
                     }
-                    if (adminW.GetUpdated == true)
+                    if (accuntW.GetUpdated == true)
                     {
-                        MyUser = adminW.user1;
+                        MyUser = accuntW.user1;
                         this.Dispatcher.Invoke(() =>
                         {
+                            if (userGrid.Visibility == Visibility.Visible)
+                                accountUser.ToolTip = MyUser.FirstName;
+                            else
                             accountAdmin.ToolTip = MyUser.FirstName;
                         });
                     }

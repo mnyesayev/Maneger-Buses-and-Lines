@@ -77,7 +77,6 @@ namespace DS
                     Phone = "0523456789"
                 }
             };
-            initUsers();
         }
 
         private static void initLineTrips()
@@ -95,28 +94,7 @@ namespace DS
                     Id=Config.LineTripCounter
             });
             }
-            //i = 0;
-            //foreach (var item in Lines)
-            //{
-            //    LineTrips.Add(new LineTrip
-            //    {
-            //        Active = true,
-            //        StartTime = new TimeSpan(20, 0, 0),
-            //        EndTime = new TimeSpan(24, 0, 0),
-            //        Frequency = MyRandom.r.Next(1, 3),
-            //        IdLine = ++i,
-            //        Id = Config.LineTripCounter
-            //    });
-            //}
-        }
-
-        private static void initUsers()
-        {
-            Users.Add(new User()
-            {
-                Active = true,
-                Authorization = Authorizations.MainAdmin,
-            });
+            
         }
 
         private static void initBuses()

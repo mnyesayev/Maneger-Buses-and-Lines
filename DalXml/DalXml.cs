@@ -26,13 +26,13 @@ namespace Dal
 
         string runNumbersPath = @"runingNumbersXml.xml";//XMLSerializer
         string busStopsPath = @"BusStopsXml.xml"; //XMLSerializer
-        string busesOnTripPath = @"BusesOnTripXml.xml"; //XMLSerializer
+        //string busesOnTripPath = @"BusesOnTripXml.xml"; //XMLSerializer
         string consecutiveStopsPath = @"ConsecutiveStopsXml.xml"; //XMLSerializer
         string driversPath = @"DriversXml.xml"; //XMLSerializer
         string linesPath = @"LinesXml.xml"; //XMLSerializer
         string lineTripsPath = @"LineTripsXml.xml"; //XMLSerializer
         string stopLinesPath = @"StopLinesXml.xml"; //XMLSerializer
-        string userTripsPath = @"UserTripsXml.xml"; //XMLSerializer
+        //string userTripsPath = @"UserTripsXml.xml"; //XMLSerializer
         string usersPath = @"UsersXml.xml"; //XMLSerializer
         #endregion
 
@@ -406,7 +406,7 @@ namespace Dal
             if (index != -1)
             {
                 if (ListUsers[index].Active)
-                    throw new UserExceptionDO(user.UserName, "The User is already exists");
+                    throw new UserExceptionDO(user.UserName, "Such a user already exists");
                 if (!ListUsers[index].Active)
                     ListUsers[index] = user;
             }

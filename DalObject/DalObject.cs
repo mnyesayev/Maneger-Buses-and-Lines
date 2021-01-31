@@ -103,7 +103,7 @@ namespace Dal
                 return;
             }
             if (DataSource.Users[index].Active == true)
-                throw new UserExceptionDO(user.UserName, "the User is already exists");
+                throw new UserExceptionDO(user.UserName, "Such a user already exists");
         }
         public void DeleteUser(string phone, DateTime dateTime)
         {

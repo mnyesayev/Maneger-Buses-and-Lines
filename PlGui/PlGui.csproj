@@ -71,8 +71,8 @@
     <Compile Include="addStopLine.xaml.cs">
       <DependentUpon>addStopLine.xaml</DependentUpon>
     </Compile>
-    <Compile Include="adminWindow.xaml.cs">
-      <DependentUpon>adminWindow.xaml</DependentUpon>
+    <Compile Include="AccountWindow.xaml.cs">
+      <DependentUpon>AccountWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Cloning.cs" />
     <Compile Include="IT_Window.xaml.cs">
@@ -139,7 +139,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="adminWindow.xaml">
+    <Page Include="AccountWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
