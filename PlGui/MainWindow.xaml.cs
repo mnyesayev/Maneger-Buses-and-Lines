@@ -37,6 +37,7 @@ namespace PlGui
         BackgroundWorker blGetBuses;
         BackgroundWorker blGetDrivers;
         BO.User MyUser;
+        int AdminCode = 123;
         public MainWindow()
         {
             InitializeComponent();
@@ -409,9 +410,6 @@ namespace PlGui
                             Application.Current.MainWindow.WindowState = WindowState.Maximized;
                             accountUser.ToolTip = MyUser.FirstName;
                             userGrid.Visibility = Visibility.Visible;
-                            MessageBox.Show("We will resolve any challenge before us \n" +
-                                            "and plan to welcome all of you back soon.", "User Technical Difficulties"
-                                            , MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         });
                     }).Start();
 
@@ -462,6 +460,7 @@ namespace PlGui
                 ListViewFrequency.Visibility = Visibility.Visible;
                 ListViewStopsOfLine.Visibility = Visibility.Visible;
                 AddStopLine.Visibility = Visibility.Visible;
+                moreInfoOnLine.DataContext = line;
             }
             if (ListViewLinesUser.SelectedItem is PO.Line)
             {
@@ -470,6 +469,7 @@ namespace PlGui
                 ListViewFrequencyUser.DataContext = line;
                 ListViewFrequencyUser.Visibility = Visibility.Visible;
                 ListViewStopsOfLineUser.Visibility = Visibility.Visible;
+                moreInfoOnLineUser.DataContext = line;
             }
             return;
         }
@@ -960,7 +960,9 @@ namespace PlGui
             Simulator.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) =>
             {
                 bClock.Content = "Start";
+                bClockUser.Content = "Start";
                 ListViewPanel.Visibility = Visibility.Hidden;
+                ListViewPanelUser.Visibility = Visibility.Hidden;
                 bl.StopSimulator();
                 programClock.IsEnabled = true;
                 programClockUser.IsEnabled = true;
@@ -1103,6 +1105,36 @@ namespace PlGui
 
         private void SutbPhoneNumber_PreKeyD(object sender, KeyEventArgs e)
         {
+            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
+            if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
+                return;
+            if ((e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && (e.Key < Key.D0 || e.Key > Key.D9))
+                e.Handled = true;
+        }
+
+        private void moreInfoOnLine_PreKeyU(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter || e.Key == Key.Tab)
+            {
+                var upLine = ListViewLines.SelectedItem as PO.Line;
+                bl.UpdateLine(upLine.IdLine, upLine.NumLine, upLine.Area, moreInfoOnLine.Text);
+                moreInfoOnLine.IsEnabled = false;
+            }
+        }
+
+        private void editMoreInfoOnLine_Click(object sender, RoutedEventArgs e)
+        {
+            if (ListViewLines.SelectedItem is PO.Line)
+                moreInfoOnLine.IsEnabled = true;
+        }
+
+        private void adminCode_PreKeyD(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter || e.Key == Key.Down || e.Key == Key.Tab)
+            {
+                if (adminCode.Text == AdminCode.ToString())
+                    cbAdmin.IsEnabled = true;
+            }
             char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
             if (char.IsControl(c) || char.IsDigit(c) || e.Key == Key.Right || e.Key == Key.Left)
                 return;

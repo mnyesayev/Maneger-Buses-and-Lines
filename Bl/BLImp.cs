@@ -528,7 +528,7 @@ namespace Bl
                 MoreInfo = moreInfo
             };
         }
-        public bool UpdateLine(int idLine, string numLine, Areas area, Agency agency)
+        public bool UpdateLine(int idLine, string numLine, Areas area, string MoreInfo)
         {
             var l = dal.GetLine(idLine);
             if (l == null) return false;
@@ -538,7 +538,7 @@ namespace Bl
                 {
                     Line.NumLine = numLine;
                     Line.Area = (DO.Areas)area;
-                    Line.CodeAgency = (DO.Agency)agency;
+                    Line.MoreInfo = MoreInfo;
                 });
             }
             catch (Exception)

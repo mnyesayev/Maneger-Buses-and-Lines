@@ -93,7 +93,7 @@ namespace BlApi
         #region Line
         IEnumerable<Line> GetLines();
         bool DeleteLine(int idLine);
-        bool UpdateLine(int idLine ,string numLine,Areas area,Agency agency);
+        bool UpdateLine(int idLine ,string numLine,Areas area,string MoreInfo);
         Line AddLine(string numLine, Areas area,IEnumerable<StopLine> stops,string moreInfo);
         #endregion
         
