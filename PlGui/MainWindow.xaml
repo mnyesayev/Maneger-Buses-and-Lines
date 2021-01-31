@@ -429,7 +429,7 @@
             <Button x:Name="accountUser" Grid.Column="7" Grid.Row="1"
                 Style="{StaticResource MaterialDesignIconForegroundButton}"
                 ToolTip="{Binding}" Click="accountAdmin_Click" Foreground="White">
-                <materialDesign:PackIcon Kind="AccountCircleOutline"  />
+                <materialDesign:PackIcon Kind="AccountCircleOutline"/>
             </Button>
 
             <Image Source="images\bus.png" Grid.Column="3" Grid.Row="1"

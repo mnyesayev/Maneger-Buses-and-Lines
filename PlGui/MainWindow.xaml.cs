@@ -369,12 +369,14 @@ namespace PlGui
                         tbworng.Visibility = Visibility.Visible;
                     });
                     Thread.Sleep(10000);
-                    this.Dispatcher.Invoke(() => {
+                    this.Dispatcher.Invoke(() =>
+                    {
                         tbworng.Text = "";
-                        tbworng.Visibility = Visibility.Hidden; });
+                        tbworng.Visibility = Visibility.Hidden;
+                    });
                 }).Start();
                 return;
-            }      
+            }
         }
 
         private void forgetPasswordButton_Click(object sender, RoutedEventArgs e)
@@ -1011,7 +1013,7 @@ namespace PlGui
                     ListViewPanel.ItemsSource = null;
                     ListViewPanel.ItemsSource = Lists.PanelStation.GetRange(0, size);
                 }
-                if(userGrid.Visibility==Visibility.Visible)
+                if (userGrid.Visibility == Visibility.Visible)
                 {
                     ListViewPanelUser.ItemsSource = null;
                     ListViewPanelUser.ItemsSource = Lists.PanelStation.GetRange(0, size);
@@ -1049,6 +1051,10 @@ namespace PlGui
             accuntW.tpEditBirthday.SelectedDate = MyUser.Birthday;
             accuntW.tbEditFirstName.Text = MyUser.FirstName;
             accuntW.tbEditLastName.Text = MyUser.LastName;
+            if (userGrid.Visibility == Visibility.Visible)
+                accuntW.accountIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.AccountCircle;
+            if(adminGrid.Visibility==Visibility.Visible)
+                accuntW.accountIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.AccountStar;
             accuntW.Show();
             new Thread(() =>
             {
@@ -1082,7 +1088,7 @@ namespace PlGui
                             if (userGrid.Visibility == Visibility.Visible)
                                 accountUser.ToolTip = MyUser.FirstName;
                             else
-                            accountAdmin.ToolTip = MyUser.FirstName;
+                                accountAdmin.ToolTip = MyUser.FirstName;
                         });
                     }
                 }
