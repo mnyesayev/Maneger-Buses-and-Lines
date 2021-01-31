@@ -1117,8 +1117,8 @@ namespace PlGui
             if (e.Key == Key.Enter || e.Key == Key.Tab)
             {
                 var upLine = ListViewLines.SelectedItem as PO.Line;
-                bl.UpdateLine(upLine.IdLine, upLine.NumLine, upLine.Area, moreInfoOnLine.Text);
-                moreInfoOnLine.IsEnabled = false;
+                if(bl.UpdateLine(upLine.IdLine, upLine.NumLine, upLine.Area, moreInfoOnLine.Text))
+                    moreInfoOnLine.IsEnabled = false;
             }
         }
 
