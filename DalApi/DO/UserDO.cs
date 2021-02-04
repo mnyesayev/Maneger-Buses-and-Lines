@@ -43,5 +43,9 @@ namespace DO
         ///  Represents if this class active
         /// </summary>
         public bool Active { get; set; }
+        /// <summary>
+        /// Represents the last time the user log in
+        /// </summary>
+        public DateTime LogIn { get; set; }
     }
 }

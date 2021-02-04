@@ -57,7 +57,9 @@ namespace PlGui
                 FirstName = tbEditFirstName.Text,
                 LastName = tbEditLastName.Text,
                 Password = user.Password,
-                Phone = tbEditPhone.Text
+                Phone = tbEditPhone.Text,
+                LogIn = user.LogIn
+                
             };
             try
             {

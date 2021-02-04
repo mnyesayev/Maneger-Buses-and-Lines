@@ -391,6 +391,31 @@ namespace PlGui
             if (tbUserName.Text.Length == 0 || tbpassword.Password.Length == 0)
                 return;
             MyUser = bl.GetUser(tbUserName.Text, tbpassword.Password);
+            DateTime oldLogIn = MyUser.LogIn;
+            BO.User updaedUser = new BO.User()
+            {
+                UserName = MyUser.UserName,
+                Authorization = MyUser.Authorization,
+                Birthday = MyUser.Birthday,
+                FirstName = MyUser.FirstName,
+                LastName = MyUser.LastName,
+                Password = MyUser.Password,
+                Phone = MyUser.Phone,
+                LogIn =DateTime.Now
+            };
+            try
+            {
+                MyUser = bl.UpdateUser(updaedUser);
+            }
+            catch (BO.IdException ex)
+            {
+                MessageBox.Show(ex.Message, "User ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong here", "User ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             tbUserName.Text = "";
             tbpassword.Password = "";
             if (MyUser != null)
@@ -417,6 +442,7 @@ namespace PlGui
                 if (MyUser.Authorization == Authorizations.Admin)
                 {
                     logInGrid.Visibility = Visibility.Hidden;
+                   
                     new Thread(() =>
                     {
                         this.Dispatcher.Invoke(() => { loudGrid.Visibility = Visibility.Visible; });
@@ -428,8 +454,7 @@ namespace PlGui
                             Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
                             Application.Current.MainWindow.WindowState = WindowState.Maximized;
                             accountAdmin.ToolTip = MyUser.FirstName;
-                            tbHello.Text = $"Hello {MyUser.FirstName}";
-                            tbHello2.Text = $"last Log in was at {MyUser.LogIn}";
+                            tbHello.Text = $"Hello {MyUser.FirstName} your last login was at {oldLogIn}";
                             adminGrid.Visibility = Visibility.Visible;
                         });
 

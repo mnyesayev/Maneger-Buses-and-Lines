@@ -9,6 +9,7 @@
     <Phone>0521234567</Phone>
     <Birthday>2021-01-06T00:00:00</Birthday>
     <Active>true</Active>
+    <LogIn>2021-02-04T23:55:00.3621929+02:00</LogIn>
   </User>
   <User>
     <LastName />
@@ -19,5 +20,6 @@
     <Phone>0531234567</Phone>
     <Birthday>2021-01-19T00:00:00</Birthday>
     <Active>true</Active>
+    <LogIn>0001-01-01T00:00:00</LogIn>
   </User>
 </ArrayOfUser>
