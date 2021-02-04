@@ -428,6 +428,8 @@ namespace PlGui
                             Application.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
                             Application.Current.MainWindow.WindowState = WindowState.Maximized;
                             accountAdmin.ToolTip = MyUser.FirstName;
+                            tbHello.Text = $"Hello {MyUser.FirstName}";
+                            tbHello2.Text = $"last Log in was at {MyUser.LogIn}";
                             adminGrid.Visibility = Visibility.Visible;
                         });
 

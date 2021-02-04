@@ -41,5 +41,7 @@ namespace PO
         /// Represents the birthday  of the "User"
         /// </summary>
         public DateTime Birthday { get; set; }
+
+        public DateTime LogIn { get; set; }
     }
 }

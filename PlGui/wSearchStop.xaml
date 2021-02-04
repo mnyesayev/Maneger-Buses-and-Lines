@@ -36,7 +36,8 @@
 
                 <Button x:Name="bClose" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2"
                           Style="{StaticResource MaterialDesignIconButton}" 
-                        HorizontalAlignment="Right" VerticalAlignment="Center" Click="bClose_Click">
+                        HorizontalAlignment="Right" VerticalAlignment="Center" 
+                        Click="bClose_Click">
                     <materialDesign:PackIcon Kind="Close" />
                 </Button>
                 <TextBox x:Name="TbStopCode" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 

@@ -833,6 +833,75 @@
                         Grid.RowSpan="6" 
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
                         materialDesign:ColorZoneAssist.Mode="PrimaryDark">
+                <!--#region tab control home-->
+                <TabItem Header="Home"
+                         Width="90" HorizontalAlignment="Left"
+                         Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                                Grid.RowSpan="2" BorderThickness="2" BorderBrush="LightSkyBlue"
+                                CornerRadius="5"/>
+
+                        <TextBlock x:Name="tbHello" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                                   FontSize="30" HorizontalAlignment="Center" 
+                                   VerticalAlignment="Top" Foreground="Brown" Margin="10"/>
+                        <TextBlock x:Name="tbHello2" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"
+                                   FontSize="12" HorizontalAlignment="Center" 
+                                   VerticalAlignment="Bottom" Foreground="Brown" Margin="10" />
+
+
+                        <Border Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3"
+                                Grid.RowSpan="2" BorderThickness="2" BorderBrush="LightSkyBlue"
+                                CornerRadius="5" Margin="20 0 0 0"/>
+
+                        <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6"
+                                Grid.RowSpan="3" BorderThickness="2" BorderBrush="LightSkyBlue"
+                                CornerRadius="5" Margin="0 20 0 0"/>
+                        <materialDesign:PackIcon Kind="ClockTimeEightOutline" Grid.Row="7"
+                                                 Grid.Column="1" HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="ClockTimeNineOutline" Grid.Row="7"
+                                                 Grid.Column="2" HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="ClockTimeTenOutline" Grid.Row="7"
+                                                 Grid.Column="3" HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="ClockTimeElevenOutline" Grid.Row="7"
+                                                 Grid.Column="4" HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="ClockTimeTwelveOutline" Grid.Row="7"
+                                                 Grid.Column="5" HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="ClockTimeOneOutline" Grid.Row="7"
+                                                 Grid.Column="6" HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+
+                    </Grid>
+                </TabItem>
+                <!--#endregion-->
+                
                 <!--#region tab control buses-->
                 <TabItem Header="Buses" 
                     Width="90" HorizontalAlignment="Left"
