@@ -153,5 +153,10 @@ namespace PlGui
                 Console.Write(ex);
             }
         }
+
+        private void bClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
