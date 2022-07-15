@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-using DalApi;
+using DALApi;
 using BlApi;
 using System.Threading;
 using System.Diagnostics;
@@ -14,7 +14,7 @@ namespace Bl
 {
     sealed class BlImp : IBL
     {
-        readonly IDal dal = DalFactory.GetDal();
+        readonly IDAL dal = DALFactory.GetDAL();
         #region Singelton
         static readonly BlImp instance = new BlImp();
         static BlImp() { }// static ctor to ensure instance init is done just before first usage
