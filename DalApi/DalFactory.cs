@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace DalApi
+namespace DALApi
 {
     /// <summary>
     /// Static Factory class for creating Dal tier implementation object according to
     /// configuration in file config.xml
     /// </summary>
-    public static class DalFactory
+    public static class DALFactory
     {
         /// <summary>
         /// The function creates Dal tier implementation object according to Dal type
@@ -21,15 +21,15 @@ namespace DalApi
         /// which must contain the single instance of the class.
         /// </summary>
         /// <returns>Dal tier implementation object</returns>
-        public static IDal GetDal()
+        public static IDAL GetDAL()
         {
             // get dal implementation name from config.xml according to <data> element
-            string dalType = DalConfig.DalName;
+            string dalType = DALConfig.DALName;
             // bring package name (dll file name) for the dal name (above) from the list of packages in config.xml
-            DalConfig.DalPackage dalPackage;
+            DALConfig.DALPackage dalPackage;
             try // get dal package info according to <dal> element value in config file
             {
-                dalPackage = DalConfig.DalPackages[dalType];
+                dalPackage = DALConfig.DALPackages[dalType];
             }
             catch (KeyNotFoundException ex)
             {
@@ -76,7 +76,7 @@ namespace DalApi
             // Since the property is static - the object parameter is irrelevant for the GetValue() function and we can use null
             try
             {
-                IDal dal = type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).GetValue(null) as IDal;
+                IDAL dal = type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).GetValue(null) as IDAL;
                 // If the instance property is not initialized (i.e. it does not hold a real instance reference)...
                 if (dal == null)
                     throw new DalConfigException($"Class {dalNameSpace}.{dalClass} instance is not initialized");

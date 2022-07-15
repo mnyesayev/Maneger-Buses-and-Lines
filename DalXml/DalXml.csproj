@@ -7,8 +7,8 @@
     <ProjectGuid>{67A3931F-C012-472C-9242-B27C756EA5B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DalXml</RootNamespace>
-    <AssemblyName>DalXml</AssemblyName>
+    <RootNamespace>DALXml</RootNamespace>
+    <AssemblyName>DALXml</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,14 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DalXml.cs" />
+    <Compile Include="DALXML.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XMLTools.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DalApi\DalApi.csproj">
+    <ProjectReference Include="..\DalApi\DALApi.csproj">
       <Project>{d127b805-2d70-44e2-b7e1-5edb86a2ee4d}</Project>
-      <Name>DalApi</Name>
+      <Name>DALApi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

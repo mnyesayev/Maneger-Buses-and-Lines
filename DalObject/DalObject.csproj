@@ -7,8 +7,8 @@
     <ProjectGuid>{0C4F9D9E-E8B0-43ED-AB11-D197FEA14AF6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DalObject</RootNamespace>
-    <AssemblyName>DalObject</AssemblyName>
+    <RootNamespace>DALObject</RootNamespace>
+    <AssemblyName>DALObject</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,13 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cloning.cs" />
-    <Compile Include="DalObject.cs" />
+    <Compile Include="DALObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DalApi\DalApi.csproj">
+    <ProjectReference Include="..\DalApi\DALApi.csproj">
       <Project>{d127b805-2d70-44e2-b7e1-5edb86a2ee4d}</Project>
-      <Name>DalApi</Name>
+      <Name>DALApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\DS\DS.csproj">
       <Project>{bcae9683-37dd-4a4f-b9a3-6521959fd0d2}</Project>

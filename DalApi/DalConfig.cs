@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace DalApi
+namespace DALApi
 {
     /**
      <summary>
      Class for processing config.xml file and getting from there
-     information which is relevant for initialization of DalApi<br/>
+     information which is relevant for initialization of DALApi<br/>
      The file has to include in the 1st level:<br/>
      <list type="bullet">
         <item><b>&lt;dal&gt;</b> element with the name of the entry in the packages' list</item>
@@ -37,32 +37,32 @@ namespace DalApi
      </example>
      </summary>
     */
-    static class DalConfig
+    static class DALConfig
     {
-        public class DalPackage
+        public class DALPackage
         {
             public string Name;
             public string PkgName;
             public string NameSpace;
             public string ClassName;
         }
-        internal static string DalName;
-        internal static Dictionary<string, DalPackage> DalPackages;
+        internal static string DALName;
+        internal static Dictionary<string, DALPackage> DALPackages;
 
         /// <summary>
         /// Static constructor extracts Dal packages list and Dal type from
         /// Dal configuration file config.xml
         /// </summary>
-        static DalConfig()
+        static DALConfig()
         {
             XElement dlConfig = XElement.Load(@"config.xml");
-            DalName = dlConfig.Element("dl").Value;
-            DalPackages = (from pkg in dlConfig.Element("dl-packages").Elements()
+            DALName = dlConfig.Element("dl").Value;
+            DALPackages = (from pkg in dlConfig.Element("dl-packages").Elements()
                            let tmp1 = pkg.Attribute("namespace")
-                           let nameSpace = tmp1 == null ? "Dal" : tmp1.Value
+                           let nameSpace = tmp1 == null ? "DAL" : tmp1.Value
                            let tmp2 = pkg.Attribute("class")
                            let className = tmp2 == null ? pkg.Value : tmp2.Value
-                           select new DalPackage()
+                           select new DALPackage()
                            {
                                Name = "" + pkg.Name,
                                PkgName = pkg.Value,
@@ -74,7 +74,7 @@ namespace DalApi
     }
 
     /// <summary>
-    /// Represents errors during DalApi initialization
+    /// Represents errors during DALApi initialization
     /// </summary>
     [Serializable]
     public class DalConfigException : Exception

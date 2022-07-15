@@ -7,8 +7,8 @@
     <ProjectGuid>{D127B805-2D70-44E2-B7E1-5EDB86A2EE4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DalApi</RootNamespace>
-    <AssemblyName>DalApi</AssemblyName>
+    <RootNamespace>DALApi</RootNamespace>
+    <AssemblyName>DALApi</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -46,11 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DO\ConsecutiveStopsDO.cs" />
-    <Compile Include="DalConfig.cs" />
-    <Compile Include="DalFactory.cs" />
+    <Compile Include="DALConfig.cs" />
+    <Compile Include="DALFactory.cs" />
     <Compile Include="DO\EnumsDO.cs" />
     <Compile Include="DO\Exceptions.cs" />
-    <Compile Include="IDal.cs" />
+    <Compile Include="IDAL.cs" />
     <Compile Include="DO\BusDO.cs" />
     <Compile Include="DO\DriverDO.cs" />
     <Compile Include="DO\BusOnTripDO.cs" />

@@ -65,9 +65,9 @@
     <Compile Include="BO\UserTripBO.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DalApi\DalApi.csproj">
+    <ProjectReference Include="..\DalApi\DALApi.csproj">
       <Project>{d127b805-2d70-44e2-b7e1-5edb86a2ee4d}</Project>
-      <Name>DalApi</Name>
+      <Name>DALApi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

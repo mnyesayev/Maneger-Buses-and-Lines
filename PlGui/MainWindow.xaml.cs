@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// need to do PO!!!!!
 /// </summary>
-namespace PlGui
+namespace PLGui
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

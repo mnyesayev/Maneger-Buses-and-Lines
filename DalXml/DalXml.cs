@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using DalApi;
+using DALApi;
 using DO;
-namespace Dal
+namespace DAL
 {
-    public class DalXML : IDal
+    public class DALXML : IDAL
     {
         #region singelton
-        static readonly DalXML instance = new DalXML();
-        static DalXML() { }// static ctor to ensure instance init is done just before first usage
-        DalXML() { } // default => private
-        public static DalXML Instance { get => instance; }// The public Instance property to use
+        static readonly DALXML instance = new DALXML();
+        static DALXML() { }// static ctor to ensure instance init is done just before first usage
+        DALXML() { } // default => private
+        public static DALXML Instance { get => instance; }// The public Instance property to use
         #endregion
 
         #region DS XML Files

@@ -15,7 +15,7 @@ using System.Threading;
 using BlApi;
 using BO;
 
-namespace PlGui
+namespace PLGui
 {
     /// <summary>
     /// Interaction logic for porgetPassword.xaml

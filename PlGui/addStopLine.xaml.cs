@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using System.Threading;
 using System.Collections.ObjectModel;
 using BlApi;
-namespace PlGui
+namespace PLGui
 {
     /// <summary>
     /// Interaction logic for addStopLine.xaml

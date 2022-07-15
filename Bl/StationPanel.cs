@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DalApi;
+using DALApi;
 using BO;
 namespace Bl
 {
@@ -17,7 +17,7 @@ namespace Bl
         public static StationPanel Instance { get => instance; }// The public Instance property to use
         #endregion
 
-        private readonly IDal dal = DalFactory.GetDal();
+        private readonly IDAL dal = DALFactory.GetDAL();
         private int codeStop = -1;
         private static readonly Random myRandom = new Random();
         private static double GetDoubleRandom(double min, double max)

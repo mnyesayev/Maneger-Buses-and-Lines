@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
 using PO;
-namespace PlGui
+namespace PLGui
 {
     /// <summary>
     /// Interaction logic for wBusInfo.xaml

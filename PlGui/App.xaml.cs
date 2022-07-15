@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace PlGui
+namespace PLGui
 {
     /// <summary>
     /// Interaction logic for App.xaml

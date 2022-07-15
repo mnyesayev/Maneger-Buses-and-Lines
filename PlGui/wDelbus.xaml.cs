@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
-namespace PlGui
+namespace PLGui
 {
     /// <summary>
     /// Interaction logic for wDelbus.xaml

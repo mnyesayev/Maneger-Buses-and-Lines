@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalApi;
+using DALApi;
 using DS;
 using DO;
 
-namespace Dal
+namespace DAL
 {
-    sealed class DalObject : IDal
+    sealed class DALObject : IDAL
     {
         #region singelton
-        static readonly DalObject instance = new DalObject();
-        static DalObject() { }// static ctor to ensure instance init is done just before first usage
-        DalObject() { } // default => private
-        public static DalObject Instance { get => instance; }// The public Instance property to use
+        static readonly DALObject instance = new DALObject();
+        static DALObject() { }// static ctor to ensure instance init is done just before first usage
+        DALObject() { } // default => private
+        public static DALObject Instance { get => instance; }// The public Instance property to use
 
 
         #endregion
